@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 cmake_minimum_required(VERSION 3.2)
 
-project(Ethan)
+project(ETHAN)
 
 # ------------------------------------------------------
 # Load settings && macros
@@ -22,3 +22,4 @@ endif()
 ETHAN_VERSION()
 
 add_subdirectory(src)
+add_subdirectory(tests)

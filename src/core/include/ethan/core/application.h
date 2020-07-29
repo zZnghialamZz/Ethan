@@ -1,10 +1,10 @@
-#ifndef _ETHAN_CORE_APP_H_
-#define _ETHAN_CORE_APP_H_
+#ifndef _ETHAN_CORE_APPLICATION_H_
+#define _ETHAN_CORE_APPLICATION_H_
 
 namespace ethan {
 
 class Application {
-public:
+ public:
   Application();
   virtual ~Application();
 
@@ -25,6 +25,11 @@ public:
   virtual void End();
 };
 
+/**
+ * To be defined in the CLIENT
+ */
+Application* CreateApplication();
+
 } // namespace ethan
 
-#endif // _ETHAN_CORE_APP_H_
+#endif // _ETHAN_CORE_APPLICATION_H_
