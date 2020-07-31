@@ -3,7 +3,7 @@
 
 namespace ethan {}
 
-#include "ethan/core/application.h"
-#include "ethan/core/main.h"
+#include "ethan/core/core.h"
+#include "ethan/utils/utils.h"
 
 #endif // __ETHAN_H_

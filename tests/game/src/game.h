@@ -1,7 +1,7 @@
 #ifndef __GAME_H_
 #define __GAME_H_
 
-#include <ethan.h>
+#include <ethan/ethan.h>
 
 class Game : public ethan::Application {
  public:
