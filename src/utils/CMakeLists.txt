@@ -16,4 +16,5 @@ set(HEADERS
 include_directories(${ET_UTILS_INCLUDE_DIR})
 
 add_library(ET_UTILS STATIC ${SOURCES} ${HEADERS})
+target_link_libraries(ET_UTILS spdlog)
 target_precompile_headers(ET_UTILS PUBLIC "$<$<COMPILE_LANGUAGE:CXX>:${ET_UTILS_INCLUDE_DIR}/ethan/etpch.h>")

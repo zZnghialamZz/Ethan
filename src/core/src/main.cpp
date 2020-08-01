@@ -17,11 +17,10 @@ extern ethan::Application* ethan::CreateApplication();
 int main(int argc, char *argv[]) {
   ethan::Console::Init();
   ETLOG_CORE_INFO("Initialize Console!");
-  std::string name = "Nghia";
-  ETLOG_INFO("Hello {0}", name);
 
   auto app = ethan::CreateApplication();
   app->Init();
+  app->Update();
   delete app;
  
   return 0;

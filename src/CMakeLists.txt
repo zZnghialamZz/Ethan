@@ -3,6 +3,7 @@
 # -------------------------------------------------
 add_subdirectory(core)
 add_subdirectory(utils)
+add_subdirectory(libs)
 
 include_directories(
   "core/include"

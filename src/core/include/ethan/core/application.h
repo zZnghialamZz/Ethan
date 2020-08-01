@@ -1,6 +1,10 @@
 #ifndef _ETHAN_CORE_APPLICATION_H_
 #define _ETHAN_CORE_APPLICATION_H_
 
+#include <memory>
+
+#include "window.h"
+
 namespace ethan {
 
 class Application {
@@ -23,6 +27,12 @@ class Application {
    * cleaner is always a good practice.
    */
   virtual void End();
+
+  virtual void Update();
+
+ private:
+  std::unique_ptr<Window> window_;
+  bool is_running_;
 };
 
 /**

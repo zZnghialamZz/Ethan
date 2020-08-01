@@ -20,3 +20,6 @@ set(HEADERS
 include_directories(${ET_CORE_INCLUDE_DIR})
 
 add_library(ET_CORE STATIC ${SOURCES} ${HEADERS})
+if(WITH_OPENGL)
+  target_link_libraries(ET_CORE ET_OPENGL)
+endif()

@@ -30,3 +30,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${ETHAN_PATH}/${ETHAN_LIB})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO ${ETHAN_PATH}/${ETHAN_LIB})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# ------------------------------------------------------
+# Setting Default Libs
+# ------------------------------------------------------
+set(WITH_OPENGL 1)
