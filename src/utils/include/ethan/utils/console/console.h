@@ -1,8 +1,7 @@
 #ifndef _ETHAN_UTILS_CONSOLE_H_
 #define _ETHAN_UTILS_CONSOLE_H_
 
-#include <memory>
-
+#include "ethan/etpch.h"
 #include "spdlog/spdlog.h"
 
 namespace ethan {

@@ -19,4 +19,4 @@ set(HEADERS
 
 include_directories(${ET_CORE_INCLUDE_DIR})
 
-add_library(ET_CORE ${SOURCES} ${HEADERS})
+add_library(ET_CORE STATIC ${SOURCES} ${HEADERS})

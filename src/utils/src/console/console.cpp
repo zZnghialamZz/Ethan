@@ -8,7 +8,7 @@ std::shared_ptr<spdlog::logger> Console::core_logger_;
 std::shared_ptr<spdlog::logger> Console::client_logger_;
 
 void Console::Init() {
-  spdlog::set_pattern("%^[%T] %n: %v%$");
+  spdlog::set_pattern("%^<%T>[%n] : %v%$");
 
   core_logger_ = spdlog::stdout_color_mt("ETHAN");
   core_logger_->set_level(spdlog::level::trace);

@@ -1,2 +1,8 @@
 #+AUTHOR: Nghia Lam
 #+TITLE: Ethan - TODO List
+
+* Core Engine
+** [ ] Event System.
+
+* Utilities
+** [ ] Create a more lightweight logging system backend.

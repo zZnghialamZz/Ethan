@@ -7,9 +7,7 @@ Application::Application() {}
 
 Application::~Application() {}
 
-void Application::Init() {
-  printf("Ethan Game Engine Initialize ... !!");
-}
+void Application::Init() {}
 
 void Application::Start() {}
 
