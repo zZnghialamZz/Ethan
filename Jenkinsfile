@@ -11,8 +11,7 @@ pipeline {
         }
         stage('[ETHAN] Generate CMake Build Files') {
             steps {
-                sh "cmake -H. -B build"
-                sh "ln -s build/compile_commands.json ."
+                cmakeBuild buildType: 'Debug', cleanBuild: true, generator: 'Unix Makefiles', buildDir: 'build', installation: 'InSearchPath', steps: [[withCmake: true]]
             }
         }
         stage('[ETHAN] Compile & Link') {
