@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    }
     stages {
         stage('[ETHAN] Cleanup') {
             steps {
@@ -13,11 +16,6 @@ pipeline {
         stage('[ETHAN] CMake Build') {
             steps {
                 cmakeBuild buildType: 'Debug', cleanBuild: true, generator: 'Unix Makefiles', buildDir: 'build', installation: 'InSearchPath', steps: [[withCmake: true]]
-            }
-        }
-        stage('Run') {
-            steps {
-                sh "./bin/GAME"
             }
         }
     }
