@@ -7,17 +7,12 @@ pipeline {
                 sh "rm -rf lib"
                 sh "rm -rf build"
                 sh "rm -rf compile_command.json"
-                sh 'git submodule update --init --recursive'
+                sh "git submodule update --init --recursive"
             }
         }
         stage('[ETHAN] CMake Build') {
             steps {
                 cmakeBuild buildType: 'Debug', cleanBuild: true, generator: 'Unix Makefiles', buildDir: 'build', installation: 'InSearchPath', steps: [[withCmake: true]]
-            }
-        }
-        stage('[ETHAN] Compile & Link') {
-            steps {
-                sh "cmake --build build"
             }
         }
         stage('Run') {
