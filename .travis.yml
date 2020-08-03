@@ -1,0 +1,14 @@
+language: cpp
+
+compiler:
+  - g++
+
+before_script:
+  # clean up
+  - rm -rf bin
+  - rm -rf lib
+  - rm -rf build
+
+script:
+  - cmake -H. -B build
+  - cmake --build build
