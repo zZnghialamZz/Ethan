@@ -8,6 +8,8 @@ before_script:
   - rm -rf bin
   - rm -rf lib
   - rm -rf build
+  # create build folder
+  - mkdir build
 
 script:
   - cmake -H. -B build
