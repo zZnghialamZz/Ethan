@@ -10,7 +10,8 @@ before_script:
   - rm -rf build
   # create build folder
   - mkdir build
+  - cd build
 
 script:
-  - cmake -H. -B build
-  - cmake --build build
+  - cmake ..
+  - cmake --build
