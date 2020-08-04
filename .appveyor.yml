@@ -65,7 +65,7 @@ build_script:
   - mkdir build
   - cd build
   - cmake ..
-  - make
+  - cmake --build .
 
 # Test scripts
 test: off
