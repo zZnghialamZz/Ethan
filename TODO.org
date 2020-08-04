@@ -1,8 +1,10 @@
-#+AUTHOR: Nghia Lam
-#+TITLE: Ethan - TODO List
+#+TITLE:     Ethan - TODO List
+#+AUTHOR:    Nghia Lam
+#+EMAIL:     nghialam12795@gmail.com
 
-* Core Engine
-** [ ] Event System.
+* Core Engine [0/2]
+- [ ] Event System.
+- [ ] Support Window DLL Ethan Library.
 
-* Utilities
-** [ ] Create a more lightweight logging system backend.
+* Utilities [0/1]
+- [ ] Create a more lightweight logging system backend.

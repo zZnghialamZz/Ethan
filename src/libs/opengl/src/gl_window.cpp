@@ -35,7 +35,10 @@ void GLWindow::Init(const WindowProperty &props) {
   data_.width = props.width;
   data_.height = props.height;
 
-  ETLOG_CORE_INFO("Creating window {0} ({1}, {2})", data_.title, data_.width, data_.height);
+  ETLOG_CORE_INFO("Creating window {0} ({1}, {2})",
+      data_.title, 
+      data_.width, 
+      data_.height);
 
   if (!is_glfw_init_) {
     int success = glfwInit();
@@ -52,7 +55,12 @@ void GLWindow::Init(const WindowProperty &props) {
   }
 
   // Window Creation
-  window_ = glfwCreateWindow((int)data_.width, (int)data_.height, data_.title, nullptr, nullptr);
+  window_ = glfwCreateWindow(
+      (int)data_.width,
+      (int)data_.height,
+      data_.title,
+      nullptr,
+      nullptr);
   glfwMakeContextCurrent(window_);
   glfwSetWindowUserPointer(window_, &data_);
   SetVSync(true);

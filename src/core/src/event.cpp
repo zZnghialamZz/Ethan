@@ -9,7 +9,8 @@
  *
  *                   Game Engine
  * ==================================================
- * @file ethan.cpp
+ *
+ * @file event.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -29,4 +30,4 @@
  * limitations under the License.
  */
 
-#include "ethan.h"
+#include "ethan/core/event.h"

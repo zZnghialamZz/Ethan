@@ -9,7 +9,8 @@
  *
  *                   Game Engine
  * ==================================================
- * @file ethan.cpp
+ *
+ * @file event.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -29,4 +30,31 @@
  * limitations under the License.
  */
 
-#include "ethan.h"
+#ifndef _ETHAN_CORE_EVENT_H_
+#define _ETHAN_CORE_EVENT_H_
+
+#define BIT(x) (1 << x)
+
+namespace ethan {
+
+enum class EventCategory {
+  None = 0,
+  Application  = BIT(0),
+  Keyboard     = BIT(1),
+  Mouse        = BIT(2)
+};
+
+class Event {
+ public:
+  Event();
+  virtual ~Event() = default;
+  virtual bool IsHandled() = 0;
+
+ private:
+  bool handled_;
+  EventCategory category_;
+};
+
+}
+
+#endif // _ETHAN_CORE_EVENT_H_

@@ -33,6 +33,7 @@
 
 # Auto-generated folders
 .ccls-cache/
+.idea/
 build/
 bin/
 lib/
