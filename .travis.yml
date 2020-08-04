@@ -89,10 +89,10 @@ before_install:
   - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
   - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
   # Install dependencies for GLFW
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update                                  ; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install xorg-dev libglu1-mesa-dev       ; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt-get update                             ; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt-get install xorg-dev libglu1-mesa-dev  ; fi
+  - if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then brew update                                  ; fi
+  - if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then brew install xorg-dev libglu1-mesa-dev       ; fi
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; sudo apt-get update                             ; fi
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; sudo apt-get install xorg-dev libglu1-mesa-dev  ; fi
 
 install:
   # Download and install recent cmake
