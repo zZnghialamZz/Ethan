@@ -15,10 +15,6 @@
 dist: xenial
 language: cpp
 
-os:
-  - osx
-  - linux
-
 env:
   global:
     # Ubuntu version
@@ -102,7 +98,10 @@ install:
       travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
       export PATH=${DEPS_DIR}/cmake/bin:${PATH}
     fi
-  - if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then brew install cmake ; fi
+  - |
+    if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then
+      if ! brew ls --version cmake &>/dev/null; then brew update; brew install cmake; fi
+    fi
 
 before_script:
   # clean up
