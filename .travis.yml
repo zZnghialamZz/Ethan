@@ -99,7 +99,10 @@ install:
     fi
   - |
     if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then
-      if ! brew ls --version cmake &>/dev/null; then brew install cmake; fi
+      if ! brew ls --version cmake &>/dev/null;
+        then brew install cmake;
+        else brew upgrade cmake;
+      fi
     fi
 
 before_script:
