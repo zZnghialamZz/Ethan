@@ -31,14 +31,13 @@
  */
 
 #include "ethan/core/main.h"
-
 #include "ethan/utils/utils.h"
 
 namespace ethan {
 
-Main::Main() {}
+Main::Main() = default;
 
-Main::~Main() {}
+Main::~Main() = default;
 
 } // namespace ethan
 
@@ -46,9 +45,13 @@ Main::~Main() {}
 // --------- Entry Point --------- //
 extern ethan::Application* ethan::CreateApplication();
 
+// TDDO(@nghialam): Find a way to implement entry point
 int main(int argc, char *argv[]) {
   ethan::Console::Init();
   ETLOG_CORE_INFO("Initialize Console!");
+
+  ethan::WindowResizeEvent e(1600, 900);
+  ETLOG_CORE_TRACE(e);
 
   auto app = ethan::CreateApplication();
   app->Init();

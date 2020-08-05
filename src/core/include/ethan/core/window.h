@@ -9,6 +9,7 @@
  *
  *                   Game Engine
  * ==================================================
+ *
  * @file window.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
@@ -32,6 +33,8 @@
 #ifndef _ETHAN_CORE_WINDOW_H_
 #define _ETHAN_CORE_WINDOW_H_
 
+#include "event.h"
+
 namespace ethan {
 
 struct WindowProperty {
@@ -39,9 +42,32 @@ struct WindowProperty {
   unsigned int width;
   unsigned int height;
 
-  WindowProperty(const char *_title = "Ethan Engine",
-                 unsigned int _width = 1600, unsigned int _height = 900)
+  explicit WindowProperty(const char *_title = "Ethan Engine",
+                          unsigned int _width = 1600,
+                          unsigned int _height = 900)
       : title(_title), width(_width), height(_height) {}
+};
+
+class WindowResizeEvent : public Event {
+ public:
+  WindowResizeEvent(unsigned int width, unsigned int height);
+
+  [[nodiscard]] unsigned int GetWidth() const { return width_; }
+  [[nodiscard]] unsigned int GetHeight() const { return height_; }
+
+  [[nodiscard]] std::string ToString() const override;
+
+  EVENT_CLASS(WindowResize);
+
+ private:
+  unsigned int width_;
+  unsigned int height_;
+};
+
+class WindowCloseEvent : public Event {
+ public:
+  WindowCloseEvent();
+  EVENT_CLASS(WindowClose);
 };
 
 class Window {
@@ -54,11 +80,11 @@ class Window {
    */
   virtual void OnUpdate() = 0;
 
-  virtual unsigned int GetWidth() const = 0;
-  virtual unsigned int GetHeight() const = 0;
+  [[nodiscard]] virtual unsigned int GetWidth() const = 0;
+  [[nodiscard]] virtual unsigned int GetHeight() const = 0;
 
+  [[nodiscard]] virtual bool IsVSync() const = 0;
   virtual void SetVSync(bool enabled) = 0;
-  virtual bool IsVSync() const = 0;
 
   static Window *CreateWindow(const WindowProperty &props = WindowProperty());
 };

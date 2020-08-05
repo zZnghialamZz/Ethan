@@ -31,3 +31,23 @@
  */
 
 #include "ethan/core/window.h"
+
+namespace ethan {
+
+/// --- WindowResizeEvent
+WindowResizeEvent::WindowResizeEvent(unsigned int width, unsigned int height)
+    : width_(width), height_(height) {
+  SetHandled(false);
+  SetCategory(ApplicationEvent);
+}
+
+std::string WindowResizeEvent::ToString() const {
+  std::stringstream ss;
+  ss << "(WindowResizeEvent): " << width_ << ", " << height_;
+  return ss.str();
+}
+
+/// --- WindowClose
+WindowCloseEvent::WindowCloseEvent() = default;
+
+}

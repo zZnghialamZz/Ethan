@@ -31,3 +31,16 @@
  */
 
 #include "ethan/core/event.h"
+
+namespace ethan {
+
+/// --- Event Manager
+EventManager::EventManager() = default;
+EventManager::~EventManager() = default;
+
+template<typename T, typename F>
+bool EventManager::Dispatch(const F &func) {
+  return false;
+}
+
+}

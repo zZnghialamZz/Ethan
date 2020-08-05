@@ -12,14 +12,14 @@
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
 
-
-        _____                                       
-     __|___  |__    __    __   _  ____    ____   _  
-    |   ___|    | _|  |_ |  |_| ||    \  |    \ | | 
-    |   ___|    ||_    _||   _  ||     \ |     \| | 
-    |______|  __|  |__|  |__| |_||__|\__\|__/\____| 
-       |_____|                                      
-
+                    _________________________________________________
+                   /     _____                                       \
+                  /   __|___  |__    __    __   _  ____    ____   _   \
+    ....----o-o-o-   |   ___|    | _|  |_ |  |_| ||    \  |    \ | |   -o-o-o----....
+                     |   ___|    ||_    _||   _  ||     \ |     \| | 
+    ....----o-o-o-   |______|  __|  |__|  |__| |_||__|\__\|__/\____|   -o-o-o----....
+                  \     |_____|                                       /
+                   \_________________________________________________/
 
 <!-- Title -->
 <h1 align="center" style="border-bottom: none;">
@@ -32,9 +32,7 @@
 <a href="https://en.wikipedia.org/wiki/C%2B%2B14"><img alt="GitHub top language" src="https://img.shields.io/github/languages/top/zznghialamzz/ethan"></a>
 <a href="https://www.codacy.com/manual/nghialam12795/Ethan?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zZnghialamZz/Ethan&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/ec5283c04a2f43a991a48b0dfb0f5b8a"/></a>
 <a><img alt="GitHub stars" src="https://img.shields.io/github/stars/zznghialamzz/ethan?style=social"></a>
-</p>
-
-<p align="center">
+</br>
 <a href="https://ci.appveyor.com/project/zZnghialamZz/ethan/branch/master"><img alt="AppVeyor branch" src="https://img.shields.io/appveyor/build/zznghialamzz/ethan/master?label=Window"></a>
 <a href="https://travis-ci.com/zZnghialamZz/Ethan"><img alt="Travis (.com) branch" src="https://img.shields.io/travis/com/zznghialamzz/ethan/master.svg?label=MacOS"></a>
 <a href="https://travis-ci.com/zZnghialamZz/Ethan"><img alt="Travis (.com) branch" src="https://img.shields.io/travis/com/zznghialamzz/ethan/master.svg?label=Linux"></a>
@@ -43,5 +41,5 @@
 <!-- Contents -->
 Ethan Game Engine
 -------------------------------------------------------------------------------
-A lightweight Game Engine written in C++, which aims for a user friendly, fast
+A lightweight Game Engine written in modern C++, which aims for a user friendly, fast
 and robust workflow for any Game Creators.
