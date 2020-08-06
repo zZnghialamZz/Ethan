@@ -44,8 +44,9 @@ namespace ethan {
 enum EventCategory {
   None = 0,
   ApplicationEvent = BIT(0),
-  KeyboardEvent = BIT(1),
-  MouseEvent = BIT(2)
+  InputEvent = BIT(1),
+  KeyboardEvent = BIT(2),
+  MouseEvent = BIT(3)
 };
 
 class Event {
@@ -72,15 +73,6 @@ class Event {
   EventCategory category_;
 };
 
-class EventManager {
- public:
-  EventManager();
-  virtual ~EventManager();
-
-  template<typename T, typename F>
-  bool Dispatch(const F &func);
-};
-
 /**
  * Output the value of the event to the console, use mainly for debug & logging
  * purpose
@@ -92,6 +84,6 @@ inline std::ostream &operator<<(std::ostream &os, const Event &event) {
   return os << event.ToString();
 }
 
-}
+} // namespace ethan
 
 #endif // _ETHAN_CORE_EVENT_H_

@@ -34,11 +34,12 @@
 #define _ETHAN_UTILS_CONSOLE_H_
 
 #include "ethan/etpch.h"
-#include "spdlog/spdlog.h"
+
 #include "spdlog/fmt/ostr.h"
+#include "spdlog/spdlog.h"
 
 // Logger in our engine console
-#define ETLOG_CORE_TRACE(...)                                                   \
+#define ETLOG_CORE_TRACE(...)                                                  \
   ::ethan::Console::GetCoreLogger()->trace(__VA_ARGS__)
 #define ETLOG_CORE_INFO(...)                                                   \
   ::ethan::Console::GetCoreLogger()->info(__VA_ARGS__)

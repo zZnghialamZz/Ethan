@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file gl_input.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +30,19 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#include "gl_input.h"
 
-namespace ethan {}
+namespace ethan {
 
-#include "ethan/core.h"
-#include "ethan/utils.h"
+GLInput::GLInput() { Init(); }
+GLInput::~GLInput() = default;
 
-#endif // __ETHAN_H_
+void GLInput::Init() {
+  SetKeyCallback();
+  SetMouseCallback();
+}
+
+void GLInput::SetKeyCallback() {}
+void GLInput::SetMouseCallback() {}
+
+}

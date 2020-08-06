@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file keycode.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +30,15 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#ifndef _ETHAN_CORE_INPUT_KEYCODE_H_
+#define _ETHAN_CORE_INPUT_KEYCODE_H_
 
-namespace ethan {}
+namespace ethan {
 
-#include "ethan/core.h"
-#include "ethan/utils.h"
+enum class KeyCode {
 
-#endif // __ETHAN_H_
+};
+
+}
+
+#endif // _ETHAN_CORE_INPUT_KEYCODE_H_

@@ -9,8 +9,7 @@
  *
  *                   Game Engine
  * ==================================================
- *
- * @file ethan.h
+ * @file application.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +29,52 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#ifndef _ETHAN_CORE_APPLICATION_H_
+#define _ETHAN_CORE_APPLICATION_H_
 
-namespace ethan {}
+#include <memory>
 
-#include "ethan/core.h"
-#include "ethan/utils.h"
+#include "ethan/core/graphic/window.h"
 
-#endif // __ETHAN_H_
+namespace ethan {
+
+class Application {
+ public:
+  Application();
+  virtual ~Application();
+
+  /**
+   * Run before starting the app, can be use for pre-hack settings
+   */
+  virtual void Init();
+
+  /**
+   * Run once the app is started, can be used for default settings
+   */
+  virtual void Start();
+
+  /**
+   * Run when the app is terminated, can be used for final GC. Helping our OS
+   * cleaner is always a good practice.
+   */
+  virtual void End();
+
+  /**
+   * Run update every frame base on the system settings
+   */
+  virtual void Update();
+
+  virtual void EventCall(Event& event);
+
+ private:
+  std::unique_ptr<Window> main_window_;
+};
+
+/**
+ * To be defined in the CLIENT
+ */
+Application* CreateApplication();
+
+} // namespace ethan
+
+#endif // _ETHAN_CORE_APPLICATION_H_

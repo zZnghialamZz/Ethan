@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file window.cpp
+ * @file main.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,24 +30,32 @@
  * limitations under the License.
  */
 
-#include "ethan/core/window.h"
+#include "ethan/core/main/main.h"
+#include "ethan/utils.h"
 
 namespace ethan {
 
-/// --- WindowResizeEvent
-WindowResizeEvent::WindowResizeEvent(unsigned int width, unsigned int height)
-    : width_(width), height_(height) {
-  SetHandled(false);
-  SetCategory(ApplicationEvent);
-}
+Main::Main() = default;
 
-std::string WindowResizeEvent::ToString() const {
-  std::stringstream ss;
-  ss << "(WindowResizeEvent): " << width_ << ", " << height_;
-  return ss.str();
-}
+Main::~Main() = default;
 
-/// --- WindowClose
-WindowCloseEvent::WindowCloseEvent() = default;
+} // namespace ethan
 
+/////////////////////////////////////
+// --------- Entry Point --------- //
+extern ethan::Application* ethan::CreateApplication();
+
+// TDDO(@nghialam): Find a way to implement entry point
+int main(int argc, char *argv[]) {
+  ethan::Console::Init();
+  ETLOG_CORE_INFO("Initialize Console!");
+
+  auto app = ethan::CreateApplication();
+  app->Init();
+  app->Update();
+  delete app;
+ 
+  return 0;
 }
+// ------- End Entry Point ------- //
+/////////////////////////////////////

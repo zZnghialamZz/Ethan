@@ -9,7 +9,8 @@
  *
  *                   Game Engine
  * ==================================================
- * @file application.h
+ *
+ * @file application.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -29,48 +30,36 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_APPLICATION_H_
-#define _ETHAN_CORE_APPLICATION_H_
-
-#include <memory>
-
-#include "window.h"
+#include "ethan/core/main/application.h"
+#include "ethan/utils/console/console.h"
 
 namespace ethan {
 
-class Application {
- public:
-  Application();
-  virtual ~Application();
+Application::Application() {
+  main_window_ = std::unique_ptr<Window>(Window::CreateWindow());
+  main_window_->SetEventCallback(
+      std::bind(&Application::EventCall, this, std::placeholders::_1));
+}
 
-  /**
-   * Run before starting the app, can be use for pre-hack settings
-   */
-  virtual void Init();
+Application::~Application() = default;
 
-  /**
-   * Run once the app is started, can be used for default settings
-   */
-  virtual void Start();
+void Application::Init() { Start(); }
 
-  /**
-   * Run when the app is terminated, can be used for final GC. Helping our OS
-   * cleaner is always a good practice.
-   */
-  virtual void End();
+void Application::Start() {}
 
-  virtual void Update();
+void Application::End() {}
 
- private:
-  std::unique_ptr<Window> window_;
-  bool is_running_;
-};
+void Application::Update() {
+  while(!main_window_->IsClose()) {
+    main_window_->OnUpdate();
+  }
+}
 
-/**
- * To be defined in the CLIENT
- */
-Application* CreateApplication();
+void Application::EventCall(Event &event) {
+  if (event.IsInCategory(ApplicationEvent))
+    main_window_->ProcessEvent(dynamic_cast<WindowEvent &>(event));
 
-} // namespace ethan
+  ETLOG_TRACE(event);
+}
 
-#endif // _ETHAN_CORE_APPLICATION_H_
+}

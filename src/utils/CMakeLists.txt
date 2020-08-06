@@ -9,9 +9,9 @@ set(SOURCES
   "${ET_UTILS_SRC_DIR}/etpch.cpp"
   "${ET_UTILS_SRC_DIR}/console/console.cpp")
 set(HEADERS
-  "${ET_UTILS_INCLUDE_DIR}/ethan/etpch.h"
   "${ET_UTILS_INCLUDE_DIR}/ethan/utils/console/console.h"
-  "${ET_UTILS_INCLUDE_DIR}/ethan/utils/utils.h")
+  "${ET_UTILS_INCLUDE_DIR}/ethan/etpch.h"
+  "${ET_UTILS_INCLUDE_DIR}/ethan/utils.h")
 
 include_directories(${ET_UTILS_INCLUDE_DIR})
 

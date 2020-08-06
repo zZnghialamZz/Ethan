@@ -3,6 +3,6 @@
 
 namespace ethan {}
 
-#include "console/console.h"
+#include "ethan/utils/console/console.h"
 
 #endif // _ETHAN_UTILS_H_

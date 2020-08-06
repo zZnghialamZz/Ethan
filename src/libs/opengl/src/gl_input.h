@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file event.cpp
+ * @file gl_input.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,17 +30,24 @@
  * limitations under the License.
  */
 
-#include "ethan/core/event.h"
+#ifndef _ETHAN_LIB_GL_INPUT_H_
+#define _ETHAN_LIB_GL_INPUT_H_
+
+#include "gl_window.h"
 
 namespace ethan {
 
-/// --- Event Manager
-EventManager::EventManager() = default;
-EventManager::~EventManager() = default;
+class GLInput {
+ public:
+  GLInput();
+  ~GLInput();
 
-template<typename T, typename F>
-bool EventManager::Dispatch(const F &func) {
-  return false;
-}
+  void Init();
+
+ private:
+  void SetKeyCallback();
+  void SetMouseCallback();
+};
 
 }
+#endif // _ETHAN_LIBS_GL_INPUT_H_

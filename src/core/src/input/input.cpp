@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file application.cpp
+ * @file input.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,27 +30,33 @@
  * limitations under the License.
  */
 
-#include "ethan/core/application.h"
-#include <stdio.h>
+#include "ethan/core/input/input.h"
 
 namespace ethan {
 
-Application::Application() : is_running_(true) {
-  window_ = std::unique_ptr<Window>(Window::CreateWindow());
+/// --- KeyEvent
+KeyEvent::KeyEvent(int keycode) : keycode_(keycode) {
+  SetHandled(false);
+  SetCategory(InputEvent);
 }
 
-Application::~Application() {}
+/// --- KeyPressedEvent
+KeyPressedEvent::KeyPressedEvent(int keycode, int repeat)
+    : KeyEvent(keycode), repeat_(repeat) {}
 
-void Application::Init() {}
+std::string KeyPressedEvent::ToString() const {
+  std::stringstream ss;
+  ss << "(KeyPressedEvent) Pressed " << GetKeyCode() << " / " << GetRepeatCount() << " repeats";
+  return ss.str();
+}
 
-void Application::Start() {}
+/// --- KeyReleasedEvent
+KeyReleasedEvent::KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
 
-void Application::End() {}
-
-void Application::Update() {
-  while(is_running_) {
-    window_->OnUpdate();
-  }
+std::string KeyReleasedEvent::ToString() const {
+  std::stringstream ss;
+  ss << "(KeyReleasedEvent) Released " << GetKeyCode();
+  return ss.str();
 }
 
 }

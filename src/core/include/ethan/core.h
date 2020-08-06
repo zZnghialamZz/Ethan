@@ -35,7 +35,7 @@
 
 namespace ethan {}
 
-#include "application.h"
-#include "main.h"
+#include "ethan/core/input/input.h"
+#include "ethan/core/main/application.h"
 
 #endif // _ETHAN_CORE_H_

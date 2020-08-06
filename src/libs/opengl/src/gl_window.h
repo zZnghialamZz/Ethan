@@ -33,7 +33,7 @@
 #ifndef _ETHAN_LIB_GL_WINDOW_H_
 #define _ETHAN_LIB_GL_WINDOW_H_
 
-#include "ethan/core/window.h"
+#include "ethan/core/graphic/window.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -47,26 +47,37 @@ class GLWindow : public Window {
 
   void OnUpdate() override;
 
+  [[nodiscard]] GLFWwindow* GetID() const { return window_; }
   [[nodiscard]] unsigned int GetWidth() const override { return data_.width; }
   [[nodiscard]] unsigned int GetHeight() const override { return data_.height; }
-
   [[nodiscard]] bool IsVSync() const override { return data_.vsync; }
-  void SetVSync(bool enabled) override;
+  [[nodiscard]] bool IsClose() const override { return window_ == nullptr; }
 
- private:
+  void SetVSync(bool enabled) override;
+  void SetWindowResizeCallback() override;
+  void SetWindowCloseCallback() override;
+  void SetEventCallback(std::function<void(Event &)> event_func) override;
+
+  void ProcessEvent(WindowEvent &event) override;
+  void Close() override;
+  void Resize(unsigned int width, unsigned int height) override;
+
+private:
   struct WindowData {
     const char* title;
     unsigned int width, height;
     bool vsync;
+
+    std::function<void(Event&)> event_callback;
   };
 
-  WindowData data_{};
-  GLFWwindow* window_{};
+  WindowData data_;
+  GLFWwindow* window_;
 
   static bool is_glfw_init_;
 
   void Init(const WindowProperty& props);
-  void ShutDown();
+  static void SetErrorCallBack(int error, const char* description);
 };
 
 }

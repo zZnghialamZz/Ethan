@@ -33,9 +33,56 @@
 #ifndef _ETHAN_CORE_WINDOW_H_
 #define _ETHAN_CORE_WINDOW_H_
 
-#include "event.h"
+#include "ethan/core/main/event.h"
 
 namespace ethan {
+
+/// -------------------------------------------
+/// --- Events
+/// -------------------------------------------
+enum WindowEventType {
+  kWindowResizeEvent,
+  kWindowCloseEvent
+};
+
+class WindowEvent : public Event {
+ public:
+  virtual ~WindowEvent() = default;
+  [[nodiscard]] virtual WindowEventType GetEventType() const = 0;
+};
+
+class WindowResizeEvent : public WindowEvent {
+ public:
+  WindowResizeEvent(unsigned int width, unsigned int height);
+
+  [[nodiscard]] WindowEventType GetEventType() const override {
+    return kWindowResizeEvent;
+  }
+  [[nodiscard]] unsigned int GetWidth() const { return width_; }
+  [[nodiscard]] unsigned int GetHeight() const { return height_; }
+  [[nodiscard]] std::string ToString() const override;
+
+  EVENT_CLASS(WindowResize);
+
+ private:
+  unsigned int width_;
+  unsigned int height_;
+};
+
+class WindowCloseEvent : public WindowEvent {
+ public:
+  WindowCloseEvent();
+
+  [[nodiscard]] WindowEventType GetEventType() const override {
+    return kWindowCloseEvent;
+  }
+
+  EVENT_CLASS(WindowClose);
+};
+
+/// -------------------------------------------
+/// --- Main Window API
+/// -------------------------------------------
 
 struct WindowProperty {
   const char *title;
@@ -48,33 +95,10 @@ struct WindowProperty {
       : title(_title), width(_width), height(_height) {}
 };
 
-class WindowResizeEvent : public Event {
- public:
-  WindowResizeEvent(unsigned int width, unsigned int height);
-
-  [[nodiscard]] unsigned int GetWidth() const { return width_; }
-  [[nodiscard]] unsigned int GetHeight() const { return height_; }
-
-  [[nodiscard]] std::string ToString() const override;
-
-  EVENT_CLASS(WindowResize);
-
- private:
-  unsigned int width_;
-  unsigned int height_;
-};
-
-class WindowCloseEvent : public Event {
- public:
-  WindowCloseEvent();
-  EVENT_CLASS(WindowClose);
-};
-
 class Window {
  public:
   virtual ~Window() = default;
 
-  /// Windows API
   /**
    * Update once per frame, used for pulling events from our application.
    */
@@ -82,9 +106,17 @@ class Window {
 
   [[nodiscard]] virtual unsigned int GetWidth() const = 0;
   [[nodiscard]] virtual unsigned int GetHeight() const = 0;
-
   [[nodiscard]] virtual bool IsVSync() const = 0;
+  [[nodiscard]] virtual bool IsClose() const = 0;
+
   virtual void SetVSync(bool enabled) = 0;
+  virtual void SetWindowResizeCallback() = 0;
+  virtual void SetWindowCloseCallback() = 0;
+  virtual void SetEventCallback(std::function<void(Event&)> event_func) = 0;
+
+  virtual void ProcessEvent(WindowEvent& event) = 0;
+  virtual void Close() = 0;
+  virtual void Resize(unsigned int width, unsigned int height) = 0;
 
   static Window *CreateWindow(const WindowProperty &props = WindowProperty());
 };

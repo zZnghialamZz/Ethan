@@ -46,7 +46,7 @@ GLWindow::GLWindow(const WindowProperty &props) {
   Init(props);
 }
 
-GLWindow::~GLWindow() { ShutDown(); }
+GLWindow::~GLWindow() = default;
 
 void GLWindow::OnUpdate() {
   glfwSwapBuffers(window_);
@@ -54,11 +54,7 @@ void GLWindow::OnUpdate() {
 }
 
 void GLWindow::SetVSync(bool enabled) {
-  if (enabled)
-    glfwSwapInterval(1);
-  else
-    glfwSwapInterval(0);
-
+  glfwSwapInterval(enabled ? 1 : 0);
   data_.vsync = enabled;
 }
 
@@ -82,6 +78,7 @@ void GLWindow::Init(const WindowProperty &props) {
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+    glfwSetErrorCallback(SetErrorCallBack);
 
     is_glfw_init_ = true;
   }
@@ -95,12 +92,59 @@ void GLWindow::Init(const WindowProperty &props) {
       nullptr);
   glfwMakeContextCurrent(window_);
   glfwSetWindowUserPointer(window_, &data_);
+
   SetVSync(true);
+  SetWindowCloseCallback();
+  SetWindowResizeCallback();
 }
 
-void GLWindow::ShutDown() {
+void GLWindow::SetErrorCallBack(int error, const char* description) {
+  ETLOG_CORE_ERROR("GLFW Error {0} - {1}", error, description);
+}
+
+void GLWindow::SetWindowResizeCallback() {
+  glfwSetWindowSizeCallback(
+      window_, [](GLFWwindow *window, int width, int height) {
+        WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+        data.width = width;
+        data.height = height;
+
+        WindowResizeEvent event(width, height);
+        data.event_callback(event);
+      });
+}
+
+void GLWindow::SetWindowCloseCallback() {
+  glfwSetWindowCloseCallback(window_, [](GLFWwindow *window) {
+    WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+    WindowCloseEvent event;
+    data.event_callback(event);
+  });
+}
+
+void GLWindow::SetEventCallback(std::function<void(Event &)> event_func) {
+  data_.event_callback = event_func;
+}
+
+void GLWindow::ProcessEvent(WindowEvent &event) {
+  switch (event.GetEventType()) {
+    case kWindowResizeEvent: {
+      break;
+    }
+    case kWindowCloseEvent: {
+      Close();
+      break;
+    }
+  }
+}
+
+void GLWindow::Close() {
   glfwDestroyWindow(window_);
   glfwTerminate();
+
+  window_ = nullptr;
 }
+
+void GLWindow::Resize(unsigned int width, unsigned int height) {}
 
 } // namespace ethan
