@@ -12,16 +12,9 @@
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
 
-<pre style="text-align: center">
-   _________________________________________________
-  /     _____                                       \
- /   __|___  |__    __    __   _  ____    ____   _   \
-|   |   ___|    | _|  |_ |  |_| ||    \  |    \ | |   |
-|   |   ___|    ||_    _||   _  ||     \ |     \| |   | 
-|   |______|  __|  |__|  |__| |_||__|\__\|__/\____|   |
- \     |_____|                                       /
-  \_________________________________________________/
-</pre>
+<p align="center">
+  <img src="res/ethan_logo.png" />
+</p>
 
 <!-- Title -->
 <h1 align="center" style="border-bottom: none;">
