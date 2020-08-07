@@ -46,7 +46,8 @@ enum WindowEventType {
 };
 
 class WindowEvent : public Event {
- public:
+public:
+  WindowEvent();
   virtual ~WindowEvent() = default;
   [[nodiscard]] virtual WindowEventType GetEventType() const = 0;
 };
@@ -55,12 +56,12 @@ class WindowResizeEvent : public WindowEvent {
  public:
   WindowResizeEvent(unsigned int width, unsigned int height);
 
-  [[nodiscard]] WindowEventType GetEventType() const override {
-    return kWindowResizeEvent;
-  }
   [[nodiscard]] unsigned int GetWidth() const { return width_; }
   [[nodiscard]] unsigned int GetHeight() const { return height_; }
   [[nodiscard]] std::string ToString() const override;
+  [[nodiscard]] WindowEventType GetEventType() const override {
+    return kWindowResizeEvent;
+  }
 
   EVENT_CLASS(WindowResize);
 
@@ -114,7 +115,7 @@ class Window {
   virtual void SetWindowCloseCallback() = 0;
   virtual void SetEventCallback(std::function<void(Event&)> event_func) = 0;
 
-  virtual void ProcessEvent(WindowEvent& event) = 0;
+  virtual void HandleEvent(WindowEvent& event) = 0;
   virtual void Close() = 0;
   virtual void Resize(unsigned int width, unsigned int height) = 0;
 

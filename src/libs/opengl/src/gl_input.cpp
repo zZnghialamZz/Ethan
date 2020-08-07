@@ -31,10 +31,11 @@
  */
 
 #include "gl_input.h"
+#include "gl_window.h"
 
 namespace ethan {
 
-GLInput::GLInput() { Init(); }
+GLInput::GLInput(GLFWwindow* window) : window_(window) { Init(); }
 GLInput::~GLInput() = default;
 
 void GLInput::Init() {
@@ -42,7 +43,73 @@ void GLInput::Init() {
   SetMouseCallback();
 }
 
-void GLInput::SetKeyCallback() {}
-void GLInput::SetMouseCallback() {}
+bool GLInput::isPressed(int keycode) { return false; }
+bool GLInput::isReleased(int keycode) { return false; }
+
+void GLInput::SetKeyCallback() {
+  glfwSetKeyCallback(
+      window_,
+      [](GLFWwindow *window, int key, int scancode, int action, int mods) {
+        GLWindow::WindowData
+            &data = *(GLWindow::WindowData *) glfwGetWindowUserPointer(window);
+        switch (action) {
+          case GLFW_PRESS: {
+            KeyPressedEvent event(key, 0);
+            data.event_callback(event);
+            break;
+          }
+          case GLFW_RELEASE: {
+            KeyReleasedEvent event(key);
+            data.event_callback(event);
+            break;
+          }
+          case GLFW_REPEAT: {
+            KeyPressedEvent event(key, 1);
+            data.event_callback(event);
+            break;
+          }
+        }
+      });
+}
+
+void GLInput::SetMouseCallback() {
+  // MouseMovedEvent Callback
+  glfwSetCursorPosCallback(window_, [](GLFWwindow *window, double x, double y) {
+    GLWindow::WindowData
+        &data = *(GLWindow::WindowData *) glfwGetWindowUserPointer(window);
+    MouseMovedEvent event((float) x, (float) y);
+    data.event_callback(event);
+  });
+
+  // MouseScrolledEvent Callback
+  glfwSetScrollCallback(
+      window_,
+      [](GLFWwindow *window, double x_offset, double y_offset) {
+        GLWindow::WindowData
+            &data = *(GLWindow::WindowData *) glfwGetWindowUserPointer(window);
+        MouseScrolledEvent event((float(x_offset)), float(y_offset));
+        data.event_callback(event);
+      });
+
+  // MouseButtonEvent Callback
+  glfwSetMouseButtonCallback(
+      window_,
+      [](GLFWwindow *window, int key, int action, int mods) {
+        GLWindow::WindowData
+            &data = *(GLWindow::WindowData *) glfwGetWindowUserPointer(window);
+        switch (action) {
+          case GLFW_PRESS: {
+            MouseButtonPressedEvent event(key);
+            data.event_callback(event);
+            break;
+          }
+          case GLFW_RELEASE: {
+            MouseButtonReleasedEvent event(key);
+            data.event_callback(event);
+            break;
+          }
+        }
+      });
+}
 
 }

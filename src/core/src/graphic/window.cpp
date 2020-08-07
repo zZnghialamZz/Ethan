@@ -34,12 +34,19 @@
 
 namespace ethan {
 
+/// -------------------------------------------
+/// --- Events
+/// -------------------------------------------
+
+/// --- WindowEvent
+WindowEvent::WindowEvent() {
+  SetHandled(false);
+  SetCategory(EventCategory::kApplication);
+}
+
 /// --- WindowResizeEvent
 WindowResizeEvent::WindowResizeEvent(unsigned int width, unsigned int height)
-    : width_(width), height_(height) {
-  SetHandled(false);
-  SetCategory(ApplicationEvent);
-}
+    : WindowEvent(), width_(width), height_(height) { }
 
 std::string WindowResizeEvent::ToString() const {
   std::stringstream ss;
@@ -48,9 +55,6 @@ std::string WindowResizeEvent::ToString() const {
 }
 
 /// --- WindowClose
-WindowCloseEvent::WindowCloseEvent() {
-  SetHandled(false);
-  SetCategory(ApplicationEvent);
-}
+WindowCloseEvent::WindowCloseEvent() : WindowEvent() {}
 
 }

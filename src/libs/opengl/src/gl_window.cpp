@@ -96,6 +96,9 @@ void GLWindow::Init(const WindowProperty &props) {
   SetVSync(true);
   SetWindowCloseCallback();
   SetWindowResizeCallback();
+
+  // Input System Init
+  input_ = std::make_unique<GLInput>(window_);
 }
 
 void GLWindow::SetErrorCallBack(int error, const char* description) {
@@ -126,7 +129,7 @@ void GLWindow::SetEventCallback(std::function<void(Event &)> event_func) {
   data_.event_callback = event_func;
 }
 
-void GLWindow::ProcessEvent(WindowEvent &event) {
+void GLWindow::HandleEvent(WindowEvent &event) {
   switch (event.GetEventType()) {
     case kWindowResizeEvent: {
       break;

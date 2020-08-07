@@ -33,42 +33,10 @@
 #ifndef _ETHAN_CORE_INPUT_H_
 #define _ETHAN_CORE_INPUT_H_
 
-#include "ethan/core/main/event.h"
+#include "keys.h"
+#include "mouse.h"
 
 namespace ethan {
-
-/// -------------------------------------------
-/// --- Events
-/// -------------------------------------------
-
-class KeyEvent : public Event {
- public:
-  explicit KeyEvent(int keycode);
-  [[nodiscard]] int GetKeyCode() const { return keycode_; }
-
- private:
-  int keycode_;
-};
-
-class KeyPressedEvent : public KeyEvent {
- public:
-  KeyPressedEvent(int keycode, int repeat);
-  [[nodiscard]] int GetRepeatCount() const { return repeat_; }
-  [[nodiscard]] std::string ToString() const override;
-
-  EVENT_CLASS(KeyPressed);
-
- private:
-  int repeat_;
-};
-
-class KeyReleasedEvent : public KeyEvent {
- public:
-  explicit KeyReleasedEvent(int keycode);
-  [[nodiscard]] std::string ToString() const override;
-
-  EVENT_CLASS(KeyReleased);
-};
 
 /// -------------------------------------------
 /// --- Main Input API
@@ -80,6 +48,8 @@ class Input {
 
   virtual bool isPressed(int keycode) = 0;
   virtual bool isReleased(int keycode) = 0;
+  virtual void SetKeyCallback() = 0;
+  virtual void SetMouseCallback() = 0;
 };
 
 }

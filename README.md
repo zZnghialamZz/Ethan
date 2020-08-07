@@ -13,7 +13,7 @@
 <!-- limitations under the License. -->
 
 <p align="center">
-  <img src="res/ethan_logo.png" />
+  <img src="res/ethan_logo.png" width="512" height="512" />
 </p>
 
 <!-- Title -->

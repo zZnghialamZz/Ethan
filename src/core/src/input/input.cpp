@@ -32,31 +32,4 @@
 
 #include "ethan/core/input/input.h"
 
-namespace ethan {
-
-/// --- KeyEvent
-KeyEvent::KeyEvent(int keycode) : keycode_(keycode) {
-  SetHandled(false);
-  SetCategory(InputEvent);
-}
-
-/// --- KeyPressedEvent
-KeyPressedEvent::KeyPressedEvent(int keycode, int repeat)
-    : KeyEvent(keycode), repeat_(repeat) {}
-
-std::string KeyPressedEvent::ToString() const {
-  std::stringstream ss;
-  ss << "(KeyPressedEvent) Pressed " << GetKeyCode() << " / " << GetRepeatCount() << " repeats";
-  return ss.str();
-}
-
-/// --- KeyReleasedEvent
-KeyReleasedEvent::KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
-
-std::string KeyReleasedEvent::ToString() const {
-  std::stringstream ss;
-  ss << "(KeyReleasedEvent) Released " << GetKeyCode();
-  return ss.str();
-}
-
-}
+namespace ethan {}

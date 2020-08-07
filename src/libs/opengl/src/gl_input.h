@@ -33,20 +33,28 @@
 #ifndef _ETHAN_LIB_GL_INPUT_H_
 #define _ETHAN_LIB_GL_INPUT_H_
 
-#include "gl_window.h"
+#include "ethan/core/input/input.h"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+// TODO: Setup a precompile header system for ET_UTILS and ET_CORE
 
 namespace ethan {
 
-class GLInput {
+class GLInput : public Input {
  public:
-  GLInput();
+  explicit GLInput(GLFWwindow* window);
   ~GLInput();
 
   void Init();
 
- private:
-  void SetKeyCallback();
-  void SetMouseCallback();
+  bool isPressed(int keycode) override;
+  bool isReleased(int keycode) override;
+  void SetKeyCallback() override;
+  void SetMouseCallback() override;
+
+private:
+  GLFWwindow* window_;
 };
 
 }

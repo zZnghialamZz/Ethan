@@ -34,9 +34,7 @@
 #define _ETHAN_LIB_GL_WINDOW_H_
 
 #include "ethan/core/graphic/window.h"
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "gl_input.h"
 
 namespace ethan {
 
@@ -47,7 +45,6 @@ class GLWindow : public Window {
 
   void OnUpdate() override;
 
-  [[nodiscard]] GLFWwindow* GetID() const { return window_; }
   [[nodiscard]] unsigned int GetWidth() const override { return data_.width; }
   [[nodiscard]] unsigned int GetHeight() const override { return data_.height; }
   [[nodiscard]] bool IsVSync() const override { return data_.vsync; }
@@ -58,11 +55,10 @@ class GLWindow : public Window {
   void SetWindowCloseCallback() override;
   void SetEventCallback(std::function<void(Event &)> event_func) override;
 
-  void ProcessEvent(WindowEvent &event) override;
+  void HandleEvent(WindowEvent &event) override;
   void Close() override;
   void Resize(unsigned int width, unsigned int height) override;
 
-private:
   struct WindowData {
     const char* title;
     unsigned int width, height;
@@ -71,7 +67,9 @@ private:
     std::function<void(Event&)> event_callback;
   };
 
+ private:
   WindowData data_;
+  std::unique_ptr<GLInput> input_;
   GLFWwindow* window_;
 
   static bool is_glfw_init_;

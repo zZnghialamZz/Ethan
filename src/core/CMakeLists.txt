@@ -39,6 +39,8 @@ set(ET_CORE_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_CORE_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
+  "${ET_CORE_SRC_DIR}/input/keys.cpp"
+  "${ET_CORE_SRC_DIR}/input/mouse.cpp"
   "${ET_CORE_SRC_DIR}/input/input.cpp"
 
   "${ET_CORE_SRC_DIR}/graphic/window.cpp"
@@ -48,7 +50,8 @@ set(SOURCES
   "${ET_CORE_SRC_DIR}/main/main.cpp")
 
 set(HEADERS
-  "${ET_CORE_INCLUDE_DIR}/ethan/core/input/keycode.h"
+  "${ET_CORE_INCLUDE_DIR}/ethan/core/input/keys.h"
+  "${ET_CORE_INCLUDE_DIR}/ethan/core/input/mouse.h"
   "${ET_CORE_INCLUDE_DIR}/ethan/core/input/input.h"
 
   "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/window.h"

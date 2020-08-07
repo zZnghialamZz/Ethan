@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file keycode.h
+ * @file keycode.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,15 +30,35 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_INPUT_KEYCODE_H_
-#define _ETHAN_CORE_INPUT_KEYCODE_H_
+#include "ethan/core/input/keys.h"
+
+#include <sstream>
 
 namespace ethan {
 
-enum class KeyCode {
-
-};
-
+/// --- KeyEvent
+KeyEvent::KeyEvent(int keycode) : keycode_(keycode) {
+  SetHandled(false);
+  SetCategory(EventCategory::kKeys);
 }
 
-#endif // _ETHAN_CORE_INPUT_KEYCODE_H_
+/// --- KeyPressedEvent
+KeyPressedEvent::KeyPressedEvent(int keycode, int repeat)
+    : KeyEvent(keycode), repeat_(repeat) {}
+
+std::string KeyPressedEvent::ToString() const {
+  std::stringstream ss;
+  ss << "(KeyPressedEvent) Pressed " << GetKeyCode() << " / " << GetRepeatCount() << " repeats";
+  return ss.str();
+}
+
+/// --- KeyReleasedEvent
+KeyReleasedEvent::KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
+
+std::string KeyReleasedEvent::ToString() const {
+  std::stringstream ss;
+  ss << "(KeyReleasedEvent) Released " << GetKeyCode();
+  return ss.str();
+}
+
+}

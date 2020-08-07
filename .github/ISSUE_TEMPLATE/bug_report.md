@@ -14,11 +14,11 @@ assignees: ''
 
 A clear and concise description of what the bug is.
 
-### Ethan version:
+### Ethan version
 
 Specify commit hash if using non-official build.
 
-### OS/device including version:
+### OS/device including version
 
 Specify GPU model, drivers, and the backend (GLES2, GLES3, Vulkan) if 
 graphics-related.

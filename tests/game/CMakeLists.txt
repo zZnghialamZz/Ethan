@@ -7,7 +7,7 @@ project(GAME)
 
 set(ETHAN_PROJECT_SETTINGS 1)
 
-# TODO(@nghialam) : Re-organize include structure
+# TODO: Re-organize include structure
 include_directories(
   "../../extern/spdlog/include"
 

@@ -41,12 +41,12 @@
 
 namespace ethan {
 
-enum EventCategory {
+enum class EventCategory {
   None = 0,
-  ApplicationEvent = BIT(0),
-  InputEvent = BIT(1),
-  KeyboardEvent = BIT(2),
-  MouseEvent = BIT(3)
+  kApplication = BIT(0),
+  kInput = BIT(1),
+  kKeys = BIT(2),
+  kMouse = BIT(3)
 };
 
 class Event {
@@ -55,7 +55,7 @@ class Event {
 
   [[nodiscard]] virtual const char *GetName() const = 0;
   [[nodiscard]] virtual bool IsHandled() const { return handled_; }
-  [[nodiscard]] virtual int GetCategory() const { return category_; }
+  [[nodiscard]] virtual EventCategory GetCategory() const { return category_; }
   [[nodiscard]] virtual std::string ToString() const { return GetName(); }
 
   void SetHandled(bool handled) { handled_ = handled; }
@@ -66,7 +66,7 @@ class Event {
    * @param category - EventCategory
    * @return bool
    */
-  bool IsInCategory(EventCategory category) { return category_ & category; }
+  bool IsInCategory(EventCategory category) { return category_ == category; }
 
  private:
   bool handled_;

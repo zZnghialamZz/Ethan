@@ -56,8 +56,8 @@ void Application::Update() {
 }
 
 void Application::EventCall(Event &event) {
-  if (event.IsInCategory(ApplicationEvent))
-    main_window_->ProcessEvent(dynamic_cast<WindowEvent &>(event));
+  if (event.IsInCategory(EventCategory::kApplication))
+    main_window_->HandleEvent(dynamic_cast<WindowEvent &>(event));
 
   ETLOG_TRACE(event);
 }
