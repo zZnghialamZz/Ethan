@@ -19,8 +19,8 @@ include_directories(
 # ------------------------------------------------------
 # Define Executable
 # ------------------------------------------------------
-set(GAME_SOURCE "src/game.cpp")
-add_executable(GAME ${GAME_SOURCE})
+file(GLOB_RECURSE GAME_SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
+add_executable(GAME ${GAME_SRC})
 
 # ------------------------------------------------------
 # Libs linking

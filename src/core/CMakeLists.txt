@@ -46,6 +46,7 @@ set(SOURCES
   "${ET_CORE_SRC_DIR}/graphic/window.cpp"
 
   "${ET_CORE_SRC_DIR}/main/application.cpp"
+  "${ET_CORE_SRC_DIR}/main/process.cpp"
   "${ET_CORE_SRC_DIR}/main/event.cpp"
   "${ET_CORE_SRC_DIR}/main/main.cpp")
 
@@ -57,6 +58,7 @@ set(HEADERS
   "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/window.h"
 
   "${ET_CORE_INCLUDE_DIR}/ethan/core/main/application.h"
+  "${ET_CORE_INCLUDE_DIR}/ethan/core/main/process.h"
   "${ET_CORE_INCLUDE_DIR}/ethan/core/main/event.h"
   "${ET_CORE_INCLUDE_DIR}/ethan/core/main/main.h"
 

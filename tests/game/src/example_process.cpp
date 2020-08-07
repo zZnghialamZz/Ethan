@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file game.h
+ * @file example_process.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,17 +30,16 @@
  * limitations under the License.
  */
 
-#ifndef __GAME_H_
-#define __GAME_H_
-
-#include <ethan/ethan.h>
-
 #include "example_process.h"
 
-class Game : public ethan::Application {
- public:
-  Game();
-  virtual ~Game();
-};
+ExampleProcess::ExampleProcess() : ethan::Process("Example Process") {
+  ETLOG_INFO("Initialize {0} Process !!", GetName());
+}
 
-#endif // __GAME_H_
+void ExampleProcess::Attach() {}
+void ExampleProcess::Detach() {}
+void ExampleProcess::Update() {}
+
+void ExampleProcess::EventCall(ethan::Event &event) {
+  ETLOG_TRACE(event);
+}

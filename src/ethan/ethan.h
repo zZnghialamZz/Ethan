@@ -33,9 +33,19 @@
 #ifndef __ETHAN_H_
 #define __ETHAN_H_
 
-namespace ethan {}
-
 #include "ethan/core.h"
 #include "ethan/utils.h"
+
+/**
+ * These lines below is used for regex from scripts to get their values, which
+ * determine the current version of Ethan build source code.
+ */
+
+#define ETHAN_VERSION_MAJOR 0
+#define ETHAN_VERSION_MINOR 0
+#define ETHAN_VERSION_PATCH 1
+
+namespace ethan {}
+
 
 #endif // __ETHAN_H_

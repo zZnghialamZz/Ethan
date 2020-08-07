@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file game.h
+ * @file process.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,17 +30,47 @@
  * limitations under the License.
  */
 
-#ifndef __GAME_H_
-#define __GAME_H_
+#ifndef _ETHAN_CORE_MAIN_PROCESS_H_
+#define _ETHAN_CORE_MAIN_PROCESS_H_
 
-#include <ethan/ethan.h>
+#include "event.h"
 
-#include "example_process.h"
+namespace ethan {
 
-class Game : public ethan::Application {
+class Process {
  public:
-  Game();
-  virtual ~Game();
+  Process(const char* name = "Process");
+  virtual ~Process();
+
+  virtual void Attach();
+  virtual void Detach();
+  virtual void Update();
+  virtual void EventCall(Event &event);
+
+  [[nodiscard]] const char* GetName() const { return name_; }
+
+ private:
+  const char* name_;
 };
 
-#endif // __GAME_H_
+class ProcessStack {
+ public:
+  ProcessStack();
+  ~ProcessStack();
+
+  void PushProcess(Process* process);
+  void PushOverlay(Process* overlay);
+  void PopProcess(Process* process);
+  void PopOverlay(Process* overlay);
+
+  std::vector<Process*>::iterator begin() { return processes_.begin(); }
+  std::vector<Process*>::iterator end() { return processes_.end(); }
+
+ private:
+  std::vector<Process*> processes_;
+  unsigned int insert_index_;
+};
+
+}
+
+#endif // _ETHAN_CORE_MAIN_PROCESS_H_

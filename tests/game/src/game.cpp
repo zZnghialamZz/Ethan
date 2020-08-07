@@ -32,7 +32,9 @@
 
 #include "game.h"
 
-Game::Game() = default;
+Game::Game() {
+  AddProcess(new ExampleProcess());
+}
 
 Game::~Game() = default;
 

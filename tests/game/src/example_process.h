@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file game.h
+ * @file example_process.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,17 +30,19 @@
  * limitations under the License.
  */
 
-#ifndef __GAME_H_
-#define __GAME_H_
+#ifndef _GAME_SRC_EXAMPLE_PROCESS_H_
+#define _GAME_SRC_EXAMPLE_PROCESS_H_
 
-#include <ethan/ethan.h>
+#include "ethan/ethan.h"
 
-#include "example_process.h"
-
-class Game : public ethan::Application {
+class ExampleProcess : public ethan::Process {
  public:
-  Game();
-  virtual ~Game();
+  ExampleProcess();
+
+  void Attach() override;
+  void Detach() override;
+  void Update() override;
+  void EventCall(ethan::Event &event) override;
 };
 
-#endif // __GAME_H_
+#endif // _GAME_EXAMPLE_PROCESS_H_

@@ -56,10 +56,26 @@ void Application::Update() {
 }
 
 void Application::EventCall(Event &event) {
-  if (event.IsInCategory(EventCategory::kApplication))
+  if (event.IsInCategory(EventCategory::kApplication)) {
     main_window_->HandleEvent(dynamic_cast<WindowEvent &>(event));
+    event.SetHandled(true);
+  }
 
-  ETLOG_TRACE(event);
+  for (Process* process : process_stack_) {
+    if (event.IsHandled())
+      break;
+    process->EventCall(event);
+  }
+}
+
+void Application::AddProcess(Process *process) {
+  process_stack_.PushProcess(process);
+  process->Attach();
+}
+
+void Application::AddOverlay(Process *process) {
+  process_stack_.PushOverlay(process);
+  process->Attach();
 }
 
 }

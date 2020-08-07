@@ -34,6 +34,7 @@
 
 #include <memory>
 
+#include "process.h"
 #include "ethan/core/graphic/window.h"
 
 namespace ethan {
@@ -64,10 +65,20 @@ class Application {
    */
   virtual void Update();
 
+  /**
+   * Trigger whenever a callback happened and used for handled many type of
+   * events.
+   * @param event - Event
+   */
   virtual void EventCall(Event& event);
+
+  virtual void AddProcess(Process* process);
+
+  virtual void AddOverlay(Process* process);
 
  private:
   std::unique_ptr<Window> main_window_;
+  ProcessStack process_stack_;
 };
 
 /**
