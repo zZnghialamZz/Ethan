@@ -45,7 +45,7 @@ MouseEvent::MouseEvent() {
 }
 
 /// --- MouseButtonEvent
-MouseButtonEvent::MouseButtonEvent(int mouse_code)
+MouseButtonEvent::MouseButtonEvent(MouseCode mouse_code)
     : MouseEvent(), mouse_code_(mouse_code) {}
 
 /// --- MouseMovedEvent
@@ -70,7 +70,7 @@ std::string MouseScrolledEvent::ToString() const {
 }
 
 /// --- MouseButtonPressedEvent
-MouseButtonPressedEvent::MouseButtonPressedEvent(int mouse_code)
+MouseButtonPressedEvent::MouseButtonPressedEvent(MouseCode mouse_code)
     : MouseButtonEvent(mouse_code) {}
 MouseButtonPressedEvent::~MouseButtonPressedEvent() = default;
 std::string MouseButtonPressedEvent::ToString() const {
@@ -80,7 +80,7 @@ std::string MouseButtonPressedEvent::ToString() const {
 }
 
 /// --- MouseButtonPressedEvent
-MouseButtonReleasedEvent::MouseButtonReleasedEvent(int mouse_code)
+MouseButtonReleasedEvent::MouseButtonReleasedEvent(MouseCode mouse_code)
     : MouseButtonEvent(mouse_code) {}
 MouseButtonReleasedEvent::~MouseButtonReleasedEvent() = default;
 std::string MouseButtonReleasedEvent::ToString() const {

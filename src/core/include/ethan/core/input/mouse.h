@@ -38,6 +38,32 @@
 namespace ethan {
 
 /// -------------------------------------------
+/// --- Main Mouse API
+/// -------------------------------------------
+
+typedef enum class MouseCode {
+  // From glfw3.h
+  Button0                = 0,
+  Button1                = 1,
+  Button2                = 2,
+  Button3                = 3,
+  Button4                = 4,
+  Button5                = 5,
+  Button6                = 6,
+  Button7                = 7,
+
+  ButtonLast             = Button7,
+  ButtonLeft             = Button0,
+  ButtonRight            = Button1,
+  ButtonMiddle           = Button2
+} Mouse;
+
+inline std::ostream& operator<<(std::ostream& os, Mouse mouseCode) {
+  os << static_cast<int32_t>(mouseCode);
+  return os;
+}
+
+/// -------------------------------------------
 /// --- Events
 /// -------------------------------------------
 enum MouseEventType {
@@ -56,13 +82,13 @@ class MouseEvent : public Event {
 
 class MouseButtonEvent : public MouseEvent {
 public:
-  explicit MouseButtonEvent(int mouse_code);
+  explicit MouseButtonEvent(MouseCode mouse_code);
   virtual ~MouseButtonEvent() = default;
   [[nodiscard]] MouseEventType GetMouseEventType() const override = 0;
-  [[nodiscard]] int GetMouseCode() const { return mouse_code_; }
+  [[nodiscard]] MouseCode GetMouseCode() const { return mouse_code_; }
 
 private:
-  int mouse_code_;
+  MouseCode mouse_code_;
 };
 
 class MouseMovedEvent : public MouseEvent {
@@ -103,7 +129,7 @@ class MouseScrolledEvent : public MouseEvent {
 
 class MouseButtonPressedEvent : public MouseButtonEvent {
  public:
-  explicit MouseButtonPressedEvent(int mouse_code);
+  explicit MouseButtonPressedEvent(MouseCode mouse_code);
   ~MouseButtonPressedEvent();
   [[nodiscard]] std::string ToString() const override;
   [[nodiscard]] MouseEventType GetMouseEventType() const override {
@@ -115,7 +141,7 @@ class MouseButtonPressedEvent : public MouseButtonEvent {
 
 class MouseButtonReleasedEvent : public MouseButtonEvent {
 public:
-  explicit MouseButtonReleasedEvent(int mouse_code);
+  explicit MouseButtonReleasedEvent(MouseCode mouse_code);
   ~MouseButtonReleasedEvent();
   [[nodiscard]] std::string ToString() const override;
   [[nodiscard]] MouseEventType GetMouseEventType() const override {
@@ -123,12 +149,6 @@ public:
   }
   EVENT_CLASS(MouseButtonReleased);
 };
-
-/// -------------------------------------------
-/// --- Main Mouse API
-/// -------------------------------------------
-
-enum class MouseCode {};
 
 }
 

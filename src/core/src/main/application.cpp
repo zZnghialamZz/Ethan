@@ -60,9 +60,6 @@ void Application::Update() {
 
     for (Process* process : process_stack_)
       process->Update();
-
-    auto[x, y] = main_window_->GetInputSystem()->GetMousePosition();
-    ETLOG_CORE_INFO("Mouse Position: {0}, {1}", x, y);
   }
 }
 

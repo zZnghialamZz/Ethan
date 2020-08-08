@@ -47,7 +47,7 @@ enum WindowEventType {
 };
 
 class WindowEvent : public Event {
-public:
+ public:
   WindowEvent();
   virtual ~WindowEvent() = default;
   [[nodiscard]] virtual WindowEventType GetEventType() const = 0;

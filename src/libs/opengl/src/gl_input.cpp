@@ -43,23 +43,28 @@ void GLInput::Init() {
   SetMouseCallback();
 }
 
-bool GLInput::IsKeyPressed(int keycode) {
-  auto state = glfwGetKey(window_, keycode);
-  return state == GLFW_PRESS || state == GLFW_REPEAT;
+bool GLInput::IsKeyHeld(Key keycode) {
+  auto state = glfwGetKey(window_, static_cast<int32_t>(keycode));
+  return state == GLFW_REPEAT;
 }
 
-bool GLInput::IsKeyReleased(int keycode) {
-  auto state = glfwGetKey(window_, keycode);
-  return state == GLFW_RELEASE;
-}
-
-bool GLInput::IsMouseButtonPressed(int mouse_code) {
-  auto state = glfwGetMouseButton(window_, mouse_code);
+bool GLInput::IsKeyPressed(Key keycode) {
+  auto state = glfwGetKey(window_, static_cast<int32_t>(keycode));
   return state == GLFW_PRESS;
 }
 
-bool GLInput::IsMouseButtonReleased(int mouse_code) {
-  auto state = glfwGetMouseButton(window_, mouse_code);
+bool GLInput::IsKeyReleased(Key keycode) {
+  auto state = glfwGetKey(window_, static_cast<int32_t>(keycode));
+  return state == GLFW_RELEASE;
+}
+
+bool GLInput::IsMouseButtonPressed(Mouse mouse_code) {
+  auto state = glfwGetMouseButton(window_, static_cast<int32_t>(mouse_code));
+  return state == GLFW_PRESS;
+}
+
+bool GLInput::IsMouseButtonReleased(Mouse mouse_code) {
+  auto state = glfwGetMouseButton(window_, static_cast<int32_t>(mouse_code));
   return state == GLFW_RELEASE;
 }
 
@@ -88,17 +93,17 @@ void GLInput::SetKeyCallback() {
             &data = *(GLWindow::WindowData *) glfwGetWindowUserPointer(window);
         switch (action) {
           case GLFW_PRESS: {
-            KeyPressedEvent event(key, 0);
+            KeyPressedEvent event(static_cast<KeyCode>(key), 0);
             data.event_callback(event);
             break;
           }
           case GLFW_RELEASE: {
-            KeyReleasedEvent event(key);
+            KeyReleasedEvent event(static_cast<KeyCode>(key));
             data.event_callback(event);
             break;
           }
           case GLFW_REPEAT: {
-            KeyPressedEvent event(key, 1);
+            KeyPressedEvent event(static_cast<KeyCode>(key), 1);
             data.event_callback(event);
             break;
           }
@@ -133,12 +138,12 @@ void GLInput::SetMouseCallback() {
             &data = *(GLWindow::WindowData *) glfwGetWindowUserPointer(window);
         switch (action) {
           case GLFW_PRESS: {
-            MouseButtonPressedEvent event(key);
+            MouseButtonPressedEvent event(static_cast<MouseCode>(key));
             data.event_callback(event);
             break;
           }
           case GLFW_RELEASE: {
-            MouseButtonReleasedEvent event(key);
+            MouseButtonReleasedEvent event(static_cast<MouseCode>(key));
             data.event_callback(event);
             break;
           }

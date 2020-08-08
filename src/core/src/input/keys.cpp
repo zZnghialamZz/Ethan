@@ -37,13 +37,13 @@
 namespace ethan {
 
 /// --- KeyEvent
-KeyEvent::KeyEvent(int keycode) : keycode_(keycode) {
+KeyEvent::KeyEvent(KeyCode keycode) : keycode_(keycode) {
   SetHandled(false);
   SetCategory(EventCategory::kKeys);
 }
 
 /// --- KeyPressedEvent
-KeyPressedEvent::KeyPressedEvent(int keycode, int repeat)
+KeyPressedEvent::KeyPressedEvent(KeyCode keycode, int repeat)
     : KeyEvent(keycode), repeat_(repeat) {}
 
 std::string KeyPressedEvent::ToString() const {
@@ -53,7 +53,7 @@ std::string KeyPressedEvent::ToString() const {
 }
 
 /// --- KeyReleasedEvent
-KeyReleasedEvent::KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
+KeyReleasedEvent::KeyReleasedEvent(KeyCode keycode) : KeyEvent(keycode) {}
 
 std::string KeyReleasedEvent::ToString() const {
   std::stringstream ss;
