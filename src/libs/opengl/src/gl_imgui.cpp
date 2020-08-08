@@ -72,7 +72,16 @@ void GLImGuiProcess::Detach() {
   ImGui::DestroyContext();
 }
 
-void GLImGuiProcess::Update() {}
+void GLImGuiProcess::Update() {
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  Begin();
+
+  bool show_demo_window = true;
+  ImGui::ShowDemoWindow(&show_demo_window);
+
+  End();
+}
 
 void GLImGuiProcess::EventCall(Event &event) {
   ImGuiProcess::EventCall(event);

@@ -46,8 +46,16 @@ class Input {
  public:
   virtual ~Input() = default;
 
-  virtual bool isPressed(int keycode) = 0;
-  virtual bool isReleased(int keycode) = 0;
+  virtual bool IsKeyPressed(int keycode) = 0;
+  virtual bool IsKeyReleased(int keycode) = 0;
+  virtual bool IsMouseButtonPressed(int mouse_code) = 0;
+  virtual bool IsMouseButtonReleased(int mouse_code) = 0;
+
+  virtual std::pair<float, float> GetMousePosition() = 0;
+  virtual float GetMouseX() = 0;
+  virtual float GetMouseY() = 0;
+
+
   virtual void SetKeyCallback() = 0;
   virtual void SetMouseCallback() = 0;
 };

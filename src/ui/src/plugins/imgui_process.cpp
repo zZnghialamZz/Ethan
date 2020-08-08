@@ -41,7 +41,7 @@ ImGuiProcess::ImGuiProcess(const char *name) : Process(name) {}
 void ImGuiProcess::Attach() {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
-  ImGuiIO& io = ImGui::GetIO(); (void)io;
+  ImGuiIO& io = ImGui::GetIO(); (void)io; // Use for config ImGui IO
   SetStyle();
 }
 
@@ -54,7 +54,11 @@ void ImGuiProcess::SetStyle() {
   auto *style = &ImGui::GetStyle();
 
   // Set Frame Style
+#ifdef _MSC_VER
+  style->WindowRounding = 0.0f;
+#else
   style->WindowRounding = 5.3f;
+#endif
   style->GrabRounding = style->FrameRounding = 2.3f;
   style->ScrollbarRounding = 5.0f;
   style->FrameBorderSize = 1.0f;

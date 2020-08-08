@@ -47,10 +47,10 @@ GLWindow::GLWindow(const WindowProperty &props) : is_close_(false) {
 }
 
 GLWindow::~GLWindow() {
+  delete input_;
+
   glfwDestroyWindow(window_);
   glfwTerminate();
-
-  window_ = nullptr;
 }
 
 void GLWindow::OnUpdate() {
@@ -107,7 +107,7 @@ void GLWindow::Init(const WindowProperty &props) {
   SetWindowResizeCallback();
 
   // Input System Init
-  input_ = std::make_unique<GLInput>(window_);
+  input_ = new GLInput(window_);
 }
 
 void GLWindow::SetErrorCallBack(int error, const char* description) {

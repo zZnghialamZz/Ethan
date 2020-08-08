@@ -47,7 +47,16 @@ class ImGuiProcess : public Process {
   virtual void Update() override;
   virtual void EventCall(Event& event) override;
 
+  /**
+   * Begin a new frame in ImGui, should be placed at the start of every frame
+   * to render ImGui
+   */
   virtual void Begin() = 0;
+
+  /**
+   * Should be placed at the end of ImGui render for collecting and render all
+   * ImGui data in a frame.
+   */
   virtual void End() = 0;
 
   static void SetStyle();

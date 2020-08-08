@@ -43,8 +43,42 @@ void GLInput::Init() {
   SetMouseCallback();
 }
 
-bool GLInput::isPressed(int keycode) { return false; }
-bool GLInput::isReleased(int keycode) { return false; }
+bool GLInput::IsKeyPressed(int keycode) {
+  auto state = glfwGetKey(window_, keycode);
+  return state == GLFW_PRESS || state == GLFW_REPEAT;
+}
+
+bool GLInput::IsKeyReleased(int keycode) {
+  auto state = glfwGetKey(window_, keycode);
+  return state == GLFW_RELEASE;
+}
+
+bool GLInput::IsMouseButtonPressed(int mouse_code) {
+  auto state = glfwGetMouseButton(window_, mouse_code);
+  return state == GLFW_PRESS;
+}
+
+bool GLInput::IsMouseButtonReleased(int mouse_code) {
+  auto state = glfwGetMouseButton(window_, mouse_code);
+  return state == GLFW_RELEASE;
+}
+
+std::pair<float, float> GLInput::GetMousePosition() {
+  double x, y;
+  glfwGetCursorPos(window_, &x, &y);
+
+  return { (float)x, (float)y };
+}
+
+float GLInput::GetMouseX() {
+  auto[x, y] = GetMousePosition();
+  return x;
+}
+
+float GLInput::GetMouseY() {
+  auto[x, y] = GetMousePosition();
+  return y;
+}
 
 void GLInput::SetKeyCallback() {
   glfwSetKeyCallback(

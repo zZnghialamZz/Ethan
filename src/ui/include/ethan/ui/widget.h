@@ -33,4 +33,6 @@
 #ifndef _ETHAN_UI_WIDGET_H_
 #define _ETHAN_UI_WIDGET_H_
 
+namespace ethan {}
+
 #endif // _ETHAN_UI_WIDGET_H_

@@ -48,8 +48,15 @@ class GLInput : public Input {
 
   void Init();
 
-  bool isPressed(int keycode) override;
-  bool isReleased(int keycode) override;
+  bool IsKeyPressed(int keycode) override;
+  bool IsKeyReleased(int keycode) override;
+  bool IsMouseButtonPressed(int mouse_code) override;
+  bool IsMouseButtonReleased(int mouse_code) override;
+
+  std::pair<float, float> GetMousePosition() override;
+  float GetMouseX() override;
+  float GetMouseY() override;
+
   void SetKeyCallback() override;
   void SetMouseCallback() override;
 

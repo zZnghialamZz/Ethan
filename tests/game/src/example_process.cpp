@@ -40,6 +40,4 @@ void ExampleProcess::Attach() {}
 void ExampleProcess::Detach() {}
 void ExampleProcess::Update() {}
 
-void ExampleProcess::EventCall(ethan::Event &event) {
-  ETLOG_TRACE(event);
-}
+void ExampleProcess::EventCall(ethan::Event &event) {}

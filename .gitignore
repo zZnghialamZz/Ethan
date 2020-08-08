@@ -39,4 +39,5 @@ bin/
 lib/
 
 # Auto-generated files
+imgui.ini
 compile_commands.json

@@ -47,9 +47,10 @@ class GLWindow : public Window {
 
   [[nodiscard]] unsigned int GetWidth() const override { return data_.width; }
   [[nodiscard]] unsigned int GetHeight() const override { return data_.height; }
+  [[nodiscard]] void* GetNativeWindow() const override { return window_; }
+  [[nodiscard]] Input* GetInputSystem() const override { return input_; }
   [[nodiscard]] bool IsVSync() const override { return data_.vsync; }
   [[nodiscard]] bool IsClose() const override { return is_close_; }
-  [[nodiscard]] void* GetNativeWindow() const override { return window_; }
 
   void SetVSync(bool enabled) override;
   void SetWindowResizeCallback() override;
@@ -70,7 +71,7 @@ class GLWindow : public Window {
 
  private:
   WindowData data_;
-  std::unique_ptr<GLInput> input_;
+  GLInput* input_;
   GLFWwindow* window_;
 
   static bool is_glfw_init_;
