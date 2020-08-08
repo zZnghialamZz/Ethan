@@ -76,13 +76,13 @@ std::pair<float, float> GLInput::GetMousePosition() {
 }
 
 float GLInput::GetMouseX() {
-  auto[x, y] = GetMousePosition();
-  return x;
+  auto pos = GetMousePosition();
+  return pos.first;
 }
 
 float GLInput::GetMouseY() {
-  auto[x, y] = GetMousePosition();
-  return y;
+  auto pos = GetMousePosition();
+  return pos.second;
 }
 
 void GLInput::SetKeyCallback() {
