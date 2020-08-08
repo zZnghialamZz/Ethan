@@ -36,6 +36,7 @@
 
 #include "process.h"
 #include "ethan/core/graphic/window.h"
+#include "ethan/ui/plugins/imgui_process.h"
 
 namespace ethan {
 
@@ -76,12 +77,14 @@ class Application {
 
   virtual void AddOverlay(Process* process);
 
+  ImGuiProcess* GetUIProcess() { return ui_process_; }
   Window& GetMainWindow() { return *main_window_; }
   static Application& ME() { return *instance_; }
 
  private:
   std::unique_ptr<Window> main_window_;
   ProcessStack process_stack_;
+  ImGuiProcess* ui_process_;
   static Application* instance_;
 };
 

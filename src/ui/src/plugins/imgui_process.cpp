@@ -41,13 +41,22 @@ ImGuiProcess::ImGuiProcess(const char *name) : Process(name) {}
 void ImGuiProcess::Attach() {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
-  ImGuiIO& io = ImGui::GetIO(); (void)io; // Use for config ImGui IO
+
+  ImGuiIO& io = ImGui::GetIO(); (void)io;                   // Use for config ImGui IO
+  //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+  //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+  io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+  //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
+  //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
+
   SetStyle();
 }
 
 void ImGuiProcess::Detach() {}
 void ImGuiProcess::Update() {}
 void ImGuiProcess::EventCall(Event &event) {}
+void ImGuiProcess::ImGuiRender() {}
 
 // TODO: Give user option to switch styles
 void ImGuiProcess::SetStyle() {

@@ -45,6 +45,7 @@ class GLImGuiProcess : public ImGuiProcess {
   void Attach() override;
   void Detach() override;
   void Update() override;
+  void ImGuiRender() override;
   void EventCall(Event& event) override;
 
   void Begin() override;

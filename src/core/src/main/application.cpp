@@ -44,6 +44,9 @@ Application::Application() {
   main_window_ = std::unique_ptr<Window>(Window::CreateWindow());
   main_window_->SetEventCallback(
       std::bind(&Application::EventCall, this, std::placeholders::_1));
+
+  ui_process_ = ImGuiProcess::CreateImGuiProcess();
+  AddProcess(ui_process_);
 }
 
 Application::~Application() = default;
@@ -60,6 +63,10 @@ void Application::Update() {
 
     for (Process* process : process_stack_)
       process->Update();
+
+    ui_process_->Begin();
+    ui_process_->ImGuiRender();
+    ui_process_->End();
   }
 }
 

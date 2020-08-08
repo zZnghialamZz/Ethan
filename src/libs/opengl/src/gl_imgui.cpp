@@ -72,19 +72,16 @@ void GLImGuiProcess::Detach() {
   ImGui::DestroyContext();
 }
 
-void GLImGuiProcess::Update() {
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  Begin();
-
-  bool show_demo_window = true;
-  ImGui::ShowDemoWindow(&show_demo_window);
-
-  End();
-}
+void GLImGuiProcess::Update() {}
 
 void GLImGuiProcess::EventCall(Event &event) {
   ImGuiProcess::EventCall(event);
+}
+
+void GLImGuiProcess::ImGuiRender() {
+  glClear(GL_COLOR_BUFFER_BIT);
+  bool show_demo_window = true;
+  ImGui::ShowDemoWindow(&show_demo_window);
 }
 
 void GLImGuiProcess::Begin() {
@@ -94,9 +91,21 @@ void GLImGuiProcess::Begin() {
 }
 
 void GLImGuiProcess::End() {
+  ImGuiIO &io = ImGui::GetIO();
+  Application &app = Application::ME();
+  io.DisplaySize = ImVec2((float) app.GetMainWindow().GetWidth(),
+                          (float) app.GetMainWindow().GetHeight());
+
   // ImGui Render
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+  if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    GLFWwindow *backup_current_context = glfwGetCurrentContext();
+    ImGui::UpdatePlatformWindows();
+    ImGui::RenderPlatformWindowsDefault();
+    glfwMakeContextCurrent(backup_current_context);
+  }
 }
 
 }

@@ -46,6 +46,7 @@ class ImGuiProcess : public Process {
   virtual void Detach() override;
   virtual void Update() override;
   virtual void EventCall(Event& event) override;
+  virtual void ImGuiRender();
 
   /**
    * Begin a new frame in ImGui, should be placed at the start of every frame

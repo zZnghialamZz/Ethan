@@ -34,7 +34,6 @@
 
 Game::Game() {
   AddProcess(new ExampleProcess());
-  AddProcess(ethan::ImGuiProcess::CreateImGuiProcess());
 }
 
 Game::~Game() = default;
