@@ -48,5 +48,6 @@
 
 namespace ethan {}
 
+// TODO: Learn SIMD and write my own math library
 
 #endif // __ETHAN_H_
