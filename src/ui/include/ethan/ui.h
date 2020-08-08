@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file game.cpp
+ * @file ui.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,13 +30,11 @@
  * limitations under the License.
  */
 
-#include "game.h"
+#ifndef _ETHAN_UI_H_
+#define _ETHAN_UI_H_
 
-Game::Game() {
-  AddProcess(new ExampleProcess());
-  AddProcess(ethan::ImGuiProcess::CreateImGuiProcess());
-}
+// TODO: Decide to use ImGui as my main UI library or write my own
+#include "ui/widget.h"
+#include "ui/plugins/imgui_process.h"
 
-Game::~Game() = default;
-
-ethan::Application *ethan::CreateApplication() { return new Game(); }
+#endif // _ETHAN_UI_H_

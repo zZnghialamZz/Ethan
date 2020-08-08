@@ -2,15 +2,17 @@
 # Include sub modules
 # -------------------------------------------------
 add_subdirectory(core)
-add_subdirectory(utils)
 add_subdirectory(libs)
+add_subdirectory(ui)
+add_subdirectory(utils)
 
 include_directories(
-  "core/include"
-  "utils/include"
+    "core/include"
+    "ui/include"
+    "utils/include"
 
-  "../extern/spdlog/include"
-  )
+    "../extern/spdlog/include"
+)
 
 # -------------------------------------------------
 # Setup Ethan Engine Dynamic Libs
@@ -27,4 +29,4 @@ include_directories(${ETHAN_INCLUDE_DIR})
 
 add_library(ETHAN SHARED ${SOURCES} ${HEADERS})
 
-target_link_libraries(ETHAN ET_CORE ET_UTILS)
+target_link_libraries(ETHAN ET_CORE ET_UTILS ET_UI)

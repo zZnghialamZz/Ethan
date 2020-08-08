@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file game.cpp
+ * @file widget.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,13 +30,7 @@
  * limitations under the License.
  */
 
-#include "game.h"
+#ifndef _ETHAN_UI_WIDGET_H_
+#define _ETHAN_UI_WIDGET_H_
 
-Game::Game() {
-  AddProcess(new ExampleProcess());
-  AddProcess(ethan::ImGuiProcess::CreateImGuiProcess());
-}
-
-Game::~Game() = default;
-
-ethan::Application *ethan::CreateApplication() { return new Game(); }
+#endif // _ETHAN_UI_WIDGET_H_

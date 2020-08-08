@@ -76,9 +76,13 @@ class Application {
 
   virtual void AddOverlay(Process* process);
 
+  Window& GetMainWindow() { return *main_window_; }
+  static Application& ME() { return *instance_; }
+
  private:
   std::unique_ptr<Window> main_window_;
   ProcessStack process_stack_;
+  static Application* instance_;
 };
 
 /**

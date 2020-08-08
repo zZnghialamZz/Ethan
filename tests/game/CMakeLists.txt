@@ -9,12 +9,13 @@ set(ETHAN_PROJECT_SETTINGS 1)
 
 # TODO: Re-organize include structure
 include_directories(
-  "../../extern/spdlog/include"
+    "../../extern/spdlog/include"
 
-  "../../src/utils/include"
-  "../../src/core/include"
-  "../../src/"
-  )
+    "../../src/utils/include"
+    "../../src/core/include"
+    "../../src/ui/include"
+    "../../src/"
+)
 
 # ------------------------------------------------------
 # Define Executable

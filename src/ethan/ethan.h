@@ -34,6 +34,7 @@
 #define __ETHAN_H_
 
 #include "ethan/core.h"
+#include "ethan/ui.h"
 #include "ethan/utils.h"
 
 /**

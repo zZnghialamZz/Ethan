@@ -45,6 +45,10 @@ void Process::EventCall(Event &event) {}
 /// --- ProcessStack
 ProcessStack::ProcessStack() : insert_index_(0) {}
 ProcessStack::~ProcessStack() {
+  Dispose();
+}
+
+void ProcessStack::Dispose() {
   for (Process* process : processes_){
     process->Detach();
     delete process;

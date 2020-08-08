@@ -35,7 +35,12 @@
 
 namespace ethan {
 
+Application* Application::instance_ = nullptr;
+
 Application::Application() {
+  ETASSERT_CORE(!instance_, "Application Exists !");
+  instance_ = this;
+
   main_window_ = std::unique_ptr<Window>(Window::CreateWindow());
   main_window_->SetEventCallback(
       std::bind(&Application::EventCall, this, std::placeholders::_1));
@@ -52,6 +57,9 @@ void Application::End() {}
 void Application::Update() {
   while(!main_window_->IsClose()) {
     main_window_->OnUpdate();
+
+    for (Process* process : process_stack_)
+      process->Update();
   }
 }
 

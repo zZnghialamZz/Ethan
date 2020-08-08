@@ -42,11 +42,16 @@ Window* Window::CreateWindow(const WindowProperty& props) {
   return new GLWindow(props);
 }
 
-GLWindow::GLWindow(const WindowProperty &props) {
+GLWindow::GLWindow(const WindowProperty &props) : is_close_(false) {
   Init(props);
 }
 
-GLWindow::~GLWindow() = default;
+GLWindow::~GLWindow() {
+  glfwDestroyWindow(window_);
+  glfwTerminate();
+
+  window_ = nullptr;
+}
 
 void GLWindow::OnUpdate() {
   glfwSwapBuffers(window_);
@@ -91,8 +96,12 @@ void GLWindow::Init(const WindowProperty &props) {
       nullptr,
       nullptr);
   glfwMakeContextCurrent(window_);
-  glfwSetWindowUserPointer(window_, &data_);
 
+  // GLAD: Load all OpenGL function pointer
+  int glad_success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+  ETASSERT_CORE(glad_success, "Initializing GLAD!");
+
+  glfwSetWindowUserPointer(window_, &data_);
   SetVSync(true);
   SetWindowCloseCallback();
   SetWindowResizeCallback();
@@ -142,10 +151,7 @@ void GLWindow::HandleEvent(WindowEvent &event) {
 }
 
 void GLWindow::Close() {
-  glfwDestroyWindow(window_);
-  glfwTerminate();
-
-  window_ = nullptr;
+  is_close_ = true;
 }
 
 void GLWindow::Resize(unsigned int width, unsigned int height) {}

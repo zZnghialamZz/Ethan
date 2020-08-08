@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file game.cpp
+ * @file imgui_process.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,13 +30,31 @@
  * limitations under the License.
  */
 
-#include "game.h"
+#ifndef _ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
+#define _ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
 
-Game::Game() {
-  AddProcess(new ExampleProcess());
-  AddProcess(ethan::ImGuiProcess::CreateImGuiProcess());
+#include "ethan/core/main/process.h"
+
+namespace ethan {
+
+class ImGuiProcess : public Process {
+ public:
+  ImGuiProcess(const char* name = "ImGui Process");
+  virtual ~ImGuiProcess() = default;
+
+  virtual void Attach() override;
+  virtual void Detach() override;
+  virtual void Update() override;
+  virtual void EventCall(Event& event) override;
+
+  virtual void Begin() = 0;
+  virtual void End() = 0;
+
+  static void SetStyle();
+
+  static ImGuiProcess* CreateImGuiProcess();
+};
+
 }
 
-Game::~Game() = default;
-
-ethan::Application *ethan::CreateApplication() { return new Game(); }
+#endif // _ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_

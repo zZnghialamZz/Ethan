@@ -34,12 +34,13 @@
 #define _ETHAN_CORE_MAIN_PROCESS_H_
 
 #include "event.h"
+#include <vector>
 
 namespace ethan {
 
 class Process {
  public:
-  Process(const char* name = "Process");
+  explicit Process(const char* name = "Process");
   virtual ~Process();
 
   virtual void Attach();
@@ -47,6 +48,7 @@ class Process {
   virtual void Update();
   virtual void EventCall(Event &event);
 
+  void SetName(const char* name) { name_ = name; }
   [[nodiscard]] const char* GetName() const { return name_; }
 
  private:
@@ -57,6 +59,8 @@ class ProcessStack {
  public:
   ProcessStack();
   ~ProcessStack();
+
+  void Dispose();
 
   void PushProcess(Process* process);
   void PushOverlay(Process* overlay);
