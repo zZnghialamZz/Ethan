@@ -48,14 +48,15 @@ GLWindow::GLWindow(const WindowProperty &props) : is_close_(false) {
 
 GLWindow::~GLWindow() {
   delete input_;
+  delete context_;
 
   glfwDestroyWindow(window_);
   glfwTerminate();
 }
 
 void GLWindow::OnUpdate() {
-  glfwSwapBuffers(window_);
   glfwPollEvents();
+  context_->SwapBuffers();
 }
 
 void GLWindow::SetVSync(bool enabled) {
@@ -95,11 +96,9 @@ void GLWindow::Init(const WindowProperty &props) {
       data_.title,
       nullptr,
       nullptr);
-  glfwMakeContextCurrent(window_);
 
-  // GLAD: Load all OpenGL function pointer
-  int glad_success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-  ETASSERT_CORE(glad_success, "Initializing GLAD!");
+  context_ = (GLContext*)GraphicContext::Create(window_);
+  context_->Init();
 
   glfwSetWindowUserPointer(window_, &data_);
   SetVSync(true);

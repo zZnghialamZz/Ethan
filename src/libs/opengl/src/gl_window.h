@@ -34,7 +34,9 @@
 #define _ETHAN_LIB_GL_WINDOW_H_
 
 #include "ethan/core/graphic/window.h"
+
 #include "gl_input.h"
+#include "gl_context.h"
 
 namespace ethan {
 
@@ -72,6 +74,7 @@ class GLWindow : public Window {
  private:
   WindowData data_;
   GLInput* input_;
+  GLContext* context_;
   GLFWwindow* window_;
 
   static bool is_glfw_init_;

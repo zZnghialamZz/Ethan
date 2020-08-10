@@ -30,11 +30,12 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_WINDOW_H_
-#define _ETHAN_CORE_WINDOW_H_
+#ifndef _ETHAN_CORE_GRAPHIC_WINDOW_H_
+#define _ETHAN_CORE_GRAPHIC_WINDOW_H_
 
 #include "ethan/core/main/event.h"
 #include "ethan/core/input/input.h"
+#include "ethan/core/graphic/graphic_context.h"
 
 namespace ethan {
 
@@ -127,4 +128,4 @@ class Window {
 
 } // namespace ethan
 
-#endif // _ETHAN_CORE_WINDOW_H_
+#endif // _ETHAN_CORE_GRAPHIC_WINDOW_H_
