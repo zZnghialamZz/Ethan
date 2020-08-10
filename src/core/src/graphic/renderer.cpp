@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file renderer.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,34 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#include "ethan/core/graphic/renderer.h"
+#include "ethan/utils/console/console.h"
 
-#include "ethan/core.h"
-#include "ethan/ui.h"
-#include "ethan/utils.h"
+namespace ethan {
 
-// ---------------------------------------------------------------------------
-// These lines below is used for regex from scripts to get their values, which
-// determine the current version of Ethan build source code.
-// ---------------------------------------------------------------------------
-#define ETHAN_VERSION_MAJOR 0
-#define ETHAN_VERSION_MINOR 0
-#define ETHAN_VERSION_PATCH 1
+#ifdef __OPENGL_API__
+RendererAPI::API RendererAPI::api_ = RendererAPI::OpenGL;
+#endif
 
-namespace ethan {}
+/// --- RendererAPI
+RendererAPI* RendererAPI::Create() {
+  switch (api_) {
+    case None: {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
+    }
+    case OpenGL: {
+      // TODO: OpenGL Renderer API creation here
+      break;
+    }
+  }
 
-// ---------------------------------------------------------------------------
-// Temporarily list our general Tasks here.
-// ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
+}
 
-#endif // __ETHAN_H_
+/// --- RendererAPI
+void Renderer::Init() {}
+void Renderer::Shutdown() {}
+
+}

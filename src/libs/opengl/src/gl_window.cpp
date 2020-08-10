@@ -30,7 +30,7 @@
  * limitations under the License.
  */
 
-#include "gl_window.h"
+#include "ethan/opengl/gl_window.h"
 
 #include "ethan/utils/console/console.h"
 

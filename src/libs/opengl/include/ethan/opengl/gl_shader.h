@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file gl_shader.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,31 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#ifndef _ETHAN_LIBS_GL_SHADER_H_
+#define _ETHAN_LIBS_GL_SHADER_H_
 
-#include "ethan/core.h"
-#include "ethan/ui.h"
-#include "ethan/utils.h"
+#include "ethan/core/graphic/shader.h"
 
-// ---------------------------------------------------------------------------
-// These lines below is used for regex from scripts to get their values, which
-// determine the current version of Ethan build source code.
-// ---------------------------------------------------------------------------
-#define ETHAN_VERSION_MAJOR 0
-#define ETHAN_VERSION_MINOR 0
-#define ETHAN_VERSION_PATCH 1
+namespace ethan {
 
-namespace ethan {}
+class GLShader : public Shader {
+ public:
+  GLShader(const std::string& file_path);
+  GLShader(const std::string &name,
+           const std::string &vertex_source,
+           const std::string &fragment_source);
+  ~GLShader();
 
-// ---------------------------------------------------------------------------
-// Temporarily list our general Tasks here.
-// ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+  void Bind() const override;
+  void UnBind() const override;
 
-#endif // __ETHAN_H_
+  [[nodiscard]] const std::string &GetName() const override { return name_; }
+
+ private:
+  uint32_t rendererID_;
+  std::string name_;
+};
+
+}
+
+#endif // _ETHAN_LIBS_GL_SHADER_H_

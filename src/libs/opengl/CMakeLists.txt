@@ -38,20 +38,24 @@ include_directories(
     "../../ui/include"
 )
 
-set(ET_OPENGL_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+set(ET_OPENGL_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_OPENGL_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
+    "${ET_OPENGL_SRC_DIR}/gl_buffers.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_context.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_input.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_imgui.cpp"
+    "${ET_OPENGL_SRC_DIR}/gl_shader.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_window.cpp"
     )
 set(HEADERS
-    "${ET_OPENGL_SRC_DIR}/gl_context.h"
-    "${ET_OPENGL_SRC_DIR}/gl_input.h"
-    "${ET_OPENGL_SRC_DIR}/gl_imgui.h"
-    "${ET_OPENGL_SRC_DIR}/gl_window.h"
+    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_buffers.h"
+    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_context.h"
+    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_input.h"
+    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_imgui.h"
+    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_shader.h"
+    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_window.h"
     )
 
 include_directories(${ET_OPENGL_INCLUDE_DIR})

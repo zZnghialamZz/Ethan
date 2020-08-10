@@ -33,6 +33,7 @@ project(ET_CORE)
 include_directories(
     "../ui/include"
     "../utils/include"
+    "../libs/opengl/include"
     "../../extern/spdlog/include"
 )
 
@@ -45,6 +46,9 @@ set(SOURCES
     "${ET_CORE_SRC_DIR}/input/input.cpp"
 
     "${ET_CORE_SRC_DIR}/graphic/graphic_context.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/renderer.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/buffers.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/shader.cpp"
     "${ET_CORE_SRC_DIR}/graphic/window.cpp"
 
     "${ET_CORE_SRC_DIR}/main/application.cpp"
@@ -59,6 +63,9 @@ set(HEADERS
     "${ET_CORE_INCLUDE_DIR}/ethan/core/input/input.h"
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/graphic_context.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/renderer.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/buffers.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/shader.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/window.h"
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/application.h"

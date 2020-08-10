@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file buffers.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,33 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#ifndef _ETHAN_CORE_GRAPHIC_BUFFERS_H_
+#define _ETHAN_CORE_GRAPHIC_BUFFERS_H_
 
-#include "ethan/core.h"
-#include "ethan/ui.h"
-#include "ethan/utils.h"
+namespace ethan {
 
-// ---------------------------------------------------------------------------
-// These lines below is used for regex from scripts to get their values, which
-// determine the current version of Ethan build source code.
-// ---------------------------------------------------------------------------
-#define ETHAN_VERSION_MAJOR 0
-#define ETHAN_VERSION_MINOR 0
-#define ETHAN_VERSION_PATCH 1
+class VertexBuffer {
+ public:
+  virtual ~VertexBuffer() = default;
 
-namespace ethan {}
+  virtual void Bind() const = 0;
+  virtual void UnBind() const = 0;
 
-// ---------------------------------------------------------------------------
-// Temporarily list our general Tasks here.
-// ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+  static VertexBuffer* Create(float* vertices, uint32_t size);
+};
 
-#endif // __ETHAN_H_
+class IndexBuffer {
+ public:
+  virtual ~IndexBuffer() = default;
+
+  virtual void Bind() const = 0;
+  virtual void UnBind() const = 0;
+
+  [[nodiscard]] virtual uint32_t GetCount() const = 0;
+
+  static IndexBuffer* Create(uint32_t* indices, uint32_t count);
+};
+
+}
+
+#endif // _ETHAN_CORE_GRAPHIC_BUFFERS_H_

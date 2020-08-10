@@ -35,8 +35,8 @@
 
 #include "ethan/etpch.h"
 
-#include "spdlog/fmt/ostr.h"
-#include "spdlog/spdlog.h"
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 // Logger in our engine console
 #define ETLOG_CORE_TRACE(...)                                                  \
@@ -47,9 +47,9 @@
   ::ethan::Console::GetCoreLogger()->warn(__VA_ARGS__)
 #define ETLOG_CORE_ERROR(...)                                                  \
   ::ethan::Console::GetCoreLogger()->error(__VA_ARGS__)
-#define ETLOG_CORE_FATAL(...)                                                  \
-  ::ethan::Console::GetCoreLogger()->fatal(__VA_ARGS__)
-#define ETASSERT_CORE(x, ...)                                                  \
+#define ETLOG_CORE_CRITICAL(...)                                               \
+  ::ethan::Console::GetCoreLogger()->critical(__VA_ARGS__)
+#define ETASSERT_CORE(x, ...)                                                   \
   {                                                                            \
     if (!x)                                                                    \
       ETLOG_CORE_ERROR("Assertion failed at {0}", __VA_ARGS__);                \
@@ -60,8 +60,8 @@
 #define ETLOG_INFO(...) ::ethan::Console::GetClientLogger()->info(__VA_ARGS__)
 #define ETLOG_WARN(...) ::ethan::Console::GetClientLogger()->warn(__VA_ARGS__)
 #define ETLOG_ERROR(...) ::ethan::Console::GetClientLogger()->error(__VA_ARGS__)
-#define ETLOG_FATAL(...) ::ethan::Console::GetClientLogger()->fatal(__VA_ARGS__)
-#define ETASSERT(x, ...)                                                       \
+#define ETLOG_CRITICAL(...) ::ethan::Console::GetClientLogger()->critical(__VA_ARGS__)
+#define ETASSERT(x, ...)                                                        \
   {                                                                            \
     if (!x)                                                                    \
       ETLOG_ERROR("Assertion failed at {0}", __VA_ARGS__);                     \

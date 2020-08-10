@@ -30,7 +30,7 @@
  * limitations under the License.
  */
 
-#include "gl_imgui.h"
+#include "ethan/opengl/gl_imgui.h"
 #include "ethan/core/main/application.h"
 
 #include <examples/imgui_impl_glfw.h>
@@ -40,14 +40,39 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+// TODO: Remove
+#include "ethan/opengl/gl_buffers.h"
+
 namespace ethan {
 
 ImGuiProcess* ImGuiProcess::CreateImGuiProcess() {
   return new GLImGuiProcess();
 }
 
+// DELETE THESE
+unsigned int vertexarray_;
+VertexBuffer* vertex_buffer_;
+IndexBuffer* index_buffer_;
+
 GLImGuiProcess::GLImGuiProcess() {
   SetName("ImGui Process");
+
+  // Render Triangle for testing OpenGL
+  glGenVertexArrays(1, &vertexarray_);
+  glBindVertexArray(vertexarray_);
+
+  float vertices[3 * 3] = {
+      -0.5f, -0.5f, 0.0f,
+       0.5f, -0.5f, 0.0f,
+       0.0f,  0.5f, 0.0f
+  };
+
+  vertex_buffer_ = VertexBuffer::Create(vertices, sizeof(vertices));
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+  unsigned int indices[3] = { 0, 1, 2 };
+  index_buffer_ = IndexBuffer::Create(indices, 3);
 }
 
 GLImGuiProcess::~GLImGuiProcess() = default;
@@ -79,9 +104,12 @@ void GLImGuiProcess::EventCall(Event &event) {
 }
 
 void GLImGuiProcess::ImGuiRender() {
+  // FIXME: Add renderer system and remove this
+  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
-  bool show_demo_window = true;
-  ImGui::ShowDemoWindow(&show_demo_window);
+
+  glBindVertexArray(vertexarray_);
+  glDrawElements(GL_TRIANGLES, index_buffer_->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
 void GLImGuiProcess::Begin() {

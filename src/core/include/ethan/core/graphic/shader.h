@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file shader.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,26 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#ifndef _ETHAN_CORE_GRAPHIC_SHADER_H_
+#define _ETHAN_CORE_GRAPHIC_SHADER_H_
 
-#include "ethan/core.h"
-#include "ethan/ui.h"
-#include "ethan/utils.h"
+namespace ethan {
 
-// ---------------------------------------------------------------------------
-// These lines below is used for regex from scripts to get their values, which
-// determine the current version of Ethan build source code.
-// ---------------------------------------------------------------------------
-#define ETHAN_VERSION_MAJOR 0
-#define ETHAN_VERSION_MINOR 0
-#define ETHAN_VERSION_PATCH 1
+class Shader {
+ public:
+  virtual ~Shader() = default;
 
-namespace ethan {}
+  virtual void Bind() const = 0;
+  virtual void UnBind() const = 0;
 
-// ---------------------------------------------------------------------------
-// Temporarily list our general Tasks here.
-// ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+  [[nodiscard]] virtual const std::string& GetName() const = 0;
 
-#endif // __ETHAN_H_
+  static Shader *Create(const std::string& file_path);
+  static Shader *Create(const std::string &name,
+                        const std::string &vertex_source,
+                        const std::string &fragment_source);
+};
+
+}
+
+#endif // _ETHAN_CORE_GRAPHIC_SHADER_H_

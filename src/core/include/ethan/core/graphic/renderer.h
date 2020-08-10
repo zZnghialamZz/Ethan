@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file renderer.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,36 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#ifndef _ETHAN_CORE_GRAPHIC_RENDERER_H_
+#define _ETHAN_CORE_GRAPHIC_RENDERER_H_
 
-#include "ethan/core.h"
-#include "ethan/ui.h"
-#include "ethan/utils.h"
+namespace ethan {
 
-// ---------------------------------------------------------------------------
-// These lines below is used for regex from scripts to get their values, which
-// determine the current version of Ethan build source code.
-// ---------------------------------------------------------------------------
-#define ETHAN_VERSION_MAJOR 0
-#define ETHAN_VERSION_MINOR 0
-#define ETHAN_VERSION_PATCH 1
+class RendererAPI {
+ public:
+  enum API {
+    None = 0, OpenGL = 1
+  };
 
-namespace ethan {}
+  virtual ~RendererAPI() = default;
+  virtual void Init() = 0;
+  virtual void Clear() = 0;
 
-// ---------------------------------------------------------------------------
-// Temporarily list our general Tasks here.
-// ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+  static API GetAPI() { return api_; }
+  static RendererAPI* Create();
 
-#endif // __ETHAN_H_
+ private:
+  static API api_;
+};
+
+class Renderer {
+ public:
+  static void Init();
+  static void Shutdown();
+
+  static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
+};
+
+} // namespace ethan
+
+#endif // _ETHAN_CORE_GRAPHIC_RENDERER_H_

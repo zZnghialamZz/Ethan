@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file gl_buffers.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,40 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#ifndef _ETHAN_LIBS_GL_BUFFERS_H_
+#define _ETHAN_LIBS_GL_BUFFERS_H_
 
-#include "ethan/core.h"
-#include "ethan/ui.h"
-#include "ethan/utils.h"
+#include "ethan/core/graphic/buffers.h"
 
-// ---------------------------------------------------------------------------
-// These lines below is used for regex from scripts to get their values, which
-// determine the current version of Ethan build source code.
-// ---------------------------------------------------------------------------
-#define ETHAN_VERSION_MAJOR 0
-#define ETHAN_VERSION_MINOR 0
-#define ETHAN_VERSION_PATCH 1
+namespace ethan {
 
-namespace ethan {}
+class GLVertexBuffer : public VertexBuffer {
+ public:
+  GLVertexBuffer(float* vertices, uint32_t size);
+  ~GLVertexBuffer();
 
-// ---------------------------------------------------------------------------
-// Temporarily list our general Tasks here.
-// ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+  void Bind() const override;
+  void UnBind() const override;
 
-#endif // __ETHAN_H_
+ private:
+  uint32_t rendererID_{};
+};
+
+class GLIndexBuffer : public IndexBuffer {
+ public:
+  GLIndexBuffer(uint32_t* indices, uint32_t& count);
+  ~GLIndexBuffer();
+
+  void Bind() const override;
+  void UnBind() const override;
+
+  [[nodiscard]] uint32_t GetCount() const override { return count_; }
+
+ private:
+  uint32_t rendererID_;
+  uint32_t count_;
+};
+
+}
+
+#endif // _ETHAN_LIBS_GL_BUFFERS_H_

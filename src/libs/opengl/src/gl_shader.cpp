@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ethan.h
+ * @file gl_shader.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,31 @@
  * limitations under the License.
  */
 
-#ifndef __ETHAN_H_
-#define __ETHAN_H_
+#include "ethan/opengl/gl_shader.h"
 
-#include "ethan/core.h"
-#include "ethan/ui.h"
-#include "ethan/utils.h"
+#include <glad/glad.h>
 
-// ---------------------------------------------------------------------------
-// These lines below is used for regex from scripts to get their values, which
-// determine the current version of Ethan build source code.
-// ---------------------------------------------------------------------------
-#define ETHAN_VERSION_MAJOR 0
-#define ETHAN_VERSION_MINOR 0
-#define ETHAN_VERSION_PATCH 1
+namespace ethan {
 
-namespace ethan {}
+GLShader::GLShader(const std::string &file_path) {
+  // TODO: Read file path for shader code from source files
+}
 
-// ---------------------------------------------------------------------------
-// Temporarily list our general Tasks here.
-// ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+GLShader::GLShader(const std::string &name,
+                   const std::string &vertex_source,
+                   const std::string &fragment_source)
+                   : name_(name) {
 
-#endif // __ETHAN_H_
+}
+
+GLShader::~GLShader() = default;
+
+void GLShader::Bind() const {
+  glUseProgram(rendererID_);
+}
+
+void GLShader::UnBind() const {
+  glUseProgram(0);
+}
+
+}

@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#include "gl_input.h"
-#include "gl_window.h"
+#include "ethan/opengl/gl_input.h"
+#include "ethan/opengl/gl_window.h"
 
 namespace ethan {
 

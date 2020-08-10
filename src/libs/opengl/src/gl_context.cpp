@@ -30,7 +30,7 @@
  * limitations under the License.
  */
 
-#include "gl_context.h"
+#include "ethan/opengl/gl_context.h"
 
 #include "ethan/utils/console/console.h"
 
@@ -54,9 +54,9 @@ void GLContext::Init() {
   ETASSERT_CORE(glad_success, "Cannot Initializing GLAD!");
 
   ETLOG_CORE_INFO("OpenGL Info:");
-  ETLOG_CORE_INFO("   Vendor: {0}", GL_VENDOR);
-  ETLOG_CORE_INFO("   Renderer: {0}", GL_RENDERER);
-  ETLOG_CORE_INFO("   Version: {0}", GL_VERSION);
+  ETLOG_CORE_INFO("   - Vendor: {0}", glGetString(GL_VENDOR));
+  ETLOG_CORE_INFO("   - Version: {0}", glGetString(GL_VERSION));
+  ETLOG_CORE_INFO("   - Renderer: {0}", glGetString(GL_RENDERER));
 }
 
 void GLContext::SwapBuffers() {
