@@ -73,17 +73,6 @@ class Event {
   EventCategory category_;
 };
 
-/**
- * Output the value of the event to the console, use mainly for debug & logging
- * purpose
- * @param os - std::ostream
- * @param event - Event
- * @return overload for operator <<
- */
-inline std::ostream &operator<<(std::ostream &os, const Event &event) {
-  return os << event.ToString();
-}
-
 } // namespace ethan
 
 #endif // _ETHAN_CORE_EVENT_H_

@@ -27,6 +27,6 @@ set(HEADERS
 
 include_directories(${ETHAN_INCLUDE_DIR})
 
-add_library(ETHAN SHARED ${SOURCES} ${HEADERS})
+add_library(ETHAN STATIC ${SOURCES} ${HEADERS})
 
 target_link_libraries(ETHAN ET_CORE ET_UTILS ET_UI)

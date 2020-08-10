@@ -49,5 +49,6 @@
 namespace ethan {}
 
 // TODO: Learn SIMD and write my own math library
+// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
 
 #endif // __ETHAN_H_

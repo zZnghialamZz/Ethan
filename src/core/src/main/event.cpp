@@ -32,4 +32,17 @@
 
 #include "ethan/core/main/event.h"
 
-namespace ethan {}
+namespace ethan {
+
+/**
+ * Output the value of the event to the console, use mainly for debug & logging
+ * purpose
+ * @param os - std::ostream
+ * @param event - Event
+ * @return overload for operator <<
+ */
+inline std::ostream &operator<<(std::ostream &os, const Event &event) {
+  return os << event.ToString();
+}
+
+} // namespace ethan
