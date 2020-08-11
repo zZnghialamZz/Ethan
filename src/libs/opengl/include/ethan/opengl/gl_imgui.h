@@ -36,8 +36,9 @@
 #include "ethan/ui/plugins/imgui_process.h"
 
 // TODO: Remove
-#include "ethan/opengl/gl_shader.h"
-#include "ethan/opengl/gl_buffers.h"
+#include "gl_shader.h"
+#include "gl_buffers.h"
+#include "gl_vertexarray.h"
 
 namespace ethan {
 
@@ -57,10 +58,10 @@ class GLImGuiProcess : public ImGuiProcess {
 
  private:
   // TODO: To be removed
-  unsigned int vertexarray_;
-  VertexBuffer* vertex_buffer_;
-  IndexBuffer* index_buffer_;
-  Shader* shader_;
+  std::shared_ptr<VertexArray> vertexarray_;
+  std::shared_ptr<VertexBuffer> vertex_buffer_;
+  std::shared_ptr<IndexBuffer> index_buffer_;
+  std::shared_ptr<Shader> shader_;
 };
 
 }

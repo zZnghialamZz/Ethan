@@ -49,10 +49,11 @@
   ::ethan::Console::GetCoreLogger()->error(__VA_ARGS__)
 #define ETLOG_CORE_CRITICAL(...)                                               \
   ::ethan::Console::GetCoreLogger()->critical(__VA_ARGS__)
-#define ETASSERT_CORE(x, ...)                                                   \
+#define ETASSERT_CORE(x, ...)                                                  \
   {                                                                            \
     if (!x)                                                                    \
-      ETLOG_CORE_ERROR("Assertion failed at {0}", __VA_ARGS__);                \
+      ETLOG_CORE_ERROR("Assertion failed at {0} line {1}:\n\t\t\t\t\t - {2}",  \
+                       __FILE__, __LINE__, __VA_ARGS__);                       \
   }
 
 // Logger in our application console
@@ -61,10 +62,11 @@
 #define ETLOG_WARN(...) ::ethan::Console::GetClientLogger()->warn(__VA_ARGS__)
 #define ETLOG_ERROR(...) ::ethan::Console::GetClientLogger()->error(__VA_ARGS__)
 #define ETLOG_CRITICAL(...) ::ethan::Console::GetClientLogger()->critical(__VA_ARGS__)
-#define ETASSERT(x, ...)                                                        \
+#define ETASSERT(x, ...)                                                       \
   {                                                                            \
     if (!x)                                                                    \
-      ETLOG_ERROR("Assertion failed at {0}", __VA_ARGS__);                     \
+      ETLOG_ERROR("Assertion failed at {0} line {1}:\n\t\t\t\t\t - {2}",       \
+                  __FILE__, __LINE__, __VA_ARGS__);                            \
   }
 
 namespace ethan {

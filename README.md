@@ -35,7 +35,6 @@
 <a><img alt="GitHub stars" src="https://img.shields.io/github/stars/zznghialamzz/ethan?style=social"></a>
 </p>
 
-
 <!-- Contents -->
 Ethan Game Engine
 -------------------------------------------------------------------------------

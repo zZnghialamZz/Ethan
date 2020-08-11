@@ -45,8 +45,12 @@ class GLVertexBuffer : public VertexBuffer {
   void Bind() const override;
   void UnBind() const override;
 
+  [[nodiscard]] const BufferLayout &GetLayout() const override { return layout_; }
+  void SetLayout(const BufferLayout &layout) override { layout_ = layout; }
+
  private:
-  uint32_t rendererID_{};
+  uint32_t rendererID_;
+  BufferLayout layout_;
 };
 
 class GLIndexBuffer : public IndexBuffer {

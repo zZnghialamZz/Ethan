@@ -42,6 +42,7 @@ set(ET_OPENGL_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_OPENGL_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
+    "${ET_OPENGL_SRC_DIR}/gl_vertexarray.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_buffers.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_context.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_input.cpp"
@@ -50,6 +51,7 @@ set(SOURCES
     "${ET_OPENGL_SRC_DIR}/gl_window.cpp"
     )
 set(HEADERS
+    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_vertexarray.h"
     "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_buffers.h"
     "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_context.h"
     "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_input.h"

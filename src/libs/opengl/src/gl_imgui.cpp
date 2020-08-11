@@ -49,36 +49,28 @@ ImGuiProcess* ImGuiProcess::CreateImGuiProcess() {
 GLImGuiProcess::GLImGuiProcess() {
   SetName("ImGui Process");
 
-  // Render Triangle for testing OpenGL
-  glGenVertexArrays(1, &vertexarray_);
-  glBindVertexArray(vertexarray_);
+  vertexarray_.reset(VertexArray::Create());
 
   float vertices[3 * 7] = {
-      -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-       0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-       0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
+      -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+       0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+       0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
   };
 
-  vertex_buffer_ = VertexBuffer::Create(vertices, sizeof(vertices));
+  vertex_buffer_.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
-  BufferLayout layout = {
+  BufferLayout layout {
       { "pos", ShaderData::Type::kFloat3 },
       { "col", ShaderData::Type::kFloat4 }
   };
-  uint32_t index = 0;
-  for (const auto& element : layout) {
-    glEnableVertexAttribArray(index);
-    glVertexAttribPointer(index,
-                          element.GetComponentCount(),
-                          ShaderData::ConvertToNativeType(element.GetType()),
-                          element.IsNormalized() ? GL_TRUE : GL_FALSE,
-                          layout.GetStride(),
-                          (const void *) element.GetOffset());
-    ++index;
-  }
+  vertex_buffer_->SetLayout(layout);
+
+  vertexarray_->AddVertexBuffer(vertex_buffer_);
 
   unsigned int indices[3] = { 0, 1, 2 };
-  index_buffer_ = IndexBuffer::Create(indices, 3);
+  index_buffer_.reset(IndexBuffer::Create(indices, 3));
+
+  vertexarray_->SetIndexBuffer(index_buffer_);
 
   std::string vertex_src = R"(
     #version 330 core
@@ -110,7 +102,7 @@ GLImGuiProcess::GLImGuiProcess() {
     }
   )";
 
-  shader_ = Shader::Create("Tris", vertex_src, fragment_src);
+  shader_.reset(Shader::Create("Tris", vertex_src, fragment_src));
 }
 
 GLImGuiProcess::~GLImGuiProcess() = default;
@@ -140,7 +132,7 @@ void GLImGuiProcess::Update() {
   glClear(GL_COLOR_BUFFER_BIT);
 
   shader_->Bind();
-  glBindVertexArray(vertexarray_);
+  vertexarray_->Bind();
   glDrawElements(GL_TRIANGLES, index_buffer_->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 

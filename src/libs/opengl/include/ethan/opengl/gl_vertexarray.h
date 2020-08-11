@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_context.cpp
+ * @file gl_vertexarray.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,37 +30,34 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_context.h"
+#ifndef _ETHAN_LIBS_GL_VERTEXARRAY_H_
+#define _ETHAN_LIBS_GL_VERTEXARRAY_H_
 
-#include "ethan/utils/console/console.h"
+#include "ethan/core/graphic/vertex_array.h"
 
 namespace ethan {
 
-GraphicContext* GraphicContext::Create(void *window) {
-  return new GLContext(static_cast<GLFWwindow *>(window));
-}
+class GLVertexArray : public VertexArray {
+ public:
+  GLVertexArray();
+  ~GLVertexArray();
 
-GLContext::GLContext(GLFWwindow *window) : window_(window) {
-  ETASSERT_CORE(window_, "Window Context NULL !");
-}
+  void Bind() const override;
+  void UnBind() const override;
+  void AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vertex_buffer) override;
+  void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &index_buffer) override;
 
-GLContext::~GLContext() = default;
+  [[nodiscard]] const std::vector<std::shared_ptr<VertexBuffer>> &GetVertexBuffers() const override { return vertex_buffers_; }
+  [[nodiscard]] const std::shared_ptr<IndexBuffer> &GetIndexBuffer() const override { return index_buffer_; }
 
-void GLContext::Init() {
-  glfwMakeContextCurrent(window_);
+  static void SettingBufferLayout(const std::shared_ptr<VertexBuffer>& vertex_buffer);
 
-  // GLAD: Load all OpenGL function pointer
-  int glad_success = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-  ETASSERT_CORE(glad_success, "Cannot Initializing GLAD!");
+ private:
+  unsigned int vertexarrayID_;
+  std::vector<std::shared_ptr<VertexBuffer>> vertex_buffers_;
+  std::shared_ptr<IndexBuffer> index_buffer_;
+};
 
-  ETLOG_CORE_INFO("OpenGL Info:");
-  ETLOG_CORE_INFO(" - Vendor: {0}", glGetString(GL_VENDOR));
-  ETLOG_CORE_INFO(" - Version: {0}", glGetString(GL_VERSION));
-  ETLOG_CORE_INFO(" - Renderer: {0}", glGetString(GL_RENDERER));
-}
+} // namespace ethan
 
-void GLContext::SwapBuffers() {
-  glfwSwapBuffers(window_);
-}
-
-}
+#endif // _ETHAN_LIBS_GL_VERTEXARRAY_H_

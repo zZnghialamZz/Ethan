@@ -46,6 +46,7 @@ set(SOURCES
     "${ET_CORE_SRC_DIR}/input/input.cpp"
 
     "${ET_CORE_SRC_DIR}/graphic/graphic_context.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/vertex_array.cpp"
     "${ET_CORE_SRC_DIR}/graphic/renderer.cpp"
     "${ET_CORE_SRC_DIR}/graphic/buffers.cpp"
     "${ET_CORE_SRC_DIR}/graphic/shader.cpp"
@@ -63,6 +64,7 @@ set(HEADERS
     "${ET_CORE_INCLUDE_DIR}/ethan/core/input/input.h"
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/graphic_context.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/vertex_array.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/renderer.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/buffers.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/shader.h"

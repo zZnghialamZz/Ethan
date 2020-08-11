@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_context.cpp
+ * @file vertex_array.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,37 +30,36 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_context.h"
-
+#include "ethan/core/graphic/vertex_array.h"
+#include "ethan/core/graphic/renderer.h"
 #include "ethan/utils/console/console.h"
+
+#ifdef __OPENGL_API__
+#include "ethan/opengl/gl_vertexarray.h"
+#endif
 
 namespace ethan {
 
-GraphicContext* GraphicContext::Create(void *window) {
-  return new GLContext(static_cast<GLFWwindow *>(window));
-}
+VertexArray* VertexArray::Create() {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None : {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
+    }
+      // OpenGL Renderer
+    case RendererAPI::OpenGL : {
+#ifdef __OPENGL_API__
+      return new GLVertexArray();
+#else
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+    }
+  }
 
-GLContext::GLContext(GLFWwindow *window) : window_(window) {
-  ETASSERT_CORE(window_, "Window Context NULL !");
-}
-
-GLContext::~GLContext() = default;
-
-void GLContext::Init() {
-  glfwMakeContextCurrent(window_);
-
-  // GLAD: Load all OpenGL function pointer
-  int glad_success = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-  ETASSERT_CORE(glad_success, "Cannot Initializing GLAD!");
-
-  ETLOG_CORE_INFO("OpenGL Info:");
-  ETLOG_CORE_INFO(" - Vendor: {0}", glGetString(GL_VENDOR));
-  ETLOG_CORE_INFO(" - Version: {0}", glGetString(GL_VERSION));
-  ETLOG_CORE_INFO(" - Renderer: {0}", glGetString(GL_RENDERER));
-}
-
-void GLContext::SwapBuffers() {
-  glfwSwapBuffers(window_);
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
 }
 
 }
+
