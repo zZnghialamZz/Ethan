@@ -33,22 +33,26 @@
 #include "ethan/core/graphic/renderer.h"
 #include "ethan/utils/console/console.h"
 
+#ifdef __OPENGL_API__
+#include "ethan/opengl/gl_renderer.h"
+#endif
+
 namespace ethan {
 
 #ifdef __OPENGL_API__
 RendererAPI::API RendererAPI::api_ = RendererAPI::OpenGL;
+std::shared_ptr<RendererAPI> RendererCommand::renderer_api_ = RendererAPI::Create();
 #endif
 
 /// --- RendererAPI
-RendererAPI* RendererAPI::Create() {
+std::shared_ptr<RendererAPI> RendererAPI::Create() {
   switch (api_) {
     case None: {
       ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
       return nullptr;
     }
     case OpenGL: {
-      // TODO: OpenGL Renderer API creation here
-      break;
+      return std::make_shared<GLRendererAPI>();
     }
   }
 
@@ -59,5 +63,26 @@ RendererAPI* RendererAPI::Create() {
 /// --- RendererAPI
 void Renderer::Init() {}
 void Renderer::Shutdown() {}
+void Renderer::Begin() {}
+void Renderer::End() {}
+void Renderer::Submit(const std::shared_ptr<Shader> &shader,
+                      const std::shared_ptr<VertexArray> &vertex_array) {
+  shader->Bind();
+  vertex_array->Bind();
+  RendererCommand::DrawIndexed(vertex_array);
+}
+
+/// --- RendererCommand
+void RendererCommand::Init() { renderer_api_->Init(); }
+
+void RendererCommand::Clear() { renderer_api_->Clear(); }
+
+void RendererCommand::SetClearColor(const glm::vec4 &color) {
+  renderer_api_->SetClearColor(color);
+}
+
+void RendererCommand::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
+  renderer_api_->DrawIndexed(vertex_array);
+}
 
 }

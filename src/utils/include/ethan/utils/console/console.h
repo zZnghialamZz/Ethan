@@ -39,17 +39,17 @@
 #include <spdlog/spdlog.h>
 
 // Logger in our engine console
-#define ETLOG_CORE_TRACE(...)                                                  \
+#define ETLOG_CORE_TRACE(...)                                                   \
   ::ethan::Console::GetCoreLogger()->trace(__VA_ARGS__)
-#define ETLOG_CORE_INFO(...)                                                   \
+#define ETLOG_CORE_INFO(...)                                                    \
   ::ethan::Console::GetCoreLogger()->info(__VA_ARGS__)
-#define ETLOG_CORE_WARN(...)                                                   \
+#define ETLOG_CORE_WARN(...)                                                    \
   ::ethan::Console::GetCoreLogger()->warn(__VA_ARGS__)
-#define ETLOG_CORE_ERROR(...)                                                  \
+#define ETLOG_CORE_ERROR(...)                                                   \
   ::ethan::Console::GetCoreLogger()->error(__VA_ARGS__)
-#define ETLOG_CORE_CRITICAL(...)                                               \
+#define ETLOG_CORE_CRITICAL(...)                                                \
   ::ethan::Console::GetCoreLogger()->critical(__VA_ARGS__)
-#define ETASSERT_CORE(x, ...)                                                  \
+#define ETASSERT_CORE(x, ...)                                                   \
   {                                                                            \
     if (!x)                                                                    \
       ETLOG_CORE_ERROR("Assertion failed at {0} line {1}:\n\t\t\t\t\t - {2}",  \
@@ -62,7 +62,7 @@
 #define ETLOG_WARN(...) ::ethan::Console::GetClientLogger()->warn(__VA_ARGS__)
 #define ETLOG_ERROR(...) ::ethan::Console::GetClientLogger()->error(__VA_ARGS__)
 #define ETLOG_CRITICAL(...) ::ethan::Console::GetClientLogger()->critical(__VA_ARGS__)
-#define ETASSERT(x, ...)                                                       \
+#define ETASSERT(x, ...)                                                        \
   {                                                                            \
     if (!x)                                                                    \
       ETLOG_ERROR("Assertion failed at {0} line {1}:\n\t\t\t\t\t - {2}",       \

@@ -37,8 +37,9 @@
 #include <examples/imgui_impl_opengl3.h>
 
 // TODO: Create precompile header for ET_UI
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "ethan/core/graphic/renderer.h"
 
 namespace ethan {
 
@@ -128,12 +129,10 @@ void GLImGuiProcess::Detach() {
 }
 
 void GLImGuiProcess::Update() {
-  // FIXME: Add renderer system and remove this
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  shader_->Bind();
-  vertexarray_->Bind();
-  glDrawElements(GL_TRIANGLES, index_buffer_->GetCount(), GL_UNSIGNED_INT, nullptr);
+  // TODO: Move this to test
+  Renderer::Begin();
+  Renderer::Submit(shader_, vertexarray_);
+  Renderer::End();
 }
 
 void GLImGuiProcess::EventCall(Event &event) {

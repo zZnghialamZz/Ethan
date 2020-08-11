@@ -33,6 +33,10 @@
 #ifndef _ETHAN_CORE_GRAPHIC_RENDERER_H_
 #define _ETHAN_CORE_GRAPHIC_RENDERER_H_
 
+#include "vertex_array.h"
+
+#include <glm/glm.hpp>
+
 namespace ethan {
 
 class RendererAPI {
@@ -44,18 +48,38 @@ class RendererAPI {
   virtual ~RendererAPI() = default;
   virtual void Init() = 0;
   virtual void Clear() = 0;
+  virtual void SetClearColor(const glm::vec4& color) = 0;
+  virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertex_array) = 0;
 
   static API GetAPI() { return api_; }
-  static RendererAPI* Create();
+  static std::shared_ptr<RendererAPI> Create();
 
  private:
   static API api_;
+};
+
+class RendererCommand {
+ public:
+  static void Init();
+  static void Clear();
+
+  static void SetClearColor(const glm::vec4& color);
+  static void DrawIndexed(const std::shared_ptr<VertexArray>& vertex_array);
+
+ private:
+  static std::shared_ptr<RendererAPI> renderer_api_;
 };
 
 class Renderer {
  public:
   static void Init();
   static void Shutdown();
+
+  static void Begin();
+  static void End();
+
+  static void Submit(const std::shared_ptr<Shader> &shader,
+                     const std::shared_ptr<VertexArray> &vertex_array);
 
   static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
 };

@@ -34,6 +34,7 @@ include_directories(
     "../ui/include"
     "../utils/include"
     "../libs/opengl/include"
+    "../../extern/glm"
     "../../extern/spdlog/include"
 )
 
@@ -83,5 +84,5 @@ include_directories(${ET_CORE_INCLUDE_DIR})
 add_library(ET_CORE STATIC ${SOURCES} ${HEADERS})
 
 if(WITH_OPENGL)
-  target_link_libraries(ET_CORE ET_OPENGL ET_UTILS ET_UI)
+  target_link_libraries(ET_CORE glm ET_OPENGL ET_UTILS ET_UI)
 endif()
