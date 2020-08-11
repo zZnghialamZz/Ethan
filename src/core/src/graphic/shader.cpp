@@ -82,4 +82,25 @@ Shader *Shader::Create(const std::string &name,
   return nullptr;
 }
 
+/// --- ShaderData
+uint8_t ShaderData::GetTypeSize(ShaderData::Type type) {
+  switch (type) {
+    case kNone:   return 0;
+    case kFloat:  return 4;
+    case kFloat2: return 4 * 2;
+    case kFloat3: return 4 * 3;
+    case kFloat4: return 4 * 4;
+    case kMat3:   return 4 * 3 * 3;
+    case kMat4:   return 4 * 4 * 4;
+    case kInt:    return 4;
+    case kInt2:   return 4 * 2;
+    case kInt3:   return 4 * 3;
+    case kInt4:   return 4 * 4;
+    case kBool:   return 1;
+  }
+
+  ETLOG_CORE_ERROR("Invalid ShaderData Type !!");
+  return 0;
 }
+
+} // namespace ethan

@@ -50,6 +50,29 @@ class Shader {
                         const std::string &fragment_source);
 };
 
+class ShaderData {
+ public:
+  virtual ~ShaderData() = default;
+
+  enum Type : uint8_t {
+    kNone = 0,
+    kFloat,
+    kFloat2,
+    kFloat3,
+    kFloat4,
+    kMat3,
+    kMat4,
+    kInt,
+    kInt2,
+    kInt3,
+    kInt4,
+    kBool
+  };
+
+  static uint8_t GetTypeSize(Type type);
+  static unsigned int ConvertToNativeType(Type type);
+};
+
 }
 
 #endif // _ETHAN_CORE_GRAPHIC_SHADER_H_

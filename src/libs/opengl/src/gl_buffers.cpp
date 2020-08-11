@@ -40,7 +40,7 @@ namespace ethan {
 GLVertexBuffer::GLVertexBuffer(float* vertices, uint32_t size) {
   glGenBuffers(1, &rendererID_);
   glBindBuffer(GL_ARRAY_BUFFER, rendererID_);
-  glBufferData(GL_ARRAY_BUFFER, size, &vertices, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 }
 
 GLVertexBuffer::~GLVertexBuffer() {
@@ -63,8 +63,8 @@ GLIndexBuffer::GLIndexBuffer(uint32_t* indices, uint32_t &count)
   // GL_ELEMENT_ARRAY_BUFFER is not valid without an actively bound VAO
   // Binding with GL_ARRAY_BUFFER allows the data to be loaded regardless of
   // VAO state.
-  glBindBuffer(GL_ARRAY_BUFFER, rendererID_);
-  glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID_);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 }
 
 GLIndexBuffer::~GLIndexBuffer() {
@@ -79,4 +79,4 @@ void GLIndexBuffer::UnBind() const {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-}
+} // namespace ethan

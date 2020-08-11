@@ -50,6 +50,8 @@ class GLShader : public Shader {
 
   [[nodiscard]] const std::string &GetName() const override { return name_; }
 
+  unsigned int CompileShader(unsigned int type, const std::string& source);
+
  private:
   uint32_t rendererID_;
   std::string name_;

@@ -40,19 +40,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-// TODO: Remove
-#include "ethan/opengl/gl_buffers.h"
-
 namespace ethan {
 
 ImGuiProcess* ImGuiProcess::CreateImGuiProcess() {
   return new GLImGuiProcess();
 }
-
-// DELETE THESE
-unsigned int vertexarray_;
-VertexBuffer* vertex_buffer_;
-IndexBuffer* index_buffer_;
 
 GLImGuiProcess::GLImGuiProcess() {
   SetName("ImGui Process");
@@ -61,18 +53,64 @@ GLImGuiProcess::GLImGuiProcess() {
   glGenVertexArrays(1, &vertexarray_);
   glBindVertexArray(vertexarray_);
 
-  float vertices[3 * 3] = {
-      -0.5f, -0.5f, 0.0f,
-       0.5f, -0.5f, 0.0f,
-       0.0f,  0.5f, 0.0f
+  float vertices[3 * 7] = {
+      -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+       0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+       0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
   };
 
   vertex_buffer_ = VertexBuffer::Create(vertices, sizeof(vertices));
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+  BufferLayout layout = {
+      { "pos", ShaderData::Type::kFloat3 },
+      { "col", ShaderData::Type::kFloat4 }
+  };
+  uint32_t index = 0;
+  for (const auto& element : layout) {
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index,
+                          element.GetComponentCount(),
+                          ShaderData::ConvertToNativeType(element.GetType()),
+                          element.IsNormalized() ? GL_TRUE : GL_FALSE,
+                          layout.GetStride(),
+                          (const void *) element.GetOffset());
+    ++index;
+  }
 
   unsigned int indices[3] = { 0, 1, 2 };
   index_buffer_ = IndexBuffer::Create(indices, 3);
+
+  std::string vertex_src = R"(
+    #version 330 core
+
+    layout(location = 0) in vec3 pos;
+    layout(location = 1) in vec4 col;
+
+    out vec4 vcol;
+    out vec3 vpos;
+
+    void main() {
+      vcol = col;
+      vpos = pos;
+      gl_Position = vec4(pos, 1.0);
+    }
+  )";
+
+  std::string fragment_src = R"(
+    #version 330 core
+
+    out vec4 color;
+
+    in vec3 vpos;
+    in vec4 vcol;
+
+    void main() {
+      color = vec4(vpos * 0.5 + 0.5, 1.0);
+      color = vcol;
+    }
+  )";
+
+  shader_ = Shader::Create("Tris", vertex_src, fragment_src);
 }
 
 GLImGuiProcess::~GLImGuiProcess() = default;
@@ -97,19 +135,22 @@ void GLImGuiProcess::Detach() {
   ImGui::DestroyContext();
 }
 
-void GLImGuiProcess::Update() {}
+void GLImGuiProcess::Update() {
+  // FIXME: Add renderer system and remove this
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  shader_->Bind();
+  glBindVertexArray(vertexarray_);
+  glDrawElements(GL_TRIANGLES, index_buffer_->GetCount(), GL_UNSIGNED_INT, nullptr);
+}
 
 void GLImGuiProcess::EventCall(Event &event) {
   ImGuiProcess::EventCall(event);
 }
 
 void GLImGuiProcess::ImGuiRender() {
-  // FIXME: Add renderer system and remove this
-  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  glBindVertexArray(vertexarray_);
-  glDrawElements(GL_TRIANGLES, index_buffer_->GetCount(), GL_UNSIGNED_INT, nullptr);
+  bool show = true;
+  ImGui::ShowDemoWindow(&show);
 }
 
 void GLImGuiProcess::Begin() {

@@ -33,7 +33,53 @@
 #ifndef _ETHAN_CORE_GRAPHIC_BUFFERS_H_
 #define _ETHAN_CORE_GRAPHIC_BUFFERS_H_
 
+#include "shader.h"
+
 namespace ethan {
+
+class BufferElement {
+ public:
+  BufferElement(const std::string &name,
+                ShaderData::Type type,
+                bool normalized = false);
+  virtual ~BufferElement();
+
+  void SetOffset(size_t offset) { offset_ = offset; }
+
+  [[nodiscard]] const std::string &GetName() const { return name_; }
+  [[nodiscard]] const size_t &GetOffset() const { return offset_; }
+  [[nodiscard]] const uint32_t &GetSize() const { return size_; }
+  [[nodiscard]] const ShaderData::Type &GetType() const { return type_; }
+  [[nodiscard]] const bool &IsNormalized() const { return normalized_; }
+  [[nodiscard]] uint32_t GetComponentCount() const;
+
+ private:
+  std::string name_;
+  uint32_t size_;
+  size_t offset_;
+  ShaderData::Type type_;
+  bool normalized_;
+};
+
+class BufferLayout {
+ public:
+  BufferLayout(const std::initializer_list<BufferElement> &elements);
+  virtual ~BufferLayout();
+
+  [[nodiscard]] uint32_t GetStride() const { return stride_; }
+  [[nodiscard]] const std::vector<BufferElement> &GetElements() const { return elements_; }
+
+  std::vector<BufferElement>::iterator begin() { return elements_.begin(); }
+  std::vector<BufferElement>::iterator end() { return elements_.end(); }
+  [[nodiscard]] std::vector<BufferElement>::const_iterator begin() const { return elements_.begin(); }
+  [[nodiscard]] std::vector<BufferElement>::const_iterator end() const { return elements_.end(); }
+
+ private:
+  std::vector<BufferElement> elements_;
+  uint32_t stride_;
+
+  void Init();
+};
 
 class VertexBuffer {
  public:

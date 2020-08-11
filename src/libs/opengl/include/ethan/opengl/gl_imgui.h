@@ -35,6 +35,10 @@
 
 #include "ethan/ui/plugins/imgui_process.h"
 
+// TODO: Remove
+#include "ethan/opengl/gl_shader.h"
+#include "ethan/opengl/gl_buffers.h"
+
 namespace ethan {
 
 class GLImGuiProcess : public ImGuiProcess {
@@ -51,6 +55,12 @@ class GLImGuiProcess : public ImGuiProcess {
   void Begin() override;
   void End() override;
 
+ private:
+  // TODO: To be removed
+  unsigned int vertexarray_;
+  VertexBuffer* vertex_buffer_;
+  IndexBuffer* index_buffer_;
+  Shader* shader_;
 };
 
 }
