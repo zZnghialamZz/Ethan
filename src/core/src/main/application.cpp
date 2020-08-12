@@ -33,7 +33,7 @@
 #include "ethan/core/main/application.h"
 #include "ethan/utils/console/console.h"
 
-namespace ethan {
+namespace Ethan {
 
 Application* Application::instance_ = nullptr;
 

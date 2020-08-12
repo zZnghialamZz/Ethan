@@ -38,7 +38,7 @@
 #include "ethan/opengl/gl_vertexarray.h"
 #endif
 
-namespace ethan {
+namespace Ethan {
 
 VertexArray* VertexArray::Create() {
   switch (Renderer::GetAPI()) {

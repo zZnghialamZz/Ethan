@@ -34,7 +34,7 @@
 
 #include <glad/glad.h>
 
-namespace ethan {
+namespace Ethan {
 
 void GLRendererAPI::Init() {}
 

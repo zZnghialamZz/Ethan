@@ -32,7 +32,7 @@
 
 #include "ethan/core/main/event.h"
 
-namespace ethan {
+namespace Ethan {
 
 /**
  * Output the value of the event to the console, use mainly for debug & logging

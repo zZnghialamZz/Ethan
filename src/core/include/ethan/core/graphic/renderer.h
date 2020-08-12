@@ -38,7 +38,7 @@
 
 #include <glm/glm.hpp>
 
-namespace ethan {
+namespace Ethan {
 
 class RendererAPI {
  public:

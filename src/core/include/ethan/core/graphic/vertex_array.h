@@ -35,7 +35,7 @@
 
 #include "buffers.h"
 
-namespace ethan {
+namespace Ethan {
 
 class VertexArray {
  public:

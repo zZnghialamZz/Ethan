@@ -32,4 +32,4 @@
 
 #include "ethan/core/graphic/graphic_context.h"
 
-namespace ethan {}
+namespace Ethan {}

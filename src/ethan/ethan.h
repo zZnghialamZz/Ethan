@@ -45,7 +45,7 @@
 #define ETHAN_VERSION_MINOR 0
 #define ETHAN_VERSION_PATCH 1
 
-namespace ethan {}
+namespace Ethan {}
 
 // ---------------------------------------------------------------------------
 // Temporarily list our general Tasks here.

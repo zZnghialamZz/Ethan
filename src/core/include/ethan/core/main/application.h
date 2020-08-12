@@ -38,7 +38,7 @@
 #include "ethan/core/graphic/window.h"
 #include "ethan/ui/plugins/imgui_process.h"
 
-namespace ethan {
+namespace Ethan {
 
 class Application {
  public:

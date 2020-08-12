@@ -37,7 +37,7 @@
 
 #include "example_process.h"
 
-class Game : public ethan::Application {
+class Game : public Ethan::Application {
  public:
   Game();
   virtual ~Game();

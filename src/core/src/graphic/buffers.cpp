@@ -38,7 +38,7 @@
 #include "ethan/opengl/gl_buffers.h"
 #endif
 
-namespace ethan {
+namespace Ethan {
 
 /// --- VertexBuffer
 VertexBuffer *VertexBuffer::Create(float *vertices, uint32_t size) {

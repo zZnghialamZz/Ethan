@@ -38,7 +38,7 @@
 #include "gl_input.h"
 #include "gl_context.h"
 
-namespace ethan {
+namespace Ethan {
 
 class GLWindow : public Window {
  public:

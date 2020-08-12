@@ -34,7 +34,7 @@
 
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-namespace ethan {
+namespace Ethan {
 
 std::shared_ptr<spdlog::logger> Console::core_logger_;
 std::shared_ptr<spdlog::logger> Console::client_logger_;

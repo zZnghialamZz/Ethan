@@ -36,7 +36,7 @@
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
-namespace ethan {
+namespace Ethan {
 
 /// --- ShaderData
 unsigned int ShaderData::ConvertToNativeType(ShaderData::Type type) {

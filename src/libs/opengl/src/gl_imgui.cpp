@@ -39,9 +39,7 @@
 // TODO: Create precompile header for ET_UI
 #include <GLFW/glfw3.h>
 
-#include "ethan/core/graphic/renderer.h"
-
-namespace ethan {
+namespace Ethan {
 
 ImGuiProcess* ImGuiProcess::CreateImGuiProcess() {
   return new GLImGuiProcess();
@@ -49,64 +47,6 @@ ImGuiProcess* ImGuiProcess::CreateImGuiProcess() {
 
 GLImGuiProcess::GLImGuiProcess() {
   SetName("ImGui Process");
-
-  vertexarray_.reset(VertexArray::Create());
-  camera_ = new Camera();
-
-  float vertices[3 * 7] = {
-      -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-       0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-       0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-  };
-
-  vertex_buffer_.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-
-  BufferLayout layout {
-      { "pos", ShaderData::Type::kFloat3 },
-      { "col", ShaderData::Type::kFloat4 }
-  };
-  vertex_buffer_->SetLayout(layout);
-
-  vertexarray_->AddVertexBuffer(vertex_buffer_);
-
-  unsigned int indices[3] = { 0, 1, 2 };
-  index_buffer_.reset(IndexBuffer::Create(indices, 3));
-
-  vertexarray_->SetIndexBuffer(index_buffer_);
-
-  std::string vertex_src = R"(
-    #version 330 core
-
-    layout(location = 0) in vec3 pos;
-    layout(location = 1) in vec4 col;
-
-    uniform mat4 u_et_world_matrix;
-
-    out vec4 vcol;
-    out vec3 vpos;
-
-    void main() {
-      vcol = col;
-      vpos = pos;
-      gl_Position = u_et_world_matrix * vec4(pos, 1.0);
-    }
-  )";
-
-  std::string fragment_src = R"(
-    #version 330 core
-
-    out vec4 color;
-
-    in vec3 vpos;
-    in vec4 vcol;
-
-    void main() {
-      color = vec4(vpos * 0.5 + 0.5, 1.0);
-      color = vcol;
-    }
-  )";
-
-  shader_.reset(Shader::Create("Tris", vertex_src, fragment_src));
 }
 
 GLImGuiProcess::~GLImGuiProcess() = default;
@@ -131,25 +71,13 @@ void GLImGuiProcess::Detach() {
   ImGui::DestroyContext();
 }
 
-void GLImGuiProcess::Update() {
-  // TODO: Move this to test
-  RendererCommand::Clear();
-
-  camera_->SetRotation({ 45.0f, 25.0f , 90.0f });
-
-  Renderer::Begin(*camera_);
-  Renderer::Submit(shader_, vertexarray_);
-  Renderer::End();
-}
+void GLImGuiProcess::Update() {}
 
 void GLImGuiProcess::EventCall(Event &event) {
   ImGuiProcess::EventCall(event);
 }
 
-void GLImGuiProcess::ImGuiRender() {
-  bool show = true;
-  ImGui::ShowDemoWindow(&show);
-}
+void GLImGuiProcess::ImGuiRender() {}
 
 void GLImGuiProcess::Begin() {
   ImGui_ImplOpenGL3_NewFrame();

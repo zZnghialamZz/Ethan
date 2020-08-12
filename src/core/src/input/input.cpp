@@ -32,4 +32,4 @@
 
 #include "ethan/core/input/input.h"
 
-namespace ethan {}
+namespace Ethan {}

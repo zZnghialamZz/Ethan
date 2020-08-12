@@ -39,7 +39,7 @@
 #include <GLFW/glfw3.h>
 // TODO: Setup a precompile header system for ET_UTILS and ET_CORE
 
-namespace ethan {
+namespace Ethan {
 
 class GLInput : public Input {
  public:

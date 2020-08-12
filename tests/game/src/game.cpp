@@ -38,4 +38,4 @@ Game::Game() {
 
 Game::~Game() = default;
 
-ethan::Application *ethan::CreateApplication() { return new Game(); }
+Ethan::Application *Ethan::CreateApplication() { return new Game(); }

@@ -35,7 +35,7 @@
 
 #include "ethan/core/graphic/buffers.h"
 
-namespace ethan {
+namespace Ethan {
 
 class GLVertexBuffer : public VertexBuffer {
  public:

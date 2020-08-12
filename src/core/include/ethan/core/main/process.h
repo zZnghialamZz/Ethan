@@ -36,7 +36,7 @@
 #include "event.h"
 #include <vector>
 
-namespace ethan {
+namespace Ethan {
 
 class Process {
  public:

@@ -35,7 +35,7 @@
 
 #include "ethan/core/graphic/renderer.h"
 
-namespace ethan {
+namespace Ethan {
 
 class GLRendererAPI : public RendererAPI {
  public:

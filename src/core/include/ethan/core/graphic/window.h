@@ -37,7 +37,7 @@
 #include "ethan/core/input/input.h"
 #include "ethan/core/graphic/graphic_context.h"
 
-namespace ethan {
+namespace Ethan {
 
 /// -------------------------------------------
 /// --- Events

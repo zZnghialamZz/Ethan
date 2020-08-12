@@ -34,7 +34,7 @@
 
 #include <glad/glad.h>
 
-namespace ethan {
+namespace Ethan {
 
 /// --- GLVertexBuffer
 GLVertexBuffer::GLVertexBuffer(float* vertices, uint32_t size) {

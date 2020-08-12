@@ -39,7 +39,7 @@
 #define EVENT_CLASS(type)                                                      \
   virtual const char *GetName() const override { return #type; }
 
-namespace ethan {
+namespace Ethan {
 
 enum class EventCategory {
   None = 0,

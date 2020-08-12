@@ -38,7 +38,7 @@
 #include "ethan/opengl/gl_shader.h"
 #endif
 
-namespace ethan {
+namespace Ethan {
 
 Shader *Shader::Create(const std::string &file_path) {
   switch (Renderer::GetAPI()) {

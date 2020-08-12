@@ -35,7 +35,7 @@
 
 #include <glad/glad.h>
 
-namespace ethan {
+namespace Ethan {
 
 GLVertexArray::GLVertexArray() {
   glGenVertexArrays(1, &vertexarrayID_);

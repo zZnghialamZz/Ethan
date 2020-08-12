@@ -33,14 +33,14 @@
 #ifndef _ETHAN_CORE_H_
 #define _ETHAN_CORE_H_
 
-namespace ethan {}
+namespace Ethan {}
 
 #include "ethan/core/input/input.h"
 #include "ethan/core/main/application.h"
 
 // TODO: Consider move this to sub files
 #include "ethan/core/graphic/shader.h"
-#include "ethan/core/graphic/buffers.h"
 #include "ethan/core/graphic/renderer.h"
+#include "ethan/core/graphic/vertex_array.h"
 
 #endif // _ETHAN_CORE_H_

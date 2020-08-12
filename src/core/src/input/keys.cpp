@@ -34,7 +34,7 @@
 
 #include <sstream>
 
-namespace ethan {
+namespace Ethan {
 
 /// --- KeyEvent
 KeyEvent::KeyEvent(KeyCode keycode) : keycode_(keycode) {

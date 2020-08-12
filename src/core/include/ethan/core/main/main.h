@@ -34,7 +34,7 @@
 
 #include "application.h"
 
-namespace ethan {
+namespace Ethan {
 
 class Main {
  public:

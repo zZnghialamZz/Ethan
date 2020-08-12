@@ -35,14 +35,28 @@
 
 #include "ethan/ethan.h"
 
-class ExampleProcess : public ethan::Process {
+class ExampleProcess : public Ethan::Process {
  public:
   ExampleProcess();
 
   void Attach() override;
   void Detach() override;
   void Update() override;
-  void EventCall(ethan::Event &event) override;
+  void EventCall(Ethan::Event &event) override;
+
+ private:
+  std::shared_ptr<Ethan::VertexArray> vertexarray_;
+  std::shared_ptr<Ethan::VertexBuffer> vertex_buffer_;
+  std::shared_ptr<Ethan::IndexBuffer> index_buffer_;
+  std::shared_ptr<Ethan::Shader> shader_;
+
+  Ethan::Camera* camera_;
+
+  glm::vec3 cam_pos_ = {0.0f , 0.0f, 0.0f};
+  glm::vec3 cam_rot_ = {0.0f , 0.0f, 0.0f};
+
+  float cam_spd_ = 0.01f;
+  float rot_deg_ = 2.0f;
 };
 
 #endif // _GAME_EXAMPLE_PROCESS_H_

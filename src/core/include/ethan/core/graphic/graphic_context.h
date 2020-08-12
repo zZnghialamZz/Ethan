@@ -33,7 +33,7 @@
 #ifndef _ETHAN_CORE_GRAPHIC_CONTEXT_H_
 #define _ETHAN_CORE_GRAPHIC_CONTEXT_H_
 
-namespace ethan {
+namespace Ethan {
 
 class GraphicContext {
  public:

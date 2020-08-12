@@ -35,13 +35,7 @@
 
 #include "ethan/ui/plugins/imgui_process.h"
 
-// TODO: Remove
-#include "gl_shader.h"
-#include "gl_buffers.h"
-#include "gl_vertexarray.h"
-#include "ethan/core/graphic/camera.h"
-
-namespace ethan {
+namespace Ethan {
 
 class GLImGuiProcess : public ImGuiProcess {
  public:
@@ -56,14 +50,6 @@ class GLImGuiProcess : public ImGuiProcess {
 
   void Begin() override;
   void End() override;
-
- private:
-  // TODO: To be removed
-  std::shared_ptr<VertexArray> vertexarray_;
-  std::shared_ptr<VertexBuffer> vertex_buffer_;
-  std::shared_ptr<IndexBuffer> index_buffer_;
-  std::shared_ptr<Shader> shader_;
-  Camera* camera_;
 };
 
 }

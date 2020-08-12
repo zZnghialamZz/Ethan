@@ -35,7 +35,7 @@
 
 #include <glm/glm.hpp>
 
-namespace ethan {
+namespace Ethan {
 
 class Shader {
  public:

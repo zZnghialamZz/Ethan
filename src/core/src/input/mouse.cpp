@@ -32,7 +32,7 @@
 
 #include "ethan/core/input/mouse.h"
 
-namespace ethan {
+namespace Ethan {
 
 /// -------------------------------------------
 /// --- Events

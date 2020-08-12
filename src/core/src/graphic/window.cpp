@@ -32,7 +32,7 @@
 
 #include "ethan/core/graphic/window.h"
 
-namespace ethan {
+namespace Ethan {
 
 /// -------------------------------------------
 /// --- Events

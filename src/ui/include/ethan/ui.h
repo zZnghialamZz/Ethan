@@ -37,6 +37,6 @@
 #include "ui/widget.h"
 #include "ui/plugins/imgui_process.h"
 
-namespace ethan {}
+namespace Ethan {}
 
 #endif // _ETHAN_UI_H_

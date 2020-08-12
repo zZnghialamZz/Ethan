@@ -31,13 +31,107 @@
  */
 
 #include "example_process.h"
+#include "game.h"
 
-ExampleProcess::ExampleProcess() : ethan::Process("Example Process") {
+ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
   ETLOG_INFO("Initialize {0} Process !!", GetName());
+
+  // Test Render a Triangle
+  vertexarray_.reset(Ethan::VertexArray::Create());
+  camera_ = new Ethan::Camera(Ethan::CameraProjection::kOrthographic);
+
+  float vertices[3 * 7] = {
+      -0.5f, -0.5f, 1.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+      0.5f, -0.5f, 1.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+      0.0f,  0.5f, 1.0f, 0.8f, 0.8f, 0.2f, 1.0f
+  };
+
+  vertex_buffer_.reset(Ethan::VertexBuffer::Create(vertices, sizeof(vertices)));
+
+  Ethan::BufferLayout layout {
+      {"pos", Ethan:: ShaderData::Type::kFloat3 },
+      {"col", Ethan:: ShaderData::Type::kFloat4 }
+  };
+  vertex_buffer_->SetLayout(layout);
+
+  vertexarray_->AddVertexBuffer(vertex_buffer_);
+
+  unsigned int indices[3] = { 0, 1, 2 };
+  index_buffer_.reset(Ethan::IndexBuffer::Create(indices, 3));
+
+  vertexarray_->SetIndexBuffer(index_buffer_);
+
+  std::string vertex_src = R"(
+    #version 330 core
+
+    layout(location = 0) in vec3 pos;
+    layout(location = 1) in vec4 col;
+
+    uniform mat4 u_et_world_matrix;
+
+    out vec4 vcol;
+    out vec3 vpos;
+
+    void main() {
+      vcol = col;
+      vpos = pos;
+      gl_Position = u_et_world_matrix * vec4(pos, 1.0);
+    }
+  )";
+
+  std::string fragment_src = R"(
+    #version 330 core
+
+    out vec4 color;
+
+    in vec3 vpos;
+    in vec4 vcol;
+
+    void main() {
+      color = vec4(vpos * 0.5 + 0.5, 1.0);
+      color = vcol;
+    }
+  )";
+
+  shader_.reset(Ethan::Shader::Create("Tris", vertex_src, fragment_src));
+
 }
 
 void ExampleProcess::Attach() {}
-void ExampleProcess::Detach() {}
-void ExampleProcess::Update() {}
 
-void ExampleProcess::EventCall(ethan::Event &event) {}
+void ExampleProcess::Detach() {}
+
+void ExampleProcess::Update() {
+  // Test Input
+  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Left))
+    cam_pos_.x += cam_spd_;
+  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Right))
+    cam_pos_.x -= cam_spd_;
+
+  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Up))
+    cam_pos_.y -= cam_spd_;
+  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Down))
+    cam_pos_.y += cam_spd_;
+
+  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::A))
+    cam_rot_.x -= rot_deg_;
+  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::D))
+    cam_rot_.x += rot_deg_;
+
+  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::W))
+    cam_rot_.y -= rot_deg_;
+  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::S))
+    cam_rot_.y += rot_deg_;
+
+  // Render
+  Ethan::RendererCommand::Clear();
+
+  camera_->SetPosition(cam_pos_);
+  camera_->SetRotation(cam_rot_);
+
+  Ethan::Renderer::Begin(*camera_);
+  Ethan::Renderer::Submit(shader_, vertexarray_);
+  Ethan::Renderer::End();
+}
+
+void ExampleProcess::EventCall(Ethan::Event &event) {}

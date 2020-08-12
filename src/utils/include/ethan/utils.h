@@ -1,7 +1,7 @@
 #ifndef _ETHAN_UTILS_H_
 #define _ETHAN_UTILS_H_
 
-namespace ethan {}
+namespace Ethan {}
 
 #include "ethan/utils/console/console.h"
 

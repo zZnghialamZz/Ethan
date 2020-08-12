@@ -34,7 +34,7 @@
 
 #include "ethan/utils/console/console.h"
 
-namespace ethan {
+namespace Ethan {
 
 bool GLWindow::is_glfw_init_ = false;
 

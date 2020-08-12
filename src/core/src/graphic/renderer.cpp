@@ -37,7 +37,7 @@
 #include "ethan/opengl/gl_renderer.h"
 #endif
 
-namespace ethan {
+namespace Ethan {
 
 #ifdef __OPENGL_API__
 RendererAPI::API RendererAPI::api_ = RendererAPI::OpenGL;

@@ -35,7 +35,7 @@
 
 #include "shader.h"
 
-namespace ethan {
+namespace Ethan {
 
 class BufferElement {
  public:

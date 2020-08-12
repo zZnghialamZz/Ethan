@@ -35,7 +35,7 @@
 
 #include "ethan/core/graphic/shader.h"
 
-namespace ethan {
+namespace Ethan {
 
 class GLShader : public Shader {
  public:

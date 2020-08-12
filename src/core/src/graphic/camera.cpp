@@ -34,12 +34,12 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace ethan {
+namespace Ethan {
 
 Camera::Camera(CameraProjection projection)
     : projection_(projection)
     , near_plane_(0.1f)
-    , far_plane_(100.0f)
+    , far_plane_(1000.0f)
     , fov_(45.0f)
     , position_(0.0f)
     , rotation_(0.0f)
@@ -89,14 +89,15 @@ void Camera::SetViewport(const glm::vec2 &viewport) {
 void Camera::UpdateProjectionMatrix() {
   switch (projection_) {
     case CameraProjection::kOrthographic: {
-      projection_matrix_ = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+      projection_matrix_ = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1000.0f, 1000.0f);
       break;
     }
     case CameraProjection::kPerspective: {
-      projection_matrix_ = glm::perspective(glm::radians(fov_),
-                                            viewport_.x/viewport_.y,
-                                            near_plane_,
-                                            far_plane_);
+      projection_matrix_ = glm::perspectiveFov(glm::radians(fov_),
+                                               viewport_.x,
+                                               viewport_.y,
+                                               near_plane_,
+                                               far_plane_);
       break;
     }
   }

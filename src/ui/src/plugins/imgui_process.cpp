@@ -34,7 +34,7 @@
 
 #include "imgui.h"
 
-namespace ethan {
+namespace Ethan {
 
 ImGuiProcess::ImGuiProcess(const char *name) : Process(name) {}
 

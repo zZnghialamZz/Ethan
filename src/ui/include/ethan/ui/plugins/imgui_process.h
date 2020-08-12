@@ -35,7 +35,7 @@
 
 #include "ethan/core/main/process.h"
 
-namespace ethan {
+namespace Ethan {
 
 class ImGuiProcess : public Process {
  public:

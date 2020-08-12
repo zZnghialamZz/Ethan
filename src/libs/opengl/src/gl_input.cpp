@@ -33,7 +33,7 @@
 #include "ethan/opengl/gl_input.h"
 #include "ethan/opengl/gl_window.h"
 
-namespace ethan {
+namespace Ethan {
 
 GLInput::GLInput(GLFWwindow* window) : window_(window) { Init(); }
 GLInput::~GLInput() = default;

@@ -32,7 +32,7 @@
 
 #include "ethan/core/main/process.h"
 
-namespace ethan {
+namespace Ethan {
 
 /// --- Process
 Process::Process(const char *name) : name_(name) {}

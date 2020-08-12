@@ -35,7 +35,7 @@
 
 #include "ethan/core/main/event.h"
 
-namespace ethan {
+namespace Ethan {
 
 /// -------------------------------------------
 /// --- Main Mouse API

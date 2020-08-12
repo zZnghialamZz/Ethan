@@ -35,7 +35,7 @@
 
 #include "ethan/core/graphic/vertex_array.h"
 
-namespace ethan {
+namespace Ethan {
 
 class GLVertexArray : public VertexArray {
  public:

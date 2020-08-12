@@ -36,7 +36,7 @@
 #include "keys.h"
 #include "mouse.h"
 
-namespace ethan {
+namespace Ethan {
 
 /// -------------------------------------------
 /// --- Main Input API

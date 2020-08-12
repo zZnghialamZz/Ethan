@@ -33,7 +33,7 @@
 #include "ethan/core/main/main.h"
 #include "ethan/utils.h"
 
-namespace ethan {
+namespace Ethan {
 
 Main::Main() = default;
 
@@ -43,14 +43,14 @@ Main::~Main() = default;
 
 /////////////////////////////////////
 // --------- Entry Point --------- //
-extern ethan::Application* ethan::CreateApplication();
+extern Ethan::Application* Ethan::CreateApplication();
 
 // TDDO(@nghialam): Find a way to implement entry point
 int main(int argc, char *argv[]) {
-  ethan::Console::Init();
+  Ethan::Console::Init();
   ETLOG_CORE_INFO("Initialize Console!");
 
-  auto app = ethan::CreateApplication();
+  auto app = Ethan::CreateApplication();
   app->Init();
   app->Update();
   delete app;

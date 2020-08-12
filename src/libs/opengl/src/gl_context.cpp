@@ -34,7 +34,7 @@
 
 #include "ethan/utils/console/console.h"
 
-namespace ethan {
+namespace Ethan {
 
 GraphicContext* GraphicContext::Create(void *window) {
   return new GLContext(static_cast<GLFWwindow *>(window));
