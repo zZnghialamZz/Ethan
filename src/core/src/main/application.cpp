@@ -53,7 +53,9 @@ Application::~Application() = default;
 
 void Application::Init() { Start(); }
 
-void Application::Start() {}
+void Application::Start() {
+  timer_.Start();
+}
 
 void Application::End() {}
 
@@ -67,6 +69,8 @@ void Application::Update() {
     ui_process_->Begin();
     ui_process_->ImGuiRender();
     ui_process_->End();
+
+    ETLOG_CORE_INFO("Time passed {0}s", timer_.GetTime());
   }
 }
 

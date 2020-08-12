@@ -36,6 +36,7 @@
 
 #include "process.h"
 #include "ethan/core/graphic/window.h"
+#include "ethan/utils/time/timer.h"
 #include "ethan/ui/plugins/imgui_process.h"
 
 namespace Ethan {
@@ -83,8 +84,12 @@ class Application {
 
  private:
   std::unique_ptr<Window> main_window_;
+
   ProcessStack process_stack_;
   ImGuiProcess* ui_process_;
+
+  Timer timer_;
+
   static Application* instance_;
 };
 

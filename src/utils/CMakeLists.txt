@@ -6,12 +6,18 @@ set(ET_UTILS_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_UTILS_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
-  "${ET_UTILS_SRC_DIR}/etpch.cpp"
-  "${ET_UTILS_SRC_DIR}/console/console.cpp")
+    "${ET_UTILS_SRC_DIR}/etpch.cpp"
+    "${ET_UTILS_SRC_DIR}/time/timer.cpp"
+    "${ET_UTILS_SRC_DIR}/time/delta_time.cpp"
+    "${ET_UTILS_SRC_DIR}/console/console.cpp"
+    )
 set(HEADERS
-  "${ET_UTILS_INCLUDE_DIR}/ethan/utils/console/console.h"
-  "${ET_UTILS_INCLUDE_DIR}/ethan/etpch.h"
-  "${ET_UTILS_INCLUDE_DIR}/ethan/utils.h")
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils/console/console.h"
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils/time/delta_time.h"
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils/time/timer.h"
+    "${ET_UTILS_INCLUDE_DIR}/ethan/etpch.h"
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils.h"
+    )
 
 include_directories(${ET_UTILS_INCLUDE_DIR})
 

@@ -3,6 +3,7 @@
 
 namespace Ethan {}
 
+#include "ethan/utils/time/timer.h"
 #include "ethan/utils/console/console.h"
 
 #endif // _ETHAN_UTILS_H_
