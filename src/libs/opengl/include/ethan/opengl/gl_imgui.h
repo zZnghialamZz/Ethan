@@ -39,6 +39,7 @@
 #include "gl_shader.h"
 #include "gl_buffers.h"
 #include "gl_vertexarray.h"
+#include "ethan/core/graphic/camera.h"
 
 namespace ethan {
 
@@ -62,6 +63,7 @@ class GLImGuiProcess : public ImGuiProcess {
   std::shared_ptr<VertexBuffer> vertex_buffer_;
   std::shared_ptr<IndexBuffer> index_buffer_;
   std::shared_ptr<Shader> shader_;
+  Camera* camera_;
 };
 
 }

@@ -34,6 +34,7 @@
 #include "ethan/utils/console/console.h"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace ethan {
 
@@ -85,7 +86,7 @@ GLShader::GLShader(const std::string &name,
   glAttachShader(program, vs);
   glAttachShader(program, fs);
 
-  rendererID_ = program;
+  shaderID_ = program;
 
   // Link our program & checking if success
   glLinkProgram(program);
@@ -110,8 +111,8 @@ GLShader::GLShader(const std::string &name,
   }
 
   // Cleanup as we dont need the shader code after linking
-//  glDetachShader(program, vs);
-//  glDetachShader(program, fs);
+  glDetachShader(program, vs);
+  glDetachShader(program, fs);
   glDeleteShader(vs);
   glDeleteShader(fs);
 }
@@ -119,7 +120,7 @@ GLShader::GLShader(const std::string &name,
 GLShader::~GLShader() = default;
 
 void GLShader::Bind() const {
-  glUseProgram(rendererID_);
+  glUseProgram(shaderID_);
 }
 
 void GLShader::UnBind() const {
@@ -156,6 +157,11 @@ unsigned int GLShader::CompileShader(unsigned int type,
   }
 
   return id;
+}
+
+void GLShader::SetMat4(const std::string &name, const glm::mat4 &value) {
+  GLint location = glGetUniformLocation(shaderID_, name.c_str());
+  glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 }
 
 }

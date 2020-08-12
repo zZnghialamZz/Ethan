@@ -52,6 +52,7 @@ set(SOURCES
     "${ET_CORE_SRC_DIR}/graphic/buffers.cpp"
     "${ET_CORE_SRC_DIR}/graphic/shader.cpp"
     "${ET_CORE_SRC_DIR}/graphic/window.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/camera.cpp"
 
     "${ET_CORE_SRC_DIR}/main/application.cpp"
     "${ET_CORE_SRC_DIR}/main/process.cpp"
@@ -70,6 +71,7 @@ set(HEADERS
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/buffers.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/shader.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/window.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera.h"
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/application.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/process.h"

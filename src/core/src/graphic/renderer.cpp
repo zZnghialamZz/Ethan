@@ -44,6 +44,8 @@ RendererAPI::API RendererAPI::api_ = RendererAPI::OpenGL;
 std::shared_ptr<RendererAPI> RendererCommand::renderer_api_ = RendererAPI::Create();
 #endif
 
+Renderer::SceneData* Renderer::scene_data_ = new Renderer::SceneData;
+
 /// --- RendererAPI
 std::shared_ptr<RendererAPI> RendererAPI::Create() {
   switch (api_) {
@@ -62,12 +64,19 @@ std::shared_ptr<RendererAPI> RendererAPI::Create() {
 
 /// --- RendererAPI
 void Renderer::Init() {}
+
 void Renderer::Shutdown() {}
-void Renderer::Begin() {}
+
+void Renderer::Begin(Camera& camera) {
+  scene_data_->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+}
+
 void Renderer::End() {}
+
 void Renderer::Submit(const std::shared_ptr<Shader> &shader,
                       const std::shared_ptr<VertexArray> &vertex_array) {
   shader->Bind();
+  shader->SetMat4("u_et_world_matrix", scene_data_->ViewProjectionMatrix);
   vertex_array->Bind();
   RendererCommand::DrawIndexed(vertex_array);
 }

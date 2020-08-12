@@ -51,6 +51,7 @@ GLImGuiProcess::GLImGuiProcess() {
   SetName("ImGui Process");
 
   vertexarray_.reset(VertexArray::Create());
+  camera_ = new Camera();
 
   float vertices[3 * 7] = {
       -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -79,13 +80,15 @@ GLImGuiProcess::GLImGuiProcess() {
     layout(location = 0) in vec3 pos;
     layout(location = 1) in vec4 col;
 
+    uniform mat4 u_et_world_matrix;
+
     out vec4 vcol;
     out vec3 vpos;
 
     void main() {
       vcol = col;
       vpos = pos;
-      gl_Position = vec4(pos, 1.0);
+      gl_Position = u_et_world_matrix * vec4(pos, 1.0);
     }
   )";
 
@@ -130,7 +133,11 @@ void GLImGuiProcess::Detach() {
 
 void GLImGuiProcess::Update() {
   // TODO: Move this to test
-  Renderer::Begin();
+  RendererCommand::Clear();
+
+  camera_->SetRotation({ 45.0f, 25.0f , 90.0f });
+
+  Renderer::Begin(*camera_);
   Renderer::Submit(shader_, vertexarray_);
   Renderer::End();
 }

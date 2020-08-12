@@ -34,6 +34,7 @@
 #define _ETHAN_CORE_GRAPHIC_RENDERER_H_
 
 #include "vertex_array.h"
+#include "camera.h"
 
 #include <glm/glm.hpp>
 
@@ -75,13 +76,21 @@ class Renderer {
   static void Init();
   static void Shutdown();
 
-  static void Begin();
+  static void Begin(Camera& camera);
   static void End();
 
   static void Submit(const std::shared_ptr<Shader> &shader,
                      const std::shared_ptr<VertexArray> &vertex_array);
 
   static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
+
+ private:
+  // TODO: Move to Room/Level/Scene file.
+  struct SceneData {
+    glm::mat4 ViewProjectionMatrix;
+  };
+
+  static SceneData* scene_data_;
 };
 
 } // namespace ethan

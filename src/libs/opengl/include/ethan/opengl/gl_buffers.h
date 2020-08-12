@@ -49,7 +49,7 @@ class GLVertexBuffer : public VertexBuffer {
   void SetLayout(const BufferLayout &layout) override { layout_ = layout; }
 
  private:
-  uint32_t rendererID_;
+  uint32_t vertexbufferID_;
   BufferLayout layout_;
 };
 
@@ -64,7 +64,7 @@ class GLIndexBuffer : public IndexBuffer {
   [[nodiscard]] uint32_t GetCount() const override { return count_; }
 
  private:
-  uint32_t rendererID_;
+  uint32_t indexbufferID_;
   uint32_t count_;
 };
 

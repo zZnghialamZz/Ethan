@@ -39,7 +39,7 @@ namespace ethan {
 
 class GLShader : public Shader {
  public:
-  GLShader(const std::string& file_path);
+  explicit GLShader(const std::string& file_path);
   GLShader(const std::string &name,
            const std::string &vertex_source,
            const std::string &fragment_source);
@@ -47,13 +47,14 @@ class GLShader : public Shader {
 
   void Bind() const override;
   void UnBind() const override;
+  void SetMat4(const std::string &name, const glm::mat4 &value) override;
 
   [[nodiscard]] const std::string &GetName() const override { return name_; }
 
   unsigned int CompileShader(unsigned int type, const std::string& source);
 
  private:
-  uint32_t rendererID_;
+  uint32_t shaderID_;
   std::string name_;
 };
 
