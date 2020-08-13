@@ -33,18 +33,40 @@
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# ------------------------------------------------------
+# Compiler Flag
+# ------------------------------------------------------
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   # using Clang
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -stdlib=libc++")
+  add_definitions( -c -Wall -msse2 )
+
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+  add_definitions( -c -Wall -msse2 )
+
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
   # using Intel C++
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  add_definitions( -c -Wall -msse2 )
+
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  add_definitions( -c -W4 )
+
+endif()
+
+if (CMAKE_BUILD_TYPE STREQUAL "")
+  # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
+  # differentiation between debug and release builds.
+  set(CMAKE_BUILD_TYPE "Debug"
+      CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) \"Debug\" \"Release\" \"RelWithDebInfo\" \"MinSizeRel\"."
+      FORCE)
+endif()
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+  add_definitions( -O2 ) # Optimization Level 2
 endif()
 
 # ------------------------------------------------------

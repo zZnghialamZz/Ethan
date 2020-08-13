@@ -68,7 +68,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
     layout(location = 1) in vec4 col;
 
     uniform mat4 uEthan_ViewProjection;
-    uniform vec4 uEthan_Transform;
+    uniform mat4 uEthan_Transform;
 
     out vec4 vcol;
     out vec3 vpos;

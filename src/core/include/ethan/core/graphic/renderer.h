@@ -66,7 +66,7 @@ class RendererCommand {
   static void DrawIndexed(const Shared<VertexArray>& vertex_array);
 
  private:
-  static std::shared_ptr<RendererAPI> renderer_api_;
+  static Shared<RendererAPI> renderer_api_;
 };
 
 class Renderer {
@@ -79,7 +79,7 @@ class Renderer {
 
   static void Submit(const Shared<Shader> &shader,
                      const Shared<VertexArray> &vertex_array,
-                     const glm::vec4& transform = glm::vec4(1.0f));
+                     const glm::mat4& transform = glm::mat4(1.0f));
 
   static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
 

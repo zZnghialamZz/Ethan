@@ -40,7 +40,7 @@ namespace Ethan {
 
 #ifdef __OPENGL_API__
 RendererAPI::API RendererAPI::api_ = RendererAPI::OpenGL;
-std::shared_ptr<RendererAPI> RendererCommand::renderer_api_ = RendererAPI::Create();
+Shared<RendererAPI> RendererCommand::renderer_api_ = RendererAPI::Create();
 #endif
 
 Renderer::SceneData* Renderer::scene_data_ = new Renderer::SceneData;
@@ -72,12 +72,12 @@ void Renderer::Begin(Camera& camera) {
 
 void Renderer::End() {}
 
-void Renderer::Submit(const std::shared_ptr<Shader> &shader,
-                      const std::shared_ptr<VertexArray> &vertex_array,
-                      const glm::vec4& transform) {
+void Renderer::Submit(const Shared<Shader> &shader,
+                      const Shared<VertexArray> &vertex_array,
+                      const glm::mat4& transform) {
   shader->Bind();
   shader->SetMat4("uEthan_ViewProjection", scene_data_->ViewProjectionMatrix);
-  shader->SetFloat4("uEthan_Transform", transform);
+  shader->SetMat4("uEthan_Transform", transform);
 
   vertex_array->Bind();
   RendererCommand::DrawIndexed(vertex_array);
@@ -92,7 +92,7 @@ void RendererCommand::SetClearColor(const glm::vec4 &color) {
   renderer_api_->SetClearColor(color);
 }
 
-void RendererCommand::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
+void RendererCommand::DrawIndexed(const Shared<VertexArray> &vertex_array) {
   renderer_api_->DrawIndexed(vertex_array);
 }
 
