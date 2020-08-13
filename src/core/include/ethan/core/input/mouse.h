@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_INPUT_MOUSE_H_
-#define _ETHAN_CORE_INPUT_MOUSE_H_
+#ifndef ETHAN_CORE_INPUT_MOUSE_H_
+#define ETHAN_CORE_INPUT_MOUSE_H_
 
 #include "ethan/core/main/event.h"
 
@@ -152,4 +152,4 @@ public:
 
 }
 
-#endif // _ETHAN_CORE_INPUT_MOUSE_H_
+#endif // ETHAN_CORE_INPUT_MOUSE_H_

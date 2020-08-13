@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_UTILS_TIME_DELTA_TIME_H_
-#define _ETHAN_UTILS_TIME_DELTA_TIME_H_
+#ifndef ETHAN_UTILS_TIME_DELTA_TIME_H_
+#define ETHAN_UTILS_TIME_DELTA_TIME_H_
 
 namespace Ethan {
 
@@ -47,4 +47,4 @@ class DeltaTime {
 
 }
 
-#endif // _ETHAN_UTILS_TIME_DELTA_TIME_H_
+#endif // ETHAN_UTILS_TIME_DELTA_TIME_H_

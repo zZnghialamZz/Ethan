@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_buffers.h
+ * @file base_wrappers.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,44 +30,6 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_LIBS_GL_BUFFERS_H_
-#define ETHAN_LIBS_GL_BUFFERS_H_
+#include "ethan/utils/helper/base_wrappers.h"
 
-#include "ethan/core.h"
-
-namespace Ethan {
-
-class GLVertexBuffer : public VertexBuffer {
- public:
-  GLVertexBuffer(float* vertices, uint32_t size);
-  ~GLVertexBuffer();
-
-  void Bind() const override;
-  void UnBind() const override;
-
-  [[nodiscard]] const BufferLayout &GetLayout() const override { return layout_; }
-  void SetLayout(const BufferLayout &layout) override { layout_ = layout; }
-
- private:
-  uint32_t vertexbufferID_;
-  BufferLayout layout_;
-};
-
-class GLIndexBuffer : public IndexBuffer {
- public:
-  GLIndexBuffer(uint32_t* indices, uint32_t& count);
-  ~GLIndexBuffer();
-
-  void Bind() const override;
-  void UnBind() const override;
-
-  [[nodiscard]] uint32_t GetCount() const override { return count_; }
-
- private:
-  uint32_t indexbufferID_;
-  uint32_t count_;
-};
-
-}
-
-#endif // ETHAN_LIBS_GL_BUFFERS_H_
+namespace Ethan {}

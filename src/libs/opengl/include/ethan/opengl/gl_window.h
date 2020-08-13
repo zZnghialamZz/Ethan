@@ -30,10 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_LIB_GL_WINDOW_H_
-#define _ETHAN_LIB_GL_WINDOW_H_
-
-#include "ethan/core/graphic/window.h"
+#ifndef ETHAN_LIB_GL_WINDOW_H_
+#define ETHAN_LIB_GL_WINDOW_H_
 
 #include "gl_input.h"
 #include "gl_context.h"
@@ -74,7 +72,7 @@ class GLWindow : public Window {
  private:
   WindowData data_;
   GLInput* input_;
-  GLContext* context_;
+  Scope<GraphicContext> context_;
   GLFWwindow* window_;
 
   static bool is_glfw_init_;
@@ -86,4 +84,4 @@ class GLWindow : public Window {
 
 }
 
-#endif // _ETHAN_LIB_GL_WINDOW_H_
+#endif // ETHAN_LIB_GL_WINDOW_H_

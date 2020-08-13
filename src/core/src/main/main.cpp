@@ -31,7 +31,6 @@
  */
 
 #include "ethan/core/main/main.h"
-#include "ethan/utils.h"
 
 namespace Ethan {
 
@@ -39,7 +38,7 @@ Main::Main() = default;
 
 Main::~Main() = default;
 
-} // namespace ethan
+} // namespace Ethan
 
 /////////////////////////////////////
 // --------- Entry Point --------- //

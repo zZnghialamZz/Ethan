@@ -30,10 +30,10 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_LIB_GL_INPUT_H_
-#define _ETHAN_LIB_GL_INPUT_H_
+#ifndef ETHAN_LIB_GL_INPUT_H_
+#define ETHAN_LIB_GL_INPUT_H_
 
-#include "ethan/core/input/input.h"
+#include "ethan/core.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -66,4 +66,4 @@ private:
 };
 
 }
-#endif // _ETHAN_LIBS_GL_INPUT_H_
+#endif // ETHAN_LIBS_GL_INPUT_H_

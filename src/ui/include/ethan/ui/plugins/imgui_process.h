@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
-#define _ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
+#ifndef ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
+#define ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
 
 #include "ethan/core/main/process.h"
 
@@ -42,10 +42,10 @@ class ImGuiProcess : public Process {
   ImGuiProcess(const char* name = "ImGui Process");
   virtual ~ImGuiProcess() = default;
 
-  virtual void Attach() override;
-  virtual void Detach() override;
-  virtual void Update() override;
-  virtual void EventCall(Event& event) override;
+  void Attach() override;
+  void Detach() override;
+  void Update() override;
+  void EventCall(Event& event) override;
   virtual void ImGuiRender();
 
   /**
@@ -67,4 +67,4 @@ class ImGuiProcess : public Process {
 
 }
 
-#endif // _ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
+#endif // ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_

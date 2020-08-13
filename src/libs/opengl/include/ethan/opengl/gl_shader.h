@@ -30,10 +30,10 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_LIBS_GL_SHADER_H_
-#define _ETHAN_LIBS_GL_SHADER_H_
+#ifndef ETHAN_LIBS_GL_SHADER_H_
+#define ETHAN_LIBS_GL_SHADER_H_
 
-#include "ethan/core/graphic/shader.h"
+#include "ethan/core.h"
 
 #include <unordered_map>
 
@@ -79,4 +79,4 @@ class GLShader : public Shader {
 
 }
 
-#endif // _ETHAN_LIBS_GL_SHADER_H_
+#endif // ETHAN_LIBS_GL_SHADER_H_

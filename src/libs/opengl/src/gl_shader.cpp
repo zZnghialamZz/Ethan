@@ -41,30 +41,18 @@ namespace Ethan {
 /// --- ShaderData
 unsigned int ShaderData::ConvertToNativeType(ShaderData::Type type) {
   switch (type) {
-    case ShaderData::Type::kNone:
-      return GL_NONE;
-    case ShaderData::Type::kFloat:
-      return GL_FLOAT;
-    case ShaderData::Type::kFloat2:
-      return GL_FLOAT;
-    case ShaderData::Type::kFloat3:
-      return GL_FLOAT;
-    case ShaderData::Type::kFloat4:
-      return GL_FLOAT;
-    case ShaderData::Type::kMat3:
-      return GL_FLOAT;
-    case ShaderData::Type::kMat4:
-      return GL_FLOAT;
-    case ShaderData::Type::kInt:
-      return GL_INT;
-    case ShaderData::Type::kInt2:
-      return GL_INT;
-    case ShaderData::Type::kInt3:
-      return GL_INT;
-    case ShaderData::Type::kInt4:
-      return GL_INT;
-    case ShaderData::Type::kBool:
-      return GL_BOOL;
+    case ShaderData::Type::kNone:       return GL_NONE;
+    case ShaderData::Type::kFloat:      return GL_FLOAT;
+    case ShaderData::Type::kFloat2:     return GL_FLOAT;
+    case ShaderData::Type::kFloat3:     return GL_FLOAT;
+    case ShaderData::Type::kFloat4:     return GL_FLOAT;
+    case ShaderData::Type::kMat3:       return GL_FLOAT;
+    case ShaderData::Type::kMat4:       return GL_FLOAT;
+    case ShaderData::Type::kInt:        return GL_INT;
+    case ShaderData::Type::kInt2:       return GL_INT;
+    case ShaderData::Type::kInt3:       return GL_INT;
+    case ShaderData::Type::kInt4:       return GL_INT;
+    case ShaderData::Type::kBool:       return GL_BOOL;
   }
 
   ETLOG_CORE_ERROR("Invalid ShaderData Type !");

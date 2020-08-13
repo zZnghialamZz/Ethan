@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_GRAPHIC_VERTEX_ARRAY_H_
-#define _ETHAN_CORE_GRAPHIC_VERTEX_ARRAY_H_
+#ifndef ETHAN_CORE_GRAPHIC_VERTEX_ARRAY_H_
+#define ETHAN_CORE_GRAPHIC_VERTEX_ARRAY_H_
 
 #include "buffers.h"
 
@@ -44,15 +44,15 @@ class VertexArray {
   virtual void Bind() const = 0;
   virtual void UnBind() const = 0;
 
-  virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertex_buffer) = 0;
-  virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& index_buffer) = 0;
+  virtual void AddVertexBuffer(const Shared<VertexBuffer>& vertex_buffer) = 0;
+  virtual void SetIndexBuffer(const Shared<IndexBuffer>& index_buffer) = 0;
 
-  [[nodiscard]] virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const = 0;
-  [[nodiscard]] virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const = 0;
+  [[nodiscard]] virtual const std::vector<Shared<VertexBuffer>>& GetVertexBuffers() const = 0;
+  [[nodiscard]] virtual const Shared<IndexBuffer>& GetIndexBuffer() const = 0;
 
-  static VertexArray* Create();
+  static Shared<VertexArray> Create();
 };
 
 }
 
-#endif // _ETHAN_CORE_GRAPHIC_VERTEX_ARRAY_H_
+#endif // ETHAN_CORE_GRAPHIC_VERTEX_ARRAY_H_

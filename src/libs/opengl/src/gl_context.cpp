@@ -36,10 +36,6 @@
 
 namespace Ethan {
 
-GraphicContext* GraphicContext::Create(void *window) {
-  return new GLContext(static_cast<GLFWwindow *>(window));
-}
-
 GLContext::GLContext(GLFWwindow *window) : window_(window) {
   ETASSERT_CORE(window_, "Window Context NULL !");
 }

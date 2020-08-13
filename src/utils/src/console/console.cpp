@@ -49,4 +49,4 @@ void Console::Init() {
   client_logger_->set_level(spdlog::level::trace);
 }
 
-} // namespace ethan
+} // namespace Ethan

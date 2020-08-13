@@ -48,7 +48,6 @@ GLWindow::GLWindow(const WindowProperty &props) : is_close_(false) {
 
 GLWindow::~GLWindow() {
   delete input_;
-  delete context_;
 
   glfwDestroyWindow(window_);
   glfwTerminate();
@@ -97,7 +96,7 @@ void GLWindow::Init(const WindowProperty &props) {
       nullptr,
       nullptr);
 
-  context_ = (GLContext*)GraphicContext::Create(window_);
+  context_ = GraphicContext::Create(window_);
   context_->Init();
 
   glfwSetWindowUserPointer(window_, &data_);
@@ -155,4 +154,4 @@ void GLWindow::Close() {
 
 void GLWindow::Resize(unsigned int width, unsigned int height) {}
 
-} // namespace ethan
+} // namespace Ethan

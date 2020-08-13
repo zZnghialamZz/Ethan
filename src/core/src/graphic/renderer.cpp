@@ -31,7 +31,6 @@
  */
 
 #include "ethan/core/graphic/renderer.h"
-#include "ethan/utils/console/console.h"
 
 #ifdef __OPENGL_API__
 #include "ethan/opengl/gl_renderer.h"
@@ -47,14 +46,14 @@ std::shared_ptr<RendererAPI> RendererCommand::renderer_api_ = RendererAPI::Creat
 Renderer::SceneData* Renderer::scene_data_ = new Renderer::SceneData;
 
 /// --- RendererAPI
-std::shared_ptr<RendererAPI> RendererAPI::Create() {
+Shared<RendererAPI> RendererAPI::Create() {
   switch (api_) {
     case None: {
       ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
       return nullptr;
     }
     case OpenGL: {
-      return std::make_shared<GLRendererAPI>();
+      return MakeShared<GLRendererAPI>();
     }
   }
 
@@ -75,10 +74,10 @@ void Renderer::End() {}
 
 void Renderer::Submit(const std::shared_ptr<Shader> &shader,
                       const std::shared_ptr<VertexArray> &vertex_array,
-                      const glm::mat4& transform) {
+                      const glm::vec4& transform) {
   shader->Bind();
   shader->SetMat4("uEthan_ViewProjection", scene_data_->ViewProjectionMatrix);
-  shader->SetMat4("uEthan_Transform", transform);
+  shader->SetFloat4("uEthan_Transform", transform);
 
   vertex_array->Bind();
   RendererCommand::DrawIndexed(vertex_array);

@@ -37,7 +37,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
   ETLOG_INFO("Initialize {0} Process !!", GetName());
 
   // Test Render a Triangle
-  vertexarray_.reset(Ethan::VertexArray::Create());
+  vertexarray_ = Ethan::VertexArray::Create();
   camera_ = new Ethan::Camera(Ethan::CameraProjection::kOrthographic);
 
   float vertices[3 * 7] = {
@@ -46,7 +46,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
       0.0f,  0.5f, 1.0f, 0.8f, 0.8f, 0.2f, 1.0f
   };
 
-  vertex_buffer_.reset(Ethan::VertexBuffer::Create(vertices, sizeof(vertices)));
+  vertex_buffer_ = Ethan::VertexBuffer::Create(vertices, sizeof(vertices));
 
   Ethan::BufferLayout layout {
       {"pos", Ethan:: ShaderData::Type::kFloat3 },
@@ -57,7 +57,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
   vertexarray_->AddVertexBuffer(vertex_buffer_);
 
   unsigned int indices[3] = { 0, 1, 2 };
-  index_buffer_.reset(Ethan::IndexBuffer::Create(indices, 3));
+  index_buffer_ = Ethan::IndexBuffer::Create(indices, 3);
 
   vertexarray_->SetIndexBuffer(index_buffer_);
 
@@ -68,6 +68,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
     layout(location = 1) in vec4 col;
 
     uniform mat4 uEthan_ViewProjection;
+    uniform vec4 uEthan_Transform;
 
     out vec4 vcol;
     out vec3 vpos;
@@ -75,7 +76,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
     void main() {
       vcol = col;
       vpos = pos;
-      gl_Position = uEthan_ViewProjection * vec4(pos, 1.0);
+      gl_Position = uEthan_ViewProjection * uEthan_Transform * vec4(pos, 1.0);
     }
   )";
 
@@ -93,7 +94,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
     }
   )";
 
-  shader_.reset(Ethan::Shader::Create("Tris", vertex_src, fragment_src));
+  shader_ = Ethan::Shader::Create("Tris", vertex_src, fragment_src);
 
 }
 

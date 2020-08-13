@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_INPUT_KEYCODE_H_
-#define _ETHAN_CORE_INPUT_KEYCODE_H_
+#ifndef ETHAN_CORE_INPUT_KEYCODE_H_
+#define ETHAN_CORE_INPUT_KEYCODE_H_
 
 #include "ethan/core/main/event.h"
 
@@ -247,6 +247,6 @@ class KeyReleasedEvent : public KeyEvent {
   EVENT_CLASS(KeyReleased);
 };
 
-} // namespace ethan
+} // namespace Ethan
 
-#endif // _ETHAN_CORE_INPUT_KEYCODE_H_
+#endif // ETHAN_CORE_INPUT_KEYCODE_H_

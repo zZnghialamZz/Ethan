@@ -30,13 +30,11 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_GRAPHIC_RENDERER_H_
-#define _ETHAN_CORE_GRAPHIC_RENDERER_H_
+#ifndef ETHAN_CORE_GRAPHIC_RENDERER_H_
+#define ETHAN_CORE_GRAPHIC_RENDERER_H_
 
 #include "vertex_array.h"
 #include "camera.h"
-
-#include <glm/glm.hpp>
 
 namespace Ethan {
 
@@ -50,10 +48,10 @@ class RendererAPI {
   virtual void Init() = 0;
   virtual void Clear() = 0;
   virtual void SetClearColor(const glm::vec4& color) = 0;
-  virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertex_array) = 0;
+  virtual void DrawIndexed(const Shared<VertexArray>& vertex_array) = 0;
 
   static API GetAPI() { return api_; }
-  static std::shared_ptr<RendererAPI> Create();
+  static Shared<RendererAPI> Create();
 
  private:
   static API api_;
@@ -65,7 +63,7 @@ class RendererCommand {
   static void Clear();
 
   static void SetClearColor(const glm::vec4& color);
-  static void DrawIndexed(const std::shared_ptr<VertexArray>& vertex_array);
+  static void DrawIndexed(const Shared<VertexArray>& vertex_array);
 
  private:
   static std::shared_ptr<RendererAPI> renderer_api_;
@@ -79,9 +77,9 @@ class Renderer {
   static void Begin(Camera& camera);
   static void End();
 
-  static void Submit(const std::shared_ptr<Shader> &shader,
-                     const std::shared_ptr<VertexArray> &vertex_array,
-                     const glm::mat4& transform = glm::mat4(1.0f));
+  static void Submit(const Shared<Shader> &shader,
+                     const Shared<VertexArray> &vertex_array,
+                     const glm::vec4& transform = glm::vec4(1.0f));
 
   static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
 
@@ -94,6 +92,6 @@ class Renderer {
   static SceneData* scene_data_;
 };
 
-} // namespace ethan
+} // namespace Ethan
 
-#endif // _ETHAN_CORE_GRAPHIC_RENDERER_H_
+#endif // ETHAN_CORE_GRAPHIC_RENDERER_H_

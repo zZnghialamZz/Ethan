@@ -29,8 +29,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_MAIN_H_
-#define _ETHAN_CORE_MAIN_H_
+#ifndef ETHAN_CORE_MAIN_H_
+#define ETHAN_CORE_MAIN_H_
 
 #include "application.h"
 
@@ -44,4 +44,4 @@ class Main {
 
 }
 
-#endif // _ETHAN_CORE_MAIN_H_
+#endif // ETHAN_CORE_MAIN_H_

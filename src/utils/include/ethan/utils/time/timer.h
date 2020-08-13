@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_UTILS_TIME_TIMER_H_
-#define _ETHAN_UTILS_TIME_TIMER_H_
+#ifndef ETHAN_UTILS_TIME_TIMER_H_
+#define ETHAN_UTILS_TIME_TIMER_H_
 
 #include "ethan/utils/time/delta_time.h"
 
@@ -61,4 +61,4 @@ class Timer {
 
 }
 
-#endif // _ETHAN_UTILS_TIME_TIMER_H_
+#endif // ETHAN_UTILS_TIME_TIMER_H_

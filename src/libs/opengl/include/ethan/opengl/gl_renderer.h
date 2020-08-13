@@ -30,10 +30,10 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_LIBS_GL_RENDERER_H_
-#define _ETHAN_LIBS_GL_RENDERER_H_
+#ifndef ETHAN_LIBS_GL_RENDERER_H_
+#define ETHAN_LIBS_GL_RENDERER_H_
 
-#include "ethan/core/graphic/renderer.h"
+#include "ethan/core.h"
 
 namespace Ethan {
 
@@ -47,4 +47,4 @@ class GLRendererAPI : public RendererAPI {
 
 }
 
-#endif // _ETHAN_LIBS_GL_RENDERER_H_
+#endif // ETHAN_LIBS_GL_RENDERER_H_

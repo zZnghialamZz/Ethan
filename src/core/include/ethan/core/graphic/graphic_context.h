@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_GRAPHIC_CONTEXT_H_
-#define _ETHAN_CORE_GRAPHIC_CONTEXT_H_
+#ifndef ETHAN_CORE_GRAPHIC_CONTEXT_H_
+#define ETHAN_CORE_GRAPHIC_CONTEXT_H_
 
 namespace Ethan {
 
@@ -42,9 +42,9 @@ class GraphicContext {
   virtual void Init() = 0;
   virtual void SwapBuffers() = 0;
 
-  static GraphicContext* Create(void* window);
+  static Scope<GraphicContext> Create(void* window);
 };
 
 }
 
-#endif // _ETHAN_CORE_GRAPHIC_CONTEXT_H_
+#endif // ETHAN_CORE_GRAPHIC_CONTEXT_H_

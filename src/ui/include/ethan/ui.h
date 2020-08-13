@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_UI_H_
-#define _ETHAN_UI_H_
+#ifndef ETHAN_UI_H_
+#define ETHAN_UI_H_
 
 // TODO: Decide to use ImGui as my main UI library or write my own
 #include "ui/widget.h"
@@ -39,4 +39,4 @@
 
 namespace Ethan {}
 
-#endif // _ETHAN_UI_H_
+#endif // ETHAN_UI_H_

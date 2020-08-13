@@ -29,10 +29,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_APPLICATION_H_
-#define _ETHAN_CORE_APPLICATION_H_
-
-#include <memory>
+#ifndef ETHAN_CORE_APPLICATION_H_
+#define ETHAN_CORE_APPLICATION_H_
 
 #include "process.h"
 #include "ethan/core/graphic/window.h"
@@ -98,6 +96,6 @@ class Application {
  */
 Application* CreateApplication();
 
-} // namespace ethan
+} // namespace Ethan
 
-#endif // _ETHAN_CORE_APPLICATION_H_
+#endif // ETHAN_CORE_APPLICATION_H_

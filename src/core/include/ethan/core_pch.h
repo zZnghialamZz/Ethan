@@ -9,7 +9,8 @@
  *
  *                   Game Engine
  * ==================================================
- * @file etpch.cpp
+ *
+ * @file core_pch.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -29,4 +30,17 @@
  * limitations under the License.
  */
 
-#include "ethan/etpch.h"
+#ifndef ETHAN_CORE_PCH_H_
+#define ETHAN_CORE_PCH_H_
+
+#include "ethan/ui.h"
+#include "ethan/utils.h"
+
+#include <vector>
+#include <string>
+#include <iostream>
+#include <glm/glm.hpp>
+
+namespace Ethan {}
+
+#endif // ETHAN_CORE_PCH_H_

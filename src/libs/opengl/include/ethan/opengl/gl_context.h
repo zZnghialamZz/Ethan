@@ -30,10 +30,10 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_LIBS_GL_CONTEXT_H_
-#define _ETHAN_LIBS_GL_CONTEXT_H_
+#ifndef ETHAN_LIBS_GL_CONTEXT_H_
+#define ETHAN_LIBS_GL_CONTEXT_H_
 
-#include "ethan/core/graphic/graphic_context.h"
+#include "ethan/core.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -54,4 +54,4 @@ class GLContext : public GraphicContext {
 
 }
 
-#endif // _ETHAN_LIBS_GL_CONTEXT_H_
+#endif // ETHAN_LIBS_GL_CONTEXT_H_

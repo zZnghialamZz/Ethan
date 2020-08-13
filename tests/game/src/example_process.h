@@ -45,10 +45,10 @@ class ExampleProcess : public Ethan::Process {
   void EventCall(Ethan::Event &event) override;
 
  private:
-  std::shared_ptr<Ethan::VertexArray> vertexarray_;
-  std::shared_ptr<Ethan::VertexBuffer> vertex_buffer_;
-  std::shared_ptr<Ethan::IndexBuffer> index_buffer_;
-  std::shared_ptr<Ethan::Shader> shader_;
+  Ethan::Shared<Ethan::VertexArray> vertexarray_;
+  Ethan::Shared<Ethan::VertexBuffer> vertex_buffer_;
+  Ethan::Shared<Ethan::IndexBuffer> index_buffer_;
+  Ethan::Shared<Ethan::Shader> shader_;
 
   Ethan::Camera* camera_;
 

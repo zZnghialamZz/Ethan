@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_GRAPHIC_SHADER_H_
-#define _ETHAN_CORE_GRAPHIC_SHADER_H_
+#ifndef ETHAN_CORE_GRAPHIC_SHADER_H_
+#define ETHAN_CORE_GRAPHIC_SHADER_H_
 
 #include <glm/glm.hpp>
 
@@ -54,10 +54,10 @@ class Shader {
 
   [[nodiscard]] virtual const std::string& GetName() const = 0;
 
-  static Shader *Create(const std::string& file_path);
-  static Shader *Create(const std::string &name,
-                        const std::string &vertex_source,
-                        const std::string &fragment_source);
+  static Shared<Shader> Create(const std::string& file_path);
+  static Shared<Shader> Create(const std::string &name,
+                               const std::string &vertex_source,
+                               const std::string &fragment_source);
 };
 
 class ShaderData {
@@ -85,4 +85,4 @@ class ShaderData {
 
 }
 
-#endif // _ETHAN_CORE_GRAPHIC_SHADER_H_
+#endif // ETHAN_CORE_GRAPHIC_SHADER_H_

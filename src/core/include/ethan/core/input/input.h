@@ -30,18 +30,17 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_INPUT_H_
-#define _ETHAN_CORE_INPUT_H_
+#ifndef ETHAN_CORE_INPUT_H_
+#define ETHAN_CORE_INPUT_H_
 
 #include "keys.h"
 #include "mouse.h"
 
 namespace Ethan {
 
-/// -------------------------------------------
-/// --- Main Input API
-/// -------------------------------------------
-
+/**
+ * Input API
+ */
 class Input {
  public:
   virtual ~Input() = default;
@@ -56,11 +55,10 @@ class Input {
   virtual float GetMouseX() = 0;
   virtual float GetMouseY() = 0;
 
-
   virtual void SetKeyCallback() = 0;
   virtual void SetMouseCallback() = 0;
 };
 
 }
 
-#endif // _ETHAN_CORE_INPUT_H_
+#endif // ETHAN_CORE_INPUT_H_

@@ -89,5 +89,5 @@ std::string MouseButtonReleasedEvent::ToString() const {
   return ss.str();
 }
 
-} // namespace ethan
+} // namespace Ethan
 

@@ -1,9 +1,10 @@
-#ifndef _ETHAN_UTILS_H_
-#define _ETHAN_UTILS_H_
+#ifndef ETHAN_UTILS_H_
+#define ETHAN_UTILS_H_
 
 namespace Ethan {}
 
 #include "ethan/utils/time/timer.h"
 #include "ethan/utils/console/console.h"
+#include "ethan/utils/helper/base_wrappers.h"
 
-#endif // _ETHAN_UTILS_H_
+#endif // ETHAN_UTILS_H_

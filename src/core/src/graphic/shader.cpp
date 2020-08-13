@@ -32,7 +32,6 @@
 
 #include "ethan/core/graphic/shader.h"
 #include "ethan/core/graphic/renderer.h"
-#include "ethan/utils/console/console.h"
 
 #ifdef __OPENGL_API__
 #include "ethan/opengl/gl_shader.h"
@@ -40,7 +39,7 @@
 
 namespace Ethan {
 
-Shader *Shader::Create(const std::string &file_path) {
+Shared<Shader> Shader::Create(const std::string &file_path) {
   switch (Renderer::GetAPI()) {
     case RendererAPI::None : {
       ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
@@ -48,7 +47,7 @@ Shader *Shader::Create(const std::string &file_path) {
     }
     case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return new GLShader(file_path);
+      return MakeShared<GLShader>(file_path);
 #else
       ETASSERT_CORE(false, "Settings or Build Config of RendererAPI WRONG !!");
 #endif
@@ -59,9 +58,9 @@ Shader *Shader::Create(const std::string &file_path) {
   return nullptr;
 }
 
-Shader *Shader::Create(const std::string &name,
-                       const std::string &vertex_source,
-                       const std::string &fragment_source) {
+Shared<Shader> Shader::Create(const std::string &name,
+                              const std::string &vertex_source,
+                              const std::string &fragment_source) {
   switch (Renderer::GetAPI()) {
     // None Renderer
     case RendererAPI::None : {
@@ -71,7 +70,7 @@ Shader *Shader::Create(const std::string &name,
     // OpenGL Renderer
     case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return new GLShader(name, vertex_source, fragment_source);
+      return MakeShared<GLShader>(name, vertex_source, fragment_source);
 #else
       ETASSERT_CORE(false, "Settings or Build Config of RendererAPI WRONG !!");
 #endif
@@ -103,4 +102,4 @@ uint8_t ShaderData::GetTypeSize(ShaderData::Type type) {
   return 0;
 }
 
-} // namespace ethan
+} // namespace Ethan

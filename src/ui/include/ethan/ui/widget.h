@@ -30,9 +30,9 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_UI_WIDGET_H_
-#define _ETHAN_UI_WIDGET_H_
+#ifndef ETHAN_UI_WIDGET_H_
+#define ETHAN_UI_WIDGET_H_
 
 namespace Ethan {}
 
-#endif // _ETHAN_UI_WIDGET_H_
+#endif // ETHAN_UI_WIDGET_H_

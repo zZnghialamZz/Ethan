@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_LIBS_GL_IMGUI_H_
-#define _ETHAN_LIBS_GL_IMGUI_H_
+#ifndef ETHAN_LIBS_GL_IMGUI_H_
+#define ETHAN_LIBS_GL_IMGUI_H_
 
 #include "ethan/ui/plugins/imgui_process.h"
 

@@ -30,10 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_UTILS_CONSOLE_H_
-#define _ETHAN_UTILS_CONSOLE_H_
-
-#include "ethan/etpch.h"
+#ifndef ETHAN_UTILS_CONSOLE_H_
+#define ETHAN_UTILS_CONSOLE_H_
 
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
@@ -89,4 +87,4 @@ class Console {
 
 } // namespace Ethan
 
-#endif // _ETHAN_UTILS_CONSOLE_H_
+#endif // ETHAN_UTILS_CONSOLE_H_

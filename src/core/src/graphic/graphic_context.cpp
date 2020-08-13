@@ -31,5 +31,33 @@
  */
 
 #include "ethan/core/graphic/graphic_context.h"
+#include "ethan/core/graphic/renderer.h"
 
-namespace Ethan {}
+#ifdef __OPENGL_API__
+#include "ethan/opengl/gl_context.h"
+#endif
+
+namespace Ethan {
+
+Scope<GraphicContext> GraphicContext::Create(void *window) {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None : {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
+    }
+      // OpenGL Renderer
+    case RendererAPI::OpenGL : {
+#ifdef __OPENGL_API__
+      return MakeScope<GLContext>(static_cast<GLFWwindow *>(window));
+#else
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+    }
+  }
+
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
+}
+
+}

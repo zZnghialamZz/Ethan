@@ -30,12 +30,12 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_GRAPHIC_WINDOW_H_
-#define _ETHAN_CORE_GRAPHIC_WINDOW_H_
+#ifndef ETHAN_CORE_GRAPHIC_WINDOW_H_
+#define ETHAN_CORE_GRAPHIC_WINDOW_H_
 
+#include "graphic_context.h"
 #include "ethan/core/main/event.h"
 #include "ethan/core/input/input.h"
-#include "ethan/core/graphic/graphic_context.h"
 
 namespace Ethan {
 
@@ -126,6 +126,6 @@ class Window {
   static Window *CreateWindow(const WindowProperty &props = WindowProperty());
 };
 
-} // namespace ethan
+} // namespace Ethan
 
-#endif // _ETHAN_CORE_GRAPHIC_WINDOW_H_
+#endif // ETHAN_CORE_GRAPHIC_WINDOW_H_

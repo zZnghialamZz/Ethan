@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_MAIN_PROCESS_H_
-#define _ETHAN_CORE_MAIN_PROCESS_H_
+#ifndef ETHAN_CORE_MAIN_PROCESS_H_
+#define ETHAN_CORE_MAIN_PROCESS_H_
 
 #include "event.h"
 #include <vector>
@@ -77,4 +77,4 @@ class ProcessStack {
 
 }
 
-#endif // _ETHAN_CORE_MAIN_PROCESS_H_
+#endif // ETHAN_CORE_MAIN_PROCESS_H_

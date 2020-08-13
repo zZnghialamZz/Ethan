@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_EVENT_H_
-#define _ETHAN_CORE_EVENT_H_
+#ifndef ETHAN_CORE_EVENT_H_
+#define ETHAN_CORE_EVENT_H_
 
 #include <string>
 
@@ -73,6 +73,6 @@ class Event {
   EventCategory category_;
 };
 
-} // namespace ethan
+} // namespace Ethan
 
-#endif // _ETHAN_CORE_EVENT_H_
+#endif // ETHAN_CORE_EVENT_H_

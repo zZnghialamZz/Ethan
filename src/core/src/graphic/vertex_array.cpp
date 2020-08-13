@@ -32,7 +32,6 @@
 
 #include "ethan/core/graphic/vertex_array.h"
 #include "ethan/core/graphic/renderer.h"
-#include "ethan/utils/console/console.h"
 
 #ifdef __OPENGL_API__
 #include "ethan/opengl/gl_vertexarray.h"
@@ -40,7 +39,7 @@
 
 namespace Ethan {
 
-VertexArray* VertexArray::Create() {
+Shared<VertexArray> VertexArray::Create() {
   switch (Renderer::GetAPI()) {
     // None Renderer
     case RendererAPI::None : {
@@ -50,7 +49,7 @@ VertexArray* VertexArray::Create() {
       // OpenGL Renderer
     case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return new GLVertexArray();
+      return MakeShared<GLVertexArray>();
 #else
       ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif

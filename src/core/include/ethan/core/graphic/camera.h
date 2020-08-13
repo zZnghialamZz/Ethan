@@ -30,10 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_CORE_MAIN_CAMERA_H_
-#define _ETHAN_CORE_MAIN_CAMERA_H_
-
-#include <glm/glm.hpp>
+#ifndef ETHAN_CORE_MAIN_CAMERA_H_
+#define ETHAN_CORE_MAIN_CAMERA_H_
 
 namespace Ethan {
 
@@ -92,4 +90,4 @@ class Camera {
 
 }
 
-#endif // _ETHAN_CORE_MAIN_CAMERA_H_
+#endif // ETHAN_CORE_MAIN_CAMERA_H_

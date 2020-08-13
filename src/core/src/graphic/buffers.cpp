@@ -32,7 +32,6 @@
 
 #include "ethan/core/graphic/buffers.h"
 #include "ethan/core/graphic/renderer.h"
-#include "ethan/utils/console/console.h"
 
 #ifdef __OPENGL_API__
 #include "ethan/opengl/gl_buffers.h"
@@ -41,7 +40,7 @@
 namespace Ethan {
 
 /// --- VertexBuffer
-VertexBuffer *VertexBuffer::Create(float *vertices, uint32_t size) {
+Shared<VertexBuffer> VertexBuffer::Create(float *vertices, uint32_t size) {
   switch (Renderer::GetAPI()) {
     // None Renderer
     case RendererAPI::None : {
@@ -51,7 +50,7 @@ VertexBuffer *VertexBuffer::Create(float *vertices, uint32_t size) {
     // OpenGL Renderer
     case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return new GLVertexBuffer(vertices, size);
+      return MakeShared<GLVertexBuffer>(vertices, size);
 #else
       ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
@@ -63,7 +62,7 @@ VertexBuffer *VertexBuffer::Create(float *vertices, uint32_t size) {
 }
 
 /// --- IndexBuffer
-IndexBuffer *IndexBuffer::Create(uint32_t *indices, uint32_t count) {
+Shared<IndexBuffer> IndexBuffer::Create(uint32_t *indices, uint32_t count) {
   switch (Renderer::GetAPI()) {
     // None Renderer
     case RendererAPI::None : {
@@ -73,7 +72,7 @@ IndexBuffer *IndexBuffer::Create(uint32_t *indices, uint32_t count) {
     // OpenGL Renderer
     case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return new GLIndexBuffer(indices, count);
+      return MakeShared<GLIndexBuffer>(indices, count);
 #else
       ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
@@ -133,4 +132,4 @@ void BufferLayout::Init() {
   }
 }
 
-} // namespace ethan
+} // namespace Ethan

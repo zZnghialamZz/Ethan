@@ -32,8 +32,6 @@
 
 #include "ethan/core/input/keys.h"
 
-#include <sstream>
-
 namespace Ethan {
 
 /// --- KeyEvent

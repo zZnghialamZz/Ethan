@@ -53,7 +53,7 @@ void GLVertexArray::UnBind() const {
   glBindVertexArray(0);
 }
 
-void GLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vertex_buffer) {
+void GLVertexArray::AddVertexBuffer(const Shared<VertexBuffer> &vertex_buffer) {
   ETASSERT_CORE(!vertex_buffer->GetLayout().GetElements().empty(),
                 "Vertex Buffer has no layout !!");
 
@@ -64,14 +64,14 @@ void GLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vertex_
   vertex_buffers_.emplace_back(vertex_buffer);
 }
 
-void GLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer> &index_buffer) {
+void GLVertexArray::SetIndexBuffer(const Shared<IndexBuffer> &index_buffer) {
   glBindVertexArray(vertexarrayID_);
   index_buffer->Bind();
 
   index_buffer_ = index_buffer;
 }
 
-void GLVertexArray::SettingBufferLayout(const std::shared_ptr<VertexBuffer> &vertex_buffer) {
+void GLVertexArray::SettingBufferLayout(const Shared<VertexBuffer> &vertex_buffer) {
   uint32_t index = 0;
   const auto& layout = vertex_buffer->GetLayout();
   for (const auto& element : layout) {

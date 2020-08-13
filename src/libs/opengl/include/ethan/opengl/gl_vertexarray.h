@@ -30,10 +30,10 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_LIBS_GL_VERTEXARRAY_H_
-#define _ETHAN_LIBS_GL_VERTEXARRAY_H_
+#ifndef ETHAN_LIBS_GL_VERTEXARRAY_H_
+#define ETHAN_LIBS_GL_VERTEXARRAY_H_
 
-#include "ethan/core/graphic/vertex_array.h"
+#include "ethan/core.h"
 
 namespace Ethan {
 
@@ -44,20 +44,20 @@ class GLVertexArray : public VertexArray {
 
   void Bind() const override;
   void UnBind() const override;
-  void AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vertex_buffer) override;
-  void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &index_buffer) override;
+  void AddVertexBuffer(const Shared<VertexBuffer> &vertex_buffer) override;
+  void SetIndexBuffer(const Shared<IndexBuffer> &index_buffer) override;
 
-  [[nodiscard]] const std::vector<std::shared_ptr<VertexBuffer>> &GetVertexBuffers() const override { return vertex_buffers_; }
-  [[nodiscard]] const std::shared_ptr<IndexBuffer> &GetIndexBuffer() const override { return index_buffer_; }
+  [[nodiscard]] const std::vector<Shared<VertexBuffer>> &GetVertexBuffers() const override { return vertex_buffers_; }
+  [[nodiscard]] const Shared<IndexBuffer> &GetIndexBuffer() const override { return index_buffer_; }
 
-  static void SettingBufferLayout(const std::shared_ptr<VertexBuffer>& vertex_buffer);
+  static void SettingBufferLayout(const Shared<VertexBuffer>& vertex_buffer);
 
  private:
   unsigned int vertexarrayID_;
-  std::vector<std::shared_ptr<VertexBuffer>> vertex_buffers_;
-  std::shared_ptr<IndexBuffer> index_buffer_;
+  std::vector<Shared<VertexBuffer>> vertex_buffers_;
+  Shared<IndexBuffer> index_buffer_;
 };
 
-} // namespace ethan
+} // namespace Ethan
 
-#endif // _ETHAN_LIBS_GL_VERTEXARRAY_H_
+#endif // ETHAN_LIBS_GL_VERTEXARRAY_H_
