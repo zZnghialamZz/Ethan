@@ -35,6 +35,8 @@
 
 #include "ethan/core/graphic/shader.h"
 
+#include <unordered_map>
+
 namespace Ethan {
 
 class GLShader : public Shader {
@@ -47,6 +49,15 @@ class GLShader : public Shader {
 
   void Bind() const override;
   void UnBind() const override;
+
+  void SetInt(const std::string &name, int value) override;
+  void SetIntArray(const std::string &name,
+                   int *value,
+                   uint32_t count) override;
+  void SetFloat(const std::string &name, float value) override;
+  void SetFloat2(const std::string &name, const glm::vec2 &value) override;
+  void SetFloat3(const std::string &name, const glm::vec3 &value) override;
+  void SetFloat4(const std::string &name, const glm::vec4 &value) override;
   void SetMat4(const std::string &name, const glm::mat4 &value) override;
 
   [[nodiscard]] const std::string &GetName() const override { return name_; }
@@ -54,8 +65,16 @@ class GLShader : public Shader {
   unsigned int CompileShader(unsigned int type, const std::string& source);
 
  private:
+  /// --- Private Members
+
   uint32_t shaderID_;
   std::string name_;
+
+  std::unordered_map<std::string, int> location_cache_;
+
+  /// --- Private Method
+
+  int GetUniformLocation(const std::string& name);
 };
 
 }

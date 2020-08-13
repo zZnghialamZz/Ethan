@@ -43,7 +43,10 @@ Application::Application() {
 
   main_window_ = std::unique_ptr<Window>(Window::CreateWindow());
   main_window_->SetEventCallback(
-      std::bind(&Application::EventCall, this, std::placeholders::_1));
+      [=](Event& e) {
+        Application::EventCall(e);
+      }
+  );
 
   ui_process_ = ImGuiProcess::CreateImGuiProcess();
   AddProcess(ui_process_);
@@ -71,7 +74,6 @@ void Application::Update() {
     ui_process_->ImGuiRender();
     ui_process_->End();
 
-    ETLOG_CORE_INFO("Delta time: {0}s ({1}ms)", DeltaTime::GetSeconds(), DeltaTime::GetMiliSecond());
   }
 }
 

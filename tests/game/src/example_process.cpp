@@ -67,7 +67,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
     layout(location = 0) in vec3 pos;
     layout(location = 1) in vec4 col;
 
-    uniform mat4 u_et_world_matrix;
+    uniform mat4 uEthan_ViewProjection;
 
     out vec4 vcol;
     out vec3 vpos;
@@ -75,7 +75,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
     void main() {
       vcol = col;
       vpos = pos;
-      gl_Position = u_et_world_matrix * vec4(pos, 1.0);
+      gl_Position = uEthan_ViewProjection * vec4(pos, 1.0);
     }
   )";
 

@@ -74,9 +74,12 @@ void Renderer::Begin(Camera& camera) {
 void Renderer::End() {}
 
 void Renderer::Submit(const std::shared_ptr<Shader> &shader,
-                      const std::shared_ptr<VertexArray> &vertex_array) {
+                      const std::shared_ptr<VertexArray> &vertex_array,
+                      const glm::mat4& transform) {
   shader->Bind();
-  shader->SetMat4("u_et_world_matrix", scene_data_->ViewProjectionMatrix);
+  shader->SetMat4("uEthan_ViewProjection", scene_data_->ViewProjectionMatrix);
+  shader->SetMat4("uEthan_Transform", transform);
+
   vertex_array->Bind();
   RendererCommand::DrawIndexed(vertex_array);
 }
