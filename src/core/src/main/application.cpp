@@ -62,6 +62,7 @@ void Application::End() {}
 void Application::Update() {
   while(!main_window_->IsClose()) {
     main_window_->OnUpdate();
+    timer_.CalculateDeltaTime();
 
     for (Process* process : process_stack_)
       process->Update();
@@ -70,7 +71,7 @@ void Application::Update() {
     ui_process_->ImGuiRender();
     ui_process_->End();
 
-    ETLOG_CORE_INFO("Time passed {0}s", timer_.GetTime());
+    ETLOG_CORE_INFO("Delta time: {0}s ({1}ms)", DeltaTime::GetSeconds(), DeltaTime::GetMiliSecond());
   }
 }
 

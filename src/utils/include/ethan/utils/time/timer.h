@@ -33,6 +33,8 @@
 #ifndef _ETHAN_UTILS_TIME_TIMER_H_
 #define _ETHAN_UTILS_TIME_TIMER_H_
 
+#include "ethan/utils/time/delta_time.h"
+
 #include <chrono>
 
 namespace Ethan {
@@ -46,12 +48,14 @@ class Timer {
   void Stop();
   void Pause();
   void UnPause();
+  void CalculateDeltaTime();
 
-  unsigned int GetTime();
+  uint32_t GetTime();
 
  private:
-  std::chrono::time_point<std::chrono::steady_clock> begin_;
+  std::chrono::time_point<std::chrono::high_resolution_clock> begin_;
   uint32_t time_;
+  float last_record_time_;
   bool is_pause_;
 };
 

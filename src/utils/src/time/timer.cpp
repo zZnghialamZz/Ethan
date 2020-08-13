@@ -34,7 +34,7 @@
 
 namespace Ethan {
 
-Timer::Timer() { Start(); }
+Timer::Timer() : last_record_time_(0.0f) { Start(); }
 Timer::~Timer() = default;
 
 void Timer::Start() {
@@ -51,7 +51,7 @@ void Timer::Pause() {
   auto now = std::chrono::high_resolution_clock::now();
   if (!is_pause_) {
     is_pause_ = true;
-    time_ += std::chrono::duration_cast<std::chrono::seconds>(now - begin_).count();
+    time_ += std::chrono::duration_cast<std::chrono::milliseconds>(now - begin_).count();
   }
 }
 
@@ -62,7 +62,19 @@ void Timer::UnPause() {
   }
 }
 
-unsigned int Timer::GetTime() {
+void Timer::CalculateDeltaTime() {
+  float time = (float)GetTime();
+  DeltaTime::SetDeltaTime((time - last_record_time_) / 1000);
+  last_record_time_ = time;
+}
+
+/**
+ * Get how much time has passed since the timer begin, if the timer is paused, it
+ * will use the value assigned when it is paused
+ *
+ * @return - unsigned int: time in miliseconds
+ */
+uint32_t Timer::GetTime() {
   if (is_pause_) {
     return time_;
   } else {
@@ -72,9 +84,8 @@ unsigned int Timer::GetTime() {
     // Checking whether the duration is below 1s
     //   - If yes: we dont add any value to time (int value problem) <-- Maybe change to float
     //   - If no: we add the duration to time
-    // TODO: Consider change this to minisecond
-    if (std::chrono::duration_cast<std::chrono::seconds>(now - begin_).count()) {
-      time_ += std::chrono::duration_cast<std::chrono::seconds>(now - begin_).count();
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(now - begin_).count()) {
+      time_ += std::chrono::duration_cast<std::chrono::milliseconds>(now - begin_).count();
       begin_ = now;
     }
   }

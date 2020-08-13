@@ -102,26 +102,28 @@ void ExampleProcess::Attach() {}
 void ExampleProcess::Detach() {}
 
 void ExampleProcess::Update() {
+  float dt = Ethan::DeltaTime::GetSeconds();
+
   // Test Input
   if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Left))
-    cam_pos_.x += cam_spd_;
+    cam_pos_.x += cam_spd_ * dt;
   else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Right))
-    cam_pos_.x -= cam_spd_;
+    cam_pos_.x -= cam_spd_ * dt;
 
   if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Up))
-    cam_pos_.y -= cam_spd_;
+    cam_pos_.y -= cam_spd_ * dt;
   else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Down))
-    cam_pos_.y += cam_spd_;
+    cam_pos_.y += cam_spd_ * dt;
 
   if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::A))
-    cam_rot_.x -= rot_deg_;
+    cam_rot_.x -= rot_deg_ * dt;
   else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::D))
-    cam_rot_.x += rot_deg_;
+    cam_rot_.x += rot_deg_ * dt;
 
   if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::W))
-    cam_rot_.y -= rot_deg_;
+    cam_rot_.y -= rot_deg_ * dt;
   else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::S))
-    cam_rot_.y += rot_deg_;
+    cam_rot_.y += rot_deg_ * dt;
 
   // Render
   Ethan::RendererCommand::Clear();

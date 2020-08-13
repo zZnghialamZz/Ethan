@@ -37,10 +37,9 @@ namespace Ethan {
 
 class DeltaTime {
  public:
-  operator float() const { return time_; }
-
+  static void SetDeltaTime(float time) { time_ = time; }
   [[nodiscard]] static float GetSeconds()  { return time_; }
-  [[nodiscard]] static float GetMiliSecond()  { return time_ / 1000.0f; }
+  [[nodiscard]] static float GetMiliSecond()  { return time_ * 1000.0f; }
 
  private:
   static float time_;
