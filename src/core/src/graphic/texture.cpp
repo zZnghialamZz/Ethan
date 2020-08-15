@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_renderer.cpp
+ * @file texture.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,31 +30,34 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_renderer.h"
-#include "ethan/opengl/gl_assert.h"
+#include "ethan/core/graphic/texture.h"
+#include "ethan/core/graphic/renderer.h"
 
-#include <glad/glad.h>
+#ifdef __OPENGL_API__
+#include "ethan/opengl/gl_texture.h"
+#endif
 
 namespace Ethan {
 
-void GLRendererAPI::Init() {
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
+Shared<Texture2D> Texture2D::Create(const std::string &path) {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None : {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
+    }
+      // OpenGL Renderer
+    case RendererAPI::OpenGL : {
+#ifdef __OPENGL_API__
+      return MakeShared<GLTexture2D>(path);
+#else
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+    }
+  }
 
-void GLRendererAPI::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-}
-
-void GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
-  GLCALL(glDrawElements(GL_TRIANGLES,
-                        vertex_array->GetIndexBuffer()->GetCount(),
-                        GL_UNSIGNED_INT,
-                        nullptr));
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
 }
 
 }

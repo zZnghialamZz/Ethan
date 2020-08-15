@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_renderer.cpp
+ * @file gl_assert.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,31 +30,22 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_renderer.h"
-#include "ethan/opengl/gl_assert.h"
+#ifndef ETHAN_LIBS_GL_ASSERT_H_
+#define ETHAN_LIBS_GL_ASSERT_H_
 
 #include <glad/glad.h>
 
+#define GLCALL(x)                                                               \
+  GLClearError();                                                              \
+  x;                                                                           \
+  GLLogCall(#x);
+
 namespace Ethan {
 
-void GLRendererAPI::Init() {
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
+void GLClearError();
 
-void GLRendererAPI::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-}
-
-void GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
-  GLCALL(glDrawElements(GL_TRIANGLES,
-                        vertex_array->GetIndexBuffer()->GetCount(),
-                        GL_UNSIGNED_INT,
-                        nullptr));
-}
+void GLLogCall(const char *function);
 
 }
+
+#endif // ETHAN_LIBS_GL_ASSERT_H_

@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_renderer.cpp
+ * @file file.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,31 +30,17 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_renderer.h"
-#include "ethan/opengl/gl_assert.h"
-
-#include <glad/glad.h>
+#ifndef ETHAN_UTILS_HELPER_FILE_H_
+#define ETHAN_UTILS_HELPER_FILE_H_
 
 namespace Ethan {
 
-void GLRendererAPI::Init() {
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
+class FileHandler {
+ public:
+  static bool IsFileExtension(const char* file_name, const char* extension);
+  static const char* GetFileExtension(const char* file_name);
+};
 
-void GLRendererAPI::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
+} // namespace Ethan
 
-void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-}
-
-void GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
-  GLCALL(glDrawElements(GL_TRIANGLES,
-                        vertex_array->GetIndexBuffer()->GetCount(),
-                        GL_UNSIGNED_INT,
-                        nullptr));
-}
-
-}
+#endif // ETHAN_UTILS_HELPER_FILE_H_

@@ -71,7 +71,7 @@ namespace Ethan {
 
 class Console {
  public:
-  static void Init();
+  static void Init(const std::string& client_name = "APP");
 
   inline static std::shared_ptr<spdlog::logger> &GetCoreLogger() {
     return core_logger_;

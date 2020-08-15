@@ -35,10 +35,13 @@
 
 namespace Ethan {}
 
-#include "ethan/core/input/input.h"
+#include "ethan/core/main/config.h"
 #include "ethan/core/main/application.h"
 
+#include "ethan/core/input/input.h"
+
 #include "ethan/core/graphic/shader.h"
+#include "ethan/core/graphic/texture.h"
 #include "ethan/core/graphic/renderer.h"
 #include "ethan/core/graphic/vertex_array.h"
 

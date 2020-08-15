@@ -46,8 +46,6 @@ extern Ethan::Application* Ethan::CreateApplication();
 
 // TDDO(@nghialam): Find a way to implement entry point
 int main(int argc, char *argv[]) {
-  Ethan::Console::Init();
-  ETLOG_CORE_INFO("Initialize Console!");
 
   auto app = Ethan::CreateApplication();
   app->Init();

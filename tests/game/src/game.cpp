@@ -32,7 +32,7 @@
 
 #include "game.h"
 
-Game::Game() {
+Game::Game() : Ethan::Application("GAME") {
   AddProcess(new ExampleProcess());
 }
 

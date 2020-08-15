@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_renderer.cpp
+ * @file gl_texture.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,31 +30,39 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_renderer.h"
-#include "ethan/opengl/gl_assert.h"
+#ifndef ETHAN_LIBS_GL_TEXTURE_H_
+#define ETHAN_LIBS_GL_TEXTURE_H_
+
+#include "ethan/core.h"
 
 #include <glad/glad.h>
 
 namespace Ethan {
 
-void GLRendererAPI::Init() {
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
+class GLTexture2D : public Texture2D {
+ public:
+  explicit GLTexture2D(const std::string& path);
+  virtual ~GLTexture2D();
 
-void GLRendererAPI::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
+  void Bind(uint16_t slot = 0) const override;
+  [[nodiscard]] TextureFormat GetFormat() const override { return format_; }
+  [[nodiscard]] const uint32_t GetID() const override { return textureID_; }
+  [[nodiscard]] const uint16_t GetWidth() const override { return width_; }
+  [[nodiscard]] const uint16_t GetHeight() const override { return height_; }
+  [[nodiscard]] const std::string &GetPath() const override { return path_; }
 
-void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-}
+ private:
+  uint16_t width_;
+  uint16_t height_;
+  uint32_t textureID_;
+  std::string path_;
 
-void GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
-  GLCALL(glDrawElements(GL_TRIANGLES,
-                        vertex_array->GetIndexBuffer()->GetCount(),
-                        GL_UNSIGNED_INT,
-                        nullptr));
-}
+  TextureFormat format_;
+  GLenum internal_format_;
 
-}
+  void LoadTextureToGPU(const unsigned char* data);
+};
+
+} // namespace Ethan
+
+#endif // ETHAN_LIBS_GL_TEXTURE_H_

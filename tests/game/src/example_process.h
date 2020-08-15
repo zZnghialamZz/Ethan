@@ -49,6 +49,7 @@ class ExampleProcess : public Ethan::Process {
   Ethan::Shared<Ethan::VertexBuffer> vertex_buffer_;
   Ethan::Shared<Ethan::IndexBuffer> index_buffer_;
   Ethan::Shared<Ethan::Shader> shader_;
+  Ethan::Shared<Ethan::Texture2D> texture_;
 
   Ethan::Camera* camera_;
 

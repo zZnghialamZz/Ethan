@@ -62,7 +62,9 @@ Shared<RendererAPI> RendererAPI::Create() {
 }
 
 /// --- RendererAPI
-void Renderer::Init() {}
+void Renderer::Init() {
+  RendererCommand::Init();
+}
 
 void Renderer::Shutdown() {}
 

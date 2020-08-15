@@ -31,6 +31,7 @@
  */
 
 #include "ethan/opengl/gl_buffers.h"
+#include "ethan/opengl/gl_assert.h"
 
 #include <glad/glad.h>
 
@@ -38,45 +39,45 @@ namespace Ethan {
 
 /// --- GLVertexBuffer
 GLVertexBuffer::GLVertexBuffer(float* vertices, uint32_t size) {
-  glGenBuffers(1, &vertexbufferID_);
-  glBindBuffer(GL_ARRAY_BUFFER, vertexbufferID_);
-  glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+  GLCALL(glGenBuffers(1, &vertexbufferID_));
+  GLCALL(glBindBuffer(GL_ARRAY_BUFFER, vertexbufferID_));
+  GLCALL(glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW));
 }
 
 GLVertexBuffer::~GLVertexBuffer() {
-  glDeleteBuffers(1, &vertexbufferID_);
+  GLCALL(glDeleteBuffers(1, &vertexbufferID_));
 }
 
 void GLVertexBuffer::Bind() const {
-  glBindBuffer(GL_ARRAY_BUFFER, vertexbufferID_);
+  GLCALL(glBindBuffer(GL_ARRAY_BUFFER, vertexbufferID_));
 }
 
 void GLVertexBuffer::UnBind() const {
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
 /// --- GLIndexBuffer
 GLIndexBuffer::GLIndexBuffer(uint32_t* indices, uint32_t &count)
     : count_(count) {
-  glGenBuffers(1, &indexbufferID_);
+  GLCALL(glGenBuffers(1, &indexbufferID_));
 
   // GL_ELEMENT_ARRAY_BUFFER is not valid without an actively bound VAO
   // Binding with GL_ARRAY_BUFFER allows the data to be loaded regardless of
   // VAO state.
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbufferID_);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+  GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbufferID_));
+  GLCALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW));
 }
 
 GLIndexBuffer::~GLIndexBuffer() {
-  glDeleteBuffers(1, &indexbufferID_);
+  GLCALL(glDeleteBuffers(1, &indexbufferID_));
 }
 
 void GLIndexBuffer::Bind() const {
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbufferID_);
+  GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbufferID_));
 }
 
 void GLIndexBuffer::UnBind() const {
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
 
 } // namespace Ethan

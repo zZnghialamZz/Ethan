@@ -41,7 +41,7 @@ namespace Ethan {
 
 class Application {
  public:
-  Application();
+  Application(const std::string& name = "APP");
   virtual ~Application();
 
   /**
@@ -76,12 +76,15 @@ class Application {
 
   virtual void AddOverlay(Process* process);
 
+  [[nodiscard]] const std::string& GetName() const { return name_; }
   ImGuiProcess* GetUIProcess() { return ui_process_; }
   Window& GetMainWindow() { return *main_window_; }
+
   static Application& ME() { return *instance_; }
 
  private:
   std::unique_ptr<Window> main_window_;
+  std::string name_;
 
   ProcessStack process_stack_;
   ImGuiProcess* ui_process_;

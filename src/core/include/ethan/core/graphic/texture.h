@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_renderer.cpp
+ * @file texture.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,31 +30,36 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_renderer.h"
-#include "ethan/opengl/gl_assert.h"
-
-#include <glad/glad.h>
+#ifndef ETHAN_CORE_GRAPHIC_TEXTURE_H_
+#define ETHAN_CORE_GRAPHIC_TEXTURE_H_
 
 namespace Ethan {
 
-void GLRendererAPI::Init() {
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+enum class TextureFormat : uint8_t {
+  None = 0,
+  RGB,
+  RGBA
+};
+
+class Texture {
+ public:
+  virtual ~Texture() = default;
+
+  virtual void Bind(uint16_t slot = 0) const = 0;
+
+  [[nodiscard]] virtual TextureFormat GetFormat() const = 0;
+  [[nodiscard]] virtual const uint32_t GetID() const = 0;
+  [[nodiscard]] virtual const uint16_t GetWidth() const = 0;
+  [[nodiscard]] virtual const uint16_t GetHeight() const = 0;
+};
+
+class Texture2D : public Texture {
+ public:
+  [[nodiscard]] virtual const std::string& GetPath() const = 0;
+
+  static Shared<Texture2D> Create(const std::string& path);
+};
+
 }
 
-void GLRendererAPI::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-}
-
-void GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
-  GLCALL(glDrawElements(GL_TRIANGLES,
-                        vertex_array->GetIndexBuffer()->GetCount(),
-                        GL_UNSIGNED_INT,
-                        nullptr));
-}
-
-}
+#endif // ETHAN_CORE_GRAPHIC_TEXTURE_H_

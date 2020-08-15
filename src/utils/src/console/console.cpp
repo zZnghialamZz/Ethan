@@ -39,14 +39,16 @@ namespace Ethan {
 std::shared_ptr<spdlog::logger> Console::core_logger_;
 std::shared_ptr<spdlog::logger> Console::client_logger_;
 
-void Console::Init() {
+void Console::Init(const std::string& client_name) {
   spdlog::set_pattern("%^<%T>[%n] : %v%$");
 
   core_logger_ = spdlog::stdout_color_mt("ETHAN");
   core_logger_->set_level(spdlog::level::trace);
 
-  client_logger_ = spdlog::stdout_color_mt("APP");
+  client_logger_ = spdlog::stdout_color_mt(client_name);
   client_logger_->set_level(spdlog::level::trace);
+
+  ETLOG_CORE_INFO("Initialize Console!");
 }
 
 } // namespace Ethan

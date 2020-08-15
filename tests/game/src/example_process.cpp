@@ -40,24 +40,25 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
   vertexarray_ = Ethan::VertexArray::Create();
   camera_ = new Ethan::Camera(Ethan::CameraProjection::kOrthographic);
 
-  float vertices[3 * 7] = {
-      -0.5f, -0.5f, 1.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-      0.5f, -0.5f, 1.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-      0.0f,  0.5f, 1.0f, 0.8f, 0.8f, 0.2f, 1.0f
+  float vertices[4 * 5] = {
+      -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
+       0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+       0.5f,  0.5f, 1.0f, 1.0f, 1.0f,
+      -0.5f,  0.5f, 1.0f, 0.0f, 1.0f
   };
 
   vertex_buffer_ = Ethan::VertexBuffer::Create(vertices, sizeof(vertices));
 
   Ethan::BufferLayout layout {
       {"pos", Ethan:: ShaderData::Type::kFloat3 },
-      {"col", Ethan:: ShaderData::Type::kFloat4 }
+      {"texcoord", Ethan:: ShaderData::Type::kFloat2 },
   };
   vertex_buffer_->SetLayout(layout);
 
   vertexarray_->AddVertexBuffer(vertex_buffer_);
 
-  unsigned int indices[3] = { 0, 1, 2 };
-  index_buffer_ = Ethan::IndexBuffer::Create(indices, 3);
+  unsigned int indices[6] = { 0, 1, 2, 2, 3, 0 };
+  index_buffer_ = Ethan::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t));
 
   vertexarray_->SetIndexBuffer(index_buffer_);
 
@@ -65,17 +66,17 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
     #version 330 core
 
     layout(location = 0) in vec3 pos;
-    layout(location = 1) in vec4 col;
+    layout(location = 1) in vec2 texcoord;
 
     uniform mat4 uEthan_ViewProjection;
     uniform mat4 uEthan_Transform;
 
-    out vec4 vcol;
     out vec3 vpos;
+    out vec2 vtexcoord;
 
     void main() {
-      vcol = col;
       vpos = pos;
+      vtexcoord = texcoord;
       gl_Position = uEthan_ViewProjection * uEthan_Transform * vec4(pos, 1.0);
     }
   )";
@@ -83,19 +84,23 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
   std::string fragment_src = R"(
     #version 330 core
 
-    out vec4 color;
+    layout(location = 0) out vec4 color;
 
     in vec3 vpos;
-    in vec4 vcol;
+    in vec2 vtexcoord;
+    uniform sampler2D u_Texture;
 
     void main() {
-      color = vec4(vpos * 0.5 + 0.5, 1.0);
-      color = vcol;
+      vec4 tex = texture(u_Texture, vtexcoord);
+      color = tex;
     }
   )";
 
   shader_ = Ethan::Shader::Create("Tris", vertex_src, fragment_src);
+  texture_ = Ethan::Texture2D::Create("res/textures/splashscreen.png");
 
+  shader_->Bind();
+  shader_->SetInt("u_Texture", 0);
 }
 
 void ExampleProcess::Attach() {}
@@ -133,7 +138,10 @@ void ExampleProcess::Update() {
   camera_->SetRotation(cam_rot_);
 
   Ethan::Renderer::Begin(*camera_);
+
+  texture_->Bind();
   Ethan::Renderer::Submit(shader_, vertexarray_);
+
   Ethan::Renderer::End();
 }
 

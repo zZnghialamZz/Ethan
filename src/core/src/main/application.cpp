@@ -31,12 +31,15 @@
  */
 
 #include "ethan/core/main/application.h"
+#include "ethan/core/graphic/renderer.h"
 
 namespace Ethan {
 
 Application* Application::instance_ = nullptr;
 
-Application::Application() {
+Application::Application(const std::string& name) : name_(name) {
+  Console::Init(name);
+
   ETASSERT_CORE(!instance_, "Application Exists !");
   instance_ = this;
 
@@ -46,14 +49,19 @@ Application::Application() {
         Application::EventCall(e);
       }
   );
+  main_window_->SetVSync(true);
 
   ui_process_ = ImGuiProcess::CreateImGuiProcess();
   AddProcess(ui_process_);
+
+  Renderer::Init();
 }
 
 Application::~Application() = default;
 
-void Application::Init() { Start(); }
+void Application::Init() {
+  Start();
+}
 
 void Application::Start() {
   timer_.Start();

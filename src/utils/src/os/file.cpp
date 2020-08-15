@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_renderer.cpp
+ * @file file.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,31 +30,36 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_renderer.h"
-#include "ethan/opengl/gl_assert.h"
-
-#include <glad/glad.h>
+#include "ethan/utils/os/file.h"
 
 namespace Ethan {
 
-void GLRendererAPI::Init() {
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+/**
+ * Checking if the file has the same extension as the given one.
+ * @param file_name - char array
+ * @param extension - char array
+ * @return whether the file extension is matched.
+ */
+bool FileHandler::IsFileExtension(const char *file_name,
+                                  const char *extension) {
+  const char* file_ext = GetFileExtension(file_name);
+  if (file_ext)
+    if (strcmp(file_ext, extension) != 0) return true;
+
+  return false;
 }
 
-void GLRendererAPI::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
+/**
+ * Find the extension of the given file.
+ * The function assume the file has an extension start with '.'
+ * @param file_name - char array
+ * @return a pointer at the position of the extension
+ */
+const char* FileHandler::GetFileExtension(const char *file_name) {
+  const char* dot = strrchr(file_name, '.');
+  if (!dot || dot == file_name) return nullptr;
 
-void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-}
-
-void GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
-  GLCALL(glDrawElements(GL_TRIANGLES,
-                        vertex_array->GetIndexBuffer()->GetCount(),
-                        GL_UNSIGNED_INT,
-                        nullptr));
+  return (dot + 1);
 }
 
 }
