@@ -65,7 +65,8 @@ unsigned int ShaderData::ConvertToNativeType(ShaderData::Type type) {
 
 /// --- GLShader
 GLShader::GLShader(const std::string &file_path) {
-  // TODO: Read file path for shader code from source files
+  std::string shader_src = FileSystem::ReadFile(file_path.c_str());
+  ETASSERT_CORE((!shader_src.empty()), "Cannot read shader file !!");
 }
 
 GLShader::GLShader(const std::string &name,

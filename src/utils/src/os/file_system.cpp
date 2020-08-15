@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file file.h
+ * @file file.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,17 +30,6 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UTILS_HELPER_FILE_H_
-#define ETHAN_UTILS_HELPER_FILE_H_
+#include "ethan/utils/os/file_system.h"
 
-namespace Ethan {
-
-class FileHandler {
- public:
-  static bool IsFileExtension(const char* file_name, const char* extension);
-  static const char* GetFileExtension(const char* file_name);
-};
-
-} // namespace Ethan
-
-#endif // ETHAN_UTILS_HELPER_FILE_H_
+namespace Ethan {}

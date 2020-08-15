@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_assert.cpp
+ * @file macros.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,23 +30,39 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_assert.h"
+#ifndef ETHAN_UTILS_MISC_MACROS_H_
+#define ETHAN_UTILS_MISC_MACROS_H_
 
-namespace Ethan {
+namespace Ethan {}
 
-void GLClearError() {
-  while (glGetError() != GL_NO_ERROR)
-    ;
-}
+// Some compilers does not inline any functions when not optimizing unless it
+// has always_inline attribute
+// https://gcc.gnu.org/onlinedocs/gcc/Inline.html
+// --- ALWAYS_INLINE
+#ifndef ALWAYS_INLINE
 
-void GLLogCall(const char *function) {
-  while (GLenum error = glGetError()) {
-    ETLOG_CORE_ERROR("OpenGL Error {0} - {1} \nAt {2}, line {3}",
-                     error,
-                     function,
-                     __FILE__,
-                     __LINE__);
-  }
-}
+#if defined(__GNUC__) && (__GNUC__ >= 4)
+#define ALWAYS_INLINE __attribute__((always_inline)) inline
+#elif defined(__llvm__)
+#define ALWAYS_INLINE __attribute__((always_inline)) inline
+#elif defined(_MSC_VER)
+#define ALWAYS_INLINE __forceinline
+#else
+#define ALWAYS_INLINE inline
+#endif
 
-}
+#endif
+
+// Should always inline, except in some cases because it makes debugging harder
+// --- INLINE
+#ifndef INLINE
+
+#ifdef NOT_FORCED_INLINE
+#define INLINE inline
+#else
+#define INLINE ALWAYS_INLINE
+#endif
+
+#endif
+
+#endif // ETHAN_UTILS_MISC_MACROS_H_

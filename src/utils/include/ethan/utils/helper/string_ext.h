@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_assert.cpp
+ * @file string_ext.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,23 +30,35 @@
  * limitations under the License.
  */
 
-#include "ethan/opengl/gl_assert.h"
+#ifndef ETHAN_UTILS_HELPER_STRING_EXT_H_
+#define ETHAN_UTILS_HELPER_STRING_EXT_H_
 
-namespace Ethan {
+namespace Ethan::String {
 
-void GLClearError() {
-  while (glGetError() != GL_NO_ERROR)
-    ;
+/**
+ * Split String based on the given separator
+ * @param original - std::string
+ * @param separator - std::string
+ * @return a vector contains all split strings
+ */
+static std::vector<std::string> Split(const std::string &original,
+                                      const std::string &separator);
+
+/**
+ * Convert a string with '\n' into a vector of strings
+ * @param input - std::string
+ * @return a vector of strings
+ */
+static std::vector<std::string> GetLines(const std::string& input);
+
+/**
+ * Checking if the given string contains a specific word.
+ * @param input - std::string
+ * @param contain - std::string
+ * @return whether the string contains word
+ */
+static bool IsContains(const std::string& input, const std::string& word);
+
 }
 
-void GLLogCall(const char *function) {
-  while (GLenum error = glGetError()) {
-    ETLOG_CORE_ERROR("OpenGL Error {0} - {1} \nAt {2}, line {3}",
-                     error,
-                     function,
-                     __FILE__,
-                     __LINE__);
-  }
-}
-
-}
+#endif // ETHAN_UTILS_HELPER_STRING_EXT_H_

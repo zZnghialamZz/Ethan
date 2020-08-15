@@ -56,21 +56,21 @@ GLTexture2D::GLTexture2D(const std::string &path) : path_(path) {
   // Original idea from raylib:
   // https://github.com/raysan5/raylib/blob/master/src/core.c#L1846
 #if defined(SUPPORT_IMAGE_PNG)
-  if ((FileHandler::IsFileExtension(path.c_str(), ".png"))
+  if ((FileSystem::IsFileExtension(path.c_str(), ".png"))
 #else
   if ((false)
 #endif
 #if defined(SUPPORT_IMAGE_BMP)
-      || (FileHandler::IsFileExtension(path.c_str(), ".bmp"))
+      || (FileSystem::IsFileExtension(path.c_str(), ".bmp"))
 #endif
 #if defined(SUPPORT_IMAGE_TGA)
-      || (FileHandler::IsFileExtension(path.c_str(), ".tga"))
+      || (FileSystem::IsFileExtension(path.c_str(), ".tga"))
 #endif
 #if defined(SUPPORT_IMAGE_GIF)
-      || (FileHandler::IsFileExtension(path.c_str(), ".gif"))
+      || (FileSystem::IsFileExtension(path.c_str(), ".gif"))
 #endif
 #if defined(SUPPORT_IMAGE_JPG)
-      || (FileHandler::IsFileExtension(path.c_str(), ".jpg"))
+      || (FileSystem::IsFileExtension(path.c_str(), ".jpg"))
 #endif
   ) {
     // Flip vertically as OpenGL expect to render the texture from below

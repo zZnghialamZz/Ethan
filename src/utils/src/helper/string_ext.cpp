@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file file.cpp
+ * @file string_ext.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,36 +30,35 @@
  * limitations under the License.
  */
 
-#include "ethan/utils/os/file.h"
+#include "ethan/utils/helper/string_ext.h"
 
 namespace Ethan {
 
-/**
- * Checking if the file has the same extension as the given one.
- * @param file_name - char array
- * @param extension - char array
- * @return whether the file extension is matched.
- */
-bool FileHandler::IsFileExtension(const char *file_name,
-                                  const char *extension) {
-  const char* file_ext = GetFileExtension(file_name);
-  if (file_ext)
-    if (strcmp(file_ext, extension) != 0) return true;
+std::vector<std::string> String::Split(const std::string &original,
+                                       const std::string &separator) {
+  std::vector<std::string> result;
 
-  return false;
+  size_t start = 0;
+  while(true) {
+    size_t end = original.find_first_of(separator);
+    if (end == std::string::npos) {
+      result.push_back(original.substr(start));
+      break;
+    } else {
+      result.push_back(original.substr(start, end - start));
+      start = end + 1;
+    }
+  }
+
+  return result;
 }
 
-/**
- * Find the extension of the given file.
- * The function assume the file has an extension start with '.'
- * @param file_name - char array
- * @return a pointer at the position of the extension
- */
-const char* FileHandler::GetFileExtension(const char *file_name) {
-  const char* dot = strrchr(file_name, '.');
-  if (!dot || dot == file_name) return nullptr;
+std::vector<std::string> String::GetLines(const std::string& input) {
+  return Split(input, "\n");
+}
 
-  return (dot + 1);
+bool String::IsContains(const std::string &input, const std::string &word) {
+  return input.find(word) != std::string::npos;
 }
 
 }

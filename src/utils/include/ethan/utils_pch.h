@@ -43,4 +43,6 @@
 #include <array>
 #include <vector>
 
+#include "ethan/utils/misc/macros.h"
+
 #endif // __ETPCH_H_
