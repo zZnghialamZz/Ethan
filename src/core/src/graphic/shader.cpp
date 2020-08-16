@@ -79,4 +79,41 @@ uint8_t ShaderData::GetDataTypeSize(ShaderData::DataType type) {
   return 0;
 }
 
+/// --- Shader Library
+
+ShaderLibrary::ShaderLibrary() = default;
+
+ShaderLibrary::~ShaderLibrary() = default;
+
+void ShaderLibrary::Add(const Shared<Shader> &shader) {
+  Add(shader->GetName(), shader);
+}
+
+void ShaderLibrary::Add(const std::string &name, const Shared<Shader> &shader) {
+  ETASSERT_CORE(!IsExisted(name), "Shader already existed !!");
+  all_shaders_[name] = shader;
+}
+
+Shared<Shader> ShaderLibrary::Load(const std::string &file_path) {
+  auto shader = Shader::Create(file_path);
+  Add(shader);
+  return shader;
+}
+
+Shared<Shader> ShaderLibrary::Load(const std::string &name,
+                                   const std::string &file_path) {
+  auto shader = Shader::Create(file_path);
+  Add(name, shader);
+  return shader;
+}
+
+Shared<Shader> ShaderLibrary::GetShader(const std::string &name) const {
+  ETASSERT_CORE(IsExisted(name), "Cannot find Shader !!");
+  return all_shaders_.at(name);
+}
+
+bool ShaderLibrary::IsExisted(const std::string &name) const {
+  return all_shaders_.find(name) != all_shaders_.end();
+}
+
 } // namespace Ethan

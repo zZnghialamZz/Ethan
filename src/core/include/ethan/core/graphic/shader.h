@@ -88,6 +88,23 @@ class ShaderData {
   static unsigned int ToNativeShaderType(ShaderType type);
 };
 
+class ShaderLibrary {
+ public:
+  ShaderLibrary();
+  ~ShaderLibrary();
+
+  void Add(const Shared<Shader>& shader);
+  void Add(const std::string& name, const Shared<Shader>& shader);
+  Shared<Shader> Load(const std::string& file_path);
+  Shared<Shader> Load(const std::string& name, const std::string& file_path);
+
+  [[nodiscard]] Shared<Shader> GetShader(const std::string& name) const;
+  [[nodiscard]] bool IsExisted(const std::string& name) const;
+
+ private:
+  std::unordered_map<std::string, Shared<Shader>> all_shaders_;
+};
+
 }
 
 #endif // ETHAN_CORE_GRAPHIC_SHADER_H_

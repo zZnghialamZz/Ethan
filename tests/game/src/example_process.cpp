@@ -62,11 +62,11 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
 
   vertexarray_->SetIndexBuffer(index_buffer_);
 
-  shader_ = Ethan::Shader::Create("res/shaders/basic.glsl");
+  auto shader = shader_lib_.Load("res/shaders/basic.glsl");
   texture_ = Ethan::Texture2D::Create("res/textures/splashscreen.png");
 
-  shader_->Bind();
-  shader_->SetInt("u_Texture", 0);
+  shader->Bind();
+  shader->SetInt("u_Texture", 0);
 }
 
 void ExampleProcess::Attach() {}
@@ -106,7 +106,7 @@ void ExampleProcess::Update() {
   Ethan::Renderer::Begin(*camera_);
 
   texture_->Bind();
-  Ethan::Renderer::Submit(shader_, vertexarray_);
+  Ethan::Renderer::Submit(shader_lib_.GetShader("basic"), vertexarray_);
 
   Ethan::Renderer::End();
 }
