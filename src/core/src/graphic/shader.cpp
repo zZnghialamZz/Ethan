@@ -58,31 +58,8 @@ Shared<Shader> Shader::Create(const std::string &file_path) {
   return nullptr;
 }
 
-Shared<Shader> Shader::Create(const std::string &name,
-                              const std::string &vertex_source,
-                              const std::string &fragment_source) {
-  switch (Renderer::GetAPI()) {
-    // None Renderer
-    case RendererAPI::None : {
-      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-      return nullptr;
-    }
-    // OpenGL Renderer
-    case RendererAPI::OpenGL : {
-#ifdef __OPENGL_API__
-      return MakeShared<GLShader>(name, vertex_source, fragment_source);
-#else
-      ETASSERT_CORE(false, "Settings or Build Config of RendererAPI WRONG !!");
-#endif
-    }
-  } // switch(Renderer::GetAPI())
-
-  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-  return nullptr;
-}
-
 /// --- ShaderData
-uint8_t ShaderData::GetTypeSize(ShaderData::Type type) {
+uint8_t ShaderData::GetDataTypeSize(ShaderData::DataType type) {
   switch (type) {
     case kNone:   return 0;
     case kFloat:  return 4;

@@ -53,18 +53,22 @@ class Shader {
   virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
 
   [[nodiscard]] virtual const std::string& GetName() const = 0;
+  [[nodiscard]] virtual const std::string& GetFilePath() const = 0;
 
   static Shared<Shader> Create(const std::string& file_path);
-  static Shared<Shader> Create(const std::string &name,
-                               const std::string &vertex_source,
-                               const std::string &fragment_source);
 };
 
 class ShaderData {
  public:
   virtual ~ShaderData() = default;
 
-  enum Type : uint8_t {
+  enum ShaderType : uint8_t {
+    kUnknown = 0,
+    kVertex,
+    kFragment
+  };
+
+  enum DataType : uint8_t {
     kNone = 0,
     kFloat,
     kFloat2,
@@ -79,8 +83,9 @@ class ShaderData {
     kBool
   };
 
-  static uint8_t GetTypeSize(Type type);
-  static unsigned int ConvertToNativeType(Type type);
+  static uint8_t GetDataTypeSize(DataType type);
+  static unsigned int ToNativeDataType(DataType type);
+  static unsigned int ToNativeShaderType(ShaderType type);
 };
 
 }

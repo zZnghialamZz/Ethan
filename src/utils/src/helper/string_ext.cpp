@@ -39,15 +39,16 @@ std::vector<std::string> String::Split(const std::string &original,
   std::vector<std::string> result;
 
   size_t start = 0;
-  while(true) {
-    size_t end = original.find_first_of(separator);
-    if (end == std::string::npos) {
-      result.push_back(original.substr(start));
+  size_t end = original.find_first_of(separator);
+  while (end <= std::string::npos) {
+    std::string token = original.substr(start, end - start);
+    if (!token.empty())
+      result.push_back(token);
+    if (end == std::string::npos)
       break;
-    } else {
-      result.push_back(original.substr(start, end - start));
-      start = end + 1;
-    }
+
+    start = end + 1;
+    end = original.find_first_of(separator, start);
   }
 
   return result;
@@ -59,6 +60,10 @@ std::vector<std::string> String::GetLines(const std::string& input) {
 
 bool String::IsContains(const std::string &input, const std::string &word) {
   return input.find(word) != std::string::npos;
+}
+
+bool String::IsStartWith(const std::string &input, const std::string &word) {
+  return input.find(word) == 0;
 }
 
 }

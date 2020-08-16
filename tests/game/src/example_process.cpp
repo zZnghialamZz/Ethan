@@ -50,8 +50,8 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
   vertex_buffer_ = Ethan::VertexBuffer::Create(vertices, sizeof(vertices));
 
   Ethan::BufferLayout layout {
-      {"pos", Ethan:: ShaderData::Type::kFloat3 },
-      {"texcoord", Ethan:: ShaderData::Type::kFloat2 },
+      {"pos", Ethan:: ShaderData::DataType::kFloat3 },
+      {"texcoord", Ethan:: ShaderData::DataType::kFloat2 },
   };
   vertex_buffer_->SetLayout(layout);
 
@@ -62,41 +62,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
 
   vertexarray_->SetIndexBuffer(index_buffer_);
 
-  std::string vertex_src = R"(
-    #version 330 core
-
-    layout(location = 0) in vec3 pos;
-    layout(location = 1) in vec2 texcoord;
-
-    uniform mat4 uEthan_ViewProjection;
-    uniform mat4 uEthan_Transform;
-
-    out vec3 vpos;
-    out vec2 vtexcoord;
-
-    void main() {
-      vpos = pos;
-      vtexcoord = texcoord;
-      gl_Position = uEthan_ViewProjection * uEthan_Transform * vec4(pos, 1.0);
-    }
-  )";
-
-  std::string fragment_src = R"(
-    #version 330 core
-
-    layout(location = 0) out vec4 color;
-
-    in vec3 vpos;
-    in vec2 vtexcoord;
-    uniform sampler2D u_Texture;
-
-    void main() {
-      vec4 tex = texture(u_Texture, vtexcoord);
-      color = tex;
-    }
-  )";
-
-  shader_ = Ethan::Shader::Create("Tris", vertex_src, fragment_src);
+  shader_ = Ethan::Shader::Create("res/shaders/basic.glsl");
   texture_ = Ethan::Texture2D::Create("res/textures/splashscreen.png");
 
   shader_->Bind();

@@ -40,7 +40,7 @@ namespace Ethan {
 class BufferElement {
  public:
   BufferElement(const std::string &name,
-                ShaderData::Type type,
+                ShaderData::DataType type,
                 bool normalized = false);
   virtual ~BufferElement();
 
@@ -49,7 +49,7 @@ class BufferElement {
   [[nodiscard]] const std::string &GetName() const { return name_; }
   [[nodiscard]] const size_t &GetOffset() const { return offset_; }
   [[nodiscard]] const uint32_t &GetSize() const { return size_; }
-  [[nodiscard]] const ShaderData::Type &GetType() const { return type_; }
+  [[nodiscard]] const ShaderData::DataType &GetType() const { return type_; }
   [[nodiscard]] const bool &IsNormalized() const { return normalized_; }
   [[nodiscard]] uint32_t GetComponentCount() const;
 
@@ -57,7 +57,7 @@ class BufferElement {
   std::string name_;
   uint32_t size_;
   size_t offset_;
-  ShaderData::Type type_;
+  ShaderData::DataType type_;
   bool normalized_;
 };
 

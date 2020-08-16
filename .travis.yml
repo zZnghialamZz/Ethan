@@ -49,14 +49,6 @@ jobs:
             - cmake
             - doxygen
       env: MATRIX_EVAL="CC=gcc-6 && CXX=g++-6" BUILD_TYPE=Release COMPILER_VER=6 GEN_DOC=TRUE
-    - os: linux # Use 3.8 since 3.9 is broken on trusty when using ASAN
-      compiler: clang
-      addons: &clang38 {apt: {packages: [clang-3.8,libstdc++-6-dev] , sources: [ubuntu-toolchain-r-test]}}
-      env: BUILD_TYPE=Debug COMPILER_VER=3.8 USE_ASAN=1
-    - os: linux
-      compiler: clang
-      addons: *clang38
-      env: BUILD_TYPE=Debug COMPILER_VER=3.8 USE_UBSAN=1
     - os: linux
       compiler: clang
       addons: &clang4 {apt: {packages: [clang-4.0,libstdc++-6-dev] , sources: [ubuntu-toolchain-r-test,llvm-toolchain-trusty-4.0]}}

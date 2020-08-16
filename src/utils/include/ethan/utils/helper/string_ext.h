@@ -41,15 +41,15 @@ namespace Ethan::String {
  * @param separator - std::string
  * @return a vector contains all split strings
  */
-static std::vector<std::string> Split(const std::string &original,
-                                      const std::string &separator);
+std::vector<std::string> Split(const std::string &original,
+                               const std::string &separator);
 
 /**
- * Convert a string with '\n' into a vector of strings
+ * Convert a string with multiple lines into a vector of strings
  * @param input - std::string
  * @return a vector of strings
  */
-static std::vector<std::string> GetLines(const std::string& input);
+std::vector<std::string> GetLines(const std::string& input);
 
 /**
  * Checking if the given string contains a specific word.
@@ -57,7 +57,15 @@ static std::vector<std::string> GetLines(const std::string& input);
  * @param contain - std::string
  * @return whether the string contains word
  */
-static bool IsContains(const std::string& input, const std::string& word);
+bool IsContains(const std::string& input, const std::string& word);
+
+/**
+ * Checking if the given string start with a specific word.
+ * @param input - std::string
+ * @param word - std::string
+ * @return  whether the string start with word
+ */
+bool IsStartWith(const std::string& input, const std::string& word);
 
 }
 

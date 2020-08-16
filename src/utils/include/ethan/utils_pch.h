@@ -29,8 +29,8 @@
  * limitations under the License.
  */
 
-#ifndef __ETPCH_H_
-#define __ETPCH_H_
+#ifndef ETHAN_UTILS_PCH_H_
+#define ETHAN_UTILS_PCH_H_
 
 #include <iostream>
 #include <memory>
@@ -45,4 +45,4 @@
 
 #include "ethan/utils/misc/macros.h"
 
-#endif // __ETPCH_H_
+#endif // ETHAN_UTILS_PCH_H_

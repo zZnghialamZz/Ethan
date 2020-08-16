@@ -79,7 +79,7 @@ void GLVertexArray::SettingBufferLayout(const Shared<VertexBuffer> &vertex_buffe
     GLCALL(glEnableVertexAttribArray(index));
     GLCALL(glVertexAttribPointer(index,
                                  element.GetComponentCount(),
-                                 ShaderData::ConvertToNativeType(element.GetType()),
+                                 ShaderData::ToNativeDataType(element.GetType()),
                                  element.IsNormalized() ? GL_TRUE : GL_FALSE,
                                  layout.GetStride(),
                                  (const void *) element.GetOffset()));

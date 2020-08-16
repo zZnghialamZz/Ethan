@@ -33,6 +33,11 @@
 #ifndef ETHAN_UTILS_HELPER_FILE_H_
 #define ETHAN_UTILS_HELPER_FILE_H_
 
+#if defined(__GNUC__)
+#include <cstdio>
+#include <cstring>
+#endif
+
 #include <fstream>
 #include <sys/stat.h>
 
@@ -43,7 +48,7 @@ namespace Ethan::FileSystem {
  * @param file_path - char array
  * @return a string which has all of the given file's contents
  */
-static std::string ReadFile(const char* file_path) {
+static std::string ReadFile(const std::string& file_path) {
   std::string result;
   std::ifstream in(file_path, std::ios::in | std::ios::binary);
   if (in) {
@@ -55,6 +60,26 @@ static std::string ReadFile(const char* file_path) {
   }
 
   return result;
+}
+
+/**
+ * Get the file name based on the given path. Please be note that this function
+ * will not return the file extension (if any)
+ * @param file_path -  std::string
+ * @return The File Name only.
+ */
+INLINE static std::string GetFileName(const std::string& file_path) {
+  size_t found = file_path.find_last_of("/\\");
+  std::string file_name = (found != std::string::npos)
+      ? file_path.substr(found + 1)
+      : file_path;
+
+  found = file_name.find_last_of(".");
+  file_name = (found != std::string::npos)
+      ? file_name.substr(0, found)
+      : file_name;
+
+  return file_name;
 }
 
 /**

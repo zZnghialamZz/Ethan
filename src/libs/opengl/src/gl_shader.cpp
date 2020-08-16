@@ -39,23 +39,23 @@
 namespace Ethan {
 
 /// --- ShaderData
-unsigned int ShaderData::ConvertToNativeType(ShaderData::Type type) {
+unsigned int ShaderData::ToNativeDataType(ShaderData::DataType type) {
   switch (type) {
-    case ShaderData::Type::kNone:
+    case ShaderData::DataType::kNone:
       return GL_NONE;
-    case ShaderData::Type::kFloat:
-    case ShaderData::Type::kFloat2:
-    case ShaderData::Type::kFloat3:
-    case ShaderData::Type::kFloat4:
-    case ShaderData::Type::kMat3:
-    case ShaderData::Type::kMat4:
+    case ShaderData::DataType::kFloat:
+    case ShaderData::DataType::kFloat2:
+    case ShaderData::DataType::kFloat3:
+    case ShaderData::DataType::kFloat4:
+    case ShaderData::DataType::kMat3:
+    case ShaderData::DataType::kMat4:
       return GL_FLOAT;
-    case ShaderData::Type::kInt:
-    case ShaderData::Type::kInt2:
-    case ShaderData::Type::kInt3:
-    case ShaderData::Type::kInt4:
+    case ShaderData::DataType::kInt:
+    case ShaderData::DataType::kInt2:
+    case ShaderData::DataType::kInt3:
+    case ShaderData::DataType::kInt4:
       return GL_INT;
-    case ShaderData::Type::kBool:
+    case ShaderData::DataType::kBool:
       return GL_BOOL;
   }
 
@@ -63,23 +63,46 @@ unsigned int ShaderData::ConvertToNativeType(ShaderData::Type type) {
   return 0;
 }
 
-/// --- GLShader
-GLShader::GLShader(const std::string &file_path) {
-  std::string shader_src = FileSystem::ReadFile(file_path.c_str());
-  ETASSERT_CORE((!shader_src.empty()), "Cannot read shader file !!");
+unsigned int ShaderData::ToNativeShaderType(ShaderType type) {
+  switch (type) {
+    case kUnknown:
+      return GL_NONE;
+    case kVertex:
+      return GL_VERTEX_SHADER;
+    case kFragment:
+      return GL_FRAGMENT_SHADER;
+  }
 }
 
-GLShader::GLShader(const std::string &name,
-                   const std::string &vertex_source,
-                   const std::string &fragment_source)
-                   : name_(name) {
-  GLuint program = glCreateProgram();
-  GLuint vs = CompileShader(GL_VERTEX_SHADER, vertex_source);
-  GLuint fs = CompileShader(GL_FRAGMENT_SHADER, fragment_source);
-  glAttachShader(program, vs);
-  glAttachShader(program, fs);
+/// --- GLShader
+GLShader::GLShader(const std::string &file_path)
+    : file_path_(file_path)
+    , name_(FileSystem::GetFileName(file_path)) {
 
-  shaderID_ = program;
+  LoadSource();
+  Compile();
+}
+
+GLShader::~GLShader() = default;
+
+void GLShader::Bind() const {
+  glUseProgram(shaderID_);
+}
+
+void GLShader::UnBind() const {
+  glUseProgram(0);
+}
+
+void GLShader::Compile() {
+  GLuint program = glCreateProgram();
+
+  std::vector<GLuint> shaders;
+  for (auto& source : shader_cache_) {
+    GLuint shader = CompileShader(ShaderData::ToNativeShaderType(source.first),
+                                  source.second);
+    glAttachShader(program, shader);
+    shaders.push_back(shader);
+  }
 
   // Link our program & checking if success
   glLinkProgram(program);
@@ -94,30 +117,20 @@ GLShader::GLShader(const std::string &name,
 
     // We dont need it if it failed to link
     glDeleteProgram(program);
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    for (auto shader : shaders)
+      glDeleteShader(shader);
 
-    ETLOG_CORE_CRITICAL("Cannot link Shader !");
-    ETLOG_CORE_CRITICAL("{0}", err_log.data());
-
+    ETLOG_CORE_CRITICAL("Cannot link Shader ! - {0}", err_log.data());
     return;
   }
 
+  shaderID_ = program;
+
   // Cleanup as we dont need the shader code after linking
-  glDetachShader(program, vs);
-  glDetachShader(program, fs);
-  glDeleteShader(vs);
-  glDeleteShader(fs);
-}
-
-GLShader::~GLShader() = default;
-
-void GLShader::Bind() const {
-  glUseProgram(shaderID_);
-}
-
-void GLShader::UnBind() const {
-  glUseProgram(0);
+  for (auto shader : shaders)
+    glDetachShader(program, shader);
+  for (auto shader : shaders)
+    glDeleteShader(shader);
 }
 
 unsigned int GLShader::CompileShader(unsigned int type,
@@ -150,6 +163,32 @@ unsigned int GLShader::CompileShader(unsigned int type,
   }
 
   return id;
+}
+
+void GLShader::LoadSource() {
+  std::string src = FileSystem::ReadFile(file_path_);
+  ETASSERT_CORE((!src.empty()), "Cannot read shader file !!");
+
+  std::vector<std::string> lines = String::GetLines(src);
+  ShaderData::ShaderType current_type = ShaderData::ShaderType::kUnknown;
+  for (const std::string &line : lines) {
+    if (String::IsStartWith(line, "#shader")) {
+      // ShaderType Declaration
+      if (String::IsContains(line, "vertex")) {
+        current_type = ShaderData::ShaderType::kVertex;
+        shader_cache_[current_type] = "";
+
+      } else if (String::IsContains(line, "fragment") ||
+          String::IsContains(line, "pixel")) {
+        current_type = ShaderData::ShaderType::kFragment;
+        shader_cache_[current_type] = "";
+      }
+
+    } else if (current_type != ShaderData::ShaderType::kUnknown) {
+      shader_cache_[current_type].append(line);
+      shader_cache_[current_type].append("\n");
+    }
+  }
 }
 
 void GLShader::SetInt(const std::string &name, int value) {

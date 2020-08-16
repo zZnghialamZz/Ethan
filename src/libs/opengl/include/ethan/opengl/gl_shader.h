@@ -42,9 +42,6 @@ namespace Ethan {
 class GLShader : public Shader {
  public:
   explicit GLShader(const std::string& file_path);
-  GLShader(const std::string &name,
-           const std::string &vertex_source,
-           const std::string &fragment_source);
   ~GLShader();
 
   void Bind() const override;
@@ -61,20 +58,24 @@ class GLShader : public Shader {
   void SetMat4(const std::string &name, const glm::mat4 &value) override;
 
   [[nodiscard]] const std::string &GetName() const override { return name_; }
-
-  unsigned int CompileShader(unsigned int type, const std::string& source);
+  [[nodiscard]] const std::string &GetFilePath() const override { return file_path_; }
 
  private:
   /// --- Private Members
 
   uint32_t shaderID_;
   std::string name_;
+  std::string file_path_;
 
   std::unordered_map<std::string, int> location_cache_;
+  std::unordered_map<ShaderData::ShaderType, std::string> shader_cache_;
 
   /// --- Private Method
 
   int GetUniformLocation(const std::string& name);
+  unsigned int CompileShader(unsigned int type, const std::string& source);
+  void Compile();
+  void LoadSource();
 };
 
 }

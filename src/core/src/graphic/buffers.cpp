@@ -85,12 +85,12 @@ Shared<IndexBuffer> IndexBuffer::Create(uint32_t *indices, uint32_t count) {
 
 /// --- BufferElement
 BufferElement::BufferElement(const std::string &name,
-                             ShaderData::Type type,
+                             ShaderData::DataType type,
                              bool normalized)
     : name_(name),
       type_(type),
       normalized_(normalized),
-      size_(ShaderData::GetTypeSize(type)),
+      size_(ShaderData::GetDataTypeSize(type)),
       offset_(0) {}
 
 BufferElement::~BufferElement() = default;
