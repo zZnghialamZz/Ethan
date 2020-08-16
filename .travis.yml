@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-dist: xenial
+dist: bionic
 language: cpp
 
 env:
@@ -36,12 +36,6 @@ jobs:
     - os: osx
       osx_image: xcode9.4
       env: BUILD_TYPE=Debug
-    - os: osx
-      osx_image: xcode8
-      env: BUILD_TYPE=Debug MATRIX_EVAL="brew install gcc6 && CC=gcc-6 && CXX=g++-6"
-    - os: osx
-      osx_image: xcode8
-      env: BUILD_TYPE=Debug MATRIX_EVAL="brew install gcc7 && CC=gcc-7 && CXX=g++-7"
 
     - os: linux
       compiler: gcc
