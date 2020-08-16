@@ -64,9 +64,10 @@ if (CMAKE_BUILD_TYPE STREQUAL "")
   set(CMAKE_BUILD_TYPE "Debug"
       CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) \"Debug\" \"Release\" \"RelWithDebInfo\" \"MinSizeRel\"."
       FORCE)
+  add_definitions(-DETHAN_DEBUG)
 endif()
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
-  add_definitions( -O2 ) # Optimization Level 2
+  add_definitions(-DETHAN_RELEASE)
 endif()
 
 # ------------------------------------------------------

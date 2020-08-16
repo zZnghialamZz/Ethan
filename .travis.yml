@@ -52,7 +52,7 @@ jobs:
     - os: linux
       compiler: gcc
       addons: {apt: {packages: [g++-6,doxygen] , sources: [ubuntu-toolchain-r-test]}}
-      env: BUILD_TYPE=Release COMPILER_VER=6 GEN_DOC=TRUE
+      env: MATRIX_EVAL="CC=gcc-6 && CXX=g++-6" BUILD_TYPE=Release COMPILER_VER=6 GEN_DOC=TRUE
     - os: linux # Use 3.8 since 3.9 is broken on trusty when using ASAN
       compiler: clang
       addons: &clang38 {apt: {packages: [clang-3.8,libstdc++-6-dev] , sources: [ubuntu-toolchain-r-test]}}
