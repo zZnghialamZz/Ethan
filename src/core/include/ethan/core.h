@@ -44,5 +44,6 @@ namespace Ethan {}
 #include "ethan/core/graphic/texture.h"
 #include "ethan/core/graphic/renderer.h"
 #include "ethan/core/graphic/vertex_array.h"
+#include "ethan/core/graphic/camera/camera_controller.h"
 
 #endif // ETHAN_CORE_H_

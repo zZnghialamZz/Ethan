@@ -37,7 +37,7 @@ namespace Ethan {
 /// --- KeyEvent
 KeyEvent::KeyEvent(KeyCode keycode) : keycode_(keycode) {
   SetHandled(false);
-  SetCategory(EventCategory::kKeys);
+  SetCategory(EventCategory::KEYS);
 }
 
 /// --- KeyPressedEvent

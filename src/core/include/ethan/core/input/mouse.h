@@ -41,7 +41,7 @@ namespace Ethan {
 /// --- Main Mouse API
 /// -------------------------------------------
 
-typedef enum class MouseCode {
+typedef enum class MouseCode : uint16_t {
   // From glfw3.h
   Button0                = 0,
   Button1                = 1,
@@ -67,10 +67,10 @@ inline std::ostream& operator<<(std::ostream& os, Mouse mouseCode) {
 /// --- Events
 /// -------------------------------------------
 enum MouseEventType {
-  kMouseMovedEvent,
-  kMouseScrolledEvent,
-  kMouseButtonPressedEvent,
-  kMouseButtonReleasedEvent
+  MOUSE_MOVED_EVENT,
+  MOUSE_SCROLLED_EVENT,
+  MOUSE_BUTTON_PRESSED_EVENT,
+  MOUSE_BUTTON_RELEASED_EVENT
 };
 
 class MouseEvent : public Event {
@@ -100,7 +100,7 @@ class MouseMovedEvent : public MouseEvent {
   [[nodiscard]] float GetY() const { return y_; }
   [[nodiscard]] std::string ToString() const override;
   [[nodiscard]] MouseEventType GetMouseEventType() const override {
-    return kMouseMovedEvent;
+    return MOUSE_MOVED_EVENT;
   }
 
   EVENT_CLASS(MouseMoved);
@@ -118,7 +118,7 @@ class MouseScrolledEvent : public MouseEvent {
   [[nodiscard]] float GetYOffset() const { return y_offset_; }
   [[nodiscard]] std::string ToString() const override;
   [[nodiscard]] MouseEventType GetMouseEventType() const override {
-    return kMouseScrolledEvent;
+    return MOUSE_SCROLLED_EVENT;
   }
 
   EVENT_CLASS(MouseScrolled);
@@ -133,7 +133,7 @@ class MouseButtonPressedEvent : public MouseButtonEvent {
   ~MouseButtonPressedEvent();
   [[nodiscard]] std::string ToString() const override;
   [[nodiscard]] MouseEventType GetMouseEventType() const override {
-    return kMouseButtonPressedEvent;
+    return MOUSE_BUTTON_PRESSED_EVENT;
   }
 
   EVENT_CLASS(MouseButtonPressed);
@@ -145,7 +145,7 @@ public:
   ~MouseButtonReleasedEvent();
   [[nodiscard]] std::string ToString() const override;
   [[nodiscard]] MouseEventType GetMouseEventType() const override {
-    return kMouseButtonReleasedEvent;
+    return MOUSE_BUTTON_RELEASED_EVENT;
   }
   EVENT_CLASS(MouseButtonReleased);
 };

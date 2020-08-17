@@ -35,20 +35,39 @@
 
 namespace Ethan {
 
-enum class CameraProjection : uint8_t {
-  kOrthographic,
-  kPerspective
+//------------------------------------------------------------------------------
+// Type & Structure Definition
+//------------------------------------------------------------------------------
+
+enum class CameraMode : uint8_t {
+  CAMERA_CUSTOM = 0,
+  CAMERA_2D,    // Camera specific for 2D View, can be used as default 2D game camera.
+  CAMERA_FREE,  // Free style camera for editing Scene.
+  CAMERA_FPS,   // Camera specific for FPS Game.
+  CAMERA_THIRD  // Camera specific for third person view.
 };
 
+enum class CameraType : uint8_t {
+  ORTHOGRAPHIC,
+  PERSPECTIVE
+};
+
+//------------------------------------------------------------------------------
+// Camera Class Object
+//------------------------------------------------------------------------------
 class Camera {
  public:
-  explicit Camera(CameraProjection projection = CameraProjection::kOrthographic);
+  explicit Camera(CameraMode mode = CameraMode::CAMERA_FREE,
+                  CameraType type = CameraType::ORTHOGRAPHIC);
   virtual ~Camera();
 
-  [[nodiscard]] CameraProjection GetProjection() const { return projection_; }
+  [[nodiscard]] CameraType GetCameraType() const { return type_; }
+  [[nodiscard]] CameraMode GetCameraMode() const { return mode_; }
   [[nodiscard]] float GetNearPlane() const { return near_plane_; }
   [[nodiscard]] float GetFarPlane() const { return far_plane_; }
   [[nodiscard]] float GetFieldOfViewDegree() const { return fov_; }
+  [[nodiscard]] float GetAspectRatio() const { return aspect_ratio_; }
+  [[nodiscard]] float GetZoomLevel() const { return zoom_; }
   [[nodiscard]] const glm::vec2 &GetViewport() const { return viewport_; }
   [[nodiscard]] const glm::vec3 &GetPosition() const { return position_; }
   [[nodiscard]] const glm::vec3 &GetRotation() const { return rotation_; }
@@ -56,9 +75,12 @@ class Camera {
   [[nodiscard]] const glm::mat4 &GetViewMatrix() const { return view_matrix_; }
   [[nodiscard]] const glm::mat4 &GetViewProjectionMatrix() const { return vp_matrix_; }
 
+  void SetAspectRatio(float aspect_ratio);
+  void SetZoomLevel(float zoom);
+  void SetCameraType(CameraType type);
+  void SetCameraMode(CameraMode mode);
   void SetFieldOfViewDegree(float degree);
   void SetViewport(const glm::vec2 &viewport);
-  void SetProjection(CameraProjection projection);
   void SetClippingPlanes(float near_plane, float far_plane);
   void SetPosition(const glm::vec3 &position);
   void SetRotation(const glm::vec3 &rotation);
@@ -66,7 +88,8 @@ class Camera {
  private:
   // Private members
 
-  CameraProjection projection_;
+  CameraMode mode_;
+  CameraType type_;
 
   glm::mat4 projection_matrix_;
   glm::mat4 view_matrix_;
@@ -81,6 +104,9 @@ class Camera {
   float far_plane_;
 
   float fov_;
+
+  float aspect_ratio_;
+  float zoom_;
 
   // Private methods
 

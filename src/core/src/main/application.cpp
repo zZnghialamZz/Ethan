@@ -85,8 +85,8 @@ void Application::Update() {
 }
 
 void Application::EventCall(Event &event) {
-  if (event.IsInCategory(EventCategory::kApplication)) {
-    main_window_->HandleEvent(dynamic_cast<WindowEvent &>(event));
+  if (event.IsInCategory(EventCategory::APPLICATION)) {
+    main_window_->HandleEvent((WindowEvent&)event);
     event.SetHandled(true);
   }
 

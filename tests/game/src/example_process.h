@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _GAME_SRC_EXAMPLE_PROCESS_H_
-#define _GAME_SRC_EXAMPLE_PROCESS_H_
+#ifndef GAME_SRC_EXAMPLE_PROCESS_H_
+#define GAME_SRC_EXAMPLE_PROCESS_H_
 
 #include "ethan/ethan.h"
 
@@ -51,7 +51,8 @@ class ExampleProcess : public Ethan::Process {
   Ethan::Shared<Ethan::Texture2D> texture_;
   Ethan::ShaderLibrary shader_lib_;
 
-  Ethan::Camera* camera_;
+  Ethan::Shared<Ethan::Camera> camera_;
+  Ethan::CameraController camera_controller_;
 
   glm::vec3 cam_pos_ = {0.0f , 0.0f, 0.0f};
   glm::vec3 cam_rot_ = {0.0f , 0.0f, 0.0f};
@@ -60,4 +61,4 @@ class ExampleProcess : public Ethan::Process {
   float rot_deg_ = 30.0f;
 };
 
-#endif // _GAME_EXAMPLE_PROCESS_H_
+#endif // GAME_SRC_EXAMPLE_PROCESS_H_

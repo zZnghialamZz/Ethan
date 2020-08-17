@@ -42,11 +42,11 @@
 namespace Ethan {
 
 enum class EventCategory {
-  None = 0,
-  kApplication = BIT(0),
-  kInput = BIT(1),
-  kKeys = BIT(2),
-  kMouse = BIT(3)
+  NONE = 0,
+  APPLICATION = BIT(0),
+  INPUT = BIT(1),
+  KEYS = BIT(2),
+  MOUSE = BIT(3)
 };
 
 class Event {

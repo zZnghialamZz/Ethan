@@ -47,6 +47,8 @@ set(SOURCES
     "${ET_CORE_SRC_DIR}/input/mouse.cpp"
     "${ET_CORE_SRC_DIR}/input/input.cpp"
 
+    "${ET_CORE_SRC_DIR}/graphic/camera/camera_controller.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/camera/camera.cpp"
     "${ET_CORE_SRC_DIR}/graphic/graphic_context.cpp"
     "${ET_CORE_SRC_DIR}/graphic/vertex_array.cpp"
     "${ET_CORE_SRC_DIR}/graphic/renderer.cpp"
@@ -54,7 +56,6 @@ set(SOURCES
     "${ET_CORE_SRC_DIR}/graphic/texture.cpp"
     "${ET_CORE_SRC_DIR}/graphic/shader.cpp"
     "${ET_CORE_SRC_DIR}/graphic/window.cpp"
-    "${ET_CORE_SRC_DIR}/graphic/camera.cpp"
 
     "${ET_CORE_SRC_DIR}/main/application.cpp"
     "${ET_CORE_SRC_DIR}/main/process.cpp"
@@ -67,6 +68,8 @@ set(HEADERS
     "${ET_CORE_INCLUDE_DIR}/ethan/core/input/mouse.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/input/input.h"
 
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera/camera_controller.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera/camera.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/graphic_context.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/vertex_array.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/renderer.h"
@@ -74,7 +77,6 @@ set(HEADERS
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/texture.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/shader.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/window.h"
-    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera.h"
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/application.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/process.h"

@@ -38,7 +38,8 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
 
   // Test Render a Triangle
   vertexarray_ = Ethan::VertexArray::Create();
-  camera_ = new Ethan::Camera(Ethan::CameraProjection::kOrthographic);
+  camera_ = Ethan::MakeShared<Ethan::Camera>(Ethan::CameraMode::CAMERA_2D);
+  camera_controller_.SetCurrentCamera(camera_);
 
   float vertices[4 * 5] = {
       -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
@@ -63,7 +64,7 @@ ExampleProcess::ExampleProcess() : Ethan::Process("Example Process") {
   vertexarray_->SetIndexBuffer(index_buffer_);
 
   auto shader = shader_lib_.Load("res/shaders/basic.glsl");
-  texture_ = Ethan::Texture2D::Create("res/textures/splashscreen.png");
+  texture_ = Ethan::Texture2D::Create("res/textures/ethan_logo.png");
 
   shader->Bind();
   shader->SetInt("u_Texture", 0);
@@ -75,40 +76,19 @@ void ExampleProcess::Detach() {}
 
 void ExampleProcess::Update() {
   float dt = Ethan::DeltaTime::GetSeconds();
-
-  // Test Input
-  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Left))
-    cam_pos_.x += cam_spd_ * dt;
-  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Right))
-    cam_pos_.x -= cam_spd_ * dt;
-
-  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Up))
-    cam_pos_.y -= cam_spd_ * dt;
-  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::Down))
-    cam_pos_.y += cam_spd_ * dt;
-
-  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::A))
-    cam_rot_.x -= rot_deg_ * dt;
-  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::D))
-    cam_rot_.x += rot_deg_ * dt;
-
-  if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::W))
-    cam_rot_.y -= rot_deg_ * dt;
-  else if(Game::ME().GetMainWindow().GetInputSystem()->IsKeyPressed(Ethan::Key::S))
-    cam_rot_.y += rot_deg_ * dt;
+  camera_controller_.UpdateCamera(dt);
 
   // Render
   Ethan::RendererCommand::Clear();
 
-  camera_->SetPosition(cam_pos_);
-  camera_->SetRotation(cam_rot_);
-
   Ethan::Renderer::Begin(*camera_);
-
-  texture_->Bind();
-  Ethan::Renderer::Submit(shader_lib_.GetShader("basic"), vertexarray_);
-
+  {
+    texture_->Bind();
+    Ethan::Renderer::Submit(shader_lib_.GetShader("basic"), vertexarray_);
+  }
   Ethan::Renderer::End();
 }
 
-void ExampleProcess::EventCall(Ethan::Event &event) {}
+void ExampleProcess::EventCall(Ethan::Event &event) {
+  camera_controller_.EventCall(event);
+}

@@ -41,7 +41,7 @@ namespace Ethan {
 /// --- MouseEvent
 MouseEvent::MouseEvent() {
   SetHandled(false);
-  SetCategory(EventCategory::kKeys);
+  SetCategory(EventCategory::MOUSE);
 }
 
 /// --- MouseButtonEvent

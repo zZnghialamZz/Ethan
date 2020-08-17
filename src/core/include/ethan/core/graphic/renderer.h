@@ -34,7 +34,7 @@
 #define ETHAN_CORE_GRAPHIC_RENDERER_H_
 
 #include "vertex_array.h"
-#include "camera.h"
+#include "ethan/core/graphic/camera/camera.h"
 
 namespace Ethan {
 

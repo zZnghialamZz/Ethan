@@ -30,21 +30,24 @@
  * limitations under the License.
  */
 
-#include "ethan/core/graphic/camera.h"
+#include "ethan/core/graphic/camera/camera.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Ethan {
 
-Camera::Camera(CameraProjection projection)
-    : projection_(projection)
+Camera::Camera(CameraMode mode, CameraType type)
+    : mode_(mode)
+    , type_(type)
     , near_plane_(0.1f)
     , far_plane_(1000.0f)
     , fov_(45.0f)
     , position_(0.0f)
     , rotation_(0.0f)
     , view_matrix_(1.0f)
-    , viewport_(1600.0f, 900.0f) {
+    , viewport_(1600.0f, 900.0f)
+    , aspect_ratio_(viewport_.x / viewport_.y)
+    , zoom_(1.0f) {
 
   UpdateProjectionMatrix();
 
@@ -52,9 +55,23 @@ Camera::Camera(CameraProjection projection)
 
 Camera::~Camera() = default;
 
-void Camera::SetProjection(CameraProjection projection) {
-  projection_ = projection;
+void Camera::SetAspectRatio(float aspect_ratio) {
+  aspect_ratio_ = aspect_ratio;
   UpdateProjectionMatrix();
+}
+
+void Camera::SetZoomLevel(float zoom) {
+  zoom_ = zoom;
+  UpdateProjectionMatrix();
+}
+
+void Camera::SetCameraType(CameraType type) {
+  type_ = type;
+  UpdateProjectionMatrix();
+}
+
+void Camera::SetCameraMode(CameraMode mode) {
+  mode_ = mode;
 }
 
 void Camera::SetPosition(const glm::vec3 &position) {
@@ -87,12 +104,17 @@ void Camera::SetViewport(const glm::vec2 &viewport) {
 }
 
 void Camera::UpdateProjectionMatrix() {
-  switch (projection_) {
-    case CameraProjection::kOrthographic: {
-      projection_matrix_ = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1000.0f, 1000.0f);
+  switch (type_) {
+    case CameraType::ORTHOGRAPHIC: {
+      projection_matrix_ = glm::ortho(-aspect_ratio_ * zoom_,
+                                      aspect_ratio_ * zoom_,
+                                      -zoom_,
+                                      zoom_,
+                                      -1000.0f,
+                                      1000.0f);
       break;
     }
-    case CameraProjection::kPerspective: {
+    case CameraType::PERSPECTIVE: {
       projection_matrix_ = glm::perspectiveFov(glm::radians(fov_),
                                                viewport_.x,
                                                viewport_.y,

@@ -30,8 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef _ETHAN_H_
-#define _ETHAN_H_
+#ifndef ETHAN_H_
+#define ETHAN_H_
 
 #include "ethan/core.h"
 #include "ethan/ui.h"
@@ -54,4 +54,4 @@ namespace Ethan {}
 // TODO: Learn SIMD and write my own math library
 // TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
 
-#endif // _ETHAN_H_
+#endif // ETHAN_H_

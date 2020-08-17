@@ -41,7 +41,7 @@ namespace Ethan {
 /// --- WindowEvent
 WindowEvent::WindowEvent() {
   SetHandled(false);
-  SetCategory(EventCategory::kApplication);
+  SetCategory(EventCategory::APPLICATION);
 }
 
 /// --- WindowResizeEvent

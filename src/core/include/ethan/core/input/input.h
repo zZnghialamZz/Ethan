@@ -36,11 +36,23 @@
 #include "keys.h"
 #include "mouse.h"
 
+#include <variant>
+
 namespace Ethan {
 
+//------------------------------------------------------------------------------
+// Type & Structure Definition
+//------------------------------------------------------------------------------
+
 /**
- * Input API
+ * Used when there is an input that allow two different code.
+ * Key first, Mouse second. This order is important.
  */
+using InputCode = std::variant<Key, Mouse>;
+
+//------------------------------------------------------------------------------
+// Input Class Object
+//------------------------------------------------------------------------------
 class Input {
  public:
   virtual ~Input() = default;
