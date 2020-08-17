@@ -38,6 +38,7 @@ namespace Ethan {
 Application* Application::instance_ = nullptr;
 
 Application::Application(const std::string& name) : name_(name) {
+
   Console::Init(name);
 
   ETASSERT_CORE(!instance_, "Application Exists !");
@@ -74,20 +75,21 @@ void Application::Update() {
     main_window_->OnUpdate();
     timer_.CalculateDeltaTime();
 
-    for (Process* process : process_stack_)
-      process->Update();
+    if (!main_window_->IsMinimized()) {
+      for (Process* process : process_stack_)
+        process->Update();
 
-    ui_process_->Begin();
-    ui_process_->ImGuiRender();
-    ui_process_->End();
-
+      ui_process_->Begin();
+      ui_process_->ImGuiRender();
+      ui_process_->End();
+    }
   }
 }
 
 void Application::EventCall(Event &event) {
   if (event.IsInCategory(EventCategory::APPLICATION)) {
     main_window_->HandleEvent((WindowEvent&)event);
-    event.SetHandled(true);
+//   event.SetHandled(true);
   }
 
   for (Process* process : process_stack_) {

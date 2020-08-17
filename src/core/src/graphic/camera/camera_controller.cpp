@@ -91,11 +91,13 @@ void CameraController::EventCall(Event &event) {
   if (event.GetCategory() == EventCategory::MOUSE) {
     HandleEvent((MouseEvent&)event);
     event.SetHandled(true);
+  } else if (event.GetCategory() == EventCategory::APPLICATION) {
+    HandleEvent((WindowEvent&)event);
+    event.SetHandled(true);
   }
 }
 
 void CameraController::HandleEvent(MouseEvent &event) {
-  ETLOG_CORE_INFO(event.ToString());
   if (event.GetMouseEventType() == MouseEventType::MOUSE_SCROLLED_EVENT) {
     float zoom = camera_->GetZoomLevel();
     if (parent_->GetInputSystem()->IsKeyPressed(data_.SmoothZoomKey))
@@ -111,6 +113,29 @@ void CameraController::HandleEvent(MouseEvent &event) {
     zoom = std::min(zoom, CAMERA_DISTANCE_MAX_CLAMP);
 
     camera_->SetZoomLevel(zoom);
+  }
+}
+
+void CameraController::HandleEvent(WindowEvent &event) {
+  if (event.GetEventType() == WindowEventType::kWindowResizeEvent) {
+    float width = (float) ((WindowResizeEvent &) event).GetWidth();
+    float height = (float) ((WindowResizeEvent &) event).GetHeight();
+
+    switch (camera_->GetCameraMode()) {
+      case CameraMode::CAMERA_CUSTOM:
+        break;
+      case CameraMode::CAMERA_2D: {
+        float aspect_ratio = width / height;
+        camera_->SetAspectRatio(aspect_ratio);
+        break;
+      }
+      case CameraMode::CAMERA_FREE:
+        break;
+      case CameraMode::CAMERA_FPS:
+        break;
+      case CameraMode::CAMERA_THIRD:
+        break;
+    }
   }
 }
 

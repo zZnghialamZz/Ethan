@@ -41,7 +41,7 @@ namespace Ethan {
 
 class Application {
  public:
-  Application(const std::string& name = "APP");
+  explicit Application(const std::string& name = "APP");
   virtual ~Application();
 
   /**

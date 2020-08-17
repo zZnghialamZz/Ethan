@@ -113,6 +113,7 @@ class Window {
   [[nodiscard]] virtual Input* GetInputSystem() const = 0;
   [[nodiscard]] virtual bool IsVSync() const = 0;
   [[nodiscard]] virtual bool IsClose() const = 0;
+  [[nodiscard]] virtual bool IsMinimized() const = 0;
 
   virtual void SetVSync(bool enabled) = 0;
   virtual void SetWindowResizeCallback() = 0;

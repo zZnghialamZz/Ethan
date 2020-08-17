@@ -42,7 +42,9 @@ Window* Window::CreateWindow(const WindowProperty& props) {
   return new GLWindow(props);
 }
 
-GLWindow::GLWindow(const WindowProperty &props) : is_close_(false) {
+GLWindow::GLWindow(const WindowProperty &props)
+    : is_close_(false)
+    , is_minimized_(false) {
   Init(props);
 }
 
@@ -139,6 +141,7 @@ void GLWindow::SetEventCallback(std::function<void(Event &)> event_func) {
 void GLWindow::HandleEvent(WindowEvent &event) {
   switch (event.GetEventType()) {
     case kWindowResizeEvent: {
+      Resize(data_.width, data_.height);
       break;
     }
     case kWindowCloseEvent: {
@@ -152,6 +155,14 @@ void GLWindow::Close() {
   is_close_ = true;
 }
 
-void GLWindow::Resize(unsigned int width, unsigned int height) {}
+void GLWindow::Resize(unsigned int width, unsigned int height) {
+  if (width == 0 || height == 0) {
+    is_minimized_ = true;
+    return;
+  }
+
+  is_minimized_ = false;
+//  glViewport(0, 0, width, height);
+}
 
 } // namespace Ethan

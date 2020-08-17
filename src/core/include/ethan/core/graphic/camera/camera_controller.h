@@ -88,6 +88,7 @@ static CameraData CAMERA = {
 //------------------------------------------------------------------------------
 class Application;
 class Window;
+class WindowEvent;
 
 class CameraController {
  public:
@@ -102,6 +103,7 @@ class CameraController {
   void UpdateCamera(const Shared<Camera>& camera, float dt);
 
   void HandleEvent(MouseEvent& event);
+  void HandleEvent(WindowEvent& event);
   void EventCall(Event& event);
 
   [[nodiscard]] Shared<Camera> GetCurrentCamera() const { return camera_; }
