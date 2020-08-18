@@ -36,7 +36,11 @@
 #include "keys.h"
 #include "mouse.h"
 
+#if defined(__clang__) && (__clang_major__ < 10)
+#include <experimental/variant>
+#else
 #include <variant>
+#endif
 
 namespace Ethan {
 
