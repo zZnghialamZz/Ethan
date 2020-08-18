@@ -33,13 +33,15 @@
 #ifndef ETHAN_UTILS_TIME_DELTA_TIME_H_
 #define ETHAN_UTILS_TIME_DELTA_TIME_H_
 
+#include "ethan/utils/misc/macros.h"
+
 namespace Ethan {
 
 class DeltaTime {
  public:
   static void SetDeltaTime(float time) { time_ = time; }
-  [[nodiscard]] static float GetSeconds()  { return time_; }
-  [[nodiscard]] static float GetMiliSecond()  { return time_ * 1000.0f; }
+  [[nodiscard]] INLINE static float GetSeconds()  { return time_; }
+  [[nodiscard]] INLINE static float GetMiliSecond()  { return time_ * 1000.0f; }
 
  private:
   static float time_;

@@ -214,7 +214,7 @@ enum KeyEventType {
 class KeyEvent : public Event {
  public:
   explicit KeyEvent(KeyCode keycode);
-  [[nodiscard]] KeyCode GetKeyCode() const { return keycode_; }
+  [[nodiscard]] INLINE KeyCode GetKeyCode() const { return keycode_; }
   [[nodiscard]] virtual KeyEventType GetKeyEventType() const = 0;
 
  private:
@@ -224,9 +224,9 @@ class KeyEvent : public Event {
 class KeyPressedEvent : public KeyEvent {
  public:
   KeyPressedEvent(KeyCode keycode, int repeat);
-  [[nodiscard]] int GetRepeatCount() const { return repeat_; }
+  [[nodiscard]] INLINE int GetRepeatCount() const { return repeat_; }
   [[nodiscard]] std::string ToString() const override;
-  [[nodiscard]] KeyEventType GetKeyEventType() const override {
+  [[nodiscard]] INLINE KeyEventType GetKeyEventType() const override {
     return kKeyPressedEvent;
   }
 
@@ -240,7 +240,7 @@ class KeyReleasedEvent : public KeyEvent {
  public:
   explicit KeyReleasedEvent(KeyCode keycode);
   [[nodiscard]] std::string ToString() const override;
-  [[nodiscard]] KeyEventType GetKeyEventType() const override {
+  [[nodiscard]] INLINE KeyEventType GetKeyEventType() const override {
     return kKeyReleasedEvent;
   }
 

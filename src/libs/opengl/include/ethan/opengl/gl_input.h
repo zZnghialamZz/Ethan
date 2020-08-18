@@ -37,7 +37,6 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-// TODO: Setup a precompile header system for ET_UTILS and ET_CORE
 
 namespace Ethan {
 

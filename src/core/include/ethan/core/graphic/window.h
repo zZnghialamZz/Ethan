@@ -58,10 +58,10 @@ class WindowResizeEvent : public WindowEvent {
  public:
   WindowResizeEvent(unsigned int width, unsigned int height);
 
-  [[nodiscard]] unsigned int GetWidth() const { return width_; }
-  [[nodiscard]] unsigned int GetHeight() const { return height_; }
   [[nodiscard]] std::string ToString() const override;
-  [[nodiscard]] WindowEventType GetEventType() const override {
+  [[nodiscard]] INLINE unsigned int GetWidth() const { return width_; }
+  [[nodiscard]] INLINE unsigned int GetHeight() const { return height_; }
+  [[nodiscard]] INLINE WindowEventType GetEventType() const override {
     return kWindowResizeEvent;
   }
 
@@ -76,7 +76,7 @@ class WindowCloseEvent : public WindowEvent {
  public:
   WindowCloseEvent();
 
-  [[nodiscard]] WindowEventType GetEventType() const override {
+  [[nodiscard]] INLINE WindowEventType GetEventType() const override {
     return kWindowCloseEvent;
   }
 

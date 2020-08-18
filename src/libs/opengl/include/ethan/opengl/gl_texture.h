@@ -45,11 +45,11 @@ class GLTexture2D : public Texture2D {
   virtual ~GLTexture2D();
 
   void Bind(uint16_t slot = 0) const override;
-  [[nodiscard]] TextureFormat GetFormat() const override { return format_; }
-  [[nodiscard]] const uint32_t GetID() const override { return textureID_; }
-  [[nodiscard]] const uint16_t GetWidth() const override { return width_; }
-  [[nodiscard]] const uint16_t GetHeight() const override { return height_; }
-  [[nodiscard]] const std::string &GetPath() const override { return path_; }
+  [[nodiscard]] INLINE TextureFormat GetFormat() const override { return format_; }
+  [[nodiscard]] INLINE const uint32_t GetID() const override { return textureID_; }
+  [[nodiscard]] INLINE const uint16_t GetWidth() const override { return width_; }
+  [[nodiscard]] INLINE const uint16_t GetHeight() const override { return height_; }
+  [[nodiscard]] INLINE const std::string &GetPath() const override { return path_; }
 
  private:
   uint16_t width_;

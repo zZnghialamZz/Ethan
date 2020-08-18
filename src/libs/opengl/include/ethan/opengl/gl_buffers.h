@@ -45,7 +45,7 @@ class GLVertexBuffer : public VertexBuffer {
   void Bind() const override;
   void UnBind() const override;
 
-  [[nodiscard]] const BufferLayout &GetLayout() const override { return layout_; }
+  [[nodiscard]] INLINE const BufferLayout &GetLayout() const override { return layout_; }
   void SetLayout(const BufferLayout &layout) override { layout_ = layout; }
 
  private:
@@ -61,7 +61,7 @@ class GLIndexBuffer : public IndexBuffer {
   void Bind() const override;
   void UnBind() const override;
 
-  [[nodiscard]] uint32_t GetCount() const override { return count_; }
+  [[nodiscard]] INLINE uint32_t GetCount() const override { return count_; }
 
  private:
   uint32_t indexbufferID_;

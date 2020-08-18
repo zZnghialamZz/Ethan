@@ -85,7 +85,7 @@ public:
   explicit MouseButtonEvent(MouseCode mouse_code);
   virtual ~MouseButtonEvent() = default;
   [[nodiscard]] MouseEventType GetMouseEventType() const override = 0;
-  [[nodiscard]] MouseCode GetMouseCode() const { return mouse_code_; }
+  [[nodiscard]] INLINE MouseCode GetMouseCode() const { return mouse_code_; }
 
 private:
   MouseCode mouse_code_;
@@ -96,10 +96,10 @@ class MouseMovedEvent : public MouseEvent {
   MouseMovedEvent(float x, float y);
   ~MouseMovedEvent();
 
-  [[nodiscard]] float GetX() const { return x_; }
-  [[nodiscard]] float GetY() const { return y_; }
   [[nodiscard]] std::string ToString() const override;
-  [[nodiscard]] MouseEventType GetMouseEventType() const override {
+  [[nodiscard]] INLINE float GetX() const { return x_; }
+  [[nodiscard]] INLINE float GetY() const { return y_; }
+  [[nodiscard]] INLINE MouseEventType GetMouseEventType() const override {
     return MOUSE_MOVED_EVENT;
   }
 
@@ -114,10 +114,10 @@ class MouseScrolledEvent : public MouseEvent {
   MouseScrolledEvent(float x_offset, float y_offset);
   ~MouseScrolledEvent();
 
-  [[nodiscard]] float GetXOffset() const { return x_offset_; }
-  [[nodiscard]] float GetYOffset() const { return y_offset_; }
   [[nodiscard]] std::string ToString() const override;
-  [[nodiscard]] MouseEventType GetMouseEventType() const override {
+  [[nodiscard]] INLINE float GetXOffset() const { return x_offset_; }
+  [[nodiscard]] INLINE float GetYOffset() const { return y_offset_; }
+  [[nodiscard]] INLINE MouseEventType GetMouseEventType() const override {
     return MOUSE_SCROLLED_EVENT;
   }
 
@@ -132,7 +132,7 @@ class MouseButtonPressedEvent : public MouseButtonEvent {
   explicit MouseButtonPressedEvent(MouseCode mouse_code);
   ~MouseButtonPressedEvent();
   [[nodiscard]] std::string ToString() const override;
-  [[nodiscard]] MouseEventType GetMouseEventType() const override {
+  [[nodiscard]] INLINE MouseEventType GetMouseEventType() const override {
     return MOUSE_BUTTON_PRESSED_EVENT;
   }
 
@@ -144,7 +144,7 @@ public:
   explicit MouseButtonReleasedEvent(MouseCode mouse_code);
   ~MouseButtonReleasedEvent();
   [[nodiscard]] std::string ToString() const override;
-  [[nodiscard]] MouseEventType GetMouseEventType() const override {
+  [[nodiscard]] INLINE MouseEventType GetMouseEventType() const override {
     return MOUSE_BUTTON_RELEASED_EVENT;
   }
   EVENT_CLASS(MouseButtonReleased);

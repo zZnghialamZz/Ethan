@@ -10,6 +10,8 @@ set(ETHAN_PROJECT_SETTINGS 1)
 # TODO: Re-organize include structure
 include_directories(
     "../../extern/spdlog/include"
+    "../../extern/imgui/"
+    "../../extern/glm"
 
     "../../src/utils/include"
     "../../src/core/include"

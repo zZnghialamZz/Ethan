@@ -53,12 +53,6 @@ class ExampleProcess : public Ethan::Process {
 
   Ethan::Shared<Ethan::Camera> camera_;
   Ethan::CameraController camera_controller_;
-
-  glm::vec3 cam_pos_ = {0.0f , 0.0f, 0.0f};
-  glm::vec3 cam_rot_ = {0.0f , 0.0f, 0.0f};
-
-  float cam_spd_ = 1.0f;
-  float rot_deg_ = 30.0f;
 };
 
 #endif // GAME_SRC_EXAMPLE_PROCESS_H_

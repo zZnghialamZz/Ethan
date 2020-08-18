@@ -45,13 +45,13 @@ class GLWindow : public Window {
 
   void OnUpdate() override;
 
-  [[nodiscard]] unsigned int GetWidth() const override { return data_.width; }
-  [[nodiscard]] unsigned int GetHeight() const override { return data_.height; }
-  [[nodiscard]] void* GetNativeWindow() const override { return window_; }
-  [[nodiscard]] Input* GetInputSystem() const override { return input_; }
-  [[nodiscard]] bool IsVSync() const override { return data_.vsync; }
-  [[nodiscard]] bool IsClose() const override { return is_close_; }
-  [[nodiscard]] bool IsMinimized() const override { return is_minimized_; }
+  [[nodiscard]] INLINE unsigned int GetWidth() const override { return data_.width; }
+  [[nodiscard]] INLINE unsigned int GetHeight() const override { return data_.height; }
+  [[nodiscard]] INLINE void* GetNativeWindow() const override { return window_; }
+  [[nodiscard]] INLINE Input* GetInputSystem() const override { return input_; }
+  [[nodiscard]] INLINE bool IsVSync() const override { return data_.vsync; }
+  [[nodiscard]] INLINE bool IsClose() const override { return is_close_; }
+  [[nodiscard]] INLINE bool IsMinimized() const override { return is_minimized_; }
 
   void SetVSync(bool enabled) override;
   void SetWindowResizeCallback() override;

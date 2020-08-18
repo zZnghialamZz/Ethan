@@ -46,11 +46,11 @@ class BufferElement {
 
   void SetOffset(size_t offset) { offset_ = offset; }
 
-  [[nodiscard]] const std::string &GetName() const { return name_; }
-  [[nodiscard]] const size_t &GetOffset() const { return offset_; }
-  [[nodiscard]] const uint32_t &GetSize() const { return size_; }
-  [[nodiscard]] const ShaderData::DataType &GetType() const { return type_; }
-  [[nodiscard]] const bool &IsNormalized() const { return normalized_; }
+  [[nodiscard]] INLINE const std::string &GetName() const { return name_; }
+  [[nodiscard]] INLINE const size_t &GetOffset() const { return offset_; }
+  [[nodiscard]] INLINE const uint32_t &GetSize() const { return size_; }
+  [[nodiscard]] INLINE const ShaderData::DataType &GetType() const { return type_; }
+  [[nodiscard]] INLINE const bool &IsNormalized() const { return normalized_; }
   [[nodiscard]] uint32_t GetComponentCount() const;
 
  private:
@@ -67,13 +67,13 @@ class BufferLayout {
   explicit BufferLayout(const std::initializer_list<BufferElement> &elements);
   virtual ~BufferLayout();
 
-  [[nodiscard]] uint32_t GetStride() const { return stride_; }
-  [[nodiscard]] const std::vector<BufferElement> &GetElements() const { return elements_; }
+  [[nodiscard]] INLINE uint32_t GetStride() const { return stride_; }
+  [[nodiscard]] INLINE const std::vector<BufferElement> &GetElements() const { return elements_; }
 
-  std::vector<BufferElement>::iterator begin() { return elements_.begin(); }
-  std::vector<BufferElement>::iterator end() { return elements_.end(); }
-  [[nodiscard]] std::vector<BufferElement>::const_iterator begin() const { return elements_.begin(); }
-  [[nodiscard]] std::vector<BufferElement>::const_iterator end() const { return elements_.end(); }
+  INLINE std::vector<BufferElement>::iterator begin() { return elements_.begin(); }
+  INLINE std::vector<BufferElement>::iterator end() { return elements_.end(); }
+  [[nodiscard]] INLINE std::vector<BufferElement>::const_iterator begin() const { return elements_.begin(); }
+  [[nodiscard]] INLINE std::vector<BufferElement>::const_iterator end() const { return elements_.end(); }
 
  private:
   std::vector<BufferElement> elements_;

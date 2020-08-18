@@ -46,6 +46,7 @@ class Process {
   virtual void Attach();
   virtual void Detach();
   virtual void Update();
+  virtual void UpdateUI();
   virtual void EventCall(Event &event);
 
   void SetName(const char* name) { name_ = name; }

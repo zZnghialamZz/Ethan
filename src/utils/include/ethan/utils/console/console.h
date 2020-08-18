@@ -73,10 +73,10 @@ class Console {
  public:
   static void Init(const std::string& client_name = "APP");
 
-  inline static std::shared_ptr<spdlog::logger> &GetCoreLogger() {
+  INLINE static std::shared_ptr<spdlog::logger> &GetCoreLogger() {
     return core_logger_;
   }
-  inline static std::shared_ptr<spdlog::logger> &GetClientLogger() {
+  INLINE static std::shared_ptr<spdlog::logger> &GetClientLogger() {
     return client_logger_;
   }
 

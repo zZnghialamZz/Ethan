@@ -67,20 +67,35 @@ typedef enum : uint8_t {
 
 struct CameraData {
   // Camera Movement control keys.
-  Key MoveKey[6];       // Same order of CameraMove
+  Key MoveKey[6]{};     // Same order of CameraMove
   Key SmoothZoomKey;    // Smooth Zoom Key
   Key AlterKey;         // Alternative Key
   InputCode PanKey;     // Pan view Key
+
+  CameraData(const std::array<Key, 6>& move_key,
+             Key smooth_zoom_key,
+             Key alter_key,
+             InputCode pan_key)
+      : SmoothZoomKey(smooth_zoom_key)
+      , AlterKey(alter_key)
+      , PanKey(pan_key) {
+    MoveKey[CameraMove::FRONT] = move_key[CameraMove::FRONT];
+    MoveKey[CameraMove::BACK] = move_key[CameraMove::BACK];
+    MoveKey[CameraMove::LEFT] = move_key[CameraMove::LEFT];
+    MoveKey[CameraMove::RIGHT] = move_key[CameraMove::RIGHT];
+    MoveKey[CameraMove::UP] = move_key[CameraMove::UP];
+    MoveKey[CameraMove::DOWN] = move_key[CameraMove::DOWN];
+  }
 };
 
 //------------------------------------------------------------------------------
 // Default Variables Definition
 //------------------------------------------------------------------------------
 static CameraData CAMERA = {
-    .MoveKey = { Key::E, Key::Q, Key::A, Key::D, Key::W, Key::S },
-    .SmoothZoomKey = Key::LeftControl,
-    .AlterKey = Key::LeftAlt,
-    .PanKey = Mouse::ButtonLeft
+    { Key::E, Key::Q, Key::A, Key::D, Key::W, Key::S },
+    Key::LeftControl,
+    Key::LeftAlt,
+    Mouse::ButtonLeft
 };
 
 //------------------------------------------------------------------------------
@@ -106,7 +121,7 @@ class CameraController {
   void HandleEvent(WindowEvent& event);
   void EventCall(Event& event);
 
-  [[nodiscard]] Shared<Camera> GetCurrentCamera() const { return camera_; }
+  [[nodiscard]] INLINE Shared<Camera> GetCurrentCamera() const { return camera_; }
 
   void SetCurrentCamera(const Shared<Camera>& camera);
   void SetMoveKeys(Key front, Key back, Key left, Key right, Key up, Key down);

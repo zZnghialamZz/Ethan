@@ -31,9 +31,12 @@
  */
 
 #include "game.h"
+#include "example2D.h"
+#include "example_process.h"
 
 Game::Game() : Ethan::Application("GAME") {
-  AddProcess(new ExampleProcess());
+//  AddProcess(new ExampleProcess());
+  AddProcess(new Example2D());
 }
 
 Game::~Game() = default;

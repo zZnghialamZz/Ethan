@@ -50,7 +50,7 @@ class RendererAPI {
   virtual void SetClearColor(const glm::vec4& color) = 0;
   virtual void DrawIndexed(const Shared<VertexArray>& vertex_array) = 0;
 
-  static API GetAPI() { return api_; }
+  INLINE static API GetAPI() { return api_; }
   static Shared<RendererAPI> Create();
 
  private:
@@ -81,7 +81,7 @@ class Renderer {
                      const Shared<VertexArray> &vertex_array,
                      const glm::mat4& transform = glm::mat4(1.0f));
 
-  static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
+  INLINE static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
 
  private:
   // TODO: Move to Room/Level/Scene file.

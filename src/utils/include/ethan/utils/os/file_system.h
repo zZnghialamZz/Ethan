@@ -68,7 +68,7 @@ static std::string ReadFile(const std::string& file_path) {
  * @param file_path -  std::string
  * @return The File Name only.
  */
-INLINE static std::string GetFileName(const std::string& file_path) {
+static std::string GetFileName(const std::string& file_path) {
   size_t found = file_path.find_last_of("/\\");
   std::string file_name = (found != std::string::npos)
       ? file_path.substr(found + 1)

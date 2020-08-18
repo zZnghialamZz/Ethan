@@ -80,7 +80,10 @@ void Application::Update() {
         process->Update();
 
       ui_process_->Begin();
-      ui_process_->ImGuiRender();
+      {
+        for (Process* process : process_stack_)
+          process->UpdateUI();
+      }
       ui_process_->End();
     }
   }

@@ -47,8 +47,8 @@ class GLVertexArray : public VertexArray {
   void AddVertexBuffer(const Shared<VertexBuffer> &vertex_buffer) override;
   void SetIndexBuffer(const Shared<IndexBuffer> &index_buffer) override;
 
-  [[nodiscard]] const std::vector<Shared<VertexBuffer>> &GetVertexBuffers() const override { return vertex_buffers_; }
-  [[nodiscard]] const Shared<IndexBuffer> &GetIndexBuffer() const override { return index_buffer_; }
+  [[nodiscard]] INLINE const std::vector<Shared<VertexBuffer>> &GetVertexBuffers() const override { return vertex_buffers_; }
+  [[nodiscard]] INLINE const Shared<IndexBuffer> &GetIndexBuffer() const override { return index_buffer_; }
 
   static void SettingBufferLayout(const Shared<VertexBuffer>& vertex_buffer);
 

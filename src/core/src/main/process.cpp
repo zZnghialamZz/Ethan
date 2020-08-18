@@ -40,6 +40,7 @@ Process::~Process() = default;
 void Process::Attach() {}
 void Process::Detach() {}
 void Process::Update() {}
+void Process::UpdateUI() {}
 void Process::EventCall(Event &event) {}
 
 /// --- ProcessStack

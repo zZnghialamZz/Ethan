@@ -61,19 +61,19 @@ class Camera {
                   CameraType type = CameraType::ORTHOGRAPHIC);
   virtual ~Camera();
 
-  [[nodiscard]] CameraType GetCameraType() const { return type_; }
-  [[nodiscard]] CameraMode GetCameraMode() const { return mode_; }
-  [[nodiscard]] float GetNearPlane() const { return near_plane_; }
-  [[nodiscard]] float GetFarPlane() const { return far_plane_; }
-  [[nodiscard]] float GetFieldOfViewDegree() const { return fov_; }
-  [[nodiscard]] float GetAspectRatio() const { return aspect_ratio_; }
-  [[nodiscard]] float GetZoomLevel() const { return zoom_; }
-  [[nodiscard]] const glm::vec2 &GetViewport() const { return viewport_; }
-  [[nodiscard]] const glm::vec3 &GetPosition() const { return position_; }
-  [[nodiscard]] const glm::vec3 &GetRotation() const { return rotation_; }
-  [[nodiscard]] const glm::mat4 &GetProjectionMatrix() const { return projection_matrix_; }
-  [[nodiscard]] const glm::mat4 &GetViewMatrix() const { return view_matrix_; }
-  [[nodiscard]] const glm::mat4 &GetViewProjectionMatrix() const { return vp_matrix_; }
+  [[nodiscard]] INLINE CameraType GetCameraType() const { return type_; }
+  [[nodiscard]] INLINE CameraMode GetCameraMode() const { return mode_; }
+  [[nodiscard]] INLINE float GetNearPlane() const { return near_plane_; }
+  [[nodiscard]] INLINE float GetFarPlane() const { return far_plane_; }
+  [[nodiscard]] INLINE float GetFieldOfViewDegree() const { return fov_; }
+  [[nodiscard]] INLINE float GetAspectRatio() const { return aspect_ratio_; }
+  [[nodiscard]] INLINE float GetZoomLevel() const { return zoom_; }
+  [[nodiscard]] INLINE const glm::vec2 &GetViewport() const { return viewport_; }
+  [[nodiscard]] INLINE const glm::vec3 &GetPosition() const { return position_; }
+  [[nodiscard]] INLINE const glm::vec3 &GetRotation() const { return rotation_; }
+  [[nodiscard]] INLINE const glm::mat4 &GetProjectionMatrix() const { return projection_matrix_; }
+  [[nodiscard]] INLINE const glm::mat4 &GetViewMatrix() const { return view_matrix_; }
+  [[nodiscard]] INLINE const glm::mat4 &GetViewProjectionMatrix() const { return vp_matrix_; }
 
   void SetAspectRatio(float aspect_ratio);
   void SetZoomLevel(float zoom);
