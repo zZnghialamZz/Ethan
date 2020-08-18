@@ -30,7 +30,8 @@
  * limitations under the License.
  */
 
-#include "ethan/core/graphic/renderer.h"
+#include "ethan/core/graphic/renderer/renderer.h"
+#include "ethan/core/graphic/renderer/renderer2D.h"
 
 #ifdef __OPENGL_API__
 #include "ethan/opengl/gl_renderer.h"
@@ -64,11 +65,12 @@ Shared<RendererAPI> RendererAPI::Create() {
 /// --- RendererAPI
 void Renderer::Init() {
   RendererCommand::Init();
+  Renderer2D::Init();
 }
 
 void Renderer::Shutdown() {}
 
-void Renderer::Begin(Camera& camera) {
+void Renderer::Begin(const Camera& camera) {
   scene_data_->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 }
 

@@ -49,9 +49,10 @@ set(SOURCES
 
     "${ET_CORE_SRC_DIR}/graphic/camera/camera_controller.cpp"
     "${ET_CORE_SRC_DIR}/graphic/camera/camera.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/renderer/renderer2D.cpp"
+    "${ET_CORE_SRC_DIR}/graphic/renderer/renderer.cpp"
     "${ET_CORE_SRC_DIR}/graphic/graphic_context.cpp"
     "${ET_CORE_SRC_DIR}/graphic/vertex_array.cpp"
-    "${ET_CORE_SRC_DIR}/graphic/renderer.cpp"
     "${ET_CORE_SRC_DIR}/graphic/buffers.cpp"
     "${ET_CORE_SRC_DIR}/graphic/texture.cpp"
     "${ET_CORE_SRC_DIR}/graphic/shader.cpp"
@@ -70,9 +71,10 @@ set(HEADERS
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera/camera_controller.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera/camera.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/renderer/renderer2D.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/renderer/renderer.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/graphic_context.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/vertex_array.h"
-    "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/renderer.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/buffers.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/texture.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/shader.h"

@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file texture.cpp
+ * @file renderer2D.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,34 +30,46 @@
  * limitations under the License.
  */
 
-#include "ethan/core/graphic/texture.h"
-#include "ethan/core/graphic/renderer/renderer.h"
+#ifndef ETHAN_CORE_GRAPHIC_RENDERER2D_H_
+#define ETHAN_CORE_GRAPHIC_RENDERER2D_H_
 
-#ifdef __OPENGL_API__
-#include "ethan/opengl/gl_texture.h"
-#endif
+#include "ethan/core/graphic/camera/camera.h"
+#include "ethan/core/graphic/vertex_array.h"
 
 namespace Ethan {
 
-Shared<Texture2D> Texture2D::Create(const std::string &path) {
-  switch (Renderer::GetAPI()) {
-    // None Renderer
-    case RendererAPI::None : {
-      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-      return nullptr;
-    }
-      // OpenGL Renderer
-    case RendererAPI::OpenGL : {
-#ifdef __OPENGL_API__
-      return MakeShared<GLTexture2D>(path);
-#else
-      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
-#endif
-    }
-  }
+class Renderer2D {
+ public:
+  static void Init();
+  static void Shutdown();
 
-  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-  return nullptr;
-}
+  static void Begin(const Camera& camera);
+  static void End();
 
-}
+  // Primitives
+  static void DrawQuad(float x,
+                       float y,
+                       float width,
+                       float height,
+                       const glm::vec4 &color,
+                       float layer = 0.0f);
+  static void DrawLine(float x0,
+                       float y0,
+                       float x1,
+                       float y1,
+                       const glm::vec4 &color = glm::vec4(1.0f),
+                       float layer = 0.0f);
+
+  // --- Definitions & Types
+  struct Renderer2DData {
+    Shared<VertexArray> QuadVertexArray;
+    Shared<Shader> ColorShader;
+  };
+
+ private:
+  static Renderer2DData data_;
+};
+
+} // namespace Ethan
+
+#endif // ETHAN_CORE_GRAPHIC_RENDERER2D_H_

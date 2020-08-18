@@ -31,7 +31,7 @@
  */
 
 #include "ethan/core/graphic/vertex_array.h"
-#include "ethan/core/graphic/renderer.h"
+#include "ethan/core/graphic/renderer/renderer.h"
 
 #ifdef __OPENGL_API__
 #include "ethan/opengl/gl_vertexarray.h"

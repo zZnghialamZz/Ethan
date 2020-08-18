@@ -31,7 +31,7 @@
  */
 
 #include "ethan/core/main/application.h"
-#include "ethan/core/graphic/renderer.h"
+#include "ethan/core/graphic/renderer/renderer.h"
 
 namespace Ethan {
 

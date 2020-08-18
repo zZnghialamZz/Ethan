@@ -13,7 +13,7 @@
  * @file renderer.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
- * @brief
+ * @brief Implement the Base Renderer of Ethan
  *
  * @license Copyright 2020 Nghia Lam
  *
@@ -33,7 +33,7 @@
 #ifndef ETHAN_CORE_GRAPHIC_RENDERER_H_
 #define ETHAN_CORE_GRAPHIC_RENDERER_H_
 
-#include "vertex_array.h"
+#include "ethan/core/graphic/vertex_array.h"
 #include "ethan/core/graphic/camera/camera.h"
 
 namespace Ethan {
@@ -74,7 +74,7 @@ class Renderer {
   static void Init();
   static void Shutdown();
 
-  static void Begin(Camera& camera);
+  static void Begin(const Camera& camera);
   static void End();
 
   static void Submit(const Shared<Shader> &shader,

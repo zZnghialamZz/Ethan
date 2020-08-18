@@ -47,10 +47,6 @@ class Example2D : public Ethan::Process {
   void EventCall(Ethan::Event &event) override;
 
  private:
-  Ethan::Shared<Ethan::VertexArray> vertexarray_;
-  Ethan::Shared<Ethan::Texture2D> texture_;
-  Ethan::ShaderLibrary shader_lib_;
-
   Ethan::Shared<Ethan::Camera> camera_;
   Ethan::CameraController camera_controller_;
 

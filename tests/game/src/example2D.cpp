@@ -31,7 +31,6 @@
  */
 
 #include "example2D.h"
-#include "game.h"
 
 #include <imgui.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -39,30 +38,8 @@
 Example2D::Example2D() : Ethan::Process("Example 2D") {
   ETLOG_INFO("Initialize {0} Process !!", GetName());
 
-  vertexarray_ = Ethan::VertexArray::Create();
   camera_ = Ethan::MakeShared<Ethan::Camera>(Ethan::CameraMode::CAMERA_2D);
   camera_controller_.SetCurrentCamera(camera_);
-
-  float vertices[4 * 3] = {
-      -0.5f, -0.5f, 1.0f,
-       0.5f, -0.5f, 1.0f,
-       0.5f,  0.5f, 1.0f,
-      -0.5f,  0.5f, 1.0f
-  };
-
-  Ethan::BufferLayout layout {
-      {"pos", Ethan:: ShaderData::DataType::kFloat3 }
-  };
-
-  Ethan::Shared<Ethan::VertexBuffer> vertex_buffer_ = Ethan::VertexBuffer::Create(vertices, sizeof(vertices));
-  vertex_buffer_->SetLayout(layout);
-  vertexarray_->AddVertexBuffer(vertex_buffer_);
-
-  unsigned int indices[6] = { 0, 1, 2, 2, 3, 0 };
-  Ethan::Shared<Ethan::IndexBuffer> index_buffer_ = Ethan::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t));
-  vertexarray_->SetIndexBuffer(index_buffer_);
-
-  auto shader = shader_lib_.Load("FlatColor", "res/shaders/flat_color.glsl");
 }
 
 void Example2D::Attach() {}
@@ -75,16 +52,13 @@ void Example2D::Update() {
   camera_controller_.UpdateCamera(dt);
 
   // Render
-  Ethan::RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f});
   Ethan::RendererCommand::Clear();
-  Ethan::Renderer::Begin(*camera_);
+
+  Ethan::Renderer2D::Begin(*camera_);
   {
-    auto shader = shader_lib_.GetShader("FlatColor");
-    shader->Bind();
-    shader->SetFloat4("u_Color", color_);
-    Ethan::Renderer::Submit(shader, vertexarray_);
+    Ethan::Renderer2D::DrawQuad(0.0f, 0.0f, 0.0f, 0.0f, color_);
   }
-  Ethan::Renderer::End();
+  Ethan::Renderer2D::End();
 }
 
 void Example2D::UpdateUI() {
