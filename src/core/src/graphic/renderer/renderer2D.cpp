@@ -33,6 +33,8 @@
 #include "ethan/core/graphic/renderer/renderer2D.h"
 #include "ethan/core/graphic/renderer/renderer.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Ethan {
 
 Renderer2D::Renderer2DData Renderer2D::data_;
@@ -68,7 +70,6 @@ void Renderer2D::Shutdown() {}
 void Renderer2D::Begin(const Camera &camera) {
   data_.ColorShader->Bind();
   data_.ColorShader->SetMat4("uEthan_ViewProjection", camera.GetViewProjectionMatrix());
-  data_.ColorShader->SetMat4("uEthan_Transform", glm::mat4(1.0f));
 }
 
 void Renderer2D::End() {}
@@ -80,8 +81,12 @@ void Renderer2D::DrawQuad(float x,
                           const glm::vec4 &color,
                           float layer) {
 
+  glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, layer})
+      * glm::scale(glm::mat4(1.0f), {width, height, 1.0f});
+
   data_.ColorShader->Bind();
   data_.ColorShader->SetFloat4("u_Color", color);
+  data_.ColorShader->SetMat4("uEthan_Transform", transform);
 
   data_.QuadVertexArray->Bind();
   RendererCommand::DrawIndexed(data_.QuadVertexArray);

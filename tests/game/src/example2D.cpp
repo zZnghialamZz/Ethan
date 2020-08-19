@@ -56,7 +56,8 @@ void Example2D::Update() {
 
   Ethan::Renderer2D::Begin(*camera_);
   {
-    Ethan::Renderer2D::DrawQuad(0.0f, 0.0f, 0.0f, 0.0f, color_);
+    Ethan::Renderer2D::DrawQuad(0.0f, 0.0f, 1.0f, 1.0f, color_);
+    Ethan::Renderer2D::DrawQuad(-0.5f, 0.5f, 0.5f, 0.5f, color_);
   }
   Ethan::Renderer2D::End();
 }
