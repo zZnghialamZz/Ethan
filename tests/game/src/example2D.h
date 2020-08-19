@@ -48,6 +48,7 @@ class Example2D : public Ethan::Process {
 
  private:
   Ethan::Shared<Ethan::Camera> camera_;
+  Ethan::Shared<Ethan::Texture2D> texture_;
   Ethan::CameraController camera_controller_;
 
   glm::vec4 color_ { 0.8f, 0.2f, 0.8f, 1.0f};

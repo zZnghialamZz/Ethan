@@ -14,7 +14,7 @@
 <!----------------------------------------------------------------------------->
 
 <p align="center">
-  <img src="res/ethan_logo.png" width="256" height="256" />
+  <img src="res/images/ethan_logo.png" width="256" height="256" />
 </p>
 
 <!-- Title -->

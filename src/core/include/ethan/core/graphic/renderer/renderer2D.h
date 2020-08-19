@@ -35,6 +35,7 @@
 
 #include "ethan/core/graphic/camera/camera.h"
 #include "ethan/core/graphic/vertex_array.h"
+#include "ethan/core/graphic/texture.h"
 
 namespace Ethan {
 
@@ -59,11 +60,18 @@ class Renderer2D {
                        float y1,
                        const glm::vec4 &color = glm::vec4(1.0f),
                        float layer = 0.0f);
+  static void DrawTexture(const Shared<Texture2D>& texture,
+                          float x,
+                          float y,
+                          float width,
+                          float height,
+                          float layer = 0.0f);
 
   // --- Definitions & Types
   struct Renderer2DData {
     Shared<VertexArray> QuadVertexArray;
     Shared<Shader> ColorShader;
+    Shared<Shader> TextureShader;
   };
 
  private:

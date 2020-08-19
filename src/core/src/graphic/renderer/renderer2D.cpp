@@ -43,15 +43,16 @@ void Renderer2D::Init() {
   data_.QuadVertexArray = VertexArray::Create();
 
   // TODO: Remove these
-  float vertices[4 * 3] = {
-      -0.5f, -0.5f, 1.0f,
-       0.5f, -0.5f, 1.0f,
-       0.5f,  0.5f, 1.0f,
-      -0.5f,  0.5f, 1.0f
+  float vertices[4 * 5] = {
+      -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
+       0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+       0.5f,  0.5f, 1.0f, 1.0f, 1.0f,
+      -0.5f,  0.5f, 1.0f, 0.0f, 1.0f
   };
 
   BufferLayout layout {
-      { "pos", ShaderData::DataType::kFloat3 }
+      { "pos", ShaderData::DataType::kFloat3 },
+      { "texcoord", ShaderData::DataType::kFloat2 }
   };
 
   Shared<VertexBuffer> quad_vb = VertexBuffer::Create(vertices, sizeof(vertices));
@@ -63,6 +64,8 @@ void Renderer2D::Init() {
   data_.QuadVertexArray->SetIndexBuffer(quad_ib);
 
   data_.ColorShader = Shader::Create("res/shaders/flat_color.glsl");
+  data_.TextureShader = Shader::Create("res/shaders/texture.glsl");
+  data_.TextureShader->SetInt("u_Texture", 0);
 }
 
 void Renderer2D::Shutdown() {}
@@ -70,6 +73,8 @@ void Renderer2D::Shutdown() {}
 void Renderer2D::Begin(const Camera &camera) {
   data_.ColorShader->Bind();
   data_.ColorShader->SetMat4("uEthan_ViewProjection", camera.GetViewProjectionMatrix());
+  data_.TextureShader->Bind();
+  data_.TextureShader->SetMat4("uEthan_ViewProjection", camera.GetViewProjectionMatrix());
 }
 
 void Renderer2D::End() {}
@@ -98,5 +103,22 @@ void Renderer2D::DrawLine(float x0,
                           float y1,
                           const glm::vec4 &color,
                           float layer) {}
+
+void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
+                             float x,
+                             float y,
+                             float width,
+                             float height,
+                             float layer) {
+  glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, layer})
+      * glm::scale(glm::mat4(1.0f), {width, height, 1.0f});
+
+  data_.TextureShader->Bind();
+  data_.TextureShader->SetMat4("uEthan_Transform", transform);
+
+  texture->Bind();
+  data_.QuadVertexArray->Bind();
+  RendererCommand::DrawIndexed(data_.QuadVertexArray);
+}
 
 } // namespace Ethan
