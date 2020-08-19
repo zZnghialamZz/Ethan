@@ -46,6 +46,7 @@ class Texture {
   virtual ~Texture() = default;
 
   virtual void Bind(uint16_t slot = 0) const = 0;
+  virtual void SetData(void* data, uint32_t size) const = 0;
 
   [[nodiscard]] virtual TextureFormat GetFormat() const = 0;
   [[nodiscard]] virtual const uint32_t GetID() const = 0;
@@ -57,6 +58,7 @@ class Texture2D : public Texture {
  public:
   [[nodiscard]] virtual const std::string& GetPath() const = 0;
 
+  static Shared<Texture2D> Create(uint16_t width, uint16_t height);
   static Shared<Texture2D> Create(const std::string& path);
 };
 

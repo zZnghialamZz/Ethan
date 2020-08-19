@@ -51,6 +51,15 @@ GLenum ConvertToGLFormat(TextureFormat format) {
   return 0;
 }
 
+GLTexture2D::GLTexture2D(uint16_t width, uint16_t height)
+    : width_(width), height_(height) {
+
+  internal_format_ = GL_RGBA8;
+  format_ = TextureFormat::RGBA;
+
+  LoadTextureToGPU();
+}
+
 GLTexture2D::GLTexture2D(const std::string &path) : path_(path) {
   // Little hack for checking support format.
   // Original idea from raylib:
@@ -99,7 +108,8 @@ GLTexture2D::GLTexture2D(const std::string &path) : path_(path) {
     ETASSERT_CORE((format_ != TextureFormat::None),
                   "Unsupported texture format, please change to RGB or RGBA !");
 
-    LoadTextureToGPU(data);
+    LoadTextureToGPU();
+    SetData(data, width * height * channels);
 
     // Cleanup
     glBindTexture(GL_TEXTURE_2D, 0); // Unbind after finish default setup
@@ -121,7 +131,7 @@ void GLTexture2D::Bind(uint16_t slot) const {
   GLCALL(glBindTexture(GL_TEXTURE_2D, textureID_));
 }
 
-void GLTexture2D::LoadTextureToGPU(const unsigned char* data) {
+void GLTexture2D::LoadTextureToGPU() {
   GLCALL(glGenTextures(1, &textureID_));
   GLCALL(glBindTexture(GL_TEXTURE_2D, textureID_));
 
@@ -130,6 +140,12 @@ void GLTexture2D::LoadTextureToGPU(const unsigned char* data) {
   GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
   GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
   GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+}
+
+void GLTexture2D::SetData(void *data, uint32_t size) const {
+  uint8_t bpp = internal_format_ == GL_RGBA8 ? 4 : 3;
+  ETASSERT_CORE((size == (width_ * height_ * bpp)),
+                "Data size must be the entire texture");
 
   GLCALL(glTexImage2D(GL_TEXTURE_2D,
                       0,
@@ -141,5 +157,6 @@ void GLTexture2D::LoadTextureToGPU(const unsigned char* data) {
                       GL_UNSIGNED_BYTE,
                       data));
 }
+
 
 } // namespace Ethan

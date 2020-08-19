@@ -66,12 +66,19 @@ class Renderer2D {
                           float width,
                           float height,
                           float layer = 0.0f);
+  static void DrawTexture(const Shared<Texture2D>& texture,
+                          float x,
+                          float y,
+                          float width,
+                          float height,
+                          const glm::vec4& color,
+                          float layer = 0.0f);
 
   // --- Definitions & Types
   struct Renderer2DData {
     Shared<VertexArray> QuadVertexArray;
-    Shared<Shader> ColorShader;
-    Shared<Shader> TextureShader;
+    Shared<Shader> Base2DShader;
+    Shared<Texture2D> Base2DTexture;
   };
 
  private:

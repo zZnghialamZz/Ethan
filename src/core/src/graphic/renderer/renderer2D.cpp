@@ -63,18 +63,17 @@ void Renderer2D::Init() {
   Shared<Ethan::IndexBuffer> quad_ib = IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t));
   data_.QuadVertexArray->SetIndexBuffer(quad_ib);
 
-  data_.ColorShader = Shader::Create("res/shaders/flat_color.glsl");
-  data_.TextureShader = Shader::Create("res/shaders/texture.glsl");
-  data_.TextureShader->SetInt("u_Texture", 0);
+  uint32_t white_data = 0xffffffff;
+  data_.Base2DShader = Shader::Create("res/shaders/base2D.glsl");
+  data_.Base2DTexture = Texture2D::Create(1, 1);
+  data_.Base2DTexture->SetData(&white_data, sizeof(white_data));
 }
 
 void Renderer2D::Shutdown() {}
 
 void Renderer2D::Begin(const Camera &camera) {
-  data_.ColorShader->Bind();
-  data_.ColorShader->SetMat4("uEthan_ViewProjection", camera.GetViewProjectionMatrix());
-  data_.TextureShader->Bind();
-  data_.TextureShader->SetMat4("uEthan_ViewProjection", camera.GetViewProjectionMatrix());
+  data_.Base2DShader->Bind();
+  data_.Base2DShader->SetMat4("uEthan_ViewProjection", camera.GetViewProjectionMatrix());
 }
 
 void Renderer2D::End() {}
@@ -89,10 +88,10 @@ void Renderer2D::DrawQuad(float x,
   glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, layer})
       * glm::scale(glm::mat4(1.0f), {width, height, 1.0f});
 
-  data_.ColorShader->Bind();
-  data_.ColorShader->SetFloat4("u_Color", color);
-  data_.ColorShader->SetMat4("uEthan_Transform", transform);
+  data_.Base2DShader->SetFloat4("u_Color", color);
+  data_.Base2DShader->SetMat4("uEthan_Transform", transform);
 
+  data_.Base2DTexture->Bind();
   data_.QuadVertexArray->Bind();
   RendererCommand::DrawIndexed(data_.QuadVertexArray);
 }
@@ -110,15 +109,27 @@ void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
                              float width,
                              float height,
                              float layer) {
+  DrawTexture(texture, x, y, width, height, {1.0f, 1.0f, 1.0f, 1.0f}, layer);
+}
+
+void Renderer2D::DrawTexture(const Shared<Texture2D> &texture,
+                             float x,
+                             float y,
+                             float width,
+                             float height,
+                             const glm::vec4 &color,
+                             float layer) {
+
   glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, layer})
       * glm::scale(glm::mat4(1.0f), {width, height, 1.0f});
 
-  data_.TextureShader->Bind();
-  data_.TextureShader->SetMat4("uEthan_Transform", transform);
+  data_.Base2DShader->SetFloat4("u_Color", color);
+  data_.Base2DShader->SetMat4("uEthan_Transform", transform);
 
   texture->Bind();
   data_.QuadVertexArray->Bind();
   RendererCommand::DrawIndexed(data_.QuadVertexArray);
+
 }
 
 } // namespace Ethan

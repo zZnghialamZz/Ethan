@@ -41,10 +41,12 @@ namespace Ethan {
 
 class GLTexture2D : public Texture2D {
  public:
+  GLTexture2D(uint16_t width, uint16_t height);
   explicit GLTexture2D(const std::string& path);
   virtual ~GLTexture2D();
 
   void Bind(uint16_t slot = 0) const override;
+  void SetData(void *data, uint32_t size) const override;
   [[nodiscard]] INLINE TextureFormat GetFormat() const override { return format_; }
   [[nodiscard]] INLINE const uint32_t GetID() const override { return textureID_; }
   [[nodiscard]] INLINE const uint16_t GetWidth() const override { return width_; }
@@ -60,7 +62,7 @@ class GLTexture2D : public Texture2D {
   TextureFormat format_;
   GLenum internal_format_;
 
-  void LoadTextureToGPU(const unsigned char* data);
+  void LoadTextureToGPU();
 };
 
 } // namespace Ethan
