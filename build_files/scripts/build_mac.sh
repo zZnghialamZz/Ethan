@@ -3,6 +3,6 @@
 # Author : Nghia Lam
 # Copyright (c) Nghia Lam
 
-cmake --build build
+/usr/local/bin/cmake --build build
 
 echo "Finish !!"

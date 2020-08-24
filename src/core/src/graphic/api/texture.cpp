@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file buffers.cpp
+ * @file texture.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,27 +30,26 @@
  * limitations under the License.
  */
 
-#include "ethan/core/graphic/buffers.h"
+#include "ethan/core/graphic/api/texture.h"
 #include "ethan/core/graphic/renderer/renderer.h"
 
 #ifdef __OPENGL_API__
-#include "ethan/opengl/gl_buffers.h"
+#include "ethan/opengl/gl_texture.h"
 #endif
 
 namespace Ethan {
 
-/// --- VertexBuffer
-Shared<VertexBuffer> VertexBuffer::Create(float *vertices, uint32_t size) {
+Shared<Texture2D> Texture2D::Create(uint16_t width, uint16_t height) {
   switch (Renderer::GetAPI()) {
     // None Renderer
     case RendererAPI::None : {
       ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
       return nullptr;
     }
-    // OpenGL Renderer
+      // OpenGL Renderer
     case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return MakeShared<GLVertexBuffer>(vertices, size);
+      return MakeShared<GLTexture2D>(width, height);
 #else
       ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
@@ -61,18 +60,17 @@ Shared<VertexBuffer> VertexBuffer::Create(float *vertices, uint32_t size) {
   return nullptr;
 }
 
-/// --- IndexBuffer
-Shared<IndexBuffer> IndexBuffer::Create(uint32_t *indices, uint32_t count) {
+Shared<Texture2D> Texture2D::Create(const std::string &path) {
   switch (Renderer::GetAPI()) {
     // None Renderer
     case RendererAPI::None : {
       ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
       return nullptr;
     }
-    // OpenGL Renderer
+      // OpenGL Renderer
     case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return MakeShared<GLIndexBuffer>(indices, count);
+      return MakeShared<GLTexture2D>(path);
 #else
       ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
@@ -83,53 +81,4 @@ Shared<IndexBuffer> IndexBuffer::Create(uint32_t *indices, uint32_t count) {
   return nullptr;
 }
 
-/// --- BufferElement
-BufferElement::BufferElement(const std::string &name,
-                             ShaderData::DataType type,
-                             bool normalized)
-    : name_(name),
-      type_(type),
-      normalized_(normalized),
-      size_(ShaderData::GetDataTypeSize(type)),
-      offset_(0) {}
-
-BufferElement::~BufferElement() = default;
-
-uint32_t BufferElement::GetComponentCount() const {
-  switch (type_) {
-    case ShaderData::kNone:     return 0;
-    case ShaderData::kFloat:    return 1;
-    case ShaderData::kFloat2:   return 2;
-    case ShaderData::kFloat3:   return 3;
-    case ShaderData::kFloat4:   return 4;
-    case ShaderData::kMat3:     return 3; // 3 * float3
-    case ShaderData::kMat4:     return 4; // 4 * float4
-    case ShaderData::kInt:      return 1;
-    case ShaderData::kInt2:     return 2;
-    case ShaderData::kInt3:     return 3;
-    case ShaderData::kInt4:     return 4;
-    case ShaderData::kBool:     return 1;
-  }
-
-  ETLOG_CORE_ERROR("Invalid ShaderData Type !");
-  return 0;
 }
-
-/// --- BufferLayout
-BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)
-    : elements_(elements), stride_(0) {
-  Init();
-}
-
-BufferLayout::~BufferLayout() = default;
-
-void BufferLayout::Init() {
-  size_t offset = 0;
-  for(auto& element : elements_) {
-    element.SetOffset(offset);
-    offset += element.GetSize();
-    stride_ += element.GetSize();
-  }
-}
-
-} // namespace Ethan

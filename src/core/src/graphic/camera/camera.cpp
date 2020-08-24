@@ -39,13 +39,13 @@ namespace Ethan {
 Camera::Camera(CameraMode mode, CameraType type)
     : mode_(mode)
     , type_(type)
+    , view_matrix_(1.0f)
+    , position_(0.0f)
+    , rotation_(0.0f)
+    , viewport_(1600.0f, 900.0f)
     , near_plane_(0.1f)
     , far_plane_(1000.0f)
     , fov_(45.0f)
-    , position_(0.0f)
-    , rotation_(0.0f)
-    , view_matrix_(1.0f)
-    , viewport_(1600.0f, 900.0f)
     , aspect_ratio_(viewport_.x / viewport_.y)
     , zoom_(1.0f) {
 
@@ -115,7 +115,7 @@ void Camera::UpdateProjectionMatrix() {
       break;
     }
     case CameraType::PERSPECTIVE: {
-      projection_matrix_ = glm::perspectiveFov(glm::radians(fov_),
+      projection_matrix_ = glm::perspectiveFov(fov_,
                                                viewport_.x,
                                                viewport_.y,
                                                near_plane_,

@@ -63,6 +63,6 @@ namespace Ethan {}
 #define INLINE ALWAYS_INLINE
 #endif
 
-#endif
+#endif // INLINE
 
 #endif // ETHAN_UTILS_MISC_MACROS_H_

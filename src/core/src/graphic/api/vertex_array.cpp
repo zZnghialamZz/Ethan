@@ -30,7 +30,7 @@
  * limitations under the License.
  */
 
-#include "ethan/core/graphic/vertex_array.h"
+#include "ethan/core/graphic/api/vertex_array.h"
 #include "ethan/core/graphic/renderer/renderer.h"
 
 #ifdef __OPENGL_API__

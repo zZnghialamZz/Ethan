@@ -1,0 +1,81 @@
+version(1);
+project_name = "Ethan";
+
+patterns = {
+"*.c",
+"*.cpp",
+"*.h",
+"*.m",
+"*.mm",
+"*.bat",
+"*.sh",
+"*.4coder",
+"*.txt",
+"*.md",
+"*.glsl",
+"*.shader",
+};
+
+blacklist_patterns = {
+".*",
+};
+
+load_paths_custom = {
+ {"."},
+};
+
+load_paths = {
+ { load_paths_custom, .os = "win"  },
+ { load_paths_custom, .os = "linux"},
+ { load_paths_custom, .os = "mac"  },
+};
+
+clean_win = "build_files\\scripts\\clean_win.bat";
+build_win = "build_files\\scripts\\build_win.bat";
+clean_mac = "build_files/scripts/clean_mac.sh";
+build_mac = "build_files/scripts/build_mac.sh";
+debug_mac = "build_files/scripts/debug_mac.sh";
+run_mac = "bin/GAME";
+
+command_list = {
+	{ 
+		.name = "Cleanup",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cursor_at_end = true,
+		.cmd = { {clean_win, .os ="win"  }, {clean_mac, .os ="mac"  }, }, 
+	},
+ 
+	{
+		.name = "Build",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cursor_at_end = true,
+		.cmd = { {build_win, .os ="win" }, {build_mac, .os ="mac" }, },
+	},
+
+	{
+		.name = "Run",
+		.out = "*run*",
+		.footer_panel = true,
+		.save_dirty_files = false,
+		.cursor_at_end = true,
+		.cmd = { {run_mac, .os = "mac" }, },
+	},
+
+	{
+		.name = "Debug",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cursor_at_end = true,
+		.cmd = { {debug_mac, .os ="mac" }, },
+	},
+};
+
+fkey_command[1] = "Cleanup";
+fkey_command[2] = "Build";
+fkey_command[3] = "Run";
+fkey_command[4] = "Debug";

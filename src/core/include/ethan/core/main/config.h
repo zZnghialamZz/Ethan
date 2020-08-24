@@ -35,9 +35,9 @@
 
 namespace Ethan {}
 
-/**
- * Module: Texture - Configuration Flags
- */
+// -----------------------------------------------------------------------------
+// Module: Texture - Configuration Flags
+// -----------------------------------------------------------------------------
 
 // File Format support by Ethan Engine
 #define SUPPORT_IMAGE_PNG

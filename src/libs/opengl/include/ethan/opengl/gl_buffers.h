@@ -39,7 +39,7 @@ namespace Ethan {
 
 class GLVertexBuffer : public VertexBuffer {
  public:
-  GLVertexBuffer(float* vertices, uint32_t size);
+  GLVertexBuffer(const void* data, uint32_t size);
   ~GLVertexBuffer();
 
   void Bind() const override;

@@ -35,16 +35,17 @@
 
 namespace Ethan {}
 
-#include "ethan/core/main/config.h"
 #include "ethan/core/main/application.h"
+#include "ethan/core/main/config.h"
 
 #include "ethan/core/input/input.h"
 
-#include "ethan/core/graphic/shader.h"
-#include "ethan/core/graphic/texture.h"
-#include "ethan/core/graphic/vertex_array.h"
+#include "ethan/core/graphic/api/shader.h"
+#include "ethan/core/graphic/api/texture.h"
+#include "ethan/core/graphic/api/vertex_array.h"
+#include "ethan/core/graphic/camera/camera_controller.h"
+#include "ethan/core/graphic/mesh/mesh.h"
 #include "ethan/core/graphic/renderer/renderer.h"
 #include "ethan/core/graphic/renderer/renderer2D.h"
-#include "ethan/core/graphic/camera/camera_controller.h"
 
 #endif // ETHAN_CORE_H_

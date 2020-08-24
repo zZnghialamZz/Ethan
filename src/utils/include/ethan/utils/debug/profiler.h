@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file process.h
+ * @file profiler.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,52 +30,19 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_CORE_MAIN_PROCESS_H_
-#define ETHAN_CORE_MAIN_PROCESS_H_
-
-#include "event.h"
-#include <vector>
+#ifndef ETHAN_UTILS_DEBUG_PROFILER_H_
+#define ETHAN_UTILS_DEBUG_PROFILER_H_
 
 namespace Ethan {
 
-class Process {
-public:
-  explicit Process(const char *name = "Process");
-  virtual ~Process();
+// TODO: Create the Profiler
+class Profiler {
+ public:
 
-  virtual void Attach();
-  virtual void Detach();
-  virtual void Update();
-  virtual void UpdateUI();
-  virtual void EventCall(Event &event);
+ private:
 
-  void SetName(const char *name) { name_ = name; }
-  [[nodiscard]] const char *GetName() const { return name_; }
-
-private:
-  const char *name_;
 };
 
-class ProcessStack {
-public:
-  ProcessStack();
-  ~ProcessStack();
+}
 
-  void Dispose();
-
-  void PushProcess(Process *process);
-  void PushOverlay(Process *overlay);
-  void PopProcess(Process *process);
-  void PopOverlay(Process *overlay);
-
-  std::vector<Process *>::iterator begin() { return processes_.begin(); }
-  std::vector<Process *>::iterator end() { return processes_.end(); }
-
-private:
-  std::vector<Process *> processes_;
-  unsigned int insert_index_;
-};
-
-} // namespace Ethan
-
-#endif // ETHAN_CORE_MAIN_PROCESS_H_
+#endif // ETHAN_UTILS_DEBUG_PROFILER_H_

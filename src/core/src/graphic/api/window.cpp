@@ -30,7 +30,7 @@
  * limitations under the License.
  */
 
-#include "ethan/core/graphic/window.h"
+#include "ethan/core/graphic/api/window.h"
 
 namespace Ethan {
 

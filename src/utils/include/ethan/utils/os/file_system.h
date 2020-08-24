@@ -48,7 +48,7 @@ namespace Ethan::FileSystem {
  * @param file_path - char array
  * @return a string which has all of the given file's contents
  */
-static std::string ReadFile(const std::string& file_path) {
+INLINE static std::string ReadFile(const std::string& file_path) {
   std::string result;
   std::ifstream in(file_path, std::ios::in | std::ios::binary);
   if (in) {
@@ -68,7 +68,7 @@ static std::string ReadFile(const std::string& file_path) {
  * @param file_path -  std::string
  * @return The File Name only.
  */
-static std::string GetFileName(const std::string& file_path) {
+INLINE static std::string GetFileName(const std::string& file_path) {
   size_t found = file_path.find_last_of("/\\");
   std::string file_name = (found != std::string::npos)
       ? file_path.substr(found + 1)

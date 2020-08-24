@@ -8,6 +8,8 @@ set(ET_UTILS_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 set(SOURCES
     "${ET_UTILS_SRC_DIR}/console/console.cpp"
 
+    "${ET_UTILS_SRC_DIR}/debug/profiler.cpp"
+
     "${ET_UTILS_SRC_DIR}/helper/pointer_ext.cpp"
     "${ET_UTILS_SRC_DIR}/helper/string_ext.cpp"
 
@@ -18,6 +20,8 @@ set(SOURCES
     )
 set(HEADERS
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/console/console.h"
+
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils/debug/profiler.h"
 
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/helper/pointer_ext.h"
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/helper/string_ext.h"
@@ -38,5 +42,4 @@ include_directories(${ET_UTILS_INCLUDE_DIR})
 add_library(ET_UTILS STATIC ${SOURCES} ${HEADERS})
 target_link_libraries(ET_UTILS spdlog)
 
-# TODO: Find another way for precompile headers to support older CMake
 target_precompile_headers(ET_UTILS PUBLIC "$<$<COMPILE_LANGUAGE:CXX>:${ET_UTILS_INCLUDE_DIR}/ethan/utils_pch.h>")

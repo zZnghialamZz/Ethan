@@ -71,6 +71,6 @@ class Input {
   virtual void SetMouseCallback() = 0;
 };
 
-}
+} // namespace Ethan
 
 #endif // ETHAN_CORE_INPUT_H_

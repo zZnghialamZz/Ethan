@@ -63,9 +63,11 @@ class BufferElement {
 
 class BufferLayout {
  public:
-  BufferLayout() = default;
+  BufferLayout();
   explicit BufferLayout(const std::initializer_list<BufferElement> &elements);
   virtual ~BufferLayout();
+
+  void AddElement(const BufferElement& element);
 
   [[nodiscard]] INLINE uint32_t GetStride() const { return stride_; }
   [[nodiscard]] INLINE const std::vector<BufferElement> &GetElements() const { return elements_; }
@@ -92,7 +94,7 @@ class VertexBuffer {
   [[nodiscard]] virtual const BufferLayout& GetLayout() const = 0;
   virtual void SetLayout(const BufferLayout& layout) = 0;
 
-  static Shared<VertexBuffer> Create(float* vertices, uint32_t size);
+  static Shared<VertexBuffer> Create(const void* data, uint32_t size);
 
 };
 

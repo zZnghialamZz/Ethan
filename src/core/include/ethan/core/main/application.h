@@ -33,7 +33,7 @@
 #define ETHAN_CORE_APPLICATION_H_
 
 #include "process.h"
-#include "ethan/core/graphic/window.h"
+#include "ethan/core/graphic/api/window.h"
 #include "ethan/utils/time/timer.h"
 #include "ethan/ui/plugins/imgui_process.h"
 

@@ -34,57 +34,62 @@
 #define ETHAN_CORE_GRAPHIC_RENDERER2D_H_
 
 #include "ethan/core/graphic/camera/camera.h"
-#include "ethan/core/graphic/vertex_array.h"
-#include "ethan/core/graphic/texture.h"
+#include "ethan/core/graphic/mesh/mesh.h"
+#include "ethan/core/graphic/api/vertex_array.h"
+#include "ethan/core/graphic/api/texture.h"
 
 namespace Ethan {
-
-class Renderer2D {
- public:
-  static void Init();
-  static void Shutdown();
-
-  static void Begin(const Camera& camera);
-  static void End();
-
-  // Primitives
-  static void DrawQuad(float x,
-                       float y,
-                       float width,
-                       float height,
-                       const glm::vec4 &color,
-                       float layer = 0.0f);
-  static void DrawLine(float x0,
-                       float y0,
-                       float x1,
-                       float y1,
-                       const glm::vec4 &color = glm::vec4(1.0f),
-                       float layer = 0.0f);
-  static void DrawTexture(const Shared<Texture2D>& texture,
-                          float x,
-                          float y,
-                          float width,
-                          float height,
-                          float layer = 0.0f);
-  static void DrawTexture(const Shared<Texture2D>& texture,
-                          float x,
-                          float y,
-                          float width,
-                          float height,
-                          const glm::vec4& color,
-                          float layer = 0.0f);
-
-  // --- Definitions & Types
-  struct Renderer2DData {
-    Shared<VertexArray> QuadVertexArray;
-    Shared<Shader> Base2DShader;
-    Shared<Texture2D> Base2DTexture;
+  
+  class Renderer2D {
+   public:
+    // --- Definitions & Types
+    struct Renderer2DData {
+      Shared<Mesh> QuadMesh;
+      Shared<VertexArray> QuadVertexArray;
+      Shared<Shader> Base2DShader;
+      Shared<Texture2D> Base2DTexture;
+    };
+    
+    // --- Methods
+    static void Init();
+    static void Shutdown();
+    
+    static void Begin(const Camera& camera);
+    static void End();
+    
+    // Primitives
+    static void DrawQuad(float x,
+                         float y,
+                         float width,
+                         float height,
+                         const glm::vec4 &color,
+                         float layer = 0.0f);
+    static void DrawLine(float x0,
+                         float y0,
+                         float x1,
+                         float y1,
+                         const glm::vec4 &color = glm::vec4(1.0f),
+                         float layer = 0.0f);
+    static void DrawTexture(const Shared<Texture2D>& texture,
+                            float x,
+                            float y,
+                            float width,
+                            float height,
+                            float layer = 0.0f);
+    static void DrawTexture(const Shared<Texture2D>& texture,
+                            float x,
+                            float y,
+                            float width,
+                            float height,
+                            const glm::vec4& tint,
+                            float layer = 0.0f);
+    
+    [[nodiscard]] static const Renderer2DData& GetData() { return data_; }
+    
+   private:
+    static Renderer2DData data_;
   };
-
- private:
-  static Renderer2DData data_;
-};
-
-} // namespace Ethan
+  
+} 
 
 #endif // ETHAN_CORE_GRAPHIC_RENDERER2D_H_

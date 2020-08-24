@@ -8,5 +8,5 @@ rm -rf lib
 rm -rf build
 rm -rf compile_command.json
 
-cmake -H. -B build
+/usr/local/bin/cmake -H. -B build
 ln -s build/compile_commands.json .
