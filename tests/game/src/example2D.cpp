@@ -37,10 +37,10 @@
 
 Example2D::Example2D() : Ethan::Process("Example 2D") {
   ETLOG_INFO("Initialize {0} Process !!", GetName());
-
+  
   camera_ = Ethan::MakeShared<Ethan::Camera>(Ethan::CameraMode::CAMERA_2D);
   camera_controller_.SetCurrentCamera(camera_);
-
+  
   texture_ = Ethan::Texture2D::Create("res/textures/checker.png");
 }
 
@@ -52,16 +52,15 @@ void Example2D::Update() {
   // Update
   float dt = Ethan::DeltaTime::GetSeconds();
   camera_controller_.UpdateCamera(dt);
-
+  
   // Render
   Ethan::RendererCommand::Clear();
-
+  
   Ethan::Renderer2D::Begin(*camera_);
   {
     Ethan::Renderer2D::DrawQuad(0.0f, 0.0f, 1.0f, 1.0f, color_);
-    Ethan::Renderer2D::DrawQuad(-0.5f, 0.5f, 0.5f, 0.5f, color_);
-    Ethan::Renderer2D::DrawTexture(texture_, 0.5, 0.5, 0.5, 0.5, -0.1);
-    Ethan::Renderer2D::DrawTexture(texture_, 0.5, -0.5, 0.5, 0.5, { 1.0f, 0.8f, 0.8f, 1.0f});
+    // Ethan::Renderer2D::DrawTexture(texture_, 0.5, 0.5, 0.5, 0.5, -0.1);
+    // Ethan::Renderer2D::DrawTexture(texture_, 0.5, -0.5, 0.5, 0.5, { 1.0f, 0.8f, 0.8f, 1.0f});
   }
   Ethan::Renderer2D::End();
 }

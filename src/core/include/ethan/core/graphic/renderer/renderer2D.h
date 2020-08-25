@@ -33,8 +33,8 @@
 #ifndef ETHAN_CORE_GRAPHIC_RENDERER2D_H_
 #define ETHAN_CORE_GRAPHIC_RENDERER2D_H_
 
-#include "ethan/core/graphic/camera/camera.h"
 #include "ethan/core/graphic/mesh/mesh.h"
+#include "ethan/core/graphic/camera/camera.h"
 #include "ethan/core/graphic/api/vertex_array.h"
 #include "ethan/core/graphic/api/texture.h"
 
@@ -43,11 +43,30 @@ namespace Ethan {
   class Renderer2D {
    public:
     // --- Definitions & Types
+    struct Batch2DStorage {
+      uint16_t MaxQuads = 10000;
+      uint16_t MaxVertices = MaxQuads * 4;
+      uint16_t MaxIndices = MaxQuads * 6;
+      
+      uint32_t CurrentIndiceCount = 0;
+      
+      Mesh::Vertex* VertexBatchBase;
+      
+      void SetMaxQuads(uint16_t max_quads) {
+        MaxQuads = max_quads;
+        MaxVertices = MaxQuads * 4;
+        MaxIndices = MaxQuads * 6;
+      }
+    };
+    
     struct Renderer2DData {
-      Shared<Mesh> QuadMesh;
-      Shared<VertexArray> QuadVertexArray;
+      // Shared<Mesh> QuadMesh;
+      Shared<Mesh> BatchMesh;
       Shared<Shader> Base2DShader;
       Shared<Texture2D> Base2DTexture;
+      
+      Batch2DStorage Storage;
+      Mesh::Vertex* CurrentVertex;
     };
     
     // --- Methods
@@ -88,6 +107,9 @@ namespace Ethan {
     
    private:
     static Renderer2DData data_;
+    
+    static void DoRender();
+    
   };
   
 } 

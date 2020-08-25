@@ -36,6 +36,10 @@
 
 namespace Ethan {
   
+  //------------------------------------------------------------------------------
+  // Mesh Objects
+  //------------------------------------------------------------------------------
+  
   Mesh::Mesh() : mesh_vao_(nullptr), is_hide_(false) {}
   
   Mesh::Mesh(const Mesh &mesh)
@@ -46,10 +50,14 @@ namespace Ethan {
   
   Mesh::~Mesh() = default;
   
-  void Mesh::Render() {
+  void Mesh::Render(uint32_t index_count) {
     mesh_vao_->Bind();
-    RendererCommand::DrawIndexed(mesh_vao_);
+    RendererCommand::DrawIndexed(mesh_vao_, index_count);
   }
+  
+  //------------------------------------------------------------------------------
+  // Static Methods
+  //------------------------------------------------------------------------------
   
   Shared<Mesh> Mesh::CreatePrimitive(PrimitiveType type) {
     switch(type) {
@@ -89,42 +97,90 @@ namespace Ethan {
   Shared<Mesh> Mesh::CreateQuad(float x, float y, float width, float height) {
     Vertex *data = new Vertex[4];
     
-    data[0].Position = glm::vec3(x, y, 0.0f);
-    data[0].Texcoords = glm::vec2(0.0f, 0.0f);
+    data[0].Position = { x, y, 0.0f };
+    data[0].Texcoord = { 0.0f, 0.0f };
     
-    data[1].Position = glm::vec3(x + width, y, 0.0f);
-    data[1].Texcoords = glm::vec2(1.0f, 0.0f);
+    data[1].Position = { x + width, y, 0.0f };
+    data[1].Texcoord = { 1.0f, 0.0f };
     
-    data[2].Position = glm::vec3(x + width, y + height, 0.0f);
-    data[2].Texcoords = glm::vec2(1.0f, 1.0f);
+    data[2].Position = { x + width, y + height, 0.0f };
+    data[2].Texcoord = { 1.0f, 1.0f };
     
-    data[3].Position = glm::vec3(x, y + height, 0.0f);
-    data[3].Texcoords = glm::vec2(0.0f, 1.0f);
+    data[3].Position = { x, y + height, 0.0f };
+    data[3].Texcoord = { 0.0f, 1.0f };
     
-    // TODO(Nghia Lam): Find a better structure for batch rendering and invidual rendering
-    Renderer2D::GetData().QuadVertexArray->Bind();
+    Shared<VertexArray> quad_va = VertexArray::Create();
+    quad_va->Bind();
     
-    // NOTE(Nghia Lam): BufferLayout && VertexBuffer
+    // NOTE(Nghia Lam): BufferLayout: This order does matter for the data to be layout.  
     BufferLayout layout;
-    layout.AddElement({ "pos", ShaderData::DataType::kFloat3 });
+    layout.AddElement({ "position", ShaderData::DataType::kFloat3 });
     layout.AddElement({ "texcoord", ShaderData::DataType::kFloat2 });
+    layout.AddElement({ "vercolor", ShaderData::DataType::kFloat4 });
     
+    // NOTE(Nghia Lam): VertexBuffer
     Shared<VertexBuffer> quad_vb = VertexBuffer::Create(data, sizeof(Vertex) * 4);
     quad_vb->SetLayout(layout);
-    Renderer2D::GetData().QuadVertexArray->AddVertexBuffer(quad_vb);
+    quad_va->AddVertexBuffer(quad_vb);
     
     // NOTE(Nghia Lam): IndexBuffer
     unsigned int indices[6] = { 0, 1, 2, 2, 3, 0 };
     Shared<Ethan::IndexBuffer> quad_ib = IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t));
-    Renderer2D::GetData().QuadVertexArray->SetIndexBuffer(quad_ib);
+    quad_va->SetIndexBuffer(quad_ib);
     
     delete[] data;
     
-    return MakeShared<Mesh>(Renderer2D::GetData().QuadVertexArray);
+    return MakeShared<Mesh>(quad_va);
   }
   
   Shared<Mesh> Mesh::CreateQuad(const glm::vec2& position, const glm::vec2& size) {
     return CreateQuad(position.x, position.y, size.x, size.y);
+  }
+  
+  // NOTE(Nghia Lam): Mesh for Batch Rendering of Renderer2D
+  Shared<Mesh> Mesh::CreateBatchMesh() { 
+    Shared<VertexArray> batch_va = VertexArray::Create();
+    batch_va->Bind();
+    
+    // NOTE(Nghia Lam): BufferLayout: This order does matter for the data to be layout.  
+    BufferLayout layout;
+    layout.AddElement({ "position", ShaderData::DataType::kFloat3 });
+    layout.AddElement({ "texcoord", ShaderData::DataType::kFloat2 });
+    layout.AddElement({ "vercolor", ShaderData::DataType::kFloat4 });
+    
+    // NOTE(Nghia Lam): VertexBuffer
+    Shared<VertexBuffer> batch_vb = VertexBuffer::Create(sizeof(Vertex)
+                                                         * Renderer2D::GetData().Storage.MaxVertices
+                                                         , BufferDataUsage::DYNAMIC);
+    batch_vb->SetLayout(layout);
+    batch_va->AddVertexBuffer(batch_vb);
+    
+    // NOTE(Nghia Lam): IndexBuffer
+    uint32_t* indices = new uint32_t[Renderer2D::GetData().Storage.MaxIndices];
+    uint32_t offset = 0;
+    
+    for (uint32_t i = 0; i < Renderer2D::GetData().Storage.MaxIndices; i+=6) {
+      // NOTE(Nghia Lam): Render Quad based on two triangles, 
+      // which depends on index of vertex.
+      // 3 - 2 
+      // | / |
+      // 0 - 1 
+      indices[i + 0] = offset + 0;
+      indices[i + 1] = offset + 1;
+      indices[i + 2] = offset + 2;
+      
+      indices[i + 3] = offset + 2;
+      indices[i + 4] = offset + 3;
+      indices[i + 5] = offset + 0;
+      
+      offset += 4; // Each Quad is create by 4 vertices -> the same with offset
+    }
+    
+    Shared<Ethan::IndexBuffer> batch_ib = IndexBuffer::Create(indices, Renderer2D::GetData().Storage.MaxIndices);
+    batch_va->SetIndexBuffer(batch_ib);
+    delete[] indices;
+    
+    return MakeShared<Mesh>(batch_va);
   }
   
   // TODO(Nghia Lam): Support all these primitives

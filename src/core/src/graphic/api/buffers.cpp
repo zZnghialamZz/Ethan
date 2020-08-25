@@ -40,7 +40,7 @@
 namespace Ethan {
   
   /// --- VertexBuffer
-  Shared<VertexBuffer> VertexBuffer::Create(const void *data, uint32_t size) {
+  Shared<VertexBuffer> VertexBuffer::Create(BufferDataUsage usage) {
     switch (Renderer::GetAPI()) {
       // None Renderer
       case RendererAPI::None : {
@@ -50,7 +50,49 @@ namespace Ethan {
       // OpenGL Renderer
       case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-        return MakeShared<GLVertexBuffer>(data, size);
+        return MakeShared<GLVertexBuffer>(usage);
+#else
+        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+      }
+    }
+    
+    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+    return nullptr;
+  }
+  
+  Shared<VertexBuffer> VertexBuffer::Create(uint32_t size, BufferDataUsage usage) {
+    switch (Renderer::GetAPI()) {
+      // None Renderer
+      case RendererAPI::None : {
+        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+        return nullptr;
+      }
+      // OpenGL Renderer
+      case RendererAPI::OpenGL : {
+#ifdef __OPENGL_API__
+        return MakeShared<GLVertexBuffer>(size, usage);
+#else
+        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+      }
+    }
+    
+    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+    return nullptr;
+  }
+  
+  Shared<VertexBuffer> VertexBuffer::Create(const void *data, uint32_t size, BufferDataUsage usage) {
+    switch (Renderer::GetAPI()) {
+      // None Renderer
+      case RendererAPI::None : {
+        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+        return nullptr;
+      }
+      // OpenGL Renderer
+      case RendererAPI::OpenGL : {
+#ifdef __OPENGL_API__
+        return MakeShared<GLVertexBuffer>(data, size, usage);
 #else
         ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif

@@ -36,15 +36,15 @@
 #include "ethan/core.h"
 
 namespace Ethan {
-
-class GLRendererAPI : public RendererAPI {
- public:
-  void Init() override;
-  void Clear() override;
-  void SetClearColor(const glm::vec4 &color) override;
-  void DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) override;
-};
-
+  
+  class GLRendererAPI : public RendererAPI {
+   public:
+    void Init() override;
+    void Clear() override;
+    void SetClearColor(const glm::vec4 &color) override;
+    void DrawIndexed(const Shared<VertexArray> &vertex_array, const uint32_t indice_count) override;
+  };
+  
 }
 
 #endif // ETHAN_LIBS_GL_RENDERER_H_

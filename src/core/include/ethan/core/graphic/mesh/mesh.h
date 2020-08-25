@@ -54,12 +54,19 @@ namespace Ethan {
     
     struct Vertex {
       glm::vec3 Position;
-      glm::vec2 Texcoords;
+      glm::vec2 Texcoord;
+      glm::vec4 VerColor;
       
-      Vertex() : Position(glm::vec3(1.0f)), Texcoords(glm::vec2(0.0f)) {}
+      Vertex() 
+        : Position(glm::vec3(1.0f))
+        , Texcoord(glm::vec2(0.0f))
+        , VerColor(glm::vec4(1.0f)) {}
       
       bool operator==(const Vertex& other) const {
-        return Position == other.Position && Texcoords == other.Texcoords;
+        return 
+          Position == other.Position && 
+          Texcoord == other.Texcoord &&
+          VerColor == other.VerColor;
       }
     };
     
@@ -71,7 +78,7 @@ namespace Ethan {
     
     virtual ~Mesh();
     
-    void Render();
+    void Render(uint32_t index_count = 0); // 0: Render All
     
     [[nodiscard]] INLINE bool IsHide() const { return is_hide_; };
     [[nodiscard]] INLINE const Shared<Ethan::VertexArray> &GetVertexArray() const { 
@@ -89,6 +96,7 @@ namespace Ethan {
     static Shared<Mesh> CreatePyramid();
     static Shared<Mesh> CreateCapsule();
     static Shared<Mesh> CreateCylinder();
+    static Shared<Mesh> CreateBatchMesh();
     
    private:
     Shared<VertexArray> mesh_vao_;

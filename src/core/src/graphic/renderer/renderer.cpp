@@ -96,8 +96,8 @@ void RendererCommand::SetClearColor(const glm::vec4 &color) {
   renderer_api_->SetClearColor(color);
 }
 
-void RendererCommand::DrawIndexed(const Shared<VertexArray> &vertex_array) {
-  renderer_api_->DrawIndexed(vertex_array);
+  void RendererCommand::DrawIndexed(const Shared<VertexArray> &vertex_array, const uint32_t indice_count) {
+  renderer_api_->DrawIndexed(vertex_array, indice_count);
 }
 
 }

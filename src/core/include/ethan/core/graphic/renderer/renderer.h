@@ -39,7 +39,7 @@
 namespace Ethan {
   
   class RendererAPI {
-    public:
+   public:
     enum API {
       None = 0, OpenGL = 1
     };
@@ -48,29 +48,29 @@ namespace Ethan {
     virtual void Init() = 0;
     virtual void Clear() = 0;
     virtual void SetClearColor(const glm::vec4& color) = 0;
-    virtual void DrawIndexed(const Shared<VertexArray>& vertex_array) = 0;
+    virtual void DrawIndexed(const Shared<VertexArray>& vertex_array, const uint32_t indice_count) = 0;
     
     INLINE static API GetAPI() { return api_; }
     static Shared<RendererAPI> Create();
     
-    private:
+   private:
     static API api_;
   };
   
   class RendererCommand {
-    public:
+   public:
     static void Init();
     static void Clear();
     
     static void SetClearColor(const glm::vec4& color);
-    static void DrawIndexed(const Shared<VertexArray>& vertex_array);
+    static void DrawIndexed(const Shared<VertexArray>& vertex_array, const uint32_t indice_count = 0);
     
-    private:
+   private:
     static Shared<RendererAPI> renderer_api_;
   };
   
   class Renderer {
-    public:
+   public:
     static void Init();
     static void Shutdown();
     
@@ -83,7 +83,7 @@ namespace Ethan {
     
     INLINE static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
     
-    private:
+   private:
     // TODO: Move to Room/Level/Scene file.
     struct SceneData {
       glm::mat4 ViewProjectionMatrix;

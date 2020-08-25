@@ -36,38 +36,44 @@
 #include "ethan/core.h"
 
 namespace Ethan {
-
-class GLVertexBuffer : public VertexBuffer {
- public:
-  GLVertexBuffer(const void* data, uint32_t size);
-  ~GLVertexBuffer();
-
-  void Bind() const override;
-  void UnBind() const override;
-
-  [[nodiscard]] INLINE const BufferLayout &GetLayout() const override { return layout_; }
-  void SetLayout(const BufferLayout &layout) override { layout_ = layout; }
-
- private:
-  uint32_t vertexbufferID_;
-  BufferLayout layout_;
-};
-
-class GLIndexBuffer : public IndexBuffer {
- public:
-  GLIndexBuffer(uint32_t* indices, uint32_t& count);
-  ~GLIndexBuffer();
-
-  void Bind() const override;
-  void UnBind() const override;
-
-  [[nodiscard]] INLINE uint32_t GetCount() const override { return count_; }
-
- private:
-  uint32_t indexbufferID_;
-  uint32_t count_;
-};
-
+  
+  class GLVertexBuffer : public VertexBuffer {
+   public:
+    
+    explicit GLVertexBuffer(BufferDataUsage usage);
+    GLVertexBuffer(uint32_t size, BufferDataUsage usage);
+    GLVertexBuffer(const void* data, uint32_t size, BufferDataUsage usage);
+    ~GLVertexBuffer();
+    
+    void Bind() const override;
+    void UnBind() const override;
+    
+    [[nodiscard]] INLINE const BufferLayout &GetLayout() const override { return layout_; }
+    void SetLayout(const BufferLayout &layout) override { layout_ = layout; }
+    void SetData(const void* data, uint32_t size) override;
+    void SetSubData(const void* data, uint32_t size, uint32_t offset) override;
+    
+   private:
+    uint32_t vertexbufferID_;
+    BufferLayout layout_;
+    BufferDataUsage data_usage_;
+  };
+  
+  class GLIndexBuffer : public IndexBuffer {
+   public:
+    GLIndexBuffer(uint32_t* indices, uint32_t& count);
+    ~GLIndexBuffer();
+    
+    void Bind() const override;
+    void UnBind() const override;
+    
+    [[nodiscard]] INLINE uint32_t GetCount() const override { return count_; }
+    
+   private:
+    uint32_t indexbufferID_;
+    uint32_t count_;
+  };
+  
 }
 
 #endif // ETHAN_LIBS_GL_BUFFERS_H_

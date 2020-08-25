@@ -36,26 +36,28 @@
 #include <glad/glad.h>
 
 namespace Ethan {
-
-void GLRendererAPI::Init() {
-  glEnable(GL_DEPTH_TEST);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
-void GLRendererAPI::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-}
-
-void GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray> &vertex_array) {
-  GLCALL(glDrawElements(GL_TRIANGLES,
-                        vertex_array->GetIndexBuffer()->GetCount(),
-                        GL_UNSIGNED_INT,
-                        nullptr));
-}
-
+  
+  void GLRendererAPI::Init() {
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  }
+  
+  void GLRendererAPI::Clear() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  }
+  
+  void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
+    GLCALL(glClearColor(color.r, color.g, color.b, color.a));
+  }
+  
+  void GLRendererAPI::DrawIndexed(const Shared<VertexArray> &vertex_array, const uint32_t indice_count) {
+    
+    uint32_t count = indice_count 
+      ? indice_count 
+      : vertex_array->GetIndexBuffer()->GetCount();
+    
+    GLCALL(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr));
+  }
+  
 }
