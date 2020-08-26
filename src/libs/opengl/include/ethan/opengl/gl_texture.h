@@ -38,33 +38,36 @@
 #include <glad/glad.h>
 
 namespace Ethan {
-
-class GLTexture2D : public Texture2D {
- public:
-  GLTexture2D(uint16_t width, uint16_t height);
-  explicit GLTexture2D(const std::string& path);
-  virtual ~GLTexture2D();
-
-  void Bind(uint16_t slot = 0) const override;
-  void SetData(void *data, uint32_t size) const override;
-  [[nodiscard]] INLINE TextureFormat GetFormat() const override { return format_; }
-  [[nodiscard]] INLINE const uint32_t GetID() const override { return textureID_; }
-  [[nodiscard]] INLINE const uint16_t GetWidth() const override { return width_; }
-  [[nodiscard]] INLINE const uint16_t GetHeight() const override { return height_; }
-  [[nodiscard]] INLINE const std::string &GetPath() const override { return path_; }
-
- private:
-  uint16_t width_;
-  uint16_t height_;
-  uint32_t textureID_;
-  std::string path_;
-
-  TextureFormat format_;
-  GLenum internal_format_;
-
-  void LoadTextureToGPU();
-};
-
+  
+  class GLTexture2D : public Texture2D {
+   public:
+    GLTexture2D(uint16_t width, uint16_t height);
+    explicit GLTexture2D(const std::string& path);
+    virtual ~GLTexture2D();
+    
+    void Bind(uint16_t slot = 0) const override;
+    void SetData(void *data, uint32_t size) const override;
+    
+    bool operator==(const Texture& texture) const override;
+    
+    [[nodiscard]] INLINE TextureFormat GetFormat() const override { return format_; }
+    [[nodiscard]] INLINE const uint32_t GetID() const override { return textureID_; }
+    [[nodiscard]] INLINE const uint16_t GetWidth() const override { return width_; }
+    [[nodiscard]] INLINE const uint16_t GetHeight() const override { return height_; }
+    [[nodiscard]] INLINE const std::string &GetPath() const override { return path_; }
+    
+   private:
+    uint16_t width_;
+    uint16_t height_;
+    uint32_t textureID_;
+    std::string path_;
+    
+    TextureFormat format_;
+    GLenum internal_format_;
+    
+    void LoadTextureToGPU();
+  };
+  
 } // namespace Ethan
 
 #endif // ETHAN_LIBS_GL_TEXTURE_H_

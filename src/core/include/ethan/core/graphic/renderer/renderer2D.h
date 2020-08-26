@@ -41,22 +41,28 @@
 namespace Ethan {
   
   class Renderer2D {
-   public:
+    public:
     // --- Definitions & Types
+    
+    // TODO(Nghia Lam): File a more proper way to implement this
+    struct BatchVertex : public Mesh::Vertex {
+      float TextureIndex;
+      glm::vec2 TilingFactor;
+      
+      BatchVertex() 
+        : Vertex()
+        , TextureIndex(0.0f)
+        , TilingFactor(glm::vec2(1.0f)) {}
+    };
+    
     struct Batch2DStorage {
-      uint16_t MaxQuads = 10000;
-      uint16_t MaxVertices = MaxQuads * 4;
-      uint16_t MaxIndices = MaxQuads * 6;
+      static const uint16_t MaxQuads = 10000;
+      static const uint16_t MaxIndices = MaxQuads * 6;
+      static const uint16_t MaxVertices = MaxQuads * 4;
+      static const uint16_t MaxTextures = 16; // TODO(Nghia Lam): Detect this based on current machine driver
       
-      uint32_t CurrentIndiceCount = 0;
-      
-      Mesh::Vertex* VertexBatchBase;
-      
-      void SetMaxQuads(uint16_t max_quads) {
-        MaxQuads = max_quads;
-        MaxVertices = MaxQuads * 4;
-        MaxIndices = MaxQuads * 6;
-      }
+      BatchVertex* VertexBatchBase;
+      std::array<Shared<Texture2D>, MaxTextures> BatchTextures;
     };
     
     struct Renderer2DData {
@@ -66,7 +72,10 @@ namespace Ethan {
       Shared<Texture2D> Base2DTexture;
       
       Batch2DStorage Storage;
-      Mesh::Vertex* CurrentVertex;
+      
+      BatchVertex* CurrentVertex;
+      uint32_t CurrentIndiceCount = 0;
+      uint32_t CurrentTextureIndex = 0; // Default White Texture
     };
     
     // --- Methods
@@ -102,13 +111,40 @@ namespace Ethan {
                             float height,
                             const glm::vec4& tint,
                             float layer = 0.0f);
+    static void DrawTexture(const Shared<Texture2D>& texture,
+                            float x,
+                            float y,
+                            float width,
+                            float height,
+                            float tiling_u,
+                            float tiling_v,
+                            float layer = 0.0f);
+    static void DrawTexture(const Shared<Texture2D>& texture,
+                            float x,
+                            float y,
+                            float width,
+                            float height,
+                            const glm::vec4& tint,
+                            float tiling_u,
+                            float tiling_v,
+                            float layer = 0.0f);
     
     [[nodiscard]] static const Renderer2DData& GetData() { return data_; }
     
-   private:
+    private:
     static Renderer2DData data_;
     
-    static void DoRender();
+    static void SetDataQuad(float x,
+                            float y,
+                            float width,
+                            float height,
+                            float layer,
+                            float texture_index,
+                            float tiling_u,
+                            float tiling_v,
+                            const glm::vec4& color);
+    
+    static void Execute();
     
   };
   

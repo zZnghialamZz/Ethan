@@ -36,127 +36,131 @@
 #include <stb_image/stb_image.h>
 
 namespace Ethan {
-
-GLenum ConvertToGLFormat(TextureFormat format) {
-  switch (format) {
-    case TextureFormat::None:
+  
+  GLenum ConvertToGLFormat(TextureFormat format) {
+    switch (format) {
+      case TextureFormat::None:
       ETLOG_CORE_ERROR("Unknown Texture format !!");
       break;
-    case TextureFormat::RGB:
+      case TextureFormat::RGB:
       return GL_RGB;
-    case TextureFormat::RGBA:
+      case TextureFormat::RGBA:
       return GL_RGBA;
+    }
+    
+    return 0;
   }
-
-  return 0;
-}
-
-GLTexture2D::GLTexture2D(uint16_t width, uint16_t height)
+  
+  GLTexture2D::GLTexture2D(uint16_t width, uint16_t height)
     : width_(width), height_(height) {
-
-  internal_format_ = GL_RGBA8;
-  format_ = TextureFormat::RGBA;
-
-  LoadTextureToGPU();
-}
-
-GLTexture2D::GLTexture2D(const std::string &path) : path_(path) {
-  // Little hack for checking support format.
-  // Original idea from raylib:
-  // https://github.com/raysan5/raylib/blob/master/src/core.c#L1846
+    
+    internal_format_ = GL_RGBA8;
+    format_ = TextureFormat::RGBA;
+    
+    LoadTextureToGPU();
+  }
+  
+  GLTexture2D::GLTexture2D(const std::string &path) : path_(path) {
+    // Little hack for checking support format.
+    // Original idea from raylib:
+    // https://github.com/raysan5/raylib/blob/master/src/core.c#L1846
 #if defined(SUPPORT_IMAGE_PNG)
-  if ((FileSystem::IsFileExtension(path.c_str(), ".png"))
+    if ((FileSystem::IsFileExtension(path.c_str(), ".png"))
 #else
-  if ((false)
+        if ((false)
 #endif
 #if defined(SUPPORT_IMAGE_BMP)
-      || (FileSystem::IsFileExtension(path.c_str(), ".bmp"))
+            || (FileSystem::IsFileExtension(path.c_str(), ".bmp"))
 #endif
 #if defined(SUPPORT_IMAGE_TGA)
-      || (FileSystem::IsFileExtension(path.c_str(), ".tga"))
+            || (FileSystem::IsFileExtension(path.c_str(), ".tga"))
 #endif
 #if defined(SUPPORT_IMAGE_GIF)
-      || (FileSystem::IsFileExtension(path.c_str(), ".gif"))
+            || (FileSystem::IsFileExtension(path.c_str(), ".gif"))
 #endif
 #if defined(SUPPORT_IMAGE_JPG)
-      || (FileSystem::IsFileExtension(path.c_str(), ".jpg"))
+            || (FileSystem::IsFileExtension(path.c_str(), ".jpg"))
 #endif
-  ) {
-    // Flip vertically as OpenGL expect to render the texture from below
-    stbi_set_flip_vertically_on_load(1);
-
-    int width, height, channels;
-    stbi_uc *data = stbi_load(path.c_str(), &width, &height, &channels, 0);
-    ETASSERT_CORE(data, "Cannot load texture !");
-
-    width_ = width;
-    height_ = height;
-
-    switch (channels) {
-      case 3:
-        internal_format_ = GL_RGB8;
-        format_ = TextureFormat::RGB;
-        break;
-      case 4:
-        internal_format_ = GL_RGBA8;
-        format_ = TextureFormat::RGBA;
-        break;
-      default:
-        format_ = TextureFormat::None;
-        break;
-    }
-    ETASSERT_CORE((format_ != TextureFormat::None),
-                  "Unsupported texture format, please change to RGB or RGBA !");
-
-    LoadTextureToGPU();
-    SetData(data, width * height * channels);
-
-    // Cleanup
-    glBindTexture(GL_TEXTURE_2D, 0); // Unbind after finish default setup
-    if (data)
-      stbi_image_free(data);
-
-  } else {
-    ETLOG_CORE_CRITICAL("Unsupported file type {0} !", path);
+            ) {
+          // Flip vertically as OpenGL expect to render the texture from below
+          stbi_set_flip_vertically_on_load(1);
+          
+          int width, height, channels;
+          stbi_uc *data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+          ETASSERT_CORE(data, "Cannot load texture !");
+          
+          width_ = width;
+          height_ = height;
+          
+          switch (channels) {
+            case 3:
+            internal_format_ = GL_RGB8;
+            format_ = TextureFormat::RGB;
+            break;
+            case 4:
+            internal_format_ = GL_RGBA8;
+            format_ = TextureFormat::RGBA;
+            break;
+            default:
+            format_ = TextureFormat::None;
+            break;
+          }
+          ETASSERT_CORE((format_ != TextureFormat::None),
+                        "Unsupported texture format, please change to RGB or RGBA !");
+          
+          LoadTextureToGPU();
+          SetData(data, width * height * channels);
+          
+          // Cleanup
+          glBindTexture(GL_TEXTURE_2D, 0); // Unbind after finish default setup
+          if (data)
+            stbi_image_free(data);
+          
+        } else {
+          ETLOG_CORE_CRITICAL("Unsupported file type {0} !", path);
+        }
   }
-}
-
-GLTexture2D::~GLTexture2D() {
-  GLCALL(glDeleteTextures(1, &textureID_));
-}
-
-void GLTexture2D::Bind(uint16_t slot) const {
-  // Equivalent to glBindTextureUnit(slot, textureID_);
-  GLCALL(glActiveTexture(GL_TEXTURE0 + slot));
-  GLCALL(glBindTexture(GL_TEXTURE_2D, textureID_));
-}
-
-void GLTexture2D::LoadTextureToGPU() {
-  GLCALL(glGenTextures(1, &textureID_));
-  GLCALL(glBindTexture(GL_TEXTURE_2D, textureID_));
-
-  // Set parameters
-  GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-  GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-  GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-  GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-}
-
-void GLTexture2D::SetData(void *data, uint32_t size) const {
-  uint8_t bpp = internal_format_ == GL_RGBA8 ? 4 : 3;
-  ETASSERT_CORE((size == (width_ * height_ * bpp)),
-                "Data size must be the entire texture");
-
-  GLCALL(glTexImage2D(GL_TEXTURE_2D,
-                      0,
-                      internal_format_,
-                      width_,
-                      height_,
-                      0,
-                      ConvertToGLFormat(format_),
-                      GL_UNSIGNED_BYTE,
-                      data));
-}
-
-
-} // namespace Ethan
+  
+  GLTexture2D::~GLTexture2D() {
+    GLCALL(glDeleteTextures(1, &textureID_));
+  }
+  
+  void GLTexture2D::Bind(uint16_t slot) const {
+    // Equivalent to glBindTextureUnit(slot, textureID_);
+    GLCALL(glActiveTexture(GL_TEXTURE0 + slot));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, textureID_));
+  }
+  
+  bool GLTexture2D::operator==(const Texture& texture) const {
+    return textureID_ == texture.GetID();
+  }
+  
+  void GLTexture2D::LoadTextureToGPU() {
+    GLCALL(glGenTextures(1, &textureID_));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, textureID_));
+    
+    // Set parameters
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+  }
+  
+  void GLTexture2D::SetData(void *data, uint32_t size) const {
+    uint8_t bpp = internal_format_ == GL_RGBA8 ? 4 : 3;
+    ETASSERT_CORE((size == (width_ * height_ * bpp)),
+                  "Data size must be the entire texture");
+    
+    GLCALL(glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        internal_format_,
+                        width_,
+                        height_,
+                        0,
+                        ConvertToGLFormat(format_),
+                        GL_UNSIGNED_BYTE,
+                        data));
+  }
+  
+  
+} 

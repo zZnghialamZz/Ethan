@@ -147,6 +147,8 @@ namespace Ethan {
     layout.AddElement({ "position", ShaderData::DataType::kFloat3 });
     layout.AddElement({ "texcoord", ShaderData::DataType::kFloat2 });
     layout.AddElement({ "vercolor", ShaderData::DataType::kFloat4 });
+    layout.AddElement({ "texindex", ShaderData::DataType::kFloat });
+    layout.AddElement({ "tiling", ShaderData::DataType::kFloat2 });
     
     // NOTE(Nghia Lam): VertexBuffer
     Shared<VertexBuffer> batch_vb = VertexBuffer::Create(sizeof(Vertex)
@@ -159,6 +161,7 @@ namespace Ethan {
     uint32_t* indices = new uint32_t[Renderer2D::GetData().Storage.MaxIndices];
     uint32_t offset = 0;
     
+    // TODO(Nghia Lam): This may be a bit slow, consider some alter way just need O(logn)
     for (uint32_t i = 0; i < Renderer2D::GetData().Storage.MaxIndices; i+=6) {
       // NOTE(Nghia Lam): Render Quad based on two triangles, 
       // which depends on index of vertex.

@@ -34,34 +34,36 @@
 #define ETHAN_CORE_GRAPHIC_TEXTURE_H_
 
 namespace Ethan {
-
-enum class TextureFormat : uint8_t {
-  None = 0,
-  RGB,
-  RGBA
-};
-
-class Texture {
- public:
-  virtual ~Texture() = default;
-
-  virtual void Bind(uint16_t slot = 0) const = 0;
-  virtual void SetData(void* data, uint32_t size) const = 0;
-
-  [[nodiscard]] virtual TextureFormat GetFormat() const = 0;
-  [[nodiscard]] virtual const uint32_t GetID() const = 0;
-  [[nodiscard]] virtual const uint16_t GetWidth() const = 0;
-  [[nodiscard]] virtual const uint16_t GetHeight() const = 0;
-};
-
-class Texture2D : public Texture {
- public:
-  [[nodiscard]] virtual const std::string& GetPath() const = 0;
-
-  static Shared<Texture2D> Create(uint16_t width, uint16_t height);
-  static Shared<Texture2D> Create(const std::string& path);
-};
-
+  
+  enum class TextureFormat : uint8_t {
+    None = 0,
+    RGB,
+    RGBA
+  };
+  
+  class Texture {
+    public:
+    virtual ~Texture() = default;
+    
+    virtual void Bind(uint16_t slot = 0) const = 0;
+    virtual void SetData(void* data, uint32_t size) const = 0;
+    
+    virtual bool operator==(const Texture& texture) const = 0;
+    
+    [[nodiscard]] virtual TextureFormat GetFormat() const = 0;
+    [[nodiscard]] virtual const uint32_t GetID() const = 0;
+    [[nodiscard]] virtual const uint16_t GetWidth() const = 0;
+    [[nodiscard]] virtual const uint16_t GetHeight() const = 0;
+  };
+  
+  class Texture2D : public Texture {
+    public:
+    [[nodiscard]] virtual const std::string& GetPath() const = 0;
+    
+    static Shared<Texture2D> Create(uint16_t width, uint16_t height);
+    static Shared<Texture2D> Create(const std::string& path);
+  };
+  
 }
 
 #endif // ETHAN_CORE_GRAPHIC_TEXTURE_H_
