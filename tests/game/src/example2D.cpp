@@ -57,21 +57,47 @@ void Example2D::Update() {
   rotation += dt * 20.0f;
   
   // Render
-  Ethan::RendererCommand::Clear();
-  
+  Ethan::Renderer2D::ResetStats();
+  {
+    Ethan::RendererCommand::Clear();
+  }
+    
   Ethan::Renderer2D::Begin(*camera_);
   {
-    
     Ethan::Renderer2D::DrawQuad(0.0f, 0.0f, 1.0f, 1.0f, color_);
     Ethan::Renderer2D::DrawTexture(texture_, 0.5, 0.5, 0.5, 0.5, rotation, 10.0f, 10.0f, Ethan::Renderer2D::Render2DLayer::LAYER_1);
     Ethan::Renderer2D::DrawTexture(texture_, 0.5, -0.5, 0.5, 0.5, Ethan::Renderer2D::Render2DLayer::DEFAULT, { 1.0f, 0.8f, 0.8f, 1.0f});
   }
   Ethan::Renderer2D::End();
+  
+  Ethan::Renderer2D::Begin(*camera_);
+  {
+    for (float y = -5.0f; y < 5.0f; y += 0.1f) {
+      for (float x = -5.0f; x < 5.0f; x += 0.1f) {
+        glm::vec4 grid_color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) /10.0f, 1.0f };
+        Ethan::Renderer2D::DrawQuad(x, y, 0.08f, 0.08f, grid_color);
+      }
+    }
+  }
+  Ethan::Renderer2D::End();
 }
 
 void Example2D::UpdateUI() {
-  ImGui::Begin("Color Changer");
+  auto stats = Ethan::Renderer2D::GetStats();
+  
+  ImGui::Begin("Settings");
+  
+  ImGui::Text("Renderer2D Stats: ");
+  ImGui::Separator();
+  ImGui::Text("Draw Calls: %d", stats.DrawCall);
+  ImGui::Text("Quads: %d", stats.QuadCount);
+  ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+  
+  ImGui::Separator();
+  ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+  
   ImGui::ColorEdit4("Color", glm::value_ptr(color_));
+  
   ImGui::End();
 }
 

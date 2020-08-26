@@ -9,6 +9,7 @@ patterns = {
 "*.mm",
 "*.bat",
 "*.sh",
+"*.py",
 "*.4coder",
 "*.txt",
 "*.md",

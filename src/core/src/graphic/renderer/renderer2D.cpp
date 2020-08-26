@@ -75,7 +75,11 @@ namespace Ethan {
     data_.VertexOrigin[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
   }
   
-  void Renderer2D::Shutdown() {}
+  void Renderer2D::Shutdown() {
+    // TODO(Nghia Lam): Profile here.
+    
+    delete[] data_.Storage.VertexBatchBase;
+  }
   
   void Renderer2D::Begin(const Camera &camera) {
     // TODO(Nghia Lam): Profile here.
@@ -84,14 +88,14 @@ namespace Ethan {
     
     // NOTE(Nghia Lam): Everytime we begin a scene, we set the current vertex need to be drawn back to begin.
     // So the Engine can update all the vertices and render at the end of the render process.
-    data_.CurrentVertex = data_.Storage.VertexBatchBase;
     data_.CurrentIndiceCount = 0;
+    data_.CurrentVertex = data_.Storage.VertexBatchBase;
     data_.CurrentTextureIndex = 1; // The default white texture will be always there
   }
   
   void Renderer2D::End() {
-    // TODO(Nghia Lam): Profile here.
-    uint32_t data_size = (uint8_t*)data_.CurrentVertex - (uint8_t*)data_.Storage.VertexBatchBase;
+    // TODO(Nghia Lam): Profile here & investigate a more proper way
+    uint32_t data_size = (uint32_t)((uint8_t*)data_.CurrentVertex - (uint8_t*)data_.Storage.VertexBatchBase);
     
     // NOTE(Nghia Lam): Batch Rendering currently only use 1 vertex buffers to store all info
     // TODO(Nghia Lam): Investigate any more situation where this may be a bug.
@@ -111,6 +115,21 @@ namespace Ethan {
     }
     
     data_.BatchMesh->Render(data_.CurrentIndiceCount);
+    
+    ++data_.Stats.DrawCall;
+  }
+  
+  void Renderer2D::ExecuteAndReset() {
+    End();
+    
+    data_.CurrentIndiceCount = 0;
+    data_.CurrentVertex = data_.Storage.VertexBatchBase;
+    data_.CurrentTextureIndex = 1; // The default white texture will be always there
+  }
+  
+  void Renderer2D::PreDrawing() {
+    if (data_.CurrentIndiceCount >= data_.Storage.MaxIndices)
+      ExecuteAndReset();
   }
   
   void Renderer2D::DrawQuad(float x,
@@ -120,6 +139,8 @@ namespace Ethan {
                             const glm::vec4 &color,
                             Render2DLayer layer) {
     // TODO(Nghia Lam): Profile here.
+    PreDrawing();
+    
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, layer })
       * glm::scale(glm::mat4(1.0f), { width, height, 1.0f });
     
@@ -134,6 +155,8 @@ namespace Ethan {
                             const glm::vec4 &color,
                             Render2DLayer layer) {
     // TODO(Nghia Lam): Profile here.
+    PreDrawing();
+    
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, (float)layer })
       * glm::scale(glm::mat4(1.0f), { width, height, 1.0f })
       * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f });
@@ -147,7 +170,10 @@ namespace Ethan {
                             float x1,
                             float y1,
                             const glm::vec4 &color,
-                            Render2DLayer layer) {}
+                            Render2DLayer layer) {
+    
+    PreDrawing();
+  }
   
   void Renderer2D::DrawTexture(const Shared<Texture2D> &texture,
                                float x,
@@ -170,6 +196,8 @@ namespace Ethan {
                                Render2DLayer layer,
                                const glm::vec4& tint) {
     // TODO(Nghia Lam): Profile here.
+    PreDrawing();
+    
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, (float)layer })
       * glm::scale(glm::mat4(1.0f), { width, height, 1.0f });
     
@@ -199,6 +227,8 @@ namespace Ethan {
                                Render2DLayer layer,
                                const glm::vec4& tint) {
     // TODO(Nghia Lam): Profile here.
+    PreDrawing();
+    
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, (float)layer })
       * glm::scale(glm::mat4(1.0f), { width, height, 1.0f })
       * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f });
@@ -253,5 +283,12 @@ namespace Ethan {
     }
     
     data_.CurrentIndiceCount += 6; // Has drawn 2 triangle <=> 6 indices
+    
+    ++data_.Stats.QuadCount;
   }
-} 
+  
+  void Renderer2D::ResetStats() {
+    memset(&data_.Stats, 0, sizeof(Statistic));
+  }
+  
+}

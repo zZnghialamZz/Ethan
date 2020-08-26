@@ -41,7 +41,7 @@
 namespace Ethan {
   
   class Renderer2D {
-    public:
+   public:
     // --- Definitions & Types
     enum Render2DLayer : uint8_t {
       DEFAULT = 0,
@@ -68,13 +68,20 @@ namespace Ethan {
     };
     
     struct Batch2DStorage {
-      static const uint16_t MaxQuads = 10000;
-      static const uint16_t MaxIndices = MaxQuads * 6;
-      static const uint16_t MaxVertices = MaxQuads * 4;
-      static const uint16_t MaxTextures = 16; // TODO(Nghia Lam): Detect this based on current machine driver
+      static const uint32_t MaxQuads = 20000;
+      static const uint32_t MaxIndices = MaxQuads * 6;
+      static const uint32_t MaxVertices = MaxQuads * 4;
+      static const uint8_t MaxTextures = 16; // TODO(Nghia Lam): Detect this based on current machine driver
       
       BatchVertex* VertexBatchBase;
       std::array<Shared<Texture2D>, MaxTextures> BatchTextures;
+    };
+    
+    struct Statistic {
+      uint32_t DrawCall;
+      uint32_t QuadCount;
+      
+      uint32_t GetTotalVertexCount() { return QuadCount * 4; }
     };
     
     struct Renderer2DData {
@@ -91,6 +98,8 @@ namespace Ethan {
       BatchVertex* CurrentVertex;
       uint32_t CurrentIndiceCount = 0;
       uint32_t CurrentTextureIndex = 0; // Default White Texture
+      
+      Statistic Stats;
     };
     
     // --- Methods
@@ -157,9 +166,12 @@ namespace Ethan {
                             Render2DLayer layer = DEFAULT,
                             const glm::vec4& tint = glm::vec4(1.0f));
     
+    static void ResetStats();
+    
+    [[nodiscard]] static const Statistic& GetStats() { return data_.Stats; }
     [[nodiscard]] static const Renderer2DData& GetData() { return data_; }
     
-    private:
+   private:
     static Renderer2DData data_;
     
     static void SetDataQuad(const glm::mat4& transform,
@@ -169,7 +181,9 @@ namespace Ethan {
                             const glm::vec4& color);
     
     static float GetTextureIndexInBatch(const Shared<Texture2D>& texture);
+    static void PreDrawing();
     static void Execute();
+    static void ExecuteAndReset();
     
   };
   
