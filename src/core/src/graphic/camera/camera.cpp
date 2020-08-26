@@ -110,7 +110,7 @@ void Camera::UpdateProjectionMatrix() {
                                       aspect_ratio_ * zoom_,
                                       -zoom_,
                                       zoom_,
-                                      -1000.0f,
+                                      -1000.0f, // Should we support this depth ?
                                       1000.0f);
       break;
     }

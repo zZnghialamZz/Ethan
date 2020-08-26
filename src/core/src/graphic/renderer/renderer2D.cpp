@@ -41,6 +41,8 @@ namespace Ethan {
   Renderer2D::Renderer2DData Renderer2D::data_;
   
   void Renderer2D::Init() {
+    // TODO(Nghia Lam): Profile here.
+    
     // NOTE(Nghia Lam): Setup for Batch Rendering
     data_.Storage.VertexBatchBase = new BatchVertex[data_.Storage.MaxVertices];
     data_.BatchMesh = Mesh::CreateBatchMesh();
@@ -49,6 +51,7 @@ namespace Ethan {
     data_.Base2DTexture = Texture2D::Create(1, 1);
     data_.Base2DTexture->SetData(&white_data, sizeof(white_data));
     
+    // NOTE(Nghia Lam): Upload Textures Storage to GPU
     int samplers[data_.Storage.MaxTextures];
     for (int i = 0; i < data_.Storage.MaxTextures; ++i) {
       samplers[i] = i;
@@ -59,6 +62,17 @@ namespace Ethan {
     
     // NOTE(Nghia Lam): Set first texture to be the default white texture
     data_.Storage.BatchTextures[0] = data_.Base2DTexture;
+    
+    // NOTE(Nghia Lam): Setup Texture Origin (Default to be center of the texture)
+    // * * * * *
+    // *       *
+    // *   x   *
+    // *       *
+    // * * * * * -> Consider to use Sprite System for storing this data
+    data_.VertexOrigin[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+    data_.VertexOrigin[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+    data_.VertexOrigin[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
+    data_.VertexOrigin[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
   }
   
   void Renderer2D::Shutdown() {}
@@ -87,6 +101,8 @@ namespace Ethan {
   }
   
   void Renderer2D::Execute() {
+    // TODO(Nghia Lam): Profile here.
+    
     if (!data_.CurrentIndiceCount)
       return; // Render nothing
     
@@ -102,9 +118,28 @@ namespace Ethan {
                             float width,
                             float height,
                             const glm::vec4 &color,
-                            float layer) {
+                            Render2DLayer layer) {
+    // TODO(Nghia Lam): Profile here.
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, layer })
+      * glm::scale(glm::mat4(1.0f), { width, height, 1.0f });
     
-    SetDataQuad(x, y, width, height, layer, 0.0f, 1.0f, 1.0f, color);
+    SetDataQuad(transform, 0.0f, 1.0f, 1.0f, color);
+  }
+  
+  void Renderer2D::DrawQuad(float x,
+                            float y,
+                            float width,
+                            float height,
+                            float rotation,
+                            const glm::vec4 &color,
+                            Render2DLayer layer) {
+    // TODO(Nghia Lam): Profile here.
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, (float)layer })
+      * glm::scale(glm::mat4(1.0f), { width, height, 1.0f })
+      * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f });
+    
+    SetDataQuad(transform, 0.0f, 1.0f, 1.0f, color);
+    
   }
   
   void Renderer2D::DrawLine(float x0,
@@ -112,51 +147,66 @@ namespace Ethan {
                             float x1,
                             float y1,
                             const glm::vec4 &color,
-                            float layer) {}
-  
-  
-  void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
-                               float x,
-                               float y,
-                               float width,
-                               float height,
-                               float layer) {
-    DrawTexture(texture, x, y, width, height, {1.0f, 1.0f, 1.0f, 1.0f}, 1.0f, 1.0f, layer);
-  }
-  
+                            Render2DLayer layer) {}
   
   void Renderer2D::DrawTexture(const Shared<Texture2D> &texture,
                                float x,
                                float y,
                                float width,
                                float height,
-                               const glm::vec4 &tint,
-                               float layer) {
-    DrawTexture(texture, x, y, width, height, tint, 1.0f, 1.0f, layer);
-  }
-  
-  void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
-                               float x,
-                               float y,
-                               float width,
-                               float height,
-                               float tiling_u,
-                               float tiling_v,
-                               float layer) {
-    DrawTexture(texture, x, y, width, height, {1.0f, 1.0f, 1.0f, 1.0f}, tiling_u, tiling_v, layer);
-  }
-  
-  void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
-                               float x,
-                               float y,
-                               float width,
-                               float height,
-                               const glm::vec4& tint,
-                               float tiling_u,
-                               float tiling_v,
-                               float layer) {
-    // TODO(Nghia Lam): Profile here.
+                               Render2DLayer layer,
+                               const glm::vec4 &tint) {
     
+    DrawTexture(texture, x, y, width, height, 1.0f, 1.0f, layer, tint);
+  }
+  
+  void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
+                               float x,
+                               float y,
+                               float width,
+                               float height,
+                               float tiling_u,
+                               float tiling_v,
+                               Render2DLayer layer,
+                               const glm::vec4& tint) {
+    // TODO(Nghia Lam): Profile here.
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, (float)layer })
+      * glm::scale(glm::mat4(1.0f), { width, height, 1.0f });
+    
+    SetDataQuad(transform, GetTextureIndexInBatch(texture), tiling_u, tiling_v, tint);
+  }
+  
+  void Renderer2D::DrawTexture(const Shared<Texture2D> &texture,
+                               float x,
+                               float y,
+                               float width,
+                               float height,
+                               float rotation,
+                               Render2DLayer layer,
+                               const glm::vec4 &tint) {
+    
+    DrawTexture(texture, x, y, width, height, rotation, 1.0f, 1.0f, layer, tint);
+  }
+  
+  void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
+                               float x,
+                               float y,
+                               float width,
+                               float height,
+                               float rotation,
+                               float tiling_u,
+                               float tiling_v,
+                               Render2DLayer layer,
+                               const glm::vec4& tint) {
+    // TODO(Nghia Lam): Profile here.
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, (float)layer })
+      * glm::scale(glm::mat4(1.0f), { width, height, 1.0f })
+      * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f });
+    
+    SetDataQuad(transform, GetTextureIndexInBatch(texture), tiling_u, tiling_v, tint);
+  }
+  
+  float Renderer2D::GetTextureIndexInBatch(const Shared<Texture2D>& texture) {
     float texture_index = 0.0f;
     for (uint32_t i = 1; i < data_.CurrentTextureIndex; ++i) {
       if (*texture == *data_.Storage.BatchTextures[i]) {
@@ -170,52 +220,38 @@ namespace Ethan {
       ++data_.CurrentTextureIndex;
     }
     
-    SetDataQuad(x, y, width, height, layer, texture_index, tiling_u, tiling_v, tint);
+    return texture_index;
   }
   
-  void Renderer2D::SetDataQuad(float x,
-                               float y,
-                               float width,
-                               float height,
-                               float layer,
+  void Renderer2D::SetDataQuad(const glm::mat4& transform,
                                float texture_index,
                                float tiling_u,
                                float tiling_v,
                                const glm::vec4& color) {
+    // TODO(Nghia Lam): Profile here.
+    
     // NOTE(Nghia Lam): Update all vertices attributes
     // The position of Quad Vertices look like this:
     //   3 - 2
     //  /   /
     // 0 - 1 
-    data_.CurrentVertex->Position = { x, y, layer };
-    data_.CurrentVertex->Texcoord = { 0.0f, 0.0f };
-    data_.CurrentVertex->VerColor = color;
-    data_.CurrentVertex->TextureIndex = texture_index;
-    data_.CurrentVertex->TilingFactor = { tiling_u, tiling_v };
-    data_.CurrentVertex++; // Next Vertex
+    constexpr uint8_t vertex_count = 4;
+    constexpr glm::vec2 texture_coords[vertex_count] = {
+      { 0.0f, 0.0f },
+      { 1.0f, 0.0f },
+      { 1.0f, 1.0f },
+      { 0.0f, 1.0f }
+    };
     
-    data_.CurrentVertex->Position = { x + width, y, layer };
-    data_.CurrentVertex->Texcoord = { 1.0f, 0.0f };
-    data_.CurrentVertex->VerColor = color;
-    data_.CurrentVertex->TextureIndex = texture_index;
-    data_.CurrentVertex->TilingFactor = { tiling_u, tiling_v };
-    data_.CurrentVertex++; // Next Vertex
-    
-    data_.CurrentVertex->Position = { x + width, y + height, layer };
-    data_.CurrentVertex->Texcoord = { 1.0f, 1.0f };
-    data_.CurrentVertex->VerColor = color;
-    data_.CurrentVertex->TextureIndex = texture_index;
-    data_.CurrentVertex->TilingFactor = { tiling_u, tiling_v };
-    data_.CurrentVertex++; // Next Vertex
-    
-    data_.CurrentVertex->Position = { x, y + height, layer };
-    data_.CurrentVertex->Texcoord = { 0.0f, 1.0f };
-    data_.CurrentVertex->VerColor = color;
-    data_.CurrentVertex->TextureIndex = texture_index;
-    data_.CurrentVertex->TilingFactor = { tiling_u, tiling_v };
-    data_.CurrentVertex++; // Next Vertex
+    for (uint8_t i = 0; i < vertex_count; ++i) {
+      data_.CurrentVertex->Position = transform * data_.VertexOrigin[i];
+      data_.CurrentVertex->Texcoord = texture_coords[i];
+      data_.CurrentVertex->VerColor = color;
+      data_.CurrentVertex->TextureIndex = texture_index;
+      data_.CurrentVertex->TilingFactor = { tiling_u, tiling_v };
+      data_.CurrentVertex++; // Next Vertex
+    }
     
     data_.CurrentIndiceCount += 6; // Has drawn 2 triangle <=> 6 indices
   }
-  
 } 

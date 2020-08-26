@@ -53,14 +53,18 @@ void Example2D::Update() {
   float dt = Ethan::DeltaTime::GetSeconds();
   camera_controller_.UpdateCamera(dt);
   
+  static float rotation = 0.0f;
+  rotation += dt * 20.0f;
+  
   // Render
   Ethan::RendererCommand::Clear();
   
   Ethan::Renderer2D::Begin(*camera_);
   {
+    
     Ethan::Renderer2D::DrawQuad(0.0f, 0.0f, 1.0f, 1.0f, color_);
-    Ethan::Renderer2D::DrawTexture(texture_, 0.5, 0.5, 0.5, 0.5, 10.0f, 10.0f, 1.0f);
-    Ethan::Renderer2D::DrawTexture(texture_, 0.5, -0.5, 0.5, 0.5, { 1.0f, 0.8f, 0.8f, 1.0f});
+    Ethan::Renderer2D::DrawTexture(texture_, 0.5, 0.5, 0.5, 0.5, rotation, 10.0f, 10.0f, Ethan::Renderer2D::Render2DLayer::LAYER_1);
+    Ethan::Renderer2D::DrawTexture(texture_, 0.5, -0.5, 0.5, 0.5, Ethan::Renderer2D::Render2DLayer::DEFAULT, { 1.0f, 0.8f, 0.8f, 1.0f});
   }
   Ethan::Renderer2D::End();
 }

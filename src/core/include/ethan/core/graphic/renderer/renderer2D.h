@@ -43,6 +43,18 @@ namespace Ethan {
   class Renderer2D {
     public:
     // --- Definitions & Types
+    enum Render2DLayer : uint8_t {
+      DEFAULT = 0,
+      LAYER_1 = 1,
+      LAYER_2 = 2,
+      LAYER_3 = 3,
+      LAYER_4 = 4,
+      LAYER_5 = 5,
+      LAYER_6 = 6,
+      LAYER_7 = 7,
+      LAYER_8 = 8,
+      LAYER_9 = 9,
+    };
     
     // TODO(Nghia Lam): File a more proper way to implement this
     struct BatchVertex : public Mesh::Vertex {
@@ -73,6 +85,9 @@ namespace Ethan {
       
       Batch2DStorage Storage;
       
+      // TODO(Nghia Lam): Using Sprite System for this
+      glm::vec4 VertexOrigin[4];
+      
       BatchVertex* CurrentVertex;
       uint32_t CurrentIndiceCount = 0;
       uint32_t CurrentTextureIndex = 0; // Default White Texture
@@ -91,26 +106,29 @@ namespace Ethan {
                          float width,
                          float height,
                          const glm::vec4 &color,
-                         float layer = 0.0f);
+                         Render2DLayer layer = DEFAULT);
+    static void DrawQuad(float x,
+                         float y,
+                         float width,
+                         float height,
+                         float rotation,
+                         const glm::vec4 &color,
+                         Render2DLayer layer = DEFAULT);
+    
     static void DrawLine(float x0,
                          float y0,
                          float x1,
                          float y1,
                          const glm::vec4 &color = glm::vec4(1.0f),
-                         float layer = 0.0f);
+                         Render2DLayer layer = DEFAULT);
+    
     static void DrawTexture(const Shared<Texture2D>& texture,
                             float x,
                             float y,
                             float width,
                             float height,
-                            float layer = 0.0f);
-    static void DrawTexture(const Shared<Texture2D>& texture,
-                            float x,
-                            float y,
-                            float width,
-                            float height,
-                            const glm::vec4& tint,
-                            float layer = 0.0f);
+                            Render2DLayer layer = DEFAULT,
+                            const glm::vec4& tint = glm::vec4(1.0f));
     static void DrawTexture(const Shared<Texture2D>& texture,
                             float x,
                             float y,
@@ -118,32 +136,39 @@ namespace Ethan {
                             float height,
                             float tiling_u,
                             float tiling_v,
-                            float layer = 0.0f);
+                            Render2DLayer layer = DEFAULT,
+                            const glm::vec4& tint = glm::vec4(1.0f));
     static void DrawTexture(const Shared<Texture2D>& texture,
                             float x,
                             float y,
                             float width,
                             float height,
-                            const glm::vec4& tint,
+                            float rotation,
+                            Render2DLayer layer = DEFAULT,
+                            const glm::vec4& tint = glm::vec4(1.0f));
+    static void DrawTexture(const Shared<Texture2D>& texture,
+                            float x,
+                            float y,
+                            float width,
+                            float height,
+                            float rotation,
                             float tiling_u,
                             float tiling_v,
-                            float layer = 0.0f);
+                            Render2DLayer layer = DEFAULT,
+                            const glm::vec4& tint = glm::vec4(1.0f));
     
     [[nodiscard]] static const Renderer2DData& GetData() { return data_; }
     
     private:
     static Renderer2DData data_;
     
-    static void SetDataQuad(float x,
-                            float y,
-                            float width,
-                            float height,
-                            float layer,
+    static void SetDataQuad(const glm::mat4& transform,
                             float texture_index,
                             float tiling_u,
                             float tiling_v,
                             const glm::vec4& color);
     
+    static float GetTextureIndexInBatch(const Shared<Texture2D>& texture);
     static void Execute();
     
   };
