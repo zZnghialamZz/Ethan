@@ -32,8 +32,6 @@
 
 #include "ethan/utils/console/console.h"
 
-#include "spdlog/sinks/stdout_color_sinks.h"
-
 namespace Ethan {
 
 std::shared_ptr<spdlog::logger> Console::core_logger_;
