@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file example2D.h
+ * @file editor.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,30 +30,10 @@
  * limitations under the License.
  */
 
-#ifndef GAME_EXAMPLE2D_H_
-#define GAME_EXAMPLE2D_H_
 
-#include <ethan/ethan.h>
-#include <glm/glm.hpp>
+#ifndef ETHAN_EDITOR_H_
+#define ETHAN_EDITOR_H_
 
-class Example2D : public Ethan::Process {
- public:
-  Example2D();
+namespace Ethan {}
 
-  void Attach() override;
-  void Detach() override;
-  void Update() override;
-  void UpdateUI() override;
-  void EventCall(Ethan::Event &event) override;
-
- private:
-  Ethan::Shared<Ethan::Camera> camera_;
-  Ethan::Shared<Ethan::Texture2D> texture_;
-  Ethan::CameraController camera_controller_;
-
-  glm::vec4 color_ { 0.8f, 0.2f, 0.8f, 1.0f};
-};
-
-
-
-#endif // GAME_EXAMPLE2D_H_
+#endif // ETHAN_EDITOR_H_

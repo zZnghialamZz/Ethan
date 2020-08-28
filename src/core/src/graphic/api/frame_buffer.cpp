@@ -9,7 +9,8 @@
  *
  *                   Game Engine
  * ==================================================
- * @file etpch.h
+ *
+ * @file frame_buffer.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -29,21 +30,33 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UTILS_PCH_H_
-#define ETHAN_UTILS_PCH_H_
+#include "ethan/core/graphic/api/frame_buffer.h"
 
-#include <iostream>
-#include <memory>
-#include <utility>
-#include <algorithm>
-#include <functional>
+#ifdef __OPENGL_API__
+#include "ethan/opengl/gl_frame_buffer.h"
+#endif
 
-#include <string>
-#include <sstream>
-#include <array>
-#include <vector>
-
-#include "ethan/utils/misc/types.h"
-#include "ethan/utils/misc/macros.h"
-
-#endif // ETHAN_UTILS_PCH_H_
+namespace Ethan {
+  
+  Shared<FrameBuffer> FrameBuffer::Create(FrameBufferProperty property) {
+    switch (Renderer::GetAPI()) {
+      // None Renderer
+      case RendererAPI::None : {
+        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+        return nullptr;
+      }
+      // OpenGL Renderer
+      case RendererAPI::OpenGL : {
+#ifdef __OPENGL_API__
+        return MakeShared<GLFrameBuffer>(property);
+#else
+        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+      }
+    }
+    
+    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+    return nullptr;
+  }
+  
+}

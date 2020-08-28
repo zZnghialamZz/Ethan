@@ -29,6 +29,7 @@ set(HEADERS
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/os/file_system.h"
 
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/misc/macros.h"
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils/misc/types.h"
 
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/time/delta_time.h"
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/time/timer.h"

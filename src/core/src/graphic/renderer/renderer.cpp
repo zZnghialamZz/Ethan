@@ -38,66 +38,66 @@
 #endif
 
 namespace Ethan {
-
+  
 #ifdef __OPENGL_API__
-RendererAPI::API RendererAPI::api_ = RendererAPI::OpenGL;
-Shared<RendererAPI> RendererCommand::renderer_api_ = RendererAPI::Create();
+  RendererAPI::API RendererAPI::api_ = RendererAPI::OpenGL;
+  Shared<RendererAPI> RendererCommand::renderer_api_ = RendererAPI::Create();
 #endif
-
-Renderer::SceneData* Renderer::scene_data_ = new Renderer::SceneData;
-
-/// --- RendererAPI
-Shared<RendererAPI> RendererAPI::Create() {
-  switch (api_) {
-    case None: {
-      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-      return nullptr;
+  
+  Renderer::SceneData* Renderer::scene_data_ = new Renderer::SceneData;
+  
+  /// --- RendererAPI
+  Shared<RendererAPI> RendererAPI::Create() {
+    switch (api_) {
+      case None: {
+        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+        return nullptr;
+      }
+      case OpenGL: {
+        return MakeShared<GLRendererAPI>();
+      }
     }
-    case OpenGL: {
-      return MakeShared<GLRendererAPI>();
-    }
+    
+    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+    return nullptr;
   }
-
-  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-  return nullptr;
-}
-
-/// --- RendererAPI
-void Renderer::Init() {
-  RendererCommand::Init();
-  Renderer2D::Init();
-}
-
-void Renderer::Shutdown() {}
-
-void Renderer::Begin(const Camera& camera) {
-  scene_data_->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
-}
-
-void Renderer::End() {}
-
-void Renderer::Submit(const Shared<Shader> &shader,
-                      const Shared<VertexArray> &vertex_array,
-                      const glm::mat4& transform) {
-  shader->Bind();
-  shader->SetMat4("uEthan_ViewProjection", scene_data_->ViewProjectionMatrix);
-  shader->SetMat4("uEthan_Transform", transform);
-
-  vertex_array->Bind();
-  RendererCommand::DrawIndexed(vertex_array);
-}
-
-/// --- RendererCommand
-void RendererCommand::Init() { renderer_api_->Init(); }
-
-void RendererCommand::Clear() { renderer_api_->Clear(); }
-
-void RendererCommand::SetClearColor(const glm::vec4 &color) {
-  renderer_api_->SetClearColor(color);
-}
-
+  
+  /// --- RendererAPI
+  void Renderer::Init() {
+    RendererCommand::Init();
+    Renderer2D::Init();
+  }
+  
+  void Renderer::Shutdown() {}
+  
+  void Renderer::Begin(const Camera& camera) {
+    scene_data_->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+  }
+  
+  void Renderer::End() {}
+  
+  void Renderer::Submit(const Shared<Shader> &shader,
+                        const Shared<VertexArray> &vertex_array,
+                        const glm::mat4& transform) {
+    shader->Bind();
+    shader->SetMat4("uEthan_ViewProjection", scene_data_->ViewProjectionMatrix);
+    shader->SetMat4("uEthan_Transform", transform);
+    
+    vertex_array->Bind();
+    RendererCommand::DrawIndexed(vertex_array);
+  }
+  
+  /// --- RendererCommand
+  void RendererCommand::Init() { renderer_api_->Init(); }
+  
+  void RendererCommand::Clear() { renderer_api_->Clear(); }
+  
+  void RendererCommand::SetClearColor(const glm::vec4 &color) {
+    renderer_api_->SetClearColor(color);
+  }
+  
   void RendererCommand::DrawIndexed(const Shared<VertexArray> &vertex_array, const uint32_t indice_count) {
-  renderer_api_->DrawIndexed(vertex_array, indice_count);
-}
-
+    renderer_api_->DrawIndexed(vertex_array, indice_count);
+  }
+  
 }

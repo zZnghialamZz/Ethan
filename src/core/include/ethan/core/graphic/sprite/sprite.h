@@ -9,10 +9,11 @@
  *
  *                   Game Engine
  * ==================================================
- * @file etpch.h
+ *
+ * @file sprite.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
- * @brief
+ * @brief 
  *
  * @license Copyright 2020 Nghia Lam
  *
@@ -29,21 +30,17 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UTILS_PCH_H_
-#define ETHAN_UTILS_PCH_H_
 
-#include <iostream>
-#include <memory>
-#include <utility>
-#include <algorithm>
-#include <functional>
+#ifndef ETHAN_CORE_GRAPHIC_SPRITE_H_
+#define ETHAN_CORE_GRAPHIC_SPRITE_H_
 
-#include <string>
-#include <sstream>
-#include <array>
-#include <vector>
+namespace Ethan {
+  
+  // TODO(Nghia Lam): Support Sprite and Sprite Sheet
+  class Sprite {
+    
+  };
+  
+}
 
-#include "ethan/utils/misc/types.h"
-#include "ethan/utils/misc/macros.h"
-
-#endif // ETHAN_UTILS_PCH_H_
+#endif // ETHAN_CORE_GRAPHIC_SPRITE_H_

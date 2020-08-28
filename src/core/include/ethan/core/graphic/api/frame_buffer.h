@@ -9,7 +9,8 @@
  *
  *                   Game Engine
  * ==================================================
- * @file etpch.h
+ *
+ * @file frame_buffer.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -29,21 +30,33 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UTILS_PCH_H_
-#define ETHAN_UTILS_PCH_H_
+#ifndef ETHAN_CORE_GRAPHIC_FRAME_BUFFER_H_
+#define ETHAN_CORE_GRAPHIC_FRAME_BUFFER_H_
 
-#include <iostream>
-#include <memory>
-#include <utility>
-#include <algorithm>
-#include <functional>
+namespace Ethan {
+  
+  //------------------------------------------------------------------------------
+  // Type & Structure Definition
+  //------------------------------------------------------------------------------
+  struct FrameBufferProperty {
+    u32 Width;
+    u32 Height;
+    
+    bool IsRenderTarget;
+  };
+  
+  //------------------------------------------------------------------------------
+  // Main Class Objects
+  //------------------------------------------------------------------------------
+  class FrameBuffer {
+   public:
+    virtual ~FrameBuffer() = default;
+    
+    [[nodiscard]] virtual FrameBufferProperty GetProperty() = 0;
+    [[nodiscard]] virtual const FrameBufferProperty GetProperty() const = 0;
+    
+    static Shared<FrameBuffer> Create(FrameBufferProperty property);
+  };
+}
 
-#include <string>
-#include <sstream>
-#include <array>
-#include <vector>
-
-#include "ethan/utils/misc/types.h"
-#include "ethan/utils/misc/macros.h"
-
-#endif // ETHAN_UTILS_PCH_H_
+#endif // ETHAN_CORE_GRAPHIC_FRAME_BUFFER_H_

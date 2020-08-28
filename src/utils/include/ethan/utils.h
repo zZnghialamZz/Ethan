@@ -4,6 +4,7 @@
 namespace Ethan {}
 
 #include "ethan/utils/time/timer.h"
+#include "ethan/utils/misc/types.h"
 #include "ethan/utils/misc/macros.h"
 #include "ethan/utils/os/file_system.h"
 #include "ethan/utils/console/console.h"

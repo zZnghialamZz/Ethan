@@ -9,7 +9,8 @@
  *
  *                   Game Engine
  * ==================================================
- * @file etpch.h
+ *
+ * @file gl_frame_buffer.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -29,21 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UTILS_PCH_H_
-#define ETHAN_UTILS_PCH_H_
+#include "ethan/opengl/gl_frame_buffer.h"
 
-#include <iostream>
-#include <memory>
-#include <utility>
-#include <algorithm>
-#include <functional>
-
-#include <string>
-#include <sstream>
-#include <array>
-#include <vector>
-
-#include "ethan/utils/misc/types.h"
-#include "ethan/utils/misc/macros.h"
-
-#endif // ETHAN_UTILS_PCH_H_
+namespace Ethan {
+  
+}

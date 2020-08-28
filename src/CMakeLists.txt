@@ -5,6 +5,7 @@ add_subdirectory(core)
 add_subdirectory(libs)
 add_subdirectory(ui)
 add_subdirectory(utils)
+add_subdirectory(editor)
 
 include_directories(
     "core/include"
@@ -15,7 +16,7 @@ include_directories(
 )
 
 # -------------------------------------------------
-# Setup Ethan Engine Dynamic Libs
+# Setup Ethan Engine
 # -------------------------------------------------
 set(ETHAN_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/ethan")
 set(ETHAN_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/ethan")

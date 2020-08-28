@@ -39,7 +39,7 @@
 
 namespace Ethan {
   
-  /// --- VertexBuffer
+  //~ NOTE(Nghia Lam): VertexBuffer
   Shared<VertexBuffer> VertexBuffer::Create(BufferDataUsage usage) {
     switch (Renderer::GetAPI()) {
       // None Renderer

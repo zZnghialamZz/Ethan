@@ -35,17 +35,17 @@
 
 #include <glad/glad.h>
 
-#define GLCALL(x)                                                               \
+#define GLCALL(x)                                                              \
   GLClearError();                                                              \
   x;                                                                           \
   GLLogCall(#x);
 
 namespace Ethan {
-
-void GLClearError();
-
-void GLLogCall(const char *function);
-
+  
+  void GLClearError();
+  
+  void GLLogCall(const char *function);
+  
 }
 
 #endif // ETHAN_LIBS_GL_ASSERT_H_

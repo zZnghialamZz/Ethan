@@ -43,6 +43,7 @@ namespace Ethan {}
 #include "ethan/core/graphic/api/shader.h"
 #include "ethan/core/graphic/api/texture.h"
 #include "ethan/core/graphic/api/vertex_array.h"
+#include "ethan/core/graphic/api/frame_buffer.h"
 #include "ethan/core/graphic/camera/camera_controller.h"
 #include "ethan/core/graphic/mesh/mesh.h"
 #include "ethan/core/graphic/renderer/renderer.h"

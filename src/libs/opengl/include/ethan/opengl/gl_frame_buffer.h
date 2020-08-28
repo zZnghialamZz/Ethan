@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file game.cpp
+ * @file gl_frame_buffer.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,15 +30,25 @@
  * limitations under the License.
  */
 
-#include "game.h"
-#include "example2D.h"
-#include "example_process.h"
+#ifndef ETHAN_LIBS_GL_FRAME_BUFFER_H_
+#define ETHAN_LIBS_GL_FRAME_BUFFER_H_
 
-Game::Game() : Ethan::Application("GAME") {
-//  AddProcess(new ExampleProcess());
-  AddProcess(new Example2D());
+#include "ethan/core.h"
+
+namespace Ethan {
+  
+  class GLFrameBuffer : public FrameBuffer {
+   public:
+    GLFrameBuffer(FrameBufferProperty property);
+    
+    [[nodiscard]] FrameBufferProperty GetProperty() override { return property_; }
+    [[nodiscard]] const FrameBufferProperty GetProperty() const override { return property_; }
+    
+   private:
+    FrameBufferProperty property_;
+  };
+  
 }
 
-Game::~Game() = default;
 
-Ethan::Application *Ethan::CreateApplication() { return new Game(); }
+#endif // ETHAN_LIBS_GL_FRAME_BUFFER_H_

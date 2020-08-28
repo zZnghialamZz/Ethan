@@ -37,11 +37,19 @@
 
 namespace Ethan {
   
+  //------------------------------------------------------------------------------
+  // Type & Structure Definition
+  //------------------------------------------------------------------------------
   enum class BufferDataUsage {
     STATIC,
     DYNAMIC
   };
   
+  //------------------------------------------------------------------------------
+  // Main Class Objects
+  //------------------------------------------------------------------------------
+  
+  //~ NOTE(Nghia Lam): BufferElement
   class BufferElement {
    public:
     BufferElement(const std::string &name,
@@ -66,6 +74,7 @@ namespace Ethan {
     bool normalized_;
   };
   
+  //~ NOTE(Nghia Lam): BufferLayout
   class BufferLayout {
    public:
     BufferLayout();
@@ -89,6 +98,7 @@ namespace Ethan {
     void Init();
   };
   
+  //~ NOTE(Nghia Lam): VertexBuffer
   class VertexBuffer {
    public:
     virtual ~VertexBuffer() = default;
@@ -106,6 +116,7 @@ namespace Ethan {
     static Shared<VertexBuffer> Create(const void* data, uint32_t size, BufferDataUsage usage = BufferDataUsage::STATIC);
   };
   
+  //~ NOTE(Nghia Lam): IndexBuffer
   class IndexBuffer {
    public:
     virtual ~IndexBuffer() = default;

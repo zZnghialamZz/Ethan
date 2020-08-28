@@ -98,8 +98,3 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # ------------------------------------------------------
 set(WITH_OPENGL 1)
 add_definitions(-D__OPENGL_API__)
-
-# ------------------------------------------------------
-# Setting Tests
-# ------------------------------------------------------
-set(BUILD_TEST 1)

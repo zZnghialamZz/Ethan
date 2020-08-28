@@ -10,10 +10,10 @@
  *                   Game Engine
  * ==================================================
  *
- * @file example_process.h
+ * @file sprite.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
- * @brief
+ * @brief 
  *
  * @license Copyright 2020 Nghia Lam
  *
@@ -30,29 +30,8 @@
  * limitations under the License.
  */
 
-#ifndef GAME_SRC_EXAMPLE_PROCESS_H_
-#define GAME_SRC_EXAMPLE_PROCESS_H_
+#include "ethan/core/graphic/sprite/sprite.h"
 
-#include "ethan/ethan.h"
-
-class ExampleProcess : public Ethan::Process {
- public:
-  ExampleProcess();
-
-  void Attach() override;
-  void Detach() override;
-  void Update() override;
-  void EventCall(Ethan::Event &event) override;
-
- private:
-  Ethan::Shared<Ethan::VertexArray> vertexarray_;
-  Ethan::Shared<Ethan::VertexBuffer> vertex_buffer_;
-  Ethan::Shared<Ethan::IndexBuffer> index_buffer_;
-  Ethan::Shared<Ethan::Texture2D> texture_;
-  Ethan::ShaderLibrary shader_lib_;
-
-  Ethan::Shared<Ethan::Camera> camera_;
-  Ethan::CameraController camera_controller_;
-};
-
-#endif // GAME_SRC_EXAMPLE_PROCESS_H_
+namespace Ethan {
+  
+}

@@ -44,7 +44,7 @@ Main::~Main() = default;
 // --------- Entry Point --------- //
 extern Ethan::Application* Ethan::CreateApplication();
 
-// TDDO(@nghialam): Find a way to implement entry point
+// TODO(Nghia Lam): Find a way to implement entry point
 int main(int argc, char *argv[]) {
 
   auto app = Ethan::CreateApplication();

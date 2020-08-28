@@ -13,8 +13,10 @@ patterns = {
 "*.4coder",
 "*.txt",
 "*.md",
+"*.yml",
 "*.glsl",
 "*.shader",
+"*.cmake",
 };
 
 blacklist_patterns = {
@@ -63,7 +65,7 @@ command_list = {
 		.footer_panel = true,
 		.save_dirty_files = false,
 		.cursor_at_end = true,
-		.cmd = { {run_mac, .os = "mac" }, },
+		.cmd = { { run_mac, .os = "mac" }, },
 	},
 
 	{

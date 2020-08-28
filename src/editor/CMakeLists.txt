@@ -8,7 +8,7 @@
 #                   Game Engine
 # ==================================================
 #
-# @file CMakeLists.txt
+# @file CMakeLists.txt - editor
 # @author Nghia Lam <nghialam12795@gmail.com>
 #
 # @brief
@@ -27,28 +27,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ------------------------------------------------------
-# Default setup
-# ------------------------------------------------------
-cmake_minimum_required(VERSION 3.2)
+project(ET_EDITOR)
 
-project(ETHAN)
+set(ET_EDITOR_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
+set(ET_EDITOR_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
-# ------------------------------------------------------
-# Load settings && macros
-# ------------------------------------------------------
-if (NOT ETHAN_PROJECT_SETTINGS)
-  set(ETHAN_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-    "${ETHAN_PATH}/build_files/cmake/"
-    "${ETHAN_PATH}/build_files/cmake/configs"
-    "${ETHAN_PATH}/build_files/cmake/platforms"
+set(SOURCES
     )
-  include(ethan_dev)
-  include(macros)
-endif()
 
-ETHAN_VERSION()
+set(HEADERS
+    "${ET_EDITOR_INCLUDE_DIR}/ethan/editor.h"
+    )
 
-add_subdirectory(extern)
-add_subdirectory(src)
+include_directories(${ET_EDITOR_INCLUDE_DIR})
+
+add_library(ET_EDITOR STATIC ${HEADERS})

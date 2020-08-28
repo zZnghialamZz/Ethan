@@ -33,20 +33,20 @@
 #include "ethan/opengl/gl_assert.h"
 
 namespace Ethan {
-
-void GLClearError() {
-  while (glGetError() != GL_NO_ERROR)
-    ;
-}
-
-void GLLogCall(const char *function) {
-  while (GLenum error = glGetError()) {
-    ETLOG_CORE_ERROR("OpenGL Error {0} - {1} \nAt {2}, line {3}",
-                     error,
-                     function,
-                     __FILE__,
-                     __LINE__);
+  
+  void GLClearError() {
+    while (glGetError() != GL_NO_ERROR)
+      ;
   }
-}
-
+  
+  void GLLogCall(const char *function) {
+    while (GLenum error = glGetError()) {
+      ETLOG_CORE_ERROR("OpenGL Error {0} - {1} \nAt {2}, line {3}",
+                       error,
+                       function,
+                       __FILE__,
+                       __LINE__);
+    }
+  }
+  
 }
