@@ -43,7 +43,7 @@ namespace Ethan {
   class Renderer2D {
    public:
     // --- Definitions & Types
-    enum Render2DLayer : uint8_t {
+    enum Render2DLayer : u8 {
       DEFAULT = 0,
       LAYER_1 = 1,
       LAYER_2 = 2,
@@ -68,20 +68,20 @@ namespace Ethan {
     };
     
     struct Batch2DStorage {
-      static const uint32_t MaxQuads = 20000;
-      static const uint32_t MaxIndices = MaxQuads * 6;
-      static const uint32_t MaxVertices = MaxQuads * 4;
-      static const uint8_t MaxTextures = 16; // TODO(Nghia Lam): Detect this based on current machine driver
+      static const u32 MaxQuads = 20000;
+      static const u32 MaxIndices = MaxQuads * 6;
+      static const u32 MaxVertices = MaxQuads * 4;
+      static const u8 MaxTextures = 16; // TODO(Nghia Lam): Detect this based on current machine driver
       
       BatchVertex* VertexBatchBase;
       std::array<Shared<Texture2D>, MaxTextures> BatchTextures;
     };
     
     struct Statistic {
-      uint32_t DrawCall;
-      uint32_t QuadCount;
+      u32 DrawCall;
+      u32 QuadCount;
       
-      uint32_t GetTotalVertexCount() { return QuadCount * 4; }
+      u32 GetTotalVertexCount() { return QuadCount * 4; }
     };
     
     struct Renderer2DData {
@@ -96,8 +96,8 @@ namespace Ethan {
       glm::vec4 VertexOrigin[4];
       
       BatchVertex* CurrentVertex;
-      uint32_t CurrentIndiceCount = 0;
-      uint32_t CurrentTextureIndex = 0; // Default White Texture
+      u32 CurrentIndiceCount = 0;
+      u32 CurrentTextureIndex = 0; // Default White Texture
       
       Statistic Stats;
     };

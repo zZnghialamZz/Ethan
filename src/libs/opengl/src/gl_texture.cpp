@@ -37,30 +37,92 @@
 
 namespace Ethan {
   
+  //~ NOTE(Nghia Lam): Texture Properties Convertion
   GLenum ConvertToGLFormat(TextureFormat format) {
     switch (format) {
-      case TextureFormat::None:
-      ETLOG_CORE_ERROR("Unknown Texture format !!");
-      break;
+      case TextureFormat::None: {
+        ETLOG_CORE_ERROR("Unknown Texture format !!");
+        break;
+      }
+      case TextureFormat::DEPTH:
+        return GL_DEPTH_STENCIL;
       case TextureFormat::RGB:
-      return GL_RGB;
+      case TextureFormat::RGB8:
+      case TextureFormat::RGB16:
+      case TextureFormat::RGB32:
+        return GL_RGB;
       case TextureFormat::RGBA:
-      return GL_RGBA;
+      case TextureFormat::RGBA8:
+      case TextureFormat::RGBA16:
+      case TextureFormat::RGBA32:
+        return GL_RGBA;
     }
     
     return 0;
   }
   
-  GLTexture2D::GLTexture2D(uint16_t width, uint16_t height)
-    : width_(width), height_(height) {
+  GLenum ConvertToGLInternalFormat(TextureFormat format) {
+    switch (format) {
+      case TextureFormat::None: {
+        ETLOG_CORE_ERROR("Unknown Texture format !!");
+        break;
+      }
+      case TextureFormat::DEPTH:   return GL_DEPTH24_STENCIL8;
+      case TextureFormat::RGB:     return GL_SRGB;
+      case TextureFormat::RGB8:    return GL_RGB8;
+      case TextureFormat::RGB16:   return GL_RGB16F;
+      case TextureFormat::RGB32:   return GL_RGB32F;
+      case TextureFormat::RGBA:    return GL_RGBA;
+      case TextureFormat::RGBA8:   return GL_RGBA8;//GL_SRGB_ALPHA
+      case TextureFormat::RGBA16:  return GL_RGBA16F;
+      case TextureFormat::RGBA32:  return GL_RGBA32F;
+    }
     
-    internal_format_ = GL_RGBA8;
-    format_ = TextureFormat::RGBA;
-    
-    LoadTextureToGPU();
+    return 0;
   }
   
-  GLTexture2D::GLTexture2D(const std::string &path) : path_(path) {
+  GLenum ConvertToGLFilter(TextureFilter filter) {
+    switch (filter) {
+      case TextureFilter::None: {
+        ETLOG_CORE_ERROR("Unknown Texture filter !!");
+        break;
+      }
+      case TextureFilter::LINEAR:     return GL_LINEAR;
+      case TextureFilter::NEAREST:    return GL_NEAREST;
+    }
+    
+    return 0;
+  }
+  
+  GLenum ConvertToGLWrap(TextureWrap wrap) {
+    switch (wrap) {
+      case TextureWrap::None: {
+        ETLOG_CORE_ERROR("Unknown Texture wrap settings !!");
+        break;
+      }
+      case TextureWrap::CLAMP:           return GL_CLAMP;
+      case TextureWrap::CLAMP_TO_EDGE:   return GL_CLAMP_TO_EDGE;
+      case TextureWrap::CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
+      case TextureWrap::REPEAT:          return GL_REPEAT;
+    }
+    
+    return 0;
+  }
+  
+  
+  //~ NOTE(Nghia Lam): Main Class Implementation
+  
+  GLTexture2D::GLTexture2D(uint16_t width, uint16_t height, const TextureProperty& property)
+    : width_(width), height_(height), property_(property) {
+    
+    LoadTextureToGPU();
+    SetData(nullptr);
+  }
+  
+  GLTexture2D::GLTexture2D(const std::string &path, const TextureProperty& property) 
+    : path_(path)
+    , property_(property) {
+    
     // Little hack for checking support format.
     // Original idea from raylib:
     // https://github.com/raysan5/raylib/blob/master/src/core.c#L1846
@@ -93,23 +155,24 @@ namespace Ethan {
           height_ = height;
           
           switch (channels) {
-            case 3:
-            internal_format_ = GL_RGB8;
-            format_ = TextureFormat::RGB;
-            break;
-            case 4:
-            internal_format_ = GL_RGBA8;
-            format_ = TextureFormat::RGBA;
-            break;
-            default:
-            format_ = TextureFormat::None;
-            break;
+            case 3: {
+              property_.Format = TextureFormat::RGB;
+              break;
+            }
+            case 4: {
+              property_.Format = TextureFormat::RGBA;
+              break;
+            }
+            default: {
+              property_.Format = TextureFormat::RGBA;
+              break;
+            }
           }
-          ETASSERT_CORE((format_ != TextureFormat::None),
+          ETASSERT_CORE((property_.Format != TextureFormat::None),
                         "Unsupported texture format, please change to RGB or RGBA !");
           
           LoadTextureToGPU();
-          SetData(data, width * height * channels);
+          SetData(data);
           
           // Cleanup
           glBindTexture(GL_TEXTURE_2D, 0); // Unbind after finish default setup
@@ -140,25 +203,24 @@ namespace Ethan {
     GLCALL(glBindTexture(GL_TEXTURE_2D, textureID_));
     
     // Set parameters
-    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)); 
-    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)); // Pixelated
-    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+    if (property_.Format != TextureFormat::DEPTH) {
+      GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ConvertToGLFilter(property_.MinFilter))); 
+      GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ConvertToGLFilter(property_.MaxFilter)));
+      GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ConvertToGLWrap(property_.Wrap)));
+      GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ConvertToGLWrap(property_.Wrap)));
+    }
   }
   
-  void GLTexture2D::SetData(void *data, uint32_t size) const {
-    uint8_t bpp = internal_format_ == GL_RGBA8 ? 4 : 3;
-    ETASSERT_CORE((size == (width_ * height_ * bpp)),
-                  "Data size must be the entire texture");
+  void GLTexture2D::SetData(void *data) const {
     
     GLCALL(glTexImage2D(GL_TEXTURE_2D,
                         0,
-                        internal_format_,
+                        ConvertToGLInternalFormat(property_.Format),
                         width_,
                         height_,
                         0,
-                        ConvertToGLFormat(format_),
-                        GL_UNSIGNED_BYTE,
+                        ConvertToGLFormat(property_.Format),
+                        (property_.Format != TextureFormat::DEPTH) ? GL_UNSIGNED_BYTE : GL_UNSIGNED_INT_24_8,
                         data));
   }
   

@@ -49,7 +49,7 @@ namespace Ethan {
     
     uint32_t white_data = 0xffffffff;
     data_.Base2DTexture = Texture2D::Create(1, 1);
-    data_.Base2DTexture->SetData(&white_data, sizeof(white_data));
+    data_.Base2DTexture->SetData(&white_data);
     
     // NOTE(Nghia Lam): Upload Textures Storage to GPU
     int samplers[data_.Storage.MaxTextures];

@@ -41,33 +41,36 @@ namespace Ethan {
   
   class GLTexture2D : public Texture2D {
    public:
-    GLTexture2D(uint16_t width, uint16_t height);
-    explicit GLTexture2D(const std::string& path);
+    GLTexture2D(u16 width, u16 height, const TextureProperty& property);
+    explicit GLTexture2D(const std::string& path, const TextureProperty& property);
     virtual ~GLTexture2D();
     
-    void Bind(uint16_t slot = 0) const override;
-    void SetData(void *data, uint32_t size) const override;
+    void Bind(u16 slot = 0) const override;
+    void SetData(void *data) const override;
     
     bool operator==(const Texture& texture) const override;
     
-    [[nodiscard]] INLINE TextureFormat GetFormat() const override { return format_; }
-    [[nodiscard]] INLINE const uint32_t GetID() const override { return textureID_; }
-    [[nodiscard]] INLINE const uint16_t GetWidth() const override { return width_; }
-    [[nodiscard]] INLINE const uint16_t GetHeight() const override { return height_; }
+    [[nodiscard]] INLINE TextureFormat GetFormat() const override { return property_.Format; }
+    [[nodiscard]] INLINE const u32 GetID() const override { return textureID_; }
+    [[nodiscard]] INLINE const u16 GetWidth() const override { return width_; }
+    [[nodiscard]] INLINE const u16 GetHeight() const override { return height_; }
     [[nodiscard]] INLINE const std::string &GetPath() const override { return path_; }
     
    private:
-    uint16_t width_;
-    uint16_t height_;
-    uint32_t textureID_;
-    std::string path_;
+    // Private Members ---
     
-    TextureFormat format_;
-    GLenum internal_format_;
+    u32 textureID_;
+    std::string path_;
+    u16 width_;
+    u16 height_;
+    
+    TextureProperty property_;
+    
+    // Private Methods ---
     
     void LoadTextureToGPU();
   };
   
-} // namespace Ethan
+}
 
 #endif // ETHAN_LIBS_GL_TEXTURE_H_

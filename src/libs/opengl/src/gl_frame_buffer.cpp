@@ -32,6 +32,64 @@
 
 #include "ethan/opengl/gl_frame_buffer.h"
 
+#include "ethan/opengl/gl_texture.h"
+#include "ethan/opengl/gl_assert.h"
+
 namespace Ethan {
+  
+  GLFrameBuffer::GLFrameBuffer(FrameBufferProperty property) : property_(property) {
+    GenerateFrameBuffer();
+  }
+  
+  GLFrameBuffer::~GLFrameBuffer() {
+    GLCALL(glDeleteFramebuffers(1, &framebufferID_));
+  }
+  
+  void GLFrameBuffer::Bind() const {
+    GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, framebufferID_));
+  }
+  
+  void GLFrameBuffer::UnBind() const {
+    GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+  }
+  
+  void GLFrameBuffer::Resize(u32 width, u32 height) {
+    
+  }
+  
+  void GLFrameBuffer::Validate() {
+    u32 status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+      ETLOG_CORE_ERROR("Cannot create FrameBuffer !! Error Code: {0}", status);
+    }
+  }
+  
+  void GLFrameBuffer::GenerateFrameBuffer() {
+    // NOTE(Nghia Lam): Cleanup 
+    if (framebufferID_) {
+      GLCALL(glDeleteFramebuffers(1, &framebufferID_));
+    }
+    
+    GLCALL(glGenFramebuffers(1, &framebufferID_));
+    GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, framebufferID_));
+    
+    // NOTE(Nghia Lam): Create Color Attachment
+    color_attachment_.reset(new GLTexture2D(property_.Width,
+                                            property_.Height,
+                                            TextureProperty(TextureFormat::RGBA8,
+                                                            TextureFilter::LINEAR,
+                                                            TextureFilter::LINEAR,
+                                                            TextureWrap::REPEAT)));
+    GLCALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, color_attachment_->GetID(), 0));
+    
+    // NOTE(Nghia Lam): Create Depth Attachment
+    depth_attachment_.reset(new GLTexture2D(property_.Width,
+                                            property_.Height,
+                                            TextureProperty(TextureFormat::DEPTH)));
+    
+    Validate();
+    
+    GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+  }
   
 }

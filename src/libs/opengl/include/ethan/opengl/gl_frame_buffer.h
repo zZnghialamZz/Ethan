@@ -40,12 +40,28 @@ namespace Ethan {
   class GLFrameBuffer : public FrameBuffer {
    public:
     GLFrameBuffer(FrameBufferProperty property);
+    ~GLFrameBuffer();
+    
+    void Bind() const override;
+    void UnBind() const override;
+    void Resize(u32 width, u32 height) override;
+    
+    void Validate();
     
     [[nodiscard]] FrameBufferProperty GetProperty() override { return property_; }
     [[nodiscard]] const FrameBufferProperty GetProperty() const override { return property_; }
     
    private:
+    // Private Members ---
+    
     FrameBufferProperty property_;
+    u32 framebufferID_;
+    Shared<Texture2D> color_attachment_;
+    Shared<Texture2D> depth_attachment_;
+    
+    // Private Methods ---
+    
+    void GenerateFrameBuffer();
   };
   
 }

@@ -35,33 +35,91 @@
 
 namespace Ethan {
   
-  enum class TextureFormat : uint8_t {
+  //------------------------------------------------------------------------------
+  // Type & Structure Definition
+  //------------------------------------------------------------------------------
+  enum class TextureFormat : u8 {
     None = 0,
+    DEPTH,
     RGB,
-    RGBA
+    RGB8,
+    RGB16,
+    RGB32,
+    RGBA,
+    RGBA8,
+    RGBA16,
+    RGBA32,
   };
   
+  enum class TextureFilter : u8 {
+    None = 0,
+    LINEAR,
+    NEAREST
+  };
+  
+  enum class TextureWrap : u8 {
+    None = 0,
+    CLAMP,
+    CLAMP_TO_EDGE,
+    CLAMP_TO_BORDER,
+    REPEAT,
+  };
+  
+  struct TextureProperty {
+    TextureFormat  Format;
+    TextureFilter  MinFilter;
+    TextureFilter  MaxFilter;
+    TextureWrap    Wrap;
+    
+    TextureProperty() 
+      : Format(TextureFormat::RGBA8)
+      , MinFilter(TextureFilter::NEAREST)
+      , MaxFilter(TextureFilter::NEAREST)
+      , Wrap(TextureWrap::REPEAT) {}
+    
+    TextureProperty(TextureFormat format) 
+      : Format(format)
+      , MinFilter(TextureFilter::LINEAR)
+      , MaxFilter(TextureFilter::LINEAR)
+      , Wrap(TextureWrap::CLAMP) {}
+      
+    TextureProperty(TextureFormat format, 
+                    TextureFilter min_filter, 
+                    TextureFilter max_filter, 
+                    TextureWrap wrap) 
+      : Format(format)
+      , MinFilter(min_filter)
+      , MaxFilter(max_filter)
+      , Wrap(wrap) {}
+  };
+  
+  //------------------------------------------------------------------------------
+  // Main Class Objects
+  //------------------------------------------------------------------------------
+  
+  //~ NOTE(Nghia Lam): Texture
   class Texture {
-    public:
+   public:
     virtual ~Texture() = default;
     
-    virtual void Bind(uint16_t slot = 0) const = 0;
-    virtual void SetData(void* data, uint32_t size) const = 0;
+    virtual void Bind(u16 slot = 0) const = 0;
+    virtual void SetData(void* data) const = 0;
     
     virtual bool operator==(const Texture& texture) const = 0;
     
     [[nodiscard]] virtual TextureFormat GetFormat() const = 0;
-    [[nodiscard]] virtual const uint32_t GetID() const = 0;
-    [[nodiscard]] virtual const uint16_t GetWidth() const = 0;
-    [[nodiscard]] virtual const uint16_t GetHeight() const = 0;
+    [[nodiscard]] virtual const u32 GetID() const = 0;
+    [[nodiscard]] virtual const u16 GetWidth() const = 0;
+    [[nodiscard]] virtual const u16 GetHeight() const = 0;
   };
   
+  //~ NOTE(Nghia Lam): Texture2D
   class Texture2D : public Texture {
-    public:
+   public:
     [[nodiscard]] virtual const std::string& GetPath() const = 0;
     
-    static Shared<Texture2D> Create(uint16_t width, uint16_t height);
-    static Shared<Texture2D> Create(const std::string& path);
+    static Shared<Texture2D> Create(u16 width, u16 height, const TextureProperty& property = TextureProperty());
+    static Shared<Texture2D> Create(const std::string& path, const TextureProperty& property = TextureProperty());
   };
   
 }

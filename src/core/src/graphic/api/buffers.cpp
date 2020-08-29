@@ -103,7 +103,7 @@ namespace Ethan {
     return nullptr;
   }
   
-  /// --- IndexBuffer
+  //~ NOTE(Nghia Lam): IndexBuffer
   Shared<IndexBuffer> IndexBuffer::Create(uint32_t *indices, uint32_t count) {
     switch (Renderer::GetAPI()) {
       // None Renderer
@@ -125,7 +125,7 @@ namespace Ethan {
     return nullptr;
   }
   
-  /// --- BufferElement
+  //~ NOTE(Nghia Lam): BufferElement
   BufferElement::BufferElement(const std::string &name,
                                ShaderData::DataType type,
                                bool normalized)
@@ -157,7 +157,7 @@ namespace Ethan {
     return 0;
   }
   
-  /// --- BufferLayout
+  //~ NOTE(Nghia Lam): BufferLayout
   BufferLayout::BufferLayout() : stride_(0) {}
   
   BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)

@@ -41,8 +41,8 @@ namespace Ethan {
    public:
     
     explicit GLVertexBuffer(BufferDataUsage usage);
-    GLVertexBuffer(uint32_t size, BufferDataUsage usage);
-    GLVertexBuffer(const void* data, uint32_t size, BufferDataUsage usage);
+    GLVertexBuffer(u32 size, BufferDataUsage usage);
+    GLVertexBuffer(const void* data, u32 size, BufferDataUsage usage);
     ~GLVertexBuffer();
     
     void Bind() const override;
@@ -50,28 +50,28 @@ namespace Ethan {
     
     [[nodiscard]] INLINE const BufferLayout &GetLayout() const override { return layout_; }
     void SetLayout(const BufferLayout &layout) override { layout_ = layout; }
-    void SetData(const void* data, uint32_t size) override;
-    void SetSubData(const void* data, uint32_t size, uint32_t offset) override;
+    void SetData(const void* data, u32 size) override;
+    void SetSubData(const void* data, u32 size, u32 offset) override;
     
    private:
-    uint32_t vertexbufferID_;
+    u32 vertexbufferID_;
     BufferLayout layout_;
     BufferDataUsage data_usage_;
   };
   
   class GLIndexBuffer : public IndexBuffer {
    public:
-    GLIndexBuffer(uint32_t* indices, uint32_t& count);
+    GLIndexBuffer(u32* indices, u32& count);
     ~GLIndexBuffer();
     
     void Bind() const override;
     void UnBind() const override;
     
-    [[nodiscard]] INLINE uint32_t GetCount() const override { return count_; }
+    [[nodiscard]] INLINE u32 GetCount() const override { return count_; }
     
    private:
-    uint32_t indexbufferID_;
-    uint32_t count_;
+    u32 indexbufferID_;
+    u32 count_;
   };
   
 }

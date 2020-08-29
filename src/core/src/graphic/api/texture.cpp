@@ -38,47 +38,49 @@
 #endif
 
 namespace Ethan {
-
-Shared<Texture2D> Texture2D::Create(uint16_t width, uint16_t height) {
-  switch (Renderer::GetAPI()) {
-    // None Renderer
-    case RendererAPI::None : {
-      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-      return nullptr;
-    }
+  
+  Shared<Texture2D> Texture2D::Create(uint16_t width, 
+                                      uint16_t height, 
+                                      const TextureProperty& property) {
+    switch (Renderer::GetAPI()) {
+      // None Renderer
+      case RendererAPI::None : {
+        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+        return nullptr;
+      }
       // OpenGL Renderer
-    case RendererAPI::OpenGL : {
+      case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return MakeShared<GLTexture2D>(width, height);
+        return MakeShared<GLTexture2D>(width, height, property);
 #else
-      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
+      }
     }
+    
+    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+    return nullptr;
   }
-
-  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-  return nullptr;
-}
-
-Shared<Texture2D> Texture2D::Create(const std::string &path) {
-  switch (Renderer::GetAPI()) {
-    // None Renderer
-    case RendererAPI::None : {
-      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-      return nullptr;
-    }
+  
+  Shared<Texture2D> Texture2D::Create(const std::string &path, const TextureProperty& property) {
+    switch (Renderer::GetAPI()) {
+      // None Renderer
+      case RendererAPI::None : {
+        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+        return nullptr;
+      }
       // OpenGL Renderer
-    case RendererAPI::OpenGL : {
+      case RendererAPI::OpenGL : {
 #ifdef __OPENGL_API__
-      return MakeShared<GLTexture2D>(path);
+        return MakeShared<GLTexture2D>(path, property);
 #else
-      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
+      }
     }
+    
+    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+    return nullptr;
   }
-
-  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-  return nullptr;
-}
-
+  
 }
