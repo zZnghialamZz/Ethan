@@ -51,11 +51,9 @@ namespace Ethan {
     GLCALL(glClearColor(color.r, color.g, color.b, color.a));
   }
   
-  void GLRendererAPI::DrawIndexed(const Shared<VertexArray> &vertex_array, const uint32_t indice_count) {
+  void GLRendererAPI::DrawIndexed(const Shared<VertexArray> &vertex_array, const u32 indice_count) {
     
-    uint32_t count = indice_count 
-      ? indice_count 
-      : vertex_array->GetIndexBuffer()->GetCount();
+    u32 count = indice_count  ? indice_count  : vertex_array->GetIndexBuffer()->GetCount();
     
     GLCALL(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr));
   }

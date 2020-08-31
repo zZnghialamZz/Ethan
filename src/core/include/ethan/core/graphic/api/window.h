@@ -92,9 +92,9 @@ namespace Ethan {
     unsigned int width;
     unsigned int height;
     
-    explicit WindowProperty(const char *_title = "Ethan Engine",
-                            unsigned int _width = 1600,
-                            unsigned int _height = 900)
+    WindowProperty(const char *_title = "Ethan Engine",
+                   unsigned int _width = 1600,
+                   unsigned int _height = 900)
       : title(_title), width(_width), height(_height) {}
   };
   

@@ -19,7 +19,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
+ * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -31,7 +31,7 @@
  */
 
 #include "ethan/editor/editor_process.h"
-#include "ethan/core/main/process.h"
+#include "ethan/core.h"
 
 #include <imgui.h>
 
@@ -137,15 +137,10 @@ namespace Ethan {
         
         ImGui::EndMenu();
       }
-      HelpMarker("When docking is enabled, you can ALWAYS dock MOST window into another! Try it now!" "\n\n"
-                 " > if io.ConfigDockingWithShift==false (default):" "\n"
-                 "   drag windows from title bar to dock" "\n"
-                 " > if io.ConfigDockingWithShift==true:" "\n"
-                 "   drag windows from anywhere and hold Shift to dock" "\n\n"
-                 "This demo app has nothing to do with it!" "\n\n"
-                 "This demo app only demonstrate the use of ImGui::DockSpace() which allows you to manually create a docking node _within_ another window. This is useful so you can decorate your main application window (e.g. with a menu bar)." "\n\n"
-                 "ImGui::DockSpace() comes with one hard constraint: it needs to be submitted _before_ any window which may be docked into it. Therefore, if you use a dock spot as the central point of your application, you'll probably want it to be part of the very first window you are submitting to imgui every frame." "\n\n"
-                 "(NB: because of this constraint, the implicit \"Debug\" window can not be docked into an explicit DockSpace() node, because that window is submitted as part of the NewFrame() call. An easy workaround is that you can create your own implicit \"Debug##2\" window after calling DockSpace() and leave it in the window stack for anyone to use.)"
+      HelpMarker("==================================================" "\n"
+                 "                Ethan Game Engine                 " "\n"
+                 "==================================================" "\n\n"
+                 "Created by: Nghia Lam <nghialam12795@gmail.com>"
                  );
       
       ImGui::EndMenuBar();
