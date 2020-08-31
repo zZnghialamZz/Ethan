@@ -49,7 +49,8 @@ namespace Ethan {
   // Main Class Objects
   //------------------------------------------------------------------------------
   
-  //~ NOTE(Nghia Lam): BufferElement
+  //|
+  // BufferElement
   class BufferElement {
    public:
     BufferElement(const std::string &name,
@@ -74,7 +75,8 @@ namespace Ethan {
     bool normalized_;
   };
   
-  //~ NOTE(Nghia Lam): BufferLayout
+  //|
+  // BufferLayout
   class BufferLayout {
    public:
     BufferLayout();
@@ -98,7 +100,8 @@ namespace Ethan {
     void Init();
   };
   
-  //~ NOTE(Nghia Lam): VertexBuffer
+  //|
+  // VertexBuffer
   class VertexBuffer {
    public:
     virtual ~VertexBuffer() = default;
@@ -116,7 +119,8 @@ namespace Ethan {
     static Shared<VertexBuffer> Create(const void* data, uint32_t size, BufferDataUsage usage = BufferDataUsage::STATIC);
   };
   
-  //~ NOTE(Nghia Lam): IndexBuffer
+  //|
+  // IndexBuffer
   class IndexBuffer {
    public:
     virtual ~IndexBuffer() = default;

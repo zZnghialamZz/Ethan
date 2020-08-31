@@ -35,13 +35,47 @@
 #include "application.h"
 
 namespace Ethan {
-
-class Main {
- public:
-  Main();
-  virtual ~Main();
-};
-
+  
+  class Main {
+   public:
+    static Application* CreateApplication();
+    
+    static int InitMain(int argc, char* argv[]);
+    
+    // NOTE(Nghia Lam): Specific for Windows Platforms 
+    static int InitWinMain(void* h_instance,
+                           void* h_prev_instance,
+                           char* lp_cmdline,
+                           int nshowcmd);
+  };
+  
 }
+
+//------------------------------------------------------------------------------
+// Entry Point
+//------------------------------------------------------------------------------
+
+#if defined(_WIN32)
+
+int __stdcall WinMain(HINSTANCE hInstance,
+                      HINSTANCE hPrevInstance,
+                      LPSTR lpCmdLine,
+                      int nShowCmd)
+{
+  return Ethan::Main::InitWinMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+}
+
+#else
+
+int main(int argc, char* argv[])
+{
+  return Ethan::Main::InitMain(argc, argv);
+}
+
+#endif
+
+//------------------------------------------------------------------------------
+// End
+//------------------------------------------------------------------------------
 
 #endif // ETHAN_CORE_MAIN_H_

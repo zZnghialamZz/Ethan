@@ -35,9 +35,9 @@
 
 namespace Ethan {
   
-  //------------------------------------------------------------------------------
+  //|
   // Type & Structure Definition
-  //------------------------------------------------------------------------------
+  //|
   enum class TextureFormat : u8 {
     None = 0,
     DEPTH,
@@ -93,11 +93,11 @@ namespace Ethan {
       , Wrap(wrap) {}
   };
   
-  //------------------------------------------------------------------------------
+  //|
   // Main Class Objects
-  //------------------------------------------------------------------------------
+  //|
   
-  //~ NOTE(Nghia Lam): Texture
+  // Texture
   class Texture {
    public:
     virtual ~Texture() = default;
@@ -113,7 +113,7 @@ namespace Ethan {
     [[nodiscard]] virtual const u16 GetHeight() const = 0;
   };
   
-  //~ NOTE(Nghia Lam): Texture2D
+  // Texture2D
   class Texture2D : public Texture {
    public:
     [[nodiscard]] virtual const std::string& GetPath() const = 0;

@@ -98,3 +98,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # ------------------------------------------------------
 set(WITH_OPENGL 1)
 add_definitions(-D__OPENGL_API__)
+
+# ------------------------------------------------------
+# Config Ethan Build
+# ------------------------------------------------------
+set(BUILD_ETHAN_EXECUTABLE 1)

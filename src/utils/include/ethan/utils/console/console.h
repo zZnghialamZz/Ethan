@@ -68,23 +68,23 @@
   }
 
 namespace Ethan {
-
-class Console {
- public:
-  static void Init(const std::string& client_name = "APP");
-
-  INLINE static std::shared_ptr<spdlog::logger> &GetCoreLogger() {
-    return core_logger_;
-  }
-  INLINE static std::shared_ptr<spdlog::logger> &GetClientLogger() {
-    return client_logger_;
-  }
-
- private:
-  static std::shared_ptr<spdlog::logger> core_logger_;
-  static std::shared_ptr<spdlog::logger> client_logger_;
-};
-
+  
+  class Console {
+   public:
+    static void Init(const std::string& client_name = "APP");
+    
+    INLINE static std::shared_ptr<spdlog::logger> &GetCoreLogger() {
+      return core_logger_;
+    }
+    INLINE static std::shared_ptr<spdlog::logger> &GetClientLogger() {
+      return client_logger_;
+    }
+    
+   private:
+    static std::shared_ptr<spdlog::logger> core_logger_;
+    static std::shared_ptr<spdlog::logger> client_logger_;
+  };
+  
 } // namespace Ethan
 
 #endif // ETHAN_UTILS_CONSOLE_H_

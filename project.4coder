@@ -38,7 +38,7 @@ build_win = "build_files\\scripts\\build_win.bat";
 clean_mac = "build_files/scripts/clean_mac.sh";
 build_mac = "build_files/scripts/build_mac.sh";
 debug_mac = "build_files/scripts/debug_mac.sh";
-run_mac = "bin/GAME";
+run_mac = "bin/ETHAN";
 
 command_list = {
 	{ 

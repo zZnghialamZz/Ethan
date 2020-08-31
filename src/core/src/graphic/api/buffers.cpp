@@ -39,7 +39,8 @@
 
 namespace Ethan {
   
-  //~ NOTE(Nghia Lam): VertexBuffer
+  //|
+  // VertexBuffer
   Shared<VertexBuffer> VertexBuffer::Create(BufferDataUsage usage) {
     switch (Renderer::GetAPI()) {
       // None Renderer
@@ -103,7 +104,8 @@ namespace Ethan {
     return nullptr;
   }
   
-  //~ NOTE(Nghia Lam): IndexBuffer
+  //|
+  // IndexBuffer
   Shared<IndexBuffer> IndexBuffer::Create(uint32_t *indices, uint32_t count) {
     switch (Renderer::GetAPI()) {
       // None Renderer
@@ -125,7 +127,8 @@ namespace Ethan {
     return nullptr;
   }
   
-  //~ NOTE(Nghia Lam): BufferElement
+  //|
+  // BufferElement
   BufferElement::BufferElement(const std::string &name,
                                ShaderData::DataType type,
                                bool normalized)
@@ -157,7 +160,8 @@ namespace Ethan {
     return 0;
   }
   
-  //~ NOTE(Nghia Lam): BufferLayout
+  //|
+  // BufferLayout
   BufferLayout::BufferLayout() : stride_(0) {}
   
   BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)

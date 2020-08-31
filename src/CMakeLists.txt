@@ -28,6 +28,8 @@ set(HEADERS
 
 include_directories(${ETHAN_INCLUDE_DIR})
 
-add_library(ETHAN STATIC ${SOURCES} ${HEADERS})
+if (BUILD_ETHAN_EXECUTABLE)
+    add_executable(ETHAN ${SOURCES})
+endif()
 
 target_link_libraries(ETHAN ET_CORE ET_UTILS ET_UI)

@@ -37,7 +37,9 @@
 
 namespace Ethan {
   
-  //~ NOTE(Nghia Lam): Texture Properties Convertion
+  //|
+  // Texture Properties Convertion
+  //|
   GLenum ConvertToGLFormat(TextureFormat format) {
     switch (format) {
       case TextureFormat::None: {
@@ -110,7 +112,9 @@ namespace Ethan {
   }
   
   
-  //~ NOTE(Nghia Lam): Main Class Implementation
+  //|
+  // Main Class Implementation
+  //|
   
   GLTexture2D::GLTexture2D(uint16_t width, uint16_t height, const TextureProperty& property)
     : width_(width), height_(height), property_(property) {
