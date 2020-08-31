@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file editor.h
+ * @file edtior_process.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -19,7 +19,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+  * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -30,12 +30,30 @@
  * limitations under the License.
  */
 
+#ifndef ETHAN_EDITOR_PROCESS_H
+#define ETHAN_EDITOR_PROCESS_H
 
-#ifndef ETHAN_EDITOR_H_
-#define ETHAN_EDITOR_H_
+namespace Ethan {
+  
+  class Process;
+  
+  class EditorProcess : public Process {
+   public:
+    EditorProcess();
+    ~EditorProcess();
+    
+    void Attach() override;
+    void Detach() override;
+    void Update() override;
+    void UpdateUI() override;
+    void EventCall(Event &event) override;
+    
+   private:
+    
+    void SetupImGuiDockspace();
+    
+  };
+  
+}
 
-namespace Ethan {}
-
-#include "ethan/editor/editor_process.h"
-
-#endif // ETHAN_EDITOR_H_
+#endif // ETHAN_EDITOR_PROCESS_H

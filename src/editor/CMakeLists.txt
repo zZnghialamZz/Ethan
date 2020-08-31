@@ -29,16 +29,29 @@
 
 project(ET_EDITOR)
 
+include_directories(
+    "../ui/include"
+    "../utils/include"
+    "../core/include"
+
+    "../../extern/imgui"
+)
+
 set(ET_EDITOR_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_EDITOR_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
+    "${ET_EDITOR_SRC_DIR}/editor_process.cpp"
     )
 
 set(HEADERS
+    "${ET_EDITOR_INCLUDE_DIR}/ethan/editor/editor_process.h"
+
     "${ET_EDITOR_INCLUDE_DIR}/ethan/editor.h"
     )
 
 include_directories(${ET_EDITOR_INCLUDE_DIR})
 
-add_library(ET_EDITOR STATIC ${HEADERS})
+add_library(ET_EDITOR STATIC ${SOURCES} ${HEADERS})
+
+target_link_libraries(ET_EDITOR ET_CORE IMGUI)

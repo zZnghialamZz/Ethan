@@ -31,23 +31,25 @@
  */
 
 #include "ethan/core/main/main.h"
+#include "ethan/editor/editor_process.h"
 
 namespace Ethan {
-  Application* Main::CreateApplication() {
-    // TODO(Nghia Lam): Tweaking Application, make it Singleton?
-    return new Application("Ethan Engine");
-  } 
+  Application* Main::CreateApplication() { return new Application("Ethan Engine"); } 
   
   
   //|
   // Entry Point Func
   
   int Main::InitMain(int argc, char* argv[]) {
-    // TODO(Nghia Lam): Init default options here.
     
     auto app = CreateApplication();
+    
     app->Init();
+    app->AddProcess(new EditorProcess());
+    
+    // NOTE(Nghia Lam): Main Loop
     app->Update();
+    
     delete app;
     
     return 0;

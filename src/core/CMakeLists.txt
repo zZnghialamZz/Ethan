@@ -33,6 +33,7 @@ project(ET_CORE)
 include_directories(
     "../ui/include"
     "../utils/include"
+    "../editor/include"
     "../libs/opengl/include"
     "../../extern/glm"
     "../../extern/glad/include"
@@ -100,7 +101,7 @@ include_directories(${ET_CORE_INCLUDE_DIR})
 
 add_library(ET_CORE STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(ET_CORE glm ET_UTILS ET_UI)
+target_link_libraries(ET_CORE glm ET_UTILS ET_UI ET_EDITOR)
 
 target_precompile_headers(ET_CORE PUBLIC "$<$<COMPILE_LANGUAGE:CXX>:${ET_CORE_INCLUDE_DIR}/ethan/core_pch.h>")
 
