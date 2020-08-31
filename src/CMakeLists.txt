@@ -29,7 +29,11 @@ set(HEADERS
 include_directories(${ETHAN_INCLUDE_DIR})
 
 if (BUILD_ETHAN_EXECUTABLE)
-    add_executable(ETHAN ${SOURCES})
-endif()
+    if (WIN32)
+        add_executable(ETHAN WIN32 ${SOURCES})
+    else()
+        add_executable(ETHAN ${SOURCES})
+    endif()
+endif(BUILD_ETHAN_EXECUTABLE)
 
 target_link_libraries(ETHAN ET_CORE ET_UTILS ET_UI)

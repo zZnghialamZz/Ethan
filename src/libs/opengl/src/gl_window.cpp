@@ -38,7 +38,7 @@ namespace Ethan {
 
 bool GLWindow::is_glfw_init_ = false;
 
-Window* Window::CreateWindow(const WindowProperty& props) {
+Window* Window::Create(const WindowProperty& props) {
   return new GLWindow(props);
 }
 
