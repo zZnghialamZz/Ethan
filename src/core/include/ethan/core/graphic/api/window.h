@@ -92,9 +92,9 @@ namespace Ethan {
     unsigned int width;
     unsigned int height;
     
-    explicit WindowProperty(const char *_title = "Ethan Engine",
-                            unsigned int _width = 1600,
-                            unsigned int _height = 900)
+	WindowProperty(const char* _title = "Ethan Engine",
+		unsigned int _width = 1600,
+		unsigned int _height = 900)
       : title(_title), width(_width), height(_height) {}
   };
   
@@ -124,7 +124,7 @@ namespace Ethan {
     virtual void Close() = 0;
     virtual void Resize(unsigned int width, unsigned int height) = 0;
     
-    static Window *CreateWindow(const WindowProperty &props = WindowProperty());
+    static Window *Create(const WindowProperty &props = WindowProperty());
   };
   
 } 

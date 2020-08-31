@@ -60,6 +60,15 @@ namespace Ethan {
                         char* lp_cmdline,
                         int nshowcmd) {
     // TODO(Nghia Lam): Setup for Window Platforms
+    auto app = CreateApplication();
+    
+    app->Init();
+    app->AddProcess(new EditorProcess());
+    
+    // NOTE(Nghia Lam): Main Loop
+    app->Update();
+    
+    delete app;
     
     return 0;
   }

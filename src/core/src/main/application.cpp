@@ -44,7 +44,7 @@ namespace Ethan {
     ETASSERT_CORE(!instance_, "Application Exists !");
     instance_ = this;
     
-    main_window_ = std::unique_ptr<Window>(Window::CreateWindow());
+    main_window_ = std::unique_ptr<Window>(Window::Create());
     main_window_->SetEventCallback(
                                    [=](Event& e) {
                                      Application::EventCall(e);
