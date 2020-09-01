@@ -34,6 +34,7 @@
 #define ETHAN_H_
 
 #include "ethan/core.h"
+#include "ethan/editor.h"
 #include "ethan/ui.h"
 #include "ethan/utils.h"
 
@@ -50,8 +51,8 @@ namespace Ethan {}
 // ---------------------------------------------------------------------------
 // Temporarily list our general Tasks here.
 // ---------------------------------------------------------------------------
-// TODO: Code Documentation
-// TODO: Learn SIMD and write my own math library
-// TODO: Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
+// TODO(Nghia Lam): Code Documentation
+// TODO(Nghia Lam): Learn SIMD and write my own math library
+// TODO(Nghia Lam): Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
 
 #endif // ETHAN_H_

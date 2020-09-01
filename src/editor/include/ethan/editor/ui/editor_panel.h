@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_frame_buffer.h
+ * @file edtior_panel.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,43 +30,30 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_LIBS_GL_FRAME_BUFFER_H_
-#define ETHAN_LIBS_GL_FRAME_BUFFER_H_
 
-#include "ethan/core.h"
+#ifndef ETHAN_EDITOR_PANEL_H
+#define ETHAN_EDITOR_PANEL_H
 
 namespace Ethan {
   
-  class GLFrameBuffer : public FrameBuffer {
+  class EditorPanel {
    public:
-    GLFrameBuffer(FrameBufferProperty property);
-    ~GLFrameBuffer();
+    explicit EditorPanel(const std::string& name = "EditorPanel");
+    virtual ~EditorPanel() = default;
     
-    void Bind() const override;
-    void UnBind() const override;
-    void Resize(u32 width, u32 height) override;
+    virtual void Update() = 0;
+    virtual void UpdateUI() = 0;
     
-    void Validate();
+    [[nodiscard]] virtual const std::string& GetName() const { return name_; }
+    [[nodiscard]] virtual bool IsActive() const { return is_active_; }
     
-    [[nodiscard]] FrameBufferProperty GetProperty() override { return property_; }
-    [[nodiscard]] const FrameBufferProperty GetProperty() const override { return property_; }
-    [[nodiscard]] const Shared<Texture2D> GetColorAttachment() const override { return color_attachment_; }
-    [[nodiscard]] const Shared<Texture2D> GetDepthAttachment() const override { return depth_attachment_; }
+    void SetActive(bool active) { is_active_ = active; }
     
-   private:
-    // Private Members ---
-    
-    u32 framebufferID_ = 0;
-    FrameBufferProperty property_;
-    Shared<Texture2D> color_attachment_;
-    Shared<Texture2D> depth_attachment_;
-    
-    // Private Methods ---
-    
-    void GenerateFrameBuffer();
+   protected:
+    std::string name_;
+    bool is_active_;
   };
   
 }
 
-
-#endif // ETHAN_LIBS_GL_FRAME_BUFFER_H_
+#endif // ETHAN_EDITOR_PANEL_H

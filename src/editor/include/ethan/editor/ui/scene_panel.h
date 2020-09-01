@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_frame_buffer.h
+ * @file scene_panel.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,43 +30,27 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_LIBS_GL_FRAME_BUFFER_H_
-#define ETHAN_LIBS_GL_FRAME_BUFFER_H_
+#ifndef ETHAN_EDITOR_SCENE_PANEL_H_
+#define ETHAN_EDITOR_SCENE_PANEL_H_
 
-#include "ethan/core.h"
+#include "editor_panel.h"
 
 namespace Ethan {
   
-  class GLFrameBuffer : public FrameBuffer {
+  class FrameBuffer;
+  
+  class ScenePanel : public EditorPanel {
    public:
-    GLFrameBuffer(FrameBufferProperty property);
-    ~GLFrameBuffer();
+    ScenePanel();
+    ~ScenePanel();
     
-    void Bind() const override;
-    void UnBind() const override;
-    void Resize(u32 width, u32 height) override;
-    
-    void Validate();
-    
-    [[nodiscard]] FrameBufferProperty GetProperty() override { return property_; }
-    [[nodiscard]] const FrameBufferProperty GetProperty() const override { return property_; }
-    [[nodiscard]] const Shared<Texture2D> GetColorAttachment() const override { return color_attachment_; }
-    [[nodiscard]] const Shared<Texture2D> GetDepthAttachment() const override { return depth_attachment_; }
+    void Update() override;
+    void UpdateUI() override;
     
    private:
-    // Private Members ---
-    
-    u32 framebufferID_ = 0;
-    FrameBufferProperty property_;
-    Shared<Texture2D> color_attachment_;
-    Shared<Texture2D> depth_attachment_;
-    
-    // Private Methods ---
-    
-    void GenerateFrameBuffer();
+    Shared<FrameBuffer> framebuffer_;
   };
   
 }
 
-
-#endif // ETHAN_LIBS_GL_FRAME_BUFFER_H_
+#endif // ETHAN_EDITOR_SCENE_PANEL_H_

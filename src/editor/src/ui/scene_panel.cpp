@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_frame_buffer.h
+ * @file scene_panel.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,43 +30,46 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_LIBS_GL_FRAME_BUFFER_H_
-#define ETHAN_LIBS_GL_FRAME_BUFFER_H_
-
+#include "ethan/editor/ui/scene_panel.h"
 #include "ethan/core.h"
+
+#include <imgui.h>
 
 namespace Ethan {
   
-  class GLFrameBuffer : public FrameBuffer {
-   public:
-    GLFrameBuffer(FrameBufferProperty property);
-    ~GLFrameBuffer();
+  ScenePanel::ScenePanel() : EditorPanel("Scene") {
+    framebuffer_ = FrameBuffer::Create(FrameBufferProperty());
+  }
+  
+  ScenePanel::~ScenePanel() {}
+  
+  void ScenePanel::Update() {
     
-    void Bind() const override;
-    void UnBind() const override;
-    void Resize(u32 width, u32 height) override;
+    // Render
+    Renderer2D::ResetStats();
+    framebuffer_->Bind();
     
-    void Validate();
+    RendererCommand::Clear();
+    RendererCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f }); // Gray Background
     
-    [[nodiscard]] FrameBufferProperty GetProperty() override { return property_; }
-    [[nodiscard]] const FrameBufferProperty GetProperty() const override { return property_; }
-    [[nodiscard]] const Shared<Texture2D> GetColorAttachment() const override { return color_attachment_; }
-    [[nodiscard]] const Shared<Texture2D> GetDepthAttachment() const override { return depth_attachment_; }
+    framebuffer_->UnBind();
+  }
+  
+  void ScenePanel::UpdateUI() {
+    auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
+		ImGui::SetNextWindowBgAlpha(0.0f);
     
-   private:
-    // Private Members ---
+    // NOTE(Nghia Lam): Begin Drawing
+		ImGui::Begin(name_.c_str(), &is_active_, flags);
     
-    u32 framebufferID_ = 0;
-    FrameBufferProperty property_;
-    Shared<Texture2D> color_attachment_;
-    Shared<Texture2D> depth_attachment_;
+    u64 textureID = framebuffer_->GetColorAttachment()->GetID();
+    ImGui::Image((void*)textureID, 
+                 ImVec2{ (float)framebuffer_->GetProperty().Width, (float)framebuffer_->GetProperty().Height },
+                 ImVec2{ 0, 1 },
+                 ImVec2{ 1, 0 });
     
-    // Private Methods ---
     
-    void GenerateFrameBuffer();
-  };
+    ImGui::End();
+  }
   
 }
-
-
-#endif // ETHAN_LIBS_GL_FRAME_BUFFER_H_

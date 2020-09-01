@@ -41,10 +41,18 @@ set(ET_EDITOR_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_EDITOR_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
+    "${ET_EDITOR_SRC_DIR}/ui/console_panel.cpp"
+    "${ET_EDITOR_SRC_DIR}/ui/editor_panel.cpp"
+    "${ET_EDITOR_SRC_DIR}/ui/scene_panel.cpp"
+
     "${ET_EDITOR_SRC_DIR}/editor_process.cpp"
     )
 
 set(HEADERS
+    "${ET_EDITOR_INCLUDE_DIR}/ethan/editor/ui/console_panel.h"
+    "${ET_EDITOR_INCLUDE_DIR}/ethan/editor/ui/editor_panel.h"
+    "${ET_EDITOR_INCLUDE_DIR}/ethan/editor/ui/scene_panel.h"
+
     "${ET_EDITOR_INCLUDE_DIR}/ethan/editor/editor_process.h"
 
     "${ET_EDITOR_INCLUDE_DIR}/ethan/editor.h"

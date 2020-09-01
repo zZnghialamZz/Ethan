@@ -44,11 +44,22 @@ namespace Ethan {
     u32 Samples; // Multisampling
     
     bool IsRenderTarget;
+    
+    FrameBufferProperty(u32 width = 1600,
+                        u32 height = 900,
+                        u32 samples = 1,
+                        bool istarget = false) 
+      : Width(width)
+      , Height(height)
+      , Samples(samples)
+      , IsRenderTarget(istarget) {}
   };
   
   //------------------------------------------------------------------------------
   // Main Class Objects
   //------------------------------------------------------------------------------
+  class Texture2D;
+  
   class FrameBuffer {
    public:
     virtual ~FrameBuffer() = default;
@@ -59,6 +70,8 @@ namespace Ethan {
     
     [[nodiscard]] virtual FrameBufferProperty GetProperty() = 0;
     [[nodiscard]] virtual const FrameBufferProperty GetProperty() const = 0;
+    [[nodiscard]] virtual const Shared<Texture2D> GetColorAttachment() const = 0;
+    [[nodiscard]] virtual const Shared<Texture2D> GetDepthAttachment() const = 0;
     
     static Shared<FrameBuffer> Create(FrameBufferProperty property);
   };

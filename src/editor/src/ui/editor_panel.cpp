@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file edtior_process.h
+ * @file edtior_panel.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,39 +30,12 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_EDITOR_PROCESS_H
-#define ETHAN_EDITOR_PROCESS_H
+#include "ethan/editor/ui/editor_panel.h"
 
 namespace Ethan {
   
-  class EditorPanel;
-  class Process;
-  class Event;
-  
-  class EditorProcess : public Process {
-   public:
-    EditorProcess();
-    ~EditorProcess();
-    
-    void Attach() override;
-    void Detach() override;
-    void Update() override;
-    void UpdateUI() override;
-    void EventCall(Event &event) override;
-    
-   private:
-    //|
-    // Private Members
-    std::vector<Shared<EditorPanel>> panels_;
-    
-    //|
-    // Private Methods
-    void BeginDockspace();
-    void SetupMenuBar();
-    void EndDockspace();
-    
-  };
+  EditorPanel::EditorPanel(const std::string& name) 
+    : name_(name)
+    , is_active_(false) {}
   
 }
-
-#endif // ETHAN_EDITOR_PROCESS_H
