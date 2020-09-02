@@ -36,6 +36,7 @@
 #include "ethan/opengl/gl_assert.h"
 
 namespace Ethan {
+  static const u16 frame_max_size = 8192; // 8k
   
   GLFrameBuffer::GLFrameBuffer(FrameBufferProperty property) : property_(property) {
     GenerateFrameBuffer();
@@ -54,7 +55,18 @@ namespace Ethan {
   }
   
   void GLFrameBuffer::Resize(u32 width, u32 height) {
+    // TODO(Nghia Lam): Checking valid input here
+    if (width == property_.Width   || width  <= 0 || width  >= frame_max_size ||
+        height == property_.Height || height <= 0 || height >= frame_max_size ) {
+      
+      ETLOG_CORE_ERROR("[FrameBuffer] Invalid Resize Parameters, {0} - {1}", width, height);
+      return;
+    }
+        
+    property_.Width = width;
+    property_.Height = height;
     
+    GenerateFrameBuffer();
   }
   
   void GLFrameBuffer::Validate() {

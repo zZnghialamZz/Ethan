@@ -49,6 +49,10 @@ namespace Ethan {
     
    private:
     Shared<FrameBuffer> framebuffer_;
+    
+    float scene_width_;
+    float scene_height_;
+    
   };
   
 }
