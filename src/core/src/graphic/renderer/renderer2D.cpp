@@ -38,7 +38,7 @@
 
 namespace Ethan {
   
-  Renderer2D::Renderer2DData Renderer2D::data_;
+  Renderer2DData Renderer2D::data_;
   
   void Renderer2D::Init() {
     // TODO(Nghia Lam): Profile here.
@@ -288,7 +288,7 @@ namespace Ethan {
   }
   
   void Renderer2D::ResetStats() {
-    memset(&data_.Stats, 0, sizeof(Statistic));
+    memset(&data_.Stats, 0, sizeof(Renderer2DStatistic));
   }
   
 }

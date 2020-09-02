@@ -39,69 +39,73 @@
 #include "ethan/core/graphic/api/texture.h"
 
 namespace Ethan {
+  //|
+  // Definitions & Types
+  //|
+  enum Render2DLayer : u8 {
+    DEFAULT = 0,
+    LAYER_1 = 1,
+    LAYER_2 = 2,
+    LAYER_3 = 3,
+    LAYER_4 = 4,
+    LAYER_5 = 5,
+    LAYER_6 = 6,
+    LAYER_7 = 7,
+    LAYER_8 = 8,
+    LAYER_9 = 9,
+  };
   
+  // TODO(Nghia Lam): File a more proper way to implement this
+  struct BatchVertex : public Mesh::Vertex {
+    float TextureIndex;
+    glm::vec2 TilingFactor;
+    
+    BatchVertex() 
+      : Vertex()
+      , TextureIndex(0.0f)
+      , TilingFactor(glm::vec2(1.0f)) {}
+  };
+  
+  struct Batch2DStorage {
+    static const u32 MaxQuads = 20000;
+    static const u32 MaxIndices = MaxQuads * 6;
+    static const u32 MaxVertices = MaxQuads * 4;
+    static const u8 MaxTextures = 16; // TODO(Nghia Lam): Detect this based on current machine driver
+    
+    BatchVertex* VertexBatchBase;
+    std::array<Shared<Texture2D>, MaxTextures> BatchTextures;
+  };
+  
+  struct Renderer2DStatistic {
+    u32 DrawCall;
+    u32 QuadCount;
+    
+    u32 GetTotalVertexCount() { return QuadCount * 4; }
+  };
+  
+  struct Renderer2DData {
+    // Shared<Mesh> QuadMesh;
+    Shared<Mesh> BatchMesh;
+    Shared<Shader> Base2DShader;
+    Shared<Texture2D> Base2DTexture;
+    
+    Batch2DStorage Storage;
+    
+    // TODO(Nghia Lam): Using Sprite System for this
+    glm::vec4 VertexOrigin[4];
+    
+    BatchVertex* CurrentVertex;
+    u32 CurrentIndiceCount = 0;
+    u32 CurrentTextureIndex = 0; // Default White Texture
+    
+    Renderer2DStatistic Stats;
+  };
+  
+  //|
+  // Main Class Object
+  //|
   class Renderer2D {
    public:
-    // --- Definitions & Types
-    enum Render2DLayer : u8 {
-      DEFAULT = 0,
-      LAYER_1 = 1,
-      LAYER_2 = 2,
-      LAYER_3 = 3,
-      LAYER_4 = 4,
-      LAYER_5 = 5,
-      LAYER_6 = 6,
-      LAYER_7 = 7,
-      LAYER_8 = 8,
-      LAYER_9 = 9,
-    };
-    
-    // TODO(Nghia Lam): File a more proper way to implement this
-    struct BatchVertex : public Mesh::Vertex {
-      float TextureIndex;
-      glm::vec2 TilingFactor;
-      
-      BatchVertex() 
-        : Vertex()
-        , TextureIndex(0.0f)
-        , TilingFactor(glm::vec2(1.0f)) {}
-    };
-    
-    struct Batch2DStorage {
-      static const u32 MaxQuads = 20000;
-      static const u32 MaxIndices = MaxQuads * 6;
-      static const u32 MaxVertices = MaxQuads * 4;
-      static const u8 MaxTextures = 16; // TODO(Nghia Lam): Detect this based on current machine driver
-      
-      BatchVertex* VertexBatchBase;
-      std::array<Shared<Texture2D>, MaxTextures> BatchTextures;
-    };
-    
-    struct Statistic {
-      u32 DrawCall;
-      u32 QuadCount;
-      
-      u32 GetTotalVertexCount() { return QuadCount * 4; }
-    };
-    
-    struct Renderer2DData {
-      // Shared<Mesh> QuadMesh;
-      Shared<Mesh> BatchMesh;
-      Shared<Shader> Base2DShader;
-      Shared<Texture2D> Base2DTexture;
-      
-      Batch2DStorage Storage;
-      
-      // TODO(Nghia Lam): Using Sprite System for this
-      glm::vec4 VertexOrigin[4];
-      
-      BatchVertex* CurrentVertex;
-      u32 CurrentIndiceCount = 0;
-      u32 CurrentTextureIndex = 0; // Default White Texture
-      
-      Statistic Stats;
-    };
-    
     // --- Methods
     static void Init();
     static void Shutdown();
@@ -168,8 +172,8 @@ namespace Ethan {
     
     static void ResetStats();
     
-    [[nodiscard]] static const Statistic& GetStats() { return data_.Stats; }
     [[nodiscard]] static const Renderer2DData& GetData() { return data_; }
+    [[nodiscard]] static const Renderer2DStatistic& GetStats() { return data_.Stats; }
     
    private:
     static Renderer2DData data_;
@@ -190,3 +194,5 @@ namespace Ethan {
 } 
 
 #endif // ETHAN_CORE_GRAPHIC_RENDERER2D_H_
+
+

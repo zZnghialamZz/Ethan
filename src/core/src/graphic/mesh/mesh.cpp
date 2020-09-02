@@ -151,7 +151,7 @@ namespace Ethan {
     layout.AddElement({ "tiling", ShaderData::DataType::kFloat2 });
     
     // NOTE(Nghia Lam): ertexBuffer
-    Shared<VertexBuffer> batch_vb = VertexBuffer::Create(sizeof(Renderer2D::BatchVertex)
+    Shared<VertexBuffer> batch_vb = VertexBuffer::Create(sizeof(BatchVertex)
                                                          * Renderer2D::GetData().Storage.MaxVertices
                                                          , BufferDataUsage::DYNAMIC);
     batch_vb->SetLayout(layout);

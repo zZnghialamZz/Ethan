@@ -70,6 +70,13 @@ namespace Ethan {
     
     std::vector<Process *>::iterator begin() { return processes_.begin(); }
     std::vector<Process *>::iterator end() { return processes_.end(); }
+    std::vector<Process *>::reverse_iterator rbegin() { return processes_.rbegin(); }
+    std::vector<Process *>::reverse_iterator rend() { return processes_.rend(); }
+    
+    std::vector<Process *>::const_iterator const begin() const { return processes_.begin(); }
+    std::vector<Process *>::const_iterator const end() const { return processes_.end(); }
+    std::vector<Process *>::const_reverse_iterator const rbegin() const { return processes_.rbegin(); }
+    std::vector<Process *>::const_reverse_iterator const rend() const { return processes_.rend(); }
     
    private:
     std::vector<Process *> processes_;

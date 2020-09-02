@@ -92,13 +92,13 @@ namespace Ethan {
   void Application::EventCall(Event &event) {
     if (event.IsInCategory(EventCategory::APPLICATION)) {
       main_window_->HandleEvent((WindowEvent&)event);
-      //   event.SetHandled(true);
+      event.SetHandled(true);
     }
     
-    for (Process* process : process_stack_) {
+    for (auto it = process_stack_.rbegin(); it != process_stack_.rend(); ++it) {
       if (event.IsHandled())
         break;
-      process->EventCall(event);
+      (*it)->EventCall(event);
     }
   }
   
