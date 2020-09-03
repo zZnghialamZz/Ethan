@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file editor.h
+ * @file system.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +30,12 @@
  * limitations under the License.
  */
 
+#ifndef ETHAN_ECS_SYSTEM_H_
+#define ETHAN_ECS_SYSTEM_H_
 
-#ifndef ETHAN_EDITOR_H_
-#define ETHAN_EDITOR_H_
+// TODO(Nghia Lam): Wrap System
 
 namespace Ethan {}
 
-#include "editor/editor_process.h"
+#endif // ETHAN_ECS_SYSTEM_H_
 
-#endif // ETHAN_EDITOR_H_

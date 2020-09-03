@@ -5,6 +5,7 @@ patterns = {
 "*.c",
 "*.cpp",
 "*.h",
+"*.hpp",
 "*.m",
 "*.mm",
 "*.bat",

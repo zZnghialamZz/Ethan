@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file editor.h
+ * @file component.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +30,12 @@
  * limitations under the License.
  */
 
+#ifndef ETHAN_ECS_COMPONENT_H_
+#define ETHAN_ECS_COMPONENT_H_
 
-#ifndef ETHAN_EDITOR_H_
-#define ETHAN_EDITOR_H_
+// TODO(Nghia Lam): Wrap Component
 
 namespace Ethan {}
 
-#include "editor/editor_process.h"
+#endif // ETHAN_ECS_COMPONENT_H_
 
-#endif // ETHAN_EDITOR_H_

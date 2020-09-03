@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file editor.h
+ * @file ecs.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +30,15 @@
  * limitations under the License.
  */
 
-
-#ifndef ETHAN_EDITOR_H_
-#define ETHAN_EDITOR_H_
+#ifndef ETHAN_ECS_H_
+#define ETHAN_ECS_H_
 
 namespace Ethan {}
 
-#include "editor/editor_process.h"
+#include "ecs/entity/entity.h"
+#include "ecs/component/component.h"
+#include "ecs/system/system.h"
 
-#endif // ETHAN_EDITOR_H_
+
+#endif // ETHAN_ECS_H_
+

@@ -5,10 +5,12 @@ add_subdirectory(core)
 add_subdirectory(libs)
 add_subdirectory(ui)
 add_subdirectory(utils)
+add_subdirectory(ecs)
 add_subdirectory(editor)
 
 include_directories(
     "core/include"
+    "ecs/include"
     "editor/include"
     "ui/include"
     "utils/include"
@@ -37,4 +39,4 @@ if (BUILD_ETHAN_EXECUTABLE)
     endif()
 endif(BUILD_ETHAN_EXECUTABLE)
 
-target_link_libraries(ETHAN ET_CORE ET_UTILS ET_UI ET_EDITOR)
+target_link_libraries(ETHAN ET_CORE ET_UTILS ET_UI ET_EDITOR ET_ECS)

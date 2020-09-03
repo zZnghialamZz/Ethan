@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file editor.h
+ * @file system.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +30,8 @@
  * limitations under the License.
  */
 
-
-#ifndef ETHAN_EDITOR_H_
-#define ETHAN_EDITOR_H_
+#include "ethan/ecs/system/system.h"
 
 namespace Ethan {}
 
-#include "editor/editor_process.h"
 
-#endif // ETHAN_EDITOR_H_
