@@ -30,19 +30,23 @@
 
 project(ET_ECS)
 
-# include_directories( )
-include_directories(${ENTT_INCLUDE_DIR})
+include_directories(
+    "../utils/include"
+    "../../extern/entt/include"
+)
 
 set(ET_ECS_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_ECS_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
+    "${ET_ECS_SRC_DIR}/entity/entity_manager.cpp"
     "${ET_ECS_SRC_DIR}/entity/entity.cpp"
     "${ET_ECS_SRC_DIR}/component/component.cpp"
     "${ET_ECS_SRC_DIR}/system/system.cpp"
     )
 
 set(HEADERS
+    "${ET_ECS_INCLUDE_DIR}/ethan/ecs/entity/entity_manager.h"
     "${ET_ECS_INCLUDE_DIR}/ethan/ecs/entity/entity.h"
     "${ET_ECS_INCLUDE_DIR}/ethan/ecs/component/component.h"
     "${ET_ECS_INCLUDE_DIR}/ethan/ecs/system/system.h"
@@ -53,3 +57,4 @@ set(HEADERS
 include_directories(${ET_ECS_INCLUDE_DIR})
 
 add_library(ET_ECS STATIC ${SOURCES} ${HEADERS})
+target_link_libraries(ET_ECS ET_UTILS)

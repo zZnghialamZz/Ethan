@@ -33,9 +33,38 @@
 #ifndef ETHAN_ECS_ENTIY_H_
 #define ETHAN_ECS_ENTIY_H_
 
-// TODO(Nghia Lam): Wrap Entity
+#include <entt/entt.hpp>
 
-namespace Ethan {}
+namespace Ethan::ECS {
+  
+  class EntityManager;
+  
+  class Entity {
+   public:
+    Entity() = default;
+    Entity(entt::entity entityID, EntityManager* manager);
+    ~Entity();
+    
+    // NOTE(Nghia Lam): Wrapper API
+    template<typename T, typename... Args> T& AddComponent(Args&& ...args);
+    template<typename T> T& GetComponent();
+    template<typename T> bool HasComponent();
+    template<typename T> void RemoveComponent();
+    
+    // NOTE(Nghia Lam): Operator support
+    operator u32() const { return (u32)entityID_; }
+    operator bool() const { return entityID_ != entt::null; }
+    bool operator==(const Entity& other) { 
+      return entityID_ == other.entityID_ && manager_ == other.manager_;
+    }
+    bool operator!=(const Entity& other) { return !(*this == other); }
+    
+   private:
+    entt::entity entityID_ = entt::null;
+    EntityManager* manager_ = nullptr;
+  };
+  
+}
 
 #endif // ETHAN_ECS_ENTIY_H_
 

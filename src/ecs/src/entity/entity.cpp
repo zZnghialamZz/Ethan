@@ -31,7 +31,39 @@
  */
 
 #include "ethan/ecs/entity/entity.h"
+#include "ethan/ecs/entity/entity_manager.h"
 
-namespace Ethan {}
+namespace Ethan::ECS {
+  
+  Entity::Entity(entt::entity entityID,
+                 EntityManager* manager)
+    : entityID_(entityID), manager_(manager) {}
+  
+  
+  Entity::~Entity() {}
+  
+  //|
+  // Implement API
+  //|
+  template<typename T, typename... Args> T& Entity::AddComponent(Args&&... args) {
+    ETASSERT_CORE(!HasComponent<T>(), "[ECS] Entity already contains the component !!");
+    return manager_->GetRegistry().emplace<T>(entityID_, std::forward<Args>(args)...);
+  }
+  
+  template<typename T> T& Entity::GetComponent() {
+    ETASSERT_CORE(!HasComponent<T>(), "[ECS] Entity doesnt contain the component !!");
+    return manager_->GetRegistry().get<T>(entityID_);
+  }
+  
+  template<typename T> bool Entity::HasComponent() {
+    return manager_->GetRegistry().has<T>(entityID_);
+  }
+  
+  template<typename T> void Entity::RemoveComponent() {
+    ETASSERT_CORE(!HasComponent<T>(), "[ECS] Entity doesnt contain the component !!");
+    return manager_->GetRegistry().remove<T>(entityID_);
+  }
+  
+}
 
 

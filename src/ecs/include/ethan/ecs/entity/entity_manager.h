@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file component.h
+ * @file entity_manager.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,12 +30,28 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_ECS_COMPONENT_H_
-#define ETHAN_ECS_COMPONENT_H_
+#ifndef ETHAN_ECS_ENTIY_MANAGER_H_
+#define ETHAN_ECS_ENTIY_MANAGER_H_
 
-// TODO(Nghia Lam): Wrap Component
+#include "entity.h"
+#include <string>
 
-namespace Ethan::ECS {}
+namespace Ethan::ECS {
+  
+  class EntityManager {
+   public:
+    EntityManager() = default;
+    
+    Entity CreateEntity();
+    Entity CreateEntity(const std::string& name = "Empty Entity");
+    
+    [[nodiscard]] const entt::registry& GetRegistry() const { return registry_; }
+    
+   private:
+    entt::registry registry_;
+  };
+  
+}
 
-#endif // ETHAN_ECS_COMPONENT_H_
+#endif // ETHAN_ECS_ENTIY_MANAGER_H_
 

@@ -37,6 +37,7 @@ namespace Ethan {
   
   //|
   // NOTE(Nghia Lam): Using some short name for these types
+  //|
   using i8   = int8_t;
   using i16  = int16_t;
   using i32  = int32_t;

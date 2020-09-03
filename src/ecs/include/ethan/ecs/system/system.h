@@ -35,7 +35,7 @@
 
 // TODO(Nghia Lam): Wrap System
 
-namespace Ethan {}
+namespace Ethan::ECS {}
 
 #endif // ETHAN_ECS_SYSTEM_H_
 
