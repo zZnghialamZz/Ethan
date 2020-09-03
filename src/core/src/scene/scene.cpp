@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file entity_manager.h
+ * @file scene.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,29 +30,19 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_ECS_ENTIY_MANAGER_H_
-#define ETHAN_ECS_ENTIY_MANAGER_H_
 
-#include "entity.h"
-#include <string>
+#include "ethan/core/scene/scene.h"
+#include "ethan/ecs.h"
 
-namespace Ethan::ECS {
+namespace Ethan {
   
-  class EntityManager {
-   public:
-    EntityManager();
-    ~EntityManager();
-    
-    Entity CreateEntity();
-    Entity CreateEntity(const std::string& name = "Empty Entity");
-    
-    [[nodiscard]] INLINE const entt::registry& GetRegistry() const { return registry_; }
-    
-   private:
-    entt::registry registry_;
-  };
+  Scene::Scene(const std::string& name) : name_(name) {
+    entity_manager_ = MakeScope<ECS::EntityManager>();
+  }
+  
+  Scene::~Scene() {}
+  
+  void Scene::Update() {}
   
 }
-
-#endif // ETHAN_ECS_ENTIY_MANAGER_H_
 

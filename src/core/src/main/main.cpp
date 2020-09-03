@@ -39,6 +39,7 @@ namespace Ethan {
   
   //|
   // Entry Point Func
+  // TODO(Nghia Lam): Consider moving this to ethan.h since we didnt support dynamic lib anymore -> or not
   
   int Main::InitMain(int argc, char* argv[]) {
     

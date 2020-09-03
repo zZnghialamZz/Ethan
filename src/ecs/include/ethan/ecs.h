@@ -35,10 +35,9 @@
 
 namespace Ethan {}
 
-#include "ecs/entity/entity.h"
+#include "ecs/entity/entity_manager.h"
 #include "ecs/component/component.h"
 #include "ecs/system/system.h"
-
 
 #endif // ETHAN_ECS_H_
 

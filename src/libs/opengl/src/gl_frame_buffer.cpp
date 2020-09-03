@@ -54,15 +54,12 @@ namespace Ethan {
     GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
   }
   
-  void GLFrameBuffer::Resize(u32 width, u32 height) {
-    // TODO(Nghia Lam): Checking valid input here
-    if (width == property_.Width   || width  <= 0 || width  >= frame_max_size ||
-        height == property_.Height || height <= 0 || height >= frame_max_size ) {
-      
+  void GLFrameBuffer::Resize(u16 width, u16 height) {
+    if (width  <= 0 || width  >= frame_max_size || height <= 0 || height >= frame_max_size ) {
       ETLOG_CORE_ERROR("[FrameBuffer] Invalid Resize Parameters, {0} - {1}", width, height);
       return;
     }
-        
+    
     property_.Width = width;
     property_.Height = height;
     

@@ -39,16 +39,16 @@ namespace Ethan {
   
   ScenePanel::ScenePanel() : EditorPanel("Scene") {
     framebuffer_ = FrameBuffer::Create(FrameBufferProperty());
-    scene_width_ = (float)framebuffer_->GetProperty().Width;
-    scene_height_ = (float)framebuffer_->GetProperty().Height;
+    scene_width_ = framebuffer_->GetProperty().Width;
+    scene_height_ = framebuffer_->GetProperty().Height;
   }
   
   ScenePanel::~ScenePanel() {}
   
   void ScenePanel::Update() {
     // Resize
-    if (scene_width_ != (float)framebuffer_->GetProperty().Width ||
-        scene_height_ != (float)framebuffer_->GetProperty().Height) {
+    if (scene_width_ != framebuffer_->GetProperty().Width ||
+        scene_height_ != framebuffer_->GetProperty().Height) {
       
       framebuffer_->Resize(scene_width_, scene_height_);
     }
@@ -58,7 +58,7 @@ namespace Ethan {
     framebuffer_->Bind();
     
     RendererCommand::Clear();
-    RendererCommand::SetClearColor({ 0.8f, 0.2f, 0.2f, 1.0f }); // Gray Background
+    RendererCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f }); // Gray Background
     
     framebuffer_->UnBind();
   }
@@ -68,17 +68,20 @@ namespace Ethan {
 		ImGui::SetNextWindowBgAlpha(0.0f);
     
     // NOTE(Nghia Lam): Begin Drawing
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 }); // Turn off padding
 		ImGui::Begin(name_.c_str(), &is_active_, flags);
     
     auto scene_size = ImGui::GetContentRegionAvail();
-    scene_width_ = scene_size.x;
-    scene_height_ = scene_size.y;
+    scene_width_ = (u16)scene_size.x;
+    scene_height_ = (u16)scene_size.y;
     
     u64 textureID = framebuffer_->GetColorAttachment()->GetID();
-    ImGui::Image((void*)textureID, ImVec2{scene_width_, scene_height_}, ImVec2{0, 1}, ImVec2{1, 0});
-    
+    ImGui::Image((void*)textureID,
+                 ImVec2{(float)scene_width_, (float)scene_height_},
+                 ImVec2{0, 1}, ImVec2{1, 0});
     
     ImGui::End();
+    ImGui::PopStyleVar();
   }
   
 }

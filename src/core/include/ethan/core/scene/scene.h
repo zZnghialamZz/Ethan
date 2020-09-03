@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_frame_buffer.h
+ * @file scene.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,43 +30,35 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_LIBS_GL_FRAME_BUFFER_H_
-#define ETHAN_LIBS_GL_FRAME_BUFFER_H_
 
-#include "ethan/core.h"
+#ifndef ETHAN_CORE_SCENE_H_
+#define ETHAN_CORE_SCENE_H_
 
 namespace Ethan {
   
-  class GLFrameBuffer : public FrameBuffer {
+  namespace ECS {
+    class Entity;
+    class EntityManager;
+  }
+  
+  class Scene {
    public:
-    GLFrameBuffer(FrameBufferProperty property);
-    ~GLFrameBuffer();
+    explicit Scene(const std::string& name);
+    virtual ~Scene();
     
-    void Bind() const override;
-    void UnBind() const override;
-    void Resize(u16 width, u16 height) override;
+    void Update();
     
-    void Validate();
-    
-    [[nodiscard]] FrameBufferProperty GetProperty() override { return property_; }
-    [[nodiscard]] const FrameBufferProperty GetProperty() const override { return property_; }
-    [[nodiscard]] const Shared<Texture2D> GetColorAttachment() const override { return color_attachment_; }
-    [[nodiscard]] const Shared<Texture2D> GetDepthAttachment() const override { return depth_attachment_; }
+    [[nodiscard]] INLINE const std::string& GetName() const { return name_; }
+    [[nodiscard]] INLINE const Scope<ECS::EntityManager>& GetEntityManager() const { 
+      return entity_manager_;
+    }
     
    private:
-    // Private Members ---
+    std::string name_;
+    Scope<ECS::EntityManager> entity_manager_;
     
-    u32 framebufferID_ = 0;
-    FrameBufferProperty property_;
-    Shared<Texture2D> color_attachment_;
-    Shared<Texture2D> depth_attachment_;
-    
-    // Private Methods ---
-    
-    void GenerateFrameBuffer();
   };
   
 }
 
-
-#endif // ETHAN_LIBS_GL_FRAME_BUFFER_H_
+#endif // ETHAN_CORE_SCENE_H_

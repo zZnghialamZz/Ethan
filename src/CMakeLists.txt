@@ -15,6 +15,7 @@ include_directories(
     "ui/include"
     "utils/include"
 
+    "../extern/entt/include"
     "../extern/spdlog/include"
 )
 

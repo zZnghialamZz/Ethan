@@ -40,6 +40,8 @@ namespace Ethan {}
 
 #include "core/input/input.h"
 
+#include "core/scene/scene.h"
+
 #include "core/graphic/api/shader.h"
 #include "core/graphic/api/texture.h"
 #include "core/graphic/api/vertex_array.h"

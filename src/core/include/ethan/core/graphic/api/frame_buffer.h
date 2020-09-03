@@ -39,8 +39,8 @@ namespace Ethan {
   // Type & Structure Definition
   //------------------------------------------------------------------------------
   struct FrameBufferProperty {
-    u32 Width;
-    u32 Height;
+    u16 Width;
+    u16 Height;
     u32 Samples; // Multisampling
     
     bool IsRenderTarget;
@@ -66,7 +66,7 @@ namespace Ethan {
     
     virtual void Bind() const = 0;
     virtual void UnBind() const = 0;
-    virtual void Resize(u32 width, u32 height) = 0;
+    virtual void Resize(u16 width, u16 height) = 0;
     
     [[nodiscard]] virtual FrameBufferProperty GetProperty() = 0;
     [[nodiscard]] virtual const FrameBufferProperty GetProperty() const = 0;

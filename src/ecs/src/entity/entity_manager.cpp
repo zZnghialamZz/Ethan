@@ -33,6 +33,10 @@
 #include "ethan/ecs/entity/entity_manager.h"
 
 namespace Ethan::ECS {
+  
+  EntityManager::EntityManager() {}
+  EntityManager::~EntityManager() {}
+  
   Entity EntityManager::CreateEntity() {
     return Entity(registry_.create(), this);
   }

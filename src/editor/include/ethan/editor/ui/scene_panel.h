@@ -50,8 +50,8 @@ namespace Ethan {
    private:
     Shared<FrameBuffer> framebuffer_;
     
-    float scene_width_;
-    float scene_height_;
+    u16 scene_width_;
+    u16 scene_height_;
     
   };
   

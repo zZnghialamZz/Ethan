@@ -33,10 +33,12 @@ project(ET_CORE)
 include_directories(
     "../ui/include"
     "../utils/include"
+    "../ecs/include"
     "../editor/include"
     "../libs/opengl/include"
     "../../extern/glm"
     "../../extern/glad/include"
+    "../../extern/entt/include"
     "../../extern/spdlog/include"
 )
 
@@ -47,6 +49,8 @@ set(SOURCES
     "${ET_CORE_SRC_DIR}/input/keys.cpp"
     "${ET_CORE_SRC_DIR}/input/mouse.cpp"
     "${ET_CORE_SRC_DIR}/input/input.cpp"
+
+    "${ET_CORE_SRC_DIR}/scene/scene.cpp"
 
     "${ET_CORE_SRC_DIR}/graphic/camera/camera_controller.cpp"
     "${ET_CORE_SRC_DIR}/graphic/camera/camera.cpp"
@@ -72,6 +76,8 @@ set(HEADERS
     "${ET_CORE_INCLUDE_DIR}/ethan/core/input/keys.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/input/mouse.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/input/input.h"
+
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/scene/scene.h"
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera/camera_controller.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/graphic/camera/camera.h"
@@ -101,7 +107,7 @@ include_directories(${ET_CORE_INCLUDE_DIR})
 
 add_library(ET_CORE STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(ET_CORE glm ET_UTILS ET_UI ET_EDITOR)
+target_link_libraries(ET_CORE glm ET_UTILS ET_UI ET_EDITOR ET_ECS)
 
 target_precompile_headers(ET_CORE PUBLIC "$<$<COMPILE_LANGUAGE:CXX>:${ET_CORE_INCLUDE_DIR}/ethan/core_pch.h>")
 

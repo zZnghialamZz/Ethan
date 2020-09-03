@@ -34,6 +34,7 @@ include_directories(
     "../utils/include"
     "../core/include"
 
+    "../../extern/entt/include"
     "../../extern/imgui"
 )
 
