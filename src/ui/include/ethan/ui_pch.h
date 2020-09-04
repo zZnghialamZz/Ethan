@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file widget.cpp
+ * @file ui_pch.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,4 +30,11 @@
  * limitations under the License.
  */
 
-#include "ethan/ui/widget.h"
+
+#ifndef ETHAN_UI_PCH_H_
+#define ETHAN_UI_PCH_H_
+
+#include "ethan/ui/ui_macros.h"
+#include "ethan/ui/ui_types.h"
+
+#endif // ETHAN_UI_PCH_H_

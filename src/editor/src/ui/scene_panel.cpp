@@ -42,11 +42,6 @@ namespace Ethan {
     // TODO(Nghia Lam): Change this so the user can chose which scene to load
     current_scene_ = MakeShared<Scene>(name);
     
-    // TODO(Nghia Lam): To be Removed to scene interactive
-    auto square = current_scene_->GetEntityManager()->CreateEntity("Square");
-    square.AddComponent<ECS::TransformComponent>();
-    square.AddComponent<ECS::SpriteRenderComponent>(glm::vec4{0.2f, 0.5f, 0.1f, 1.0f});
-    
     framebuffer_   = FrameBuffer::Create(FrameBufferProperty());
     
     scene_width_   = framebuffer_->GetProperty().Width;

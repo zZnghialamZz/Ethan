@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui.h
+ * @file ui_manager.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,17 +30,17 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_H_
-#define ETHAN_UI_H_
+#ifndef ETHAN_UI_MANAGER_H_
+#define ETHAN_UI_MANAGER_H_
 
-#include "ui/ui_types.h"
-#include "ui/ui_macros.h"
-#include "ui/ui_context.h"
-#include "ui/ui_manager.h"
+namespace Ethan {
+  
+  class UIManager {
+   public:
+    
+    
+  };
+  
+}
 
-// TODO(Nghia Lam): Write my own UI library & replace ImGui
-#include "ui/plugins/imgui_process.h"
-
-namespace Ethan {}
-
-#endif // ETHAN_UI_H_
+#endif // ETHAN_UI_MANAGER_H_
