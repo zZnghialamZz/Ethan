@@ -7,8 +7,7 @@ add_subdirectory(ui)
 add_subdirectory(utils)
 add_subdirectory(ecs)
 add_subdirectory(editor)
-
-include_directories(
+ include_directories(
     "core/include"
     "ecs/include"
     "editor/include"

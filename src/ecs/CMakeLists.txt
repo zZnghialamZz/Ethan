@@ -32,6 +32,7 @@ project(ET_ECS)
 
 include_directories(
     "../utils/include"
+    "../../extern/glm"
     "../../extern/entt/include"
 )
 
@@ -57,4 +58,4 @@ set(HEADERS
 include_directories(${ET_ECS_INCLUDE_DIR})
 
 add_library(ET_ECS STATIC ${SOURCES} ${HEADERS})
-target_link_libraries(ET_ECS ET_UTILS)
+target_link_libraries(ET_ECS glm ET_UTILS)

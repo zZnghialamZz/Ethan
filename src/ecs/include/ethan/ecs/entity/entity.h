@@ -33,11 +33,10 @@
 #ifndef ETHAN_ECS_ENTIY_H_
 #define ETHAN_ECS_ENTIY_H_
 
+#include "entity_manager.h"
 #include <entt/entt.hpp>
 
 namespace Ethan::ECS {
-  
-  class EntityManager;
   
   class Entity {
    public:
@@ -46,10 +45,24 @@ namespace Ethan::ECS {
     ~Entity();
     
     // NOTE(Nghia Lam): Wrapper API
-    template<typename T, typename... Args> T& AddComponent(Args&& ...args);
-    template<typename T> T& GetComponent();
-    template<typename T> bool HasComponent();
-    template<typename T> void RemoveComponent();
+    template<typename T, typename... Args> T& AddComponent(Args&&... args) {
+      ETASSERT_CORE(!HasComponent<T>(), "[ECS] Entity already contains the component !!");
+      return manager_->GetRegistry().emplace<T>(entityID_, std::forward<Args>(args)...);
+    }
+    
+    template<typename T> T& GetComponent() {
+      ETASSERT_CORE(!HasComponent<T>(), "[ECS] Entity doesnt contain the component !!");
+      return manager_->GetRegistry().get<T>(entityID_);
+    }
+    
+    template<typename T> bool HasComponent() {
+      return manager_->GetRegistry().has<T>(entityID_);
+    }
+    
+    template<typename T> void RemoveComponent() {
+      ETASSERT_CORE(!HasComponent<T>(), "[ECS] Entity doesnt contain the component !!");
+      return manager_->GetRegistry().remove<T>(entityID_);
+    }
     
     // NOTE(Nghia Lam): Operator support
     operator u32() const { return (u32)entityID_; }
@@ -60,7 +73,7 @@ namespace Ethan::ECS {
     bool operator!=(const Entity& other) { return !(*this == other); }
     
    private:
-    entt::entity entityID_ = entt::null;
+    entt::entity entityID_ { entt::null };
     EntityManager* manager_ = nullptr;
   };
   

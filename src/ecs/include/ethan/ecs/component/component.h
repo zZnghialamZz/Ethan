@@ -33,9 +33,41 @@
 #ifndef ETHAN_ECS_COMPONENT_H_
 #define ETHAN_ECS_COMPONENT_H_
 
-// TODO(Nghia Lam): Wrap Component
+#include <glm/glm.hpp>
 
-namespace Ethan::ECS {}
+//|
+// NOTE(Nghia Lam): This is a collection of components
+//|
+
+namespace Ethan::ECS {
+  
+  struct NameComponent {
+    std::string Name;
+    
+    NameComponent() = default;
+    NameComponent(const NameComponent&) = default;
+    NameComponent(const std::string& name) : Name(name) {}
+    
+    operator std::string& () { return Name; }
+  };
+  
+  struct TransformComponent {
+    glm::mat4 Transform{ 1.0f };
+    
+    TransformComponent() = default;
+    TransformComponent(const TransformComponent&) = default;
+    TransformComponent(const glm::mat4& transform) : Transform(transform) {}
+  };
+  
+  struct SpriteRenderComponent {
+    glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
+    
+    SpriteRenderComponent() = default;
+    SpriteRenderComponent(const SpriteRenderComponent&) = default;
+    SpriteRenderComponent(const glm::vec4& color) : Color(color) {}
+  };
+  
+}
 
 #endif // ETHAN_ECS_COMPONENT_H_
 

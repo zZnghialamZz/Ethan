@@ -37,17 +37,22 @@
 
 namespace Ethan {
   
+  class Scene;
   class FrameBuffer;
   
   class ScenePanel : public EditorPanel {
    public:
-    ScenePanel();
+    ScenePanel(const std::string& name = "Scene");
     ~ScenePanel();
     
     void Update() override;
     void UpdateUI() override;
     
+    INLINE void SetCurrentScene(const Shared<Scene>& scene) { current_scene_ = scene; }
+    [[nodiscard]] INLINE const Shared<Scene>& GetCurrentScene() const { return current_scene_; }
+    
    private:
+    Shared<Scene> current_scene_;
     Shared<FrameBuffer> framebuffer_;
     
     u16 scene_width_;

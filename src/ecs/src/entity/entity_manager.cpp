@@ -31,6 +31,8 @@
  */
 
 #include "ethan/ecs/entity/entity_manager.h"
+#include "ethan/ecs/entity/entity.h"
+#include "ethan/ecs/component/component.h"
 
 namespace Ethan::ECS {
   
@@ -43,8 +45,9 @@ namespace Ethan::ECS {
   
   Entity EntityManager::CreateEntity(const std::string& name) {
     auto entity = registry_.create();
-    // TODO(Nghia Lam): Add name component here
+    registry_.emplace<NameComponent>(entity, name);
     return Entity(entity, this);
   }
+  
 }
 

@@ -32,17 +32,39 @@
 
 
 #include "ethan/core/scene/scene.h"
+
+#include "ethan/core/graphic/camera/camera_controller.h"
+#include "ethan/core/graphic/renderer/renderer2D.h"
 #include "ethan/ecs.h"
 
 namespace Ethan {
   
   Scene::Scene(const std::string& name) : name_(name) {
-    entity_manager_ = MakeScope<ECS::EntityManager>();
+    entity_manager_    = MakeScope<ECS::EntityManager>();
+    scene_camera_      = MakeShared<Camera>(CameraMode::CAMERA_2D);
+    camera_controller_.SetCurrentCamera(scene_camera_);
   }
   
   Scene::~Scene() {}
   
-  void Scene::Update() {}
+  void Scene::Update() {
+    // Update
+    float dt = DeltaTime::GetSeconds();
+    camera_controller_.UpdateCamera(dt);
+    
+    // Render
+    
+    Renderer2D::Begin(*scene_camera_);
+    {
+      // NOTE(Nghia Lam): Draw Quads
+      auto group = entity_manager_->GetEntitiesWithTypes<ECS::TransformComponent, ECS::SpriteRenderComponent>();
+      for (auto entity : group) {
+        auto [transform, sprite] = group.get<ECS::TransformComponent, ECS::SpriteRenderComponent>(entity);
+        Renderer2D::DrawQuad(transform.Transform, sprite.Color);
+      }
+    }
+    Renderer2D::End();
+  }
   
 }
 

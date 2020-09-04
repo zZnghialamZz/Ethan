@@ -114,6 +114,7 @@ namespace Ethan {
     static void End();
     
     // Primitives
+    static void DrawQuad(const glm::mat4& transform, const glm::vec4 &color);
     static void DrawQuad(float x,
                          float y,
                          float width,

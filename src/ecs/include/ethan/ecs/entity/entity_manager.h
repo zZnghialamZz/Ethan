@@ -33,10 +33,12 @@
 #ifndef ETHAN_ECS_ENTIY_MANAGER_H_
 #define ETHAN_ECS_ENTIY_MANAGER_H_
 
-#include "entity.h"
+#include <entt/entt.hpp>
 #include <string>
 
 namespace Ethan::ECS {
+  
+  class Entity;
   
   class EntityManager {
    public:
@@ -46,7 +48,16 @@ namespace Ethan::ECS {
     Entity CreateEntity();
     Entity CreateEntity(const std::string& name = "Empty Entity");
     
-    [[nodiscard]] INLINE const entt::registry& GetRegistry() const { return registry_; }
+    // TODO(Nghia Lam): Add options for filter
+    template<typename ...Components> auto GetEntitiesWithTypes() {
+      return registry_.group<Components...>();
+    }
+    
+    template<typename Component> auto GetEntitiesWithType() {
+      return registry_.view<Component>();
+    }
+    
+    [[nodiscard]] INLINE entt::registry& GetRegistry() { return registry_; }
     
    private:
     entt::registry registry_;

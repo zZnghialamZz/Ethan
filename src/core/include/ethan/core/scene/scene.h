@@ -34,13 +34,19 @@
 #ifndef ETHAN_CORE_SCENE_H_
 #define ETHAN_CORE_SCENE_H_
 
+#include "ethan/core/graphic/camera/camera_controller.h"
+
 namespace Ethan {
   
+  // NOTE(Nghia Lam): Predefined include class
   namespace ECS {
     class Entity;
     class EntityManager;
   }
   
+  //|
+  // Main Class Object
+  //|
   class Scene {
    public:
     explicit Scene(const std::string& name);
@@ -57,6 +63,8 @@ namespace Ethan {
     std::string name_;
     Scope<ECS::EntityManager> entity_manager_;
     
+    Shared<Camera> scene_camera_;
+    CameraController camera_controller_;
   };
   
 }

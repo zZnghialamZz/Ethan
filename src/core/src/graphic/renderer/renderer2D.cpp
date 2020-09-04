@@ -132,6 +132,12 @@ namespace Ethan {
       ExecuteAndReset();
   }
   
+  void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4 &color) {
+    PreDrawing();
+    
+    SetDataQuad(transform, 0.0f, 1.0f, 1.0f, color);
+  }
+  
   void Renderer2D::DrawQuad(float x,
                             float y,
                             float width,

@@ -33,6 +33,7 @@ include_directories(
     "../ui/include"
     "../utils/include"
     "../core/include"
+    "../ecs/include"
 
     "../../extern/entt/include"
     "../../extern/imgui"
@@ -63,4 +64,4 @@ include_directories(${ET_EDITOR_INCLUDE_DIR})
 
 add_library(ET_EDITOR STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(ET_EDITOR ET_CORE IMGUI)
+target_link_libraries(ET_EDITOR ET_CORE ET_ECS IMGUI)

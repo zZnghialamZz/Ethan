@@ -32,15 +32,25 @@
 
 #include "ethan/editor/ui/scene_panel.h"
 #include "ethan/core.h"
+#include "ethan/ecs.h"
 
 #include <imgui.h>
 
 namespace Ethan {
   
-  ScenePanel::ScenePanel() : EditorPanel("Scene") {
-    framebuffer_ = FrameBuffer::Create(FrameBufferProperty());
-    scene_width_ = framebuffer_->GetProperty().Width;
-    scene_height_ = framebuffer_->GetProperty().Height;
+  ScenePanel::ScenePanel(const std::string& name) : EditorPanel(name) {
+    // TODO(Nghia Lam): Change this so the user can chose which scene to load
+    current_scene_ = MakeShared<Scene>(name);
+    
+    // TODO(Nghia Lam): To be Removed to scene interactive
+    auto square = current_scene_->GetEntityManager()->CreateEntity("Square");
+    square.AddComponent<ECS::TransformComponent>();
+    square.AddComponent<ECS::SpriteRenderComponent>(glm::vec4{0.2f, 0.5f, 0.1f, 1.0f});
+    
+    framebuffer_   = FrameBuffer::Create(FrameBufferProperty());
+    
+    scene_width_   = framebuffer_->GetProperty().Width;
+    scene_height_  = framebuffer_->GetProperty().Height;
   }
   
   ScenePanel::~ScenePanel() {}
@@ -59,6 +69,9 @@ namespace Ethan {
     
     RendererCommand::Clear();
     RendererCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f }); // Gray Background
+    
+    // Update Scene
+    current_scene_->Update();
     
     framebuffer_->UnBind();
   }
