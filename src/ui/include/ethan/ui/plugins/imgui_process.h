@@ -60,11 +60,12 @@ class ImGuiProcess : public Process {
    */
   virtual void End() = 0;
 
-  static void SetStyle();
+  static void SetLightStyle();
+  static void SetDarkStyle();
 
   static ImGuiProcess* CreateImGuiProcess();
 };
 
-}
+}  // namespace Ethan
 
-#endif // ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
+#endif  // ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
