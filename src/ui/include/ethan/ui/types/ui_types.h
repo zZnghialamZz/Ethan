@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file core_pch.h
+ * @file ui_types.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,21 +30,12 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_CORE_PCH_H_
-#define ETHAN_CORE_PCH_H_
+#ifndef ETHAN_UI_TYPES_H_
+#define ETHAN_UI_TYPES_H_
 
-// NOTE(Nghia Lam): This needs to be included first before using any shorten
-// types or general macros
-#include "ethan/utils.h"
+namespace Ethan {}  // namespace Ethan
 
-// Main precompiled headers
-#include "ethan/ui.h"
+#include "ui_base.h"
+#include "ui_rect.h"
 
-#include <vector>
-#include <string>
-#include <iostream>
-#include <glm/glm.hpp>
-
-namespace Ethan {}
-
-#endif // ETHAN_CORE_PCH_H_
+#endif  // ETHAN_UI_TYPES_H_

@@ -33,36 +33,36 @@
 #ifndef ETHAN_EDITOR_PROCESS_H
 #define ETHAN_EDITOR_PROCESS_H
 
-namespace Ethan {
-  
-  class EditorPanel;
-  class Process;
-  class Event;
-  
-  class EditorProcess : public Process {
-   public:
-    EditorProcess();
-    ~EditorProcess();
-    
-    void Attach() override;
-    void Detach() override;
-    void Update() override;
-    void UpdateUI() override;
-    void EventCall(Event &event) override;
-    
-   private:
-    //|
-    // Private Members
-    std::vector<Shared<EditorPanel>> panels_;
-    
-    //|
-    // Private Methods
-    void BeginDockspace();
-    void SetupMenuBar();
-    void EndDockspace();
-    
-  };
-  
-}
+#include "ethan/core/main/process.h"
 
-#endif // ETHAN_EDITOR_PROCESS_H
+namespace Ethan {
+
+class EditorPanel;
+class Event;
+
+class EditorProcess : public Process {
+ public:
+  EditorProcess();
+  ~EditorProcess();
+
+  void Attach() override;
+  void Detach() override;
+  void Update() override;
+  void UpdateUI() override;
+  void EventCall(Event& event) override;
+
+ private:
+  //|
+  // Private Members
+  std::vector<Shared<EditorPanel>> panels_;
+
+  //|
+  // Private Methods
+  void BeginDockspace();
+  void SetupMenuBar();
+  void EndDockspace();
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_EDITOR_PROCESS_H

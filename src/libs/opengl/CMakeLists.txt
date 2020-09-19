@@ -33,7 +33,6 @@ include_directories(
     "../../../extern/stb_image/include"
     "../../../extern/glad/include"
     "../../../extern/GLFW/include"
-    "../../../extern/imgui"
     "../../utils/include"
     "../../core/include"
     "../../ui/include"
@@ -53,7 +52,6 @@ set(SOURCES
     "${ET_OPENGL_SRC_DIR}/gl_shader.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_window.cpp"
     "${ET_OPENGL_SRC_DIR}/gl_input.cpp"
-    "${ET_OPENGL_SRC_DIR}/gl_imgui.cpp"
     )
 set(HEADERS
     "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_frame_buffer.h"
@@ -66,7 +64,6 @@ set(HEADERS
     "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_shader.h"
     "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_window.h"
     "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_input.h"
-    "${ET_OPENGL_INCLUDE_DIR}/ethan/opengl/gl_imgui.h"
     )
 
 include_directories(${ET_OPENGL_INCLUDE_DIR})

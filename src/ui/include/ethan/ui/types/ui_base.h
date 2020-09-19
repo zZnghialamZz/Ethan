@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file gl_imgui.h
+ * @file ui_base.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,28 +30,22 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_LIBS_GL_IMGUI_H_
-#define ETHAN_LIBS_GL_IMGUI_H_
+#ifndef ETHAN_UI_TYPES_BASE_H_
+#define ETHAN_UI_TYPES_BASE_H_
 
-#include "ethan/ui/plugins/imgui_process.h"
+#include <glm/glm.hpp>
 
-namespace Ethan {
+namespace Ethan {}  // namespace Ethan
 
-class GLImGuiProcess : public ImGuiProcess {
- public:
-  GLImGuiProcess();
-  ~GLImGuiProcess();
+//------------------------------------------------------------------------------
+// Base Types and structure definitions
+// NOTE(Nghia Lam): Some are just alias of the current math library (glm)
+//------------------------------------------------------------------------------
 
-  void Attach() override;
-  void Detach() override;
-  void Update() override;
-  void ImGuiRender() override;
-  void EventCall(Event& event) override;
+using UIVec2  = glm::vec2;
+using UIVec3  = glm::vec3;
+using UIPoint = UIVec2;
 
-  void Begin() override;
-  void End() override;
-};
+using UIColor = struct { unsigned char r, g, b, a; };
 
-}
-
-#endif //ETHAN_LIBS_GL_IMGUI_H_
+#endif  // ETHAN_UI_TYPES_BASE_H_

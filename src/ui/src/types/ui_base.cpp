@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file imgui_process.h
+ * @file ui_base.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,42 +30,6 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
-#define ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
+#include "ethan/ui/types/ui_base.h"
 
-#include "ethan/core/main/process.h"
-
-namespace Ethan {
-
-class ImGuiProcess : public Process {
- public:
-  ImGuiProcess(const char* name = "ImGui Process");
-  virtual ~ImGuiProcess() = default;
-
-  void Attach() override;
-  void Detach() override;
-  void Update() override;
-  void EventCall(Event& event) override;
-  virtual void ImGuiRender();
-
-  /**
-   * Begin a new frame in ImGui, should be placed at the start of every frame
-   * to render ImGui
-   */
-  virtual void Begin() = 0;
-
-  /**
-   * Should be placed at the end of ImGui render for collecting and render all
-   * ImGui data in a frame.
-   */
-  virtual void End() = 0;
-
-  static void SetLightStyle();
-  static void SetDarkStyle();
-
-  static ImGuiProcess* CreateImGuiProcess();
-};
-
-}  // namespace Ethan
-
-#endif  // ETHAN_UI_PLUGINS_IMGUI_PROCESS_H_
+namespace Ethan {}  // namespace Ethan

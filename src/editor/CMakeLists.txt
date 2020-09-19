@@ -36,7 +36,6 @@ include_directories(
     "../ecs/include"
 
     "../../extern/entt/include"
-    "../../extern/imgui"
 )
 
 set(ET_EDITOR_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
@@ -64,4 +63,4 @@ include_directories(${ET_EDITOR_INCLUDE_DIR})
 
 add_library(ET_EDITOR STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(ET_EDITOR ET_CORE ET_ECS IMGUI)
+target_link_libraries(ET_EDITOR ET_CORE ET_ECS)

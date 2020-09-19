@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_types.h
+ * @file ui_types.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,39 +30,6 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_TYPES_H_
-#define ETHAN_UI_TYPES_H_
+#include "ethan/ui/types/ui_types.h"
 
-#include <glm/glm.hpp>
-
-namespace Ethan {
-  
-  //|
-  // Types predefined
-  //|
-  using UIVec2  = glm::vec2;
-  using UIColor = glm::vec4;
-  
-  
-  //|
-  // UIRect
-  //|
-  class UIRect {
-   public:
-    UIRect(const glm::vec4& value = glm::vec4(1));
-    virtual ~UIRect();
-    
-    void Expand(int n);
-    [[nodiscard]] bool IsOverlapVec2(UIVec2 p) const;
-    
-    operator glm::vec4() { return value_; }
-    
-    // Static method
-    static UIRect GetIntersect(const UIRect& r0, const UIRect& r1);
-    
-   private:
-    glm::vec4 value_;
-  };
-}
-
-#endif // ETHAN_UI_TYPES_H_
+namespace Ethan {}  // namespace Ethan

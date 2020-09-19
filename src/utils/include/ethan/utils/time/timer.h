@@ -33,7 +33,7 @@
 #ifndef ETHAN_UTILS_TIME_TIMER_H_
 #define ETHAN_UTILS_TIME_TIMER_H_
 
-#include "ethan/utils/time/delta_time.h"
+#include "delta_time.h"
 
 #include <chrono>
 

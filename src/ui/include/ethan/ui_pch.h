@@ -30,11 +30,15 @@
  * limitations under the License.
  */
 
-
 #ifndef ETHAN_UI_PCH_H_
 #define ETHAN_UI_PCH_H_
 
-#include "ethan/ui/ui_macros.h"
-#include "ethan/ui/ui_types.h"
+// NOTE(Nghia Lam): This needs to be included first before using any shorten
+// types or general macros
+#include "ethan/utils.h"
 
-#endif // ETHAN_UI_PCH_H_
+// Main precompiled headers
+#include "ethan/ui/types/ui_types.h"
+#include "ethan/ui/ui_macros.h"
+
+#endif  // ETHAN_UI_PCH_H_

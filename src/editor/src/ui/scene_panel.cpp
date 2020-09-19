@@ -34,8 +34,6 @@
 #include "ethan/core.h"
 #include "ethan/ecs.h"
 
-#include <imgui.h>
-
 namespace Ethan {
   
   ScenePanel::ScenePanel(const std::string& name) : EditorPanel(name) {
@@ -72,24 +70,24 @@ namespace Ethan {
   }
   
   void ScenePanel::UpdateUI() {
-    auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
-		ImGui::SetNextWindowBgAlpha(0.0f);
-    
-    // NOTE(Nghia Lam): Begin Drawing
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 }); // Turn off padding
-		ImGui::Begin(name_.c_str(), &is_active_, flags);
-    
-    auto scene_size = ImGui::GetContentRegionAvail();
-    scene_width_ = (u16)scene_size.x;
-    scene_height_ = (u16)scene_size.y;
-    
-    u64 textureID = framebuffer_->GetColorAttachment()->GetID();
-    ImGui::Image((void*)textureID,
-                 ImVec2{(float)scene_width_, (float)scene_height_},
-                 ImVec2{0, 1}, ImVec2{1, 0});
-    
-    ImGui::End();
-    ImGui::PopStyleVar();
+    // auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
+		// ImGui::SetNextWindowBgAlpha(0.0f);
+
+    // // NOTE(Nghia Lam): Begin Drawing
+    // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 }); // Turn off padding
+		// ImGui::Begin(name_.c_str(), &is_active_, flags);
+
+    // auto scene_size = ImGui::GetContentRegionAvail();
+    // scene_width_ = (u16)scene_size.x;
+    // scene_height_ = (u16)scene_size.y;
+
+    // u64 textureID = framebuffer_->GetColorAttachment()->GetID();
+    // ImGui::Image((void*)textureID,
+    //              ImVec2{(float)scene_width_, (float)scene_height_},
+    //              ImVec2{0, 1}, ImVec2{1, 0});
+
+    // ImGui::End();
+    // ImGui::PopStyleVar();
   }
   
 }

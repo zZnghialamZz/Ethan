@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_types.cpp
+ * @file ui_rect.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,37 +30,6 @@
  * limitations under the License.
  */
 
-#include "ethan/ui/ui_types.h"
+#include "ethan/ui/types/ui_rect.h"
 
-namespace Ethan {
-  
-  //|
-  // UIRect
-  //|
-  UIRect::UIRect(const glm::vec4& value) : value_(value) {}
-  UIRect::~UIRect() {}
-  
-  void UIRect::Expand(int n) {
-    value_.x -= n;
-    value_.y -= n;
-    value_.z += n * 2;
-    value_.w += n * 2;
-  }
-  
-  bool UIRect::IsOverlapVec2(UIVec2 p) {
-    return p.x >= value_.x && p.x < value_.x + value_.z
-      && p.y >= value_.y && p.y < value_.y + value_.w;
-  }
-  
-  UIRect GetIntersect(const UIRect& r0, const UIRect& r1) {
-    int x0 = FIND_MAX(r0.x, r1.x);
-    int y0 = FIND_MAX(r0.y, r1.y);
-    int x1 = FIND_MIN(r0.x + r0.z, r1.x + r1.z);
-    int y1 = FIND_MIN(r0.y + r0.w, r1.y + r1.w);
-    x1 = (x1 > x0) ? x1 : x0;
-    y1 = (y1 > y0) ? y1 : y0;
-    
-    return UIRect(x0, y0, x1 - x0, y1 - y0);
-  }
-  
-}
+namespace Ethan {}  // namespace Ethan

@@ -32,69 +32,66 @@
 #ifndef ETHAN_CORE_APPLICATION_H_
 #define ETHAN_CORE_APPLICATION_H_
 
-#include "process.h"
 #include "ethan/core/graphic/api/window.h"
 #include "ethan/utils/time/timer.h"
-#include "ethan/ui/plugins/imgui_process.h"
+#include "process.h"
 
 namespace Ethan {
-  
-  class Application {
-   public:
-    explicit Application(const std::string& name = "APP");
-    ~Application();
-    
-    /**
-     * Run before starting the app, can be use for pre-hack settings
-     */
-    void Init();
-    
-    /**
-     * Run once the app is started, can be used for default settings
-     */
-    void Start();
-    
-    /**
-     * Run when the app is terminated, can be used for final GC. Helping our OS
-     * cleaner is always a good practice.
-     */
-    void End();
-    
-    /**
-     * Run update every frame base on the system settings
-     */
-    void Update();
-    
-    /**
-     * Trigger whenever a callback happened and used for handled many type of
-     * events.
-     * @param event - Event
-     */
-    void EventCall(Event& event);
-    
-    void AddProcess(Process* process);
-    
-    void AddOverlay(Process* process);
-    
-    // TODO(Nghia Lam): Consider to organize this to Main
-    [[nodiscard]] INLINE const std::string& GetName() const { return name_; }
-    [[nodiscard]] INLINE ImGuiProcess* GetUIProcess() { return ui_process_; }
-    [[nodiscard]] INLINE Window& GetMainWindow() { return *main_window_; }
-    
-    static Application& ME() { return *instance_; }
-    
-   private:
-    std::unique_ptr<Window> main_window_;
-    std::string name_;
-    
-    ProcessStack process_stack_;
-    ImGuiProcess* ui_process_;
-    
-    Timer timer_;
-    
-    static Application* instance_;
-  };
-  
-} 
 
-#endif // ETHAN_CORE_APPLICATION_H_
+class Application {
+ public:
+  explicit Application(const std::string& name = "APP");
+  ~Application();
+
+  /**
+   * Run before starting the app, can be use for pre-hack settings
+   */
+  void Init();
+
+  /**
+   * Run once the app is started, can be used for default settings
+   */
+  void Start();
+
+  /**
+   * Run when the app is terminated, can be used for final GC. Helping our OS
+   * cleaner is always a good practice.
+   */
+  void End();
+
+  /**
+   * Run update every frame base on the system settings
+   */
+  void Update();
+
+  /**
+   * Trigger whenever a callback happened and used for handled many type of
+   * events.
+   * @param event - Event
+   */
+  void EventCall(Event& event);
+
+  void AddProcess(Process* process);
+
+  void AddOverlay(Process* process);
+
+  // TODO(Nghia Lam): Consider to organize this to Main
+  [[nodiscard]] INLINE const std::string& GetName() const { return name_; }
+  [[nodiscard]] INLINE Window& GetMainWindow() { return *main_window_; }
+
+  static Application& ME() { return *instance_; }
+
+ private:
+  std::unique_ptr<Window> main_window_;
+  std::string name_;
+
+  ProcessStack process_stack_;
+
+  Timer timer_;
+
+  static Application* instance_;
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_CORE_APPLICATION_H_
