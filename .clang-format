@@ -1,0 +1,24 @@
+---
+BasedOnStyle: Google
+---
+Language: Cpp
+Standard: c++17
+
+ColumnLimit: 80
+
+# AlignConsecutiveBitFields: true # <- clang-format 12
+AlignConsecutiveAssignments: true
+AlignConsecutiveMacros: true
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortIfStatementsOnASingleLine: true
+AlignEscapedNewlines: Right
+AlignTrailingComments: true
+AlwaysBreakTemplateDeclarations: Yes
+
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeComma
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+UseTab: Never
