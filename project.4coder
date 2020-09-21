@@ -40,6 +40,7 @@ clean_mac = "build_files/scripts/clean_mac.sh";
 build_mac = "build_files/scripts/build_mac.sh";
 debug_mac = "build_files/scripts/debug_mac.sh";
 run_mac = "bin/ETHAN";
+run_win = "bin\ETHAN";
 
 command_list = {
 	{ 
@@ -66,7 +67,7 @@ command_list = {
 		.footer_panel = true,
 		.save_dirty_files = false,
 		.cursor_at_end = true,
-		.cmd = { { run_mac, .os = "mac" }, },
+		.cmd = { { run_win, .os = "win" }, { run_mac, .os = "mac" }, },
 	},
 
 	{

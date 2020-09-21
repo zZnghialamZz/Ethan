@@ -12,7 +12,12 @@
 :: See the License for the specific language governing permissions and
 :: limitations under the License.
 
-@echo off
-rmdir bin /s /q
-rmdir lib /s /q
-rmdir build /s /q
+@ECHO OFF
+
+RMDIR /Q/S "bin"
+RMDIR /Q/S "lib"
+RMDIR /Q/S "build"
+
+cmake -H. -B build
+
+EXIT
