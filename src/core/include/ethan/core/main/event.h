@@ -35,7 +35,6 @@
 
 #include <string>
 
-#define BIT(x) (1 << x)
 #define EVENT_CLASS(type)                                                      \
   virtual const char *GetName() const override { return #type; }
 

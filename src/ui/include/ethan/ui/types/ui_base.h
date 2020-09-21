@@ -35,7 +35,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Ethan {}  // namespace Ethan
+namespace Ethan {
 
 //------------------------------------------------------------------------------
 // Base Types and structure definitions
@@ -46,6 +46,35 @@ using UIVec2  = glm::vec2;
 using UIVec3  = glm::vec3;
 using UIPoint = UIVec2;
 
-using UIColor = struct { unsigned char r, g, b, a; };
+//------------------------------------------------------------------------------
+// UI Configurations
+// NOTE(Nghia Lam): Using a bunch of enums for predefine data
+//------------------------------------------------------------------------------
+
+/**
+ * UI Widget Flags
+ */
+enum {
+  UIFLAG_NONE        = 0,
+  UIFLAG_HIDDEN      = BIT(0),
+  UIFLAG_SELECTED    = BIT(1),
+  UIFLAG_DISABLED    = BIT(2),
+  UIFLAG_FOCUSED     = BIT(3),
+  UIFLAG_ALIGNCENTER = BIT(4),
+  UIFLAG_ALIGNLEFT   = BIT(5),
+  UIFLAG_ALIGNRIGHT  = BIT(6),
+};
+
+/**
+ * UI Widget Types
+ */
+enum : u8 {
+  UIWIDGET_UNKNOWN = 0,
+  UIWIDGET_BUTTON,
+  UIWIDGET_LABEL,
+  UIWIDGET_WINDOW,
+};
+
+}  // namespace Ethan
 
 #endif  // ETHAN_UI_TYPES_BASE_H_

@@ -35,6 +35,12 @@
 
 namespace Ethan {}
 
+//------------------------------------------------------------------------------
+// Fast way to convert to one byte
+//------------------------------------------------------------------------------
+#define BIT(x) (1 << x)
+
+//------------------------------------------------------------------------------
 // Some compilers does not inline any functions when not optimizing unless it
 // has always_inline attribute
 // https://gcc.gnu.org/onlinedocs/gcc/Inline.html
@@ -64,5 +70,8 @@ namespace Ethan {}
 #endif
 
 #endif // INLINE
+//------------------------------------------------------------------------------
+
+
 
 #endif // ETHAN_UTILS_MISC_MACROS_H_

@@ -34,7 +34,7 @@
 
 #include "ethan/core/graphic/api/window.h"
 #include "ethan/utils/time/timer.h"
-#include "process.h"
+#include "gui.h"
 
 namespace Ethan {
 
@@ -86,6 +86,7 @@ class Application {
   std::string name_;
 
   ProcessStack process_stack_;
+  GUI* gui_;
 
   Timer timer_;
 

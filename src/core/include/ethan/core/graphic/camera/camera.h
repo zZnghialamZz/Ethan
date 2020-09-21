@@ -39,7 +39,7 @@ namespace Ethan {
 // Type & Structure Definition
 //------------------------------------------------------------------------------
 
-enum class CameraMode : uint8_t {
+enum class CameraMode : u8 {
   CAMERA_CUSTOM = 0,
   CAMERA_2D,    // Camera specific for 2D View, can be used as default 2D game camera.
   CAMERA_FREE,  // Free style camera for editing Scene.
@@ -47,7 +47,7 @@ enum class CameraMode : uint8_t {
   CAMERA_THIRD  // Camera specific for third person view.
 };
 
-enum class CameraType : uint8_t {
+enum class CameraType : u8 {
   ORTHOGRAPHIC,
   PERSPECTIVE
 };

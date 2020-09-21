@@ -70,6 +70,7 @@ set(SOURCES
     "${ET_CORE_SRC_DIR}/main/process.cpp"
     "${ET_CORE_SRC_DIR}/main/event.cpp"
     "${ET_CORE_SRC_DIR}/main/main.cpp"
+    "${ET_CORE_SRC_DIR}/main/gui.cpp"
     )
 
 set(HEADERS
@@ -98,6 +99,7 @@ set(HEADERS
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/config.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/event.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core/main/main.h"
+    "${ET_CORE_INCLUDE_DIR}/ethan/core/main/gui.h"
 
     "${ET_CORE_INCLUDE_DIR}/ethan/core_pch.h"
     "${ET_CORE_INCLUDE_DIR}/ethan/core.h"

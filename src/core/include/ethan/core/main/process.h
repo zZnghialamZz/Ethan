@@ -33,56 +33,57 @@
 #ifndef ETHAN_CORE_MAIN_PROCESS_H_
 #define ETHAN_CORE_MAIN_PROCESS_H_
 
-#include "event.h"
 #include <vector>
 
-namespace Ethan {
-  
-  class Process {
-   public:
-    explicit Process(const char *name = "Process");
-    virtual ~Process();
-    
-    virtual void Attach();
-    virtual void Detach();
-    virtual void Update();
-    virtual void UpdateUI();
-    virtual void EventCall(Event &event);
-    
-    void SetName(const char *name) { name_ = name; }
-    [[nodiscard]] const char *GetName() const { return name_; }
-    
-   private:
-    const char *name_;
-  };
-  
-  class ProcessStack {
-   public:
-    ProcessStack();
-    ~ProcessStack();
-    
-    void Dispose();
-    
-    void PushProcess(Process *process);
-    void PushOverlay(Process *overlay);
-    void PopProcess(Process *process);
-    void PopOverlay(Process *overlay);
-    
-    std::vector<Process *>::iterator begin() { return processes_.begin(); }
-    std::vector<Process *>::iterator end() { return processes_.end(); }
-    std::vector<Process *>::reverse_iterator rbegin() { return processes_.rbegin(); }
-    std::vector<Process *>::reverse_iterator rend() { return processes_.rend(); }
-    
-    std::vector<Process *>::const_iterator const begin() const { return processes_.begin(); }
-    std::vector<Process *>::const_iterator const end() const { return processes_.end(); }
-    std::vector<Process *>::const_reverse_iterator const rbegin() const { return processes_.rbegin(); }
-    std::vector<Process *>::const_reverse_iterator const rend() const { return processes_.rend(); }
-    
-   private:
-    std::vector<Process *> processes_;
-    unsigned int insert_index_;
-  };
-  
-} // namespace Ethan
+#include "event.h"
 
-#endif // ETHAN_CORE_MAIN_PROCESS_H_
+namespace Ethan {
+
+class Process {
+ public:
+  explicit Process(const char* name = "Process");
+  virtual ~Process();
+
+  virtual void Attach();
+  virtual void Detach();
+  virtual void Update();
+  virtual void UpdateUI();
+  virtual void EventCall(Event& event);
+
+  void SetName(const char* name) { name_ = name; }
+  [[nodiscard]] const char* GetName() const { return name_; }
+
+ private:
+  const char* name_;
+};
+
+class ProcessStack {
+ public:
+  ProcessStack();
+  ~ProcessStack();
+
+  void Dispose();
+
+  void PushProcess(Process* process);
+  void PushOverlay(Process* overlay);
+  void PopProcess(Process* process);
+  void PopOverlay(Process* overlay);
+
+  std::vector<Process*>::iterator begin() { return processes_.begin(); }
+  std::vector<Process*>::iterator end() { return processes_.end(); }
+  std::vector<Process*>::reverse_iterator rbegin() {return processes_.rbegin();}
+  std::vector<Process*>::reverse_iterator rend() { return processes_.rend(); }
+
+  std::vector<Process*>::const_iterator const begin() const {return processes_.begin();}
+  std::vector<Process*>::const_iterator const end() const {return processes_.end();}
+  std::vector<Process*>::const_reverse_iterator const rbegin() const {return processes_.rbegin();}
+  std::vector<Process*>::const_reverse_iterator const rend() const {return processes_.rend();}
+
+ private:
+  std::vector<Process*> processes_;
+  unsigned int insert_index_;
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_CORE_MAIN_PROCESS_H_

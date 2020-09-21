@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_rect.cpp
+ * @file gui.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,6 +30,29 @@
  * limitations under the License.
  */
 
-#include "ethan/ui/types/ui_rect.h"
+#ifndef ETHAN_CORE_MAIN_GUI_H
+#define ETHAN_CORE_MAIN_GUI_H
 
-namespace Ethan {}  // namespace Ethan
+#include "process.h"
+
+namespace Ethan {
+
+class GUI : public Process {
+ public:
+  GUI(const char* name = "GUI Process");
+  virtual ~GUI() = default;
+
+  void Attach() override;
+  void Detach() override;
+  void Update() override;
+  void UpdateUI() override;
+  void EventCall(Event& event) override;
+
+  // For setting up UI
+  void BeginUI();
+  void EndUI();
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_CORE_MAIN_GUI_H

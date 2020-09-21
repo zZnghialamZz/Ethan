@@ -48,6 +48,9 @@ Application::Application(const std::string& name) : name_(name) {
   main_window_->SetEventCallback([=](Event& e) { Application::EventCall(e); });
   main_window_->SetVSync(true);
 
+  gui_ = new GUI();
+  AddProcess(gui_);
+
   Renderer::Init();
 }
 
@@ -61,17 +64,19 @@ void Application::End() {}
 
 void Application::Update() {
   while (!main_window_->IsClose()) {
+    Renderer::Reset();
+
     main_window_->OnUpdate();
     timer_.CalculateDeltaTime();
 
     if (!main_window_->IsMinimized()) {
       for (Process* process : process_stack_) process->Update();
 
-      // ui_process_->Begin();
+      gui_->BeginUI();
       {
         for (Process* process : process_stack_) process->UpdateUI();
       }
-      // ui_process_->End();
+      gui_->EndUI();
     }
   }
 }

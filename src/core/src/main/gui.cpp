@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_types.cpp
+ * @file gui.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,6 +30,33 @@
  * limitations under the License.
  */
 
-#include "ethan/ui/types/ui_types.h"
+#include "ethan/core/main/gui.h"
+#include "ethan/core/graphic/renderer/renderer.h"
+#include "ethan/core/graphic/renderer/renderer2D.h"
 
-namespace Ethan {}  // namespace Ethan
+namespace Ethan {
+
+GUI::GUI(const char* name) : Process(name) {}
+
+void GUI::BeginUI() {
+  RendererCommand::Clear();
+  RendererCommand::SetClearColor(ColorHexToRGBA(COLORPINK));
+
+  Renderer2D::BeginUI();
+}
+
+void GUI::EndUI() {
+  Renderer2D::EndUI();
+}
+
+void GUI::Attach() {}
+
+void GUI::Detach() {}
+
+void GUI::Update() {}
+
+void GUI::UpdateUI() {}
+
+void GUI::EventCall(Event& event) {}
+
+}

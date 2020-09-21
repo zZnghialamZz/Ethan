@@ -37,61 +37,62 @@
 #include "ethan/core/graphic/camera/camera.h"
 
 namespace Ethan {
-  
-  class RendererAPI {
-   public:
-    enum API {
-      None = 0, OpenGL = 1
-    };
-    
-    virtual ~RendererAPI() = default;
-    virtual void Init() = 0;
-    virtual void Clear() = 0;
-    virtual void SetClearColor(const glm::vec4& color) = 0;
-    virtual void DrawIndexed(const Shared<VertexArray>& vertex_array, const uint32_t indice_count) = 0;
-    
-    INLINE static API GetAPI() { return api_; }
-    static Shared<RendererAPI> Create();
-    
-   private:
-    static API api_;
-  };
-  
-  class RendererCommand {
-   public:
-    static void Init();
-    static void Clear();
-    
-    static void SetClearColor(const glm::vec4& color);
-    static void DrawIndexed(const Shared<VertexArray>& vertex_array, const uint32_t indice_count = 0);
-    
-   private:
-    static Shared<RendererAPI> renderer_api_;
-  };
-  
-  class Renderer {
-   public:
-    static void Init();
-    static void Shutdown();
-    
-    static void Begin(const Camera& camera);
-    static void End();
-    
-    static void Submit(const Shared<Shader> &shader,
-                       const Shared<VertexArray> &vertex_array,
-                       const glm::mat4& transform = glm::mat4(1.0f));
-    
-    INLINE static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
-    
-   private:
-    // TODO: Move to Room/Level/Scene file.
-    struct SceneData {
-      glm::mat4 ViewProjectionMatrix;
-    };
-    
-    static SceneData* scene_data_;
-  };
-  
-} 
 
-#endif // ETHAN_CORE_GRAPHIC_RENDERER_H_
+class RendererAPI {
+ public:
+  enum API { None = 0, OpenGL = 1 };
+
+  virtual ~RendererAPI()                                = default;
+  virtual void Init()                                   = 0;
+  virtual void Clear()                                  = 0;
+  virtual void SetClearColor(const glm::vec4& color)    = 0;
+  virtual void DrawIndexed(const Shared<VertexArray>& vertex_array,
+                           const uint32_t indice_count) = 0;
+
+  INLINE static API GetAPI() { return api_; }
+  static Shared<RendererAPI> Create();
+
+ private:
+  static API api_;
+};
+
+class RendererCommand {
+ public:
+  static void Init();
+  static void Clear();
+
+  static void SetClearColor(const glm::vec4& color);
+  static void DrawIndexed(const Shared<VertexArray>& vertex_array,
+                          const uint32_t indice_count = 0);
+
+ private:
+  static Shared<RendererAPI> renderer_api_;
+};
+
+class Renderer {
+ public:
+  static void Init();
+  static void Shutdown();
+  static void Reset();
+
+  static void Begin(const Camera& camera);
+  static void End();
+
+  static void Submit(const Shared<Shader>& shader,
+                     const Shared<VertexArray>& vertex_array,
+                     const glm::mat4& transform = glm::mat4(1.0f));
+
+  INLINE static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
+
+ private:
+  // TODO: Move to Room/Level/Scene file.
+  struct SceneData {
+    glm::mat4 ViewProjectionMatrix;
+  };
+
+  static SceneData* scene_data_;
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_CORE_GRAPHIC_RENDERER_H_

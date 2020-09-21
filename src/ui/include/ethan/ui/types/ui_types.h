@@ -37,5 +37,6 @@ namespace Ethan {}  // namespace Ethan
 
 #include "ui_base.h"
 #include "ui_rect.h"
+#include "ui_color.h"
 
 #endif  // ETHAN_UI_TYPES_H_

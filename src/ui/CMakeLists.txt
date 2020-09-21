@@ -11,14 +11,12 @@ set(ET_UI_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include")
 set(ET_UI_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
-    "${ET_UI_SRC_DIR}/types/ui_types.cpp"
-    "${ET_UI_SRC_DIR}/types/ui_base.cpp"
-    "${ET_UI_SRC_DIR}/types/ui_rect.cpp"
     "${ET_UI_SRC_DIR}/ui_context.cpp"
     "${ET_UI_SRC_DIR}/ui_manager.cpp"
     )
 set(HEADERS
     "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_types.h"
+    "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_color.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_base.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_rect.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_context.h"

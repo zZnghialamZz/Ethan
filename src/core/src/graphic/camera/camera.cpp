@@ -36,6 +36,10 @@
 
 namespace Ethan {
 
+//------------------------------------------------------------------------------
+// Main Definitions
+//------------------------------------------------------------------------------
+
 Camera::Camera(CameraMode mode, CameraType type)
     : mode_(mode)
     , type_(type)
@@ -87,13 +91,11 @@ void Camera::SetRotation(const glm::vec3 &rotation) {
 void Camera::SetClippingPlanes(float near_plane, float far_plane) {
   near_plane_ = near_plane;
   far_plane_ = far_plane;
-
   UpdateProjectionMatrix();
 }
 
 void Camera::SetFieldOfViewDegree(float degree) {
   fov_ = degree;
-
   UpdateProjectionMatrix();
 }
 
