@@ -54,13 +54,15 @@ Application::Application(const std::string& name) : name_(name) {
   Renderer::Init();
 }
 
-Application::~Application() = default;
+Application::~Application() {}
 
 void Application::Init() { Start(); }
 
 void Application::Start() { timer_.Start(); }
 
-void Application::End() {}
+void Application::End() {
+  // TODO(Nghia Lam): Investigate why on Windows ETHAN still have a process running after terminating..
+}
 
 void Application::Update() {
   while (!main_window_->IsClose()) {
