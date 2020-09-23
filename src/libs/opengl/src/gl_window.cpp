@@ -32,16 +32,27 @@
 
 #include "ethan/opengl/gl_window.h"
 
+#include "GLFW/glfw3.h"
 #include "ethan/utils/console/console.h"
 
 namespace Ethan {
 
+//------------------------------------------------------------------------------
+// Helpers
+//------------------------------------------------------------------------------
 bool GLWindow::is_glfw_init_ = false;
+
+static void FrameBufferSizeCallback(GLFWwindow* window, int width, int height) {
+  glViewport(0, 0, width, height);
+}
 
 Window* Window::Create(const WindowProperty& props) {
   return new GLWindow(props);
 }
 
+//------------------------------------------------------------------------------
+// Main APIs
+//------------------------------------------------------------------------------
 GLWindow::GLWindow(const WindowProperty &props)
     : is_close_(false)
     , is_minimized_(false) {
@@ -102,6 +113,8 @@ void GLWindow::Init(const WindowProperty &props) {
   context_->Init();
 
   glfwSetWindowUserPointer(window_, &data_);
+  glfwSetFramebufferSizeCallback(window_, FrameBufferSizeCallback);
+
   SetVSync(true);
   SetWindowCloseCallback();
   SetWindowResizeCallback();
@@ -162,7 +175,7 @@ void GLWindow::Resize(unsigned int width, unsigned int height) {
   }
 
   is_minimized_ = false;
-//  glViewport(0, 0, width, height);
+  // glViewport(0, 0, width, height);
 }
 
 } // namespace Ethan

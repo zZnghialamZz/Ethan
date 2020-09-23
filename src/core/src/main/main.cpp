@@ -48,7 +48,7 @@ namespace Ethan {
     auto app = CreateApplication();
     
     app->Init();
-    app->AddProcess(new EditorProcess());
+    // app->AddProcess(new EditorProcess());
     
     // NOTE(Nghia Lam): Main Loop
     app->Update();
@@ -66,7 +66,7 @@ namespace Ethan {
     auto app = CreateApplication();
     
     app->Init();
-    app->AddProcess(new EditorProcess());
+    // app->AddProcess(new EditorProcess());
     
     // NOTE(Nghia Lam): Main Loop
     app->Update();

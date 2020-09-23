@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file macros.h
+ * @file ui_window.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,48 +30,36 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UTILS_MISC_MACROS_H_
-#define ETHAN_UTILS_MISC_MACROS_H_
+#include "ethan/ui/widgets/ui_window.h"
 
-namespace Ethan {}
+#include "ethan/core/graphic/renderer/renderer2D.h"
 
-//------------------------------------------------------------------------------
-// Convinient way to convert to one byte
-//------------------------------------------------------------------------------
-#define BIT(x) (1 << x)
+namespace Ethan {
 
 //------------------------------------------------------------------------------
-// Some compilers does not inline any functions when not optimizing unless it
-// has always_inline attribute
-// https://gcc.gnu.org/onlinedocs/gcc/Inline.html
-// --- ALWAYS_INLINE
-#ifndef ALWAYS_INLINE
-
-#if defined(__GNUC__) && (__GNUC__ >= 4)
-#define ALWAYS_INLINE __attribute__((always_inline)) inline
-#elif defined(__llvm__)
-#define ALWAYS_INLINE __attribute__((always_inline)) inline
-#elif defined(_MSC_VER)
-#define ALWAYS_INLINE __forceinline
-#else
-#define ALWAYS_INLINE inline
-#endif
-
-#endif
-
-// Should always inline, except in some cases because it makes debugging harder
-// --- INLINE
-#ifndef INLINE
-
-#ifdef NOT_FORCED_INLINE
-#define INLINE inline
-#else
-#define INLINE ALWAYS_INLINE
-#endif
-
-#endif // INLINE
+// Main APIs
 //------------------------------------------------------------------------------
+void UIWindow::Begin(const char* title, const UIRect<float>& bounds, UIFlags flags) {
+  // Render
+  RenderWindow(bounds);
 
+  if (~flags & UIFLAG_NOTITLE)
+    RenderTitleBar();
+  if (~flags & UIFLAG_NOCLOSE)
+    RenderCloseButton();
+}
 
+void UIWindow::End() {}
 
-#endif // ETHAN_UTILS_MISC_MACROS_H_
+//------------------------------------------------------------------------------
+// Drawing
+//------------------------------------------------------------------------------
+void UIWindow::RenderWindow(const UIRect<float>& bounds) {
+  Renderer2D::DrawQuad(bounds.x, bounds.y, bounds.w, bounds.h, ColorHexToRGBA(COLORBLUE));
+}
+
+void UIWindow::RenderTitleBar() {}
+
+void UIWindow::RenderCloseButton() {}
+
+}  // namespace Ethan

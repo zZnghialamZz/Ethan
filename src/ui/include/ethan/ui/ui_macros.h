@@ -33,6 +33,13 @@
 #ifndef ETHAN_UI_MACROS_H_
 #define ETHAN_UI_MACROS_H_
 
-namespace Ethan {}  // namespace Ethan
+namespace Ethan {
+
+//------------------------------------------------------------------------------
+// UI Macros helpers
+//------------------------------------------------------------------------------
+#define HASH_INITIAL 2166136261  // 32bit fnv-1a hash <- Use for Universal ID?
+
+}  // namespace Ethan
 
 #endif  // ETHAN_UI_MACROS_H_

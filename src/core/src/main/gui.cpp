@@ -34,6 +34,8 @@
 #include "ethan/core/graphic/renderer/renderer.h"
 #include "ethan/core/graphic/renderer/renderer2D.h"
 
+#include "ethan/ui.h"
+
 namespace Ethan {
 
 GUI::GUI(const char* name) : Process(name) {}
@@ -55,7 +57,14 @@ void GUI::Detach() {}
 
 void GUI::Update() {}
 
-void GUI::UpdateUI() {}
+void GUI::UpdateUI() {
+  // Testing purpose <-- TO BE REMOVED
+  UIWindow::Begin("Test Window", UIRect(400.0f, 200.0f, 800.0f, 400.0f), UIFLAG_NOCLOSE);
+  {
+
+  }
+  UIWindow::End();
+}
 
 void GUI::EventCall(Event& event) {}
 

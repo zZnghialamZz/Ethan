@@ -74,16 +74,19 @@ void Renderer2D::Init() {
   // NOTE(Nghia Lam): Set first texture to be the default white texture
   data_.Storage.BatchTextures[0] = data_.Base2DTexture;
 
-  // NOTE(Nghia Lam): Setup Texture Origin (Default to be center of the texture)
-  // * * * * *
-  // *       *
-  // *   x   *
-  // *       *
-  // * * * * * -> Consider to use Sprite System for storing this data
-  data_.VertexOrigin[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
-  data_.VertexOrigin[1] = {0.5f, -0.5f, 0.0f, 1.0f};
-  data_.VertexOrigin[2] = {0.5f, 0.5f, 0.0f, 1.0f};
-  data_.VertexOrigin[3] = {-0.5f, 0.5f, 0.0f, 1.0f};
+  // NOTE(Nghia Lam): Setup Texture Origin (Default : bottomleft of the
+  // texture). Then our camera matrix will flip it upside down to make we alway
+  // begin drawing at topleft position.
+  // * * * * *      X * * * *
+  // *       *      *       *
+  // *       *  ->  *       *
+  // *       *      *       *
+  // X * * * *      * * * * *
+  // TODO(Nghia Lam): Consider to use Sprite System for storing this data
+  data_.VertexOrigin[0] = {0.0f, 0.0f, 0.0f, 1.0f};
+  data_.VertexOrigin[1] = {1.0f, 0.0f, 0.0f, 1.0f};
+  data_.VertexOrigin[2] = {1.0f, 1.0f, 0.0f, 1.0f};
+  data_.VertexOrigin[3] = {0.0f, 1.0f, 0.0f, 1.0f};
 }
 
 void Renderer2D::Shutdown() {
@@ -101,14 +104,12 @@ void Renderer2D::Begin(const Camera& camera) {
   // NOTE(Nghia Lam): Everytime we begin a scene, we set the current vertex need
   // to be drawn back to begin. So the Engine can update all the vertices and
   // render at the end of the render process.
-  data_.CurrentIndiceCount = 0;
-  data_.CurrentVertex      = data_.Storage.VertexBatchBase;
+  data_.CurrentIndiceCount  = 0;
+  data_.CurrentVertex       = data_.Storage.VertexBatchBase;
   data_.CurrentTextureIndex = 1;  // The default white texture
 }
 
-void Renderer2D::BeginUI() {
-  Begin(ui_view_);
-}
+void Renderer2D::BeginUI() { Begin(ui_view_); }
 
 void Renderer2D::End() {
   // TODO(Nghia Lam): Profile here & investigate a more proper way
@@ -125,11 +126,11 @@ void Renderer2D::End() {
       0);  // Currently there is no offset.
 
   Execute();
+
+  // data_.Base2DShader->UnBind();
 }
 
-void Renderer2D::EndUI() {
-  End();
-}
+void Renderer2D::EndUI() { End(); }
 
 void Renderer2D::Execute() {
   // TODO(Nghia Lam): Profile here.
@@ -146,8 +147,8 @@ void Renderer2D::Execute() {
 void Renderer2D::ExecuteAndReset() {
   End();
 
-  data_.CurrentIndiceCount = 0;
-  data_.CurrentVertex      = data_.Storage.VertexBatchBase;
+  data_.CurrentIndiceCount  = 0;
+  data_.CurrentVertex       = data_.Storage.VertexBatchBase;
   data_.CurrentTextureIndex = 1;  // The default white texture
 }
 
@@ -169,7 +170,7 @@ void Renderer2D::DrawQuad(float x,
   // TODO(Nghia Lam): Profile here.
   PreDrawing();
 
-  glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, layer}) *
+  glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, (float)layer}) *
                         glm::scale(glm::mat4(1.0f), {width, height, 1.0f});
 
   SetDataQuad(transform, 0.0f, 1.0f, 1.0f, color);

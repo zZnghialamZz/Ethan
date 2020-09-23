@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui.h
+ * @file ui_widgets.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,15 +30,6 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_H_
-#define ETHAN_UI_H_
-
-#include "ui/types/ui_types.h"
-#include "ui/ui_context.h"
-#include "ui/ui_macros.h"
-#include "ui/ui_manager.h"
-#include "ui/ui_widgets.h"
+#include "widgets/ui_window.h"
 
 namespace Ethan {}
-
-#endif  // ETHAN_UI_H_

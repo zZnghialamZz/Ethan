@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui.h
+ * @file ui_window.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,15 +30,24 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_H_
-#define ETHAN_UI_H_
+#ifndef ETHAN_UI_WIDGETS_WINDOW_H_
+#define ETHAN_UI_WIDGETS_WINDOW_H_
 
-#include "ui/types/ui_types.h"
-#include "ui/ui_context.h"
-#include "ui/ui_macros.h"
-#include "ui/ui_manager.h"
-#include "ui/ui_widgets.h"
+namespace Ethan {
 
-namespace Ethan {}
+class UIWindow {
+ public:
+  [[nodiscard]] INLINE static const UIType GetType() { return UIWIDGET_WINDOW; }
 
-#endif  // ETHAN_UI_H_
+  static void Begin(const char* title, const UIRect<float>& bounds, UIFlags flags);
+  static void End();
+
+ private:
+  static void RenderWindow(const UIRect<float>& bounds);
+  static void RenderTitleBar();
+  static void RenderCloseButton();
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_UI_WIDGETS_WINDOW_H_

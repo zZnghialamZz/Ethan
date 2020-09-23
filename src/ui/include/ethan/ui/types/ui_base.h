@@ -42,9 +42,12 @@ namespace Ethan {
 // NOTE(Nghia Lam): Some are just alias of the current math library (glm)
 //------------------------------------------------------------------------------
 
-using UIVec2  = glm::vec2;
-using UIVec3  = glm::vec3;
-using UIPoint = UIVec2;
+using UIID    = u32;        // Universal ID just for UI <- Do we need this ?
+using UIVec2  = glm::vec2;  // alias for math <- TODO(Nghia Lam): My math lib ..
+using UIVec3  = glm::vec3;  // alias for math <- TODO(Nghia Lam): My math lib ..
+using UIPoint = UIVec2;     // Re-alias for readability in some drawing cases
+using UIFlags = int;        // -> enum of UIFLAGs // used in UIWindow::Begin()
+using UIType  = u8;         // -> enum of UIWIDGETs // used in every widgets
 
 //------------------------------------------------------------------------------
 // UI Configurations
@@ -52,7 +55,7 @@ using UIPoint = UIVec2;
 //------------------------------------------------------------------------------
 
 /**
- * UI Widget Flags
+ * UI Widget Flags -> Consider to change this into per widgets
  */
 enum {
   UIFLAG_NONE        = 0,
@@ -63,6 +66,8 @@ enum {
   UIFLAG_ALIGNCENTER = BIT(4),
   UIFLAG_ALIGNLEFT   = BIT(5),
   UIFLAG_ALIGNRIGHT  = BIT(6),
+  UIFLAG_NOTITLE     = BIT(7),
+  UIFLAG_NOCLOSE     = BIT(8),
 };
 
 /**
