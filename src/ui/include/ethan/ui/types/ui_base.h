@@ -39,15 +39,19 @@ namespace Ethan {
 
 //------------------------------------------------------------------------------
 // Base Types and structure definitions
-// NOTE(Nghia Lam): Some are just alias of the current math library (glm)
+// NOTE(Nghia Lam): Some are just alias of the current math library (glm) for
+// readability & easy configuration.
 //------------------------------------------------------------------------------
 
 using UIID    = u32;        // Universal ID just for UI <- Do we need this ?
+using UIBool  = bool;       // alias for bool.
+using UIFloat = float;      // alias for float.
+using UIUint8 = u8;         // alias for unsigned char
 using UIVec2  = glm::vec2;  // alias for math <- TODO(Nghia Lam): My math lib ..
 using UIVec3  = glm::vec3;  // alias for math <- TODO(Nghia Lam): My math lib ..
 using UIPoint = UIVec2;     // Re-alias for readability in some drawing cases
 using UIFlags = int;        // -> enum of UIFLAGs // used in UIWindow::Begin()
-using UIType  = u8;         // -> enum of UIWIDGETs // used in every widgets
+using UIType  = UIUint8;    // -> enum of UIWIDGETs // used in every widgets
 
 //------------------------------------------------------------------------------
 // UI Configurations
@@ -78,6 +82,22 @@ enum : u8 {
   UIWIDGET_BUTTON,
   UIWIDGET_LABEL,
   UIWIDGET_WINDOW,
+};
+
+/**
+ * UI Theme
+ */
+enum : u8 {
+  UITHEME_TEXT,
+  UITHEME_BORDER,
+  UITHEME_BUTTON,
+  UITHEME_BUTTONHOVER,
+  UITHEME_BUTTONFOCUS,
+  UITHEME_PANELBG,
+  UITHEME_WINDOWBG,
+  UITHEME_TITLEBG,
+  UITHEME_TITLETEXT,
+  UITHEME_COUNT,
 };
 
 }  // namespace Ethan

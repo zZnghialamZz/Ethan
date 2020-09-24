@@ -33,6 +33,7 @@
 #ifndef ETHAN_CORE_MAIN_GUI_H
 #define ETHAN_CORE_MAIN_GUI_H
 
+#include "ethan/ui.h"
 #include "process.h"
 
 namespace Ethan {
@@ -51,6 +52,9 @@ class GUI : public Process {
   // For setting up UI
   void BeginUI();
   void EndUI();
+
+ private:
+  UIManager ui_manager_;
 };
 
 }  // namespace Ethan

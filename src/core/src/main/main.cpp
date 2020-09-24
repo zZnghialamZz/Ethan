@@ -19,7 +19,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
+ * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -31,50 +31,52 @@
  */
 
 #include "ethan/core/main/main.h"
+
 #include "ethan/editor/editor_process.h"
 
 namespace Ethan {
-  Application* Main::CreateApplication() { return new Application("Ethan Engine"); } 
-  
-  
-  //|
-  // Entry Point Func
-  // TODO(Nghia Lam): Consider moving this to ethan.h since we didnt support dynamic lib anymore -> or not
-  
-  int Main::InitMain(int argc, char* argv[]) {
 
-    // TODO(Nghia Lam): Setup for each platforms
+Application* Main::CreateApplication() {
+  return new Application("Ethan Engine");
+}
 
-    auto app = CreateApplication();
-    
-    app->Init();
-    // app->AddProcess(new EditorProcess());
-    
-    // NOTE(Nghia Lam): Main Loop
-    app->Update();
-    
-    delete app;
-    
-    return 0;
-  }
-  
-  int Main::InitWinMain(void* h_instance,
-                        void* h_prev_instance,
-                        char* lp_cmdline,
-                        int nshowcmd) {
-    // TODO(Nghia Lam): Setup for Window Platforms
-    auto app = CreateApplication();
-    
-    app->Init();
-    // app->AddProcess(new EditorProcess());
-    
-    // NOTE(Nghia Lam): Main Loop
-    app->Update();
-    
-    delete app;
-    
-    return 0;
-  }
-  
-} 
+//|
+// Entry Point Func
+// TODO(Nghia Lam): Consider moving this to ethan.h since we didnt support
+// dynamic lib anymore -> or not
 
+int Main::InitMain(int argc, char* argv[]) {
+  // TODO(Nghia Lam): Setup for each platforms
+
+  auto app = CreateApplication();
+
+  app->Init();
+  app->AddProcess(new EditorProcess());
+
+  // NOTE(Nghia Lam): Main Loop
+  app->Update();
+
+  delete app;
+
+  return 0;
+}
+
+int Main::InitWinMain(void* h_instance,
+                      void* h_prev_instance,
+                      char* lp_cmdline,
+                      int nshowcmd) {
+  // TODO(Nghia Lam): Setup for Window Platforms
+  auto app = CreateApplication();
+
+  app->Init();
+  app->AddProcess(new EditorProcess());
+
+  // NOTE(Nghia Lam): Main Loop
+  app->Update();
+
+  delete app;
+
+  return 0;
+}
+
+}  // namespace Ethan

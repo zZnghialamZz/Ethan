@@ -33,14 +33,24 @@
 #ifndef ETHAN_UI_MANAGER_H_
 #define ETHAN_UI_MANAGER_H_
 
-namespace Ethan {
-  
-  class UIManager {
-   public:
-    
-    
-  };
-  
-}
+#include "ui_context.h"
 
-#endif // ETHAN_UI_MANAGER_H_
+namespace Ethan {
+
+class UIManager {
+ public:
+  UIManager();
+  ~UIManager();
+
+  [[nodiscard]] INLINE static UIManager* Instance() { return instance_; }
+  [[nodiscard]] INLINE UIContext* GetContext() { return ctx_; }
+  [[nodiscard]] INLINE UIStyle* GetStyle() { return ctx_->Style; }
+
+ private:
+  static UIManager* instance_;
+  UIContext* ctx_;
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_UI_MANAGER_H_

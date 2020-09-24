@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_manager.cpp
+ * @file ui_style.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,24 +30,29 @@
  * limitations under the License.
  */
 
-#include "ethan/ui/ui_manager.h"
+#ifndef ETHAN_UI_STYLE_H_
+#define ETHAN_UI_STYLE_H_
 
 namespace Ethan {
 
-// Is this safe?
-UIManager* UIManager::instance_ = nullptr;
+class UIStyle {
+ public:
+  // Parameters
+  UIFloat WindowBorder;           // The width of the borders of window.
+  UIVec2  WindowPadding;          // Padding within window.
+  UIUint8 WindowTitleHeight;      // Height of the window title bar.
+  UIBool  WindowRounding;         // Radius of window corner rounding <- Intend to use
+                                  // 9-slice texture method -> It will disable the
+                                  // WindowBorder atttributes
+  UIColor Colors[UITHEME_COUNT];  // Color Theme.
 
-UIManager::UIManager() {
-  if (instance_ != nullptr)
-    ETLOG_CORE_ERROR("There can only be 1 instance of UIManager !!");
+  // Constructor & Methods
+  UIStyle();
 
-  instance_ = this;
-
-  // NOTE(Nghia Lam): The only memory allocation we will make till this point
-  // for the Immediate Mode UI of Ethan.
-  ctx_ = new UIContext();
-}
-
-UIManager::~UIManager() { delete ctx_; }
+ private:
+  void SetDefaultColor();
+};
 
 }  // namespace Ethan
+
+#endif  // ETHAN_UI_STYLE_H_

@@ -15,6 +15,7 @@ set(SOURCES
 
     "${ET_UI_SRC_DIR}/ui_context.cpp"
     "${ET_UI_SRC_DIR}/ui_manager.cpp"
+    "${ET_UI_SRC_DIR}/ui_style.cpp"
     )
 set(HEADERS
     "${ET_UI_INCLUDE_DIR}/ethan/ui/widgets/ui_window.h"
@@ -28,6 +29,7 @@ set(HEADERS
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_manager.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_widgets.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_macros.h"
+    "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_style.h"
 
     "${ET_UI_INCLUDE_DIR}/ethan/ui_pch.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui.h"

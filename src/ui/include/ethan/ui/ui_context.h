@@ -33,8 +33,22 @@
 #ifndef ETHAN_UI_CONTEXT_H_
 #define ETHAN_UI_CONTEXT_H_
 
-namespace Ethan {
-  
-}
+#include "ui_style.h"
 
-#endif // ETHAN_UI_CONTEXT_H_
+namespace Ethan {
+
+class UIContext {
+ public:
+  UIContext();
+  ~UIContext();
+
+  UIStyle* Style;
+
+ private:
+  // HACK: Little trick for not allocate Style's block of memory to the Heap
+  UIStyle style_;
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_UI_CONTEXT_H_

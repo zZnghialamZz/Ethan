@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_manager.cpp
+ * @file ui_style.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,24 +30,33 @@
  * limitations under the License.
  */
 
-#include "ethan/ui/ui_manager.h"
+#include "ethan/ui/ui_style.h"
 
 namespace Ethan {
 
-// Is this safe?
-UIManager* UIManager::instance_ = nullptr;
+UIStyle::UIStyle() {
+  WindowBorder      = 1.0f;
+  WindowPadding     = UIVec2(2, 2);
+  WindowRounding    = false;
+  WindowTitleHeight = 20;
 
-UIManager::UIManager() {
-  if (instance_ != nullptr)
-    ETLOG_CORE_ERROR("There can only be 1 instance of UIManager !!");
-
-  instance_ = this;
-
-  // NOTE(Nghia Lam): The only memory allocation we will make till this point
-  // for the Immediate Mode UI of Ethan.
-  ctx_ = new UIContext();
+  SetDefaultColor();
 }
 
-UIManager::~UIManager() { delete ctx_; }
+void UIStyle::SetDefaultColor() {
+  // Default dark theme
+  // ---
+  // NOTE(Nghia Lam): Remember UIColor in Ethan is Hex, so we need to use the
+  // function UIColorRGBA
+  Colors[UITHEME_TEXT]        = UIColorRGBA(230, 230, 230);
+  Colors[UITHEME_BORDER]      = UIColorRGBA(25, 25, 25);
+  Colors[UITHEME_BUTTON]      = UIColorRGBA(75, 75, 75);
+  Colors[UITHEME_BUTTONHOVER] = UIColorRGBA(95, 95, 95);
+  Colors[UITHEME_BUTTONFOCUS] = UIColorRGBA(115, 115, 115);
+  Colors[UITHEME_PANELBG]     = UIColorRGBA(0, 0, 0);
+  Colors[UITHEME_WINDOWBG]    = UIColorRGBA(50, 50, 50);
+  Colors[UITHEME_TITLEBG]     = UIColorRGBA(25, 25, 25);
+  Colors[UITHEME_TITLETEXT]   = UIColorRGBA(240, 240, 240);
+}
 
 }  // namespace Ethan

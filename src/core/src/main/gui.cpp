@@ -42,7 +42,7 @@ GUI::GUI(const char* name) : Process(name) {}
 
 void GUI::BeginUI() {
   RendererCommand::Clear();
-  RendererCommand::SetClearColor(ColorHexToRGBA(COLORPINK));
+  RendererCommand::SetClearColor(ColorHexToRGBA(COLORWHITE));
 
   Renderer2D::BeginUI();
 }

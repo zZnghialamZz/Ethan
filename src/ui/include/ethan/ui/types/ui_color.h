@@ -50,6 +50,7 @@ static const u8 AShift = 0;
 // Predefined Colors
 //------------------------------------------------------------------------------
 
+// 0xRRGGBBAA
 enum {
   COLORWHITE  = 0xFFFFFFFF,
   COLORBLACK  = 0x000000FF,
@@ -71,27 +72,36 @@ enum {
 /**
  * Generate new UIColor with RGBA channel
  */
-INLINE UIColor UIColorRGBA(const UIColorChannel& r,
-                           const UIColorChannel& g,
-                           const UIColorChannel& b,
-                           const UIColorChannel& a = 255) {
-  return UIColor((r << RShift) | (g << GShift) |
-                 (b << BShift) | (a << AShift));
+[[nodiscard]] INLINE UIColor UIColorRGBA(const UIColorChannel& r,
+                                         const UIColorChannel& g,
+                                         const UIColorChannel& b,
+                                         const UIColorChannel& a = 255) {
+  return UIColor((r << RShift) | (g << GShift) | (b << BShift) | (a << AShift));
 }
 
-INLINE UIColorChannel ColorGetR(UIColor c) { return (c >> RShift) & 0xFF; }
-INLINE UIColorChannel ColorGetG(UIColor c) { return (c >> GShift) & 0xFF; }
-INLINE UIColorChannel ColorGetB(UIColor c) { return (c >> BShift) & 0xFF; }
-INLINE UIColorChannel ColorGetA(UIColor c) { return (c >> AShift) & 0xFF; }
-
-INLINE glm::vec4 ColorHexToRGBA(const UIColor& c) {
-  return { ColorGetR(c) / 255.0f,
-           ColorGetG(c) / 255.0f,
-           ColorGetB(c) / 255.0f,
-           ColorGetA(c) / 255.0f };
+[[nodiscard]] INLINE UIColorChannel ColorGetR(const UIColor& c) {
+  return (c >> RShift) & 0xFF;
+}
+[[nodiscard]] INLINE UIColorChannel ColorGetG(const UIColor& c) {
+  return (c >> GShift) & 0xFF;
+}
+[[nodiscard]] INLINE UIColorChannel ColorGetB(const UIColor& c) {
+  return (c >> BShift) & 0xFF;
+}
+[[nodiscard]] INLINE UIColorChannel ColorGetA(const UIColor& c) {
+  return (c >> AShift) & 0xFF;
 }
 
-INLINE bool ColorIsTransparent(const UIColor& c) { return ColorGetA(c) == 0; }
+[[nodiscard]] INLINE glm::vec4 ColorHexToRGBA(const UIColor& c) {
+  return {ColorGetR(c) / 255.0f,
+          ColorGetG(c) / 255.0f,
+          ColorGetB(c) / 255.0f,
+          ColorGetA(c) / 255.0f};
+}
+
+[[nodiscard]] INLINE bool ColorIsTransparent(const UIColor& c) {
+  return ColorGetA(c) == 0;
+}
 
 }  // namespace Ethan
 

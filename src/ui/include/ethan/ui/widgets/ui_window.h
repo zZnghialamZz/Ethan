@@ -39,13 +39,15 @@ class UIWindow {
  public:
   [[nodiscard]] INLINE static const UIType GetType() { return UIWIDGET_WINDOW; }
 
-  static void Begin(const char* title, const UIRect<float>& bounds, UIFlags flags);
+  static void Begin(const char* title,
+                    const UIRect<float>& bounds,
+                    UIFlags flags);
   static void End();
 
  private:
-  static void RenderWindow(const UIRect<float>& bounds);
-  static void RenderTitleBar();
-  static void RenderCloseButton();
+  static void RenderWindow(const UIRect<float>& window_bound);
+  static void RenderTitleBar(const UIRect<float>& window_bound);
+  static void RenderCloseButton(const UIRect<float>& window_bound);
 };
 
 }  // namespace Ethan

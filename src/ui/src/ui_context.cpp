@@ -33,5 +33,11 @@
 #include "ethan/ui/ui_context.h"
 
 namespace Ethan {
-  
+
+UIContext::UIContext() {
+  Style = &style_;
 }
+
+UIContext::~UIContext() {}
+
+}  // namespace Ethan
