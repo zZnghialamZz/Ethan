@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_style.h
+ * @file ui_stack.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,30 +30,33 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_STYLE_H_
-#define ETHAN_UI_STYLE_H_
+#ifndef ETHAN_UTILS_DS_STACK_H_
+#define ETHAN_UTILS_DS_STACK_H_
 
 namespace Ethan {
 
-// TODO(Nghia Lam): Consider changing to use json for determine styles.
-class UIStyle {
+template <typename T>
+class Stack {
  public:
-  // Parameters
-  UIFloat WindowBorder;          // The width of the borders of window.
-  UIVec2  WindowPadding;         // Padding within window.
-  UIUint8 WindowTitleHeight;     // Height of the window title bar.
-  UIBool  WindowRounding;        // Radius of window corner rounding <- Intend to use
-                                 //   9-slice texture method -> It will disable the
-                                 //   WindowBorder atttributes
-  UIColor Colors[UITHEME_COUNT]; // Color Theme.
+  // Constructor & Destructor
+  Stack(unsigned int max_size) {
+    array_[max_size];
+  }
+  ~Stack() = default;
 
-  // Constructor & Methods
-  UIStyle();
+  // Methods
+  inline void Push(const T& value) { array_[index_++] = value; }
+  inline T Pop() { return array_[--index_]; }
+
+  [[nodiscard]] inline T& Peek() { return array_[index_ - 1]; }
+  [[nodiscard]] inline int Size() const { return index_; }
+  [[nodiscard]] inline bool IsEmpty() const { return index_ == 0; }
 
  private:
-  void SetDefaultColor();
+  T* array_;
+  int index_ = 0;
 };
 
 }  // namespace Ethan
 
-#endif  // ETHAN_UI_STYLE_H_
+#endif  // ETHAN_UTILS_DS_STACK_H_

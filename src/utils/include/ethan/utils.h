@@ -3,6 +3,7 @@
 
 namespace Ethan {}
 
+#include "utils/ds/stack.h"
 #include "utils/time/timer.h"
 #include "utils/misc/types.h"
 #include "utils/misc/macros.h"

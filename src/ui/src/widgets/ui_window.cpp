@@ -46,10 +46,12 @@ void UIWindow::Begin(const char* title,
   // TODO(Nghia Lam): IMGUI logic here
 
   // Render
-  RenderWindow(bounds);
-
-  if (~flags & UIFLAG_NOTITLE) RenderTitleBar(bounds);
+  // ---
+  // NOTE(Nghia Lam): This order does matter since our Renderer2D render
+  // everything like a stack
   if (~flags & UIFLAG_NOCLOSE) RenderCloseButton(bounds);
+  if (~flags & UIFLAG_NOTITLE) RenderTitleBar(bounds);
+  RenderWindow(bounds);
 }
 
 void UIWindow::End() {}
@@ -57,6 +59,7 @@ void UIWindow::End() {}
 //------------------------------------------------------------------------------
 // Drawing
 //------------------------------------------------------------------------------
+
 void UIWindow::RenderWindow(const UIRect<float>& window_bound) {
   UIStyle* style = UIManager::Instance()->GetStyle();
 
@@ -82,14 +85,11 @@ void UIWindow::RenderWindow(const UIRect<float>& window_bound) {
 
 void UIWindow::RenderTitleBar(const UIRect<float>& window_bound) {
   UIStyle* style = UIManager::Instance()->GetStyle();
-
-  // TODO(Nghia Lam): Drawing with z index
   Renderer2D::DrawQuad(window_bound.x,
                        window_bound.y,
                        window_bound.w,
                        style->WindowTitleHeight,
-                       ColorHexToRGBA(style->Colors[UITHEME_TITLEBG]),
-                       Render2DLayer::LAYER_1);
+                       ColorHexToRGBA(style->Colors[UITHEME_TITLEBG]));
 }
 
 // TODO(Nghia Lam): Support icons & draw this

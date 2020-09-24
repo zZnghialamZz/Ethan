@@ -15,7 +15,7 @@ out vec2 vtiling;
 out vec4 vcolor;
 
 void main() {
-		vcolor = vercolor;
+    vcolor = vercolor;
     vtiling = tiling;
     vtexcoord = texcoord;
     vtexindex = texindex;
