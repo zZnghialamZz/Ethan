@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_stack.h
+ * @file ui_font.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,31 +30,48 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UTILS_DS_STACK_H_
-#define ETHAN_UTILS_DS_STACK_H_
+#ifndef ETHAN_UI_TYPES_FONT_H_
+#define ETHAN_UI_TYPES_FONT_H_
+
+#include <ft2build.h>
+// NOTE(Nghia Lam): important files of freetype is included as macros
+#include FT_FREETYPE_H  // <freetype.h>
 
 namespace Ethan {
 
-template <typename T>
-class Stack {
+class UIFont {
  public:
+  //------------------------------------------------------------------------------
+  // Type definitions & structure
+  //------------------------------------------------------------------------------
+  struct FontAtlas {
+    u16 Width  = 0;
+    u16 Height = 0;
+  };
+
+  //------------------------------------------------------------------------------
   // Constructor & Destructor
-  Stack(unsigned int max_size) { array_[max_size]; }
-  ~Stack() = default;
+  //------------------------------------------------------------------------------
+  UIFont();
+  ~UIFont();
 
+  //------------------------------------------------------------------------------
   // Methods
-  inline void Push(const T& value) { array_[index_++] = value; }
-  inline T Pop() { return array_[--index_]; }
+  //------------------------------------------------------------------------------
+  [[nodiscard]] INLINE const FontAtlas& GetFontAtlas() const { return atlas_; }
 
-  [[nodiscard]] inline T& Peek() { return array_[index_ - 1]; }
-  [[nodiscard]] inline int Size() const { return index_; }
-  [[nodiscard]] inline bool IsEmpty() const { return index_ == 0; }
+  void LoadTTF(const char* file_path);
+  void ClearFont();
+  void BuildFontAtlas();
+  void ClearFontAtlas();
 
  private:
-  T* array_;
-  int index_ = 0;
+  FT_Library ft_;
+  FT_Face face_;
+  FontAtlas atlas_;
+  u8 size_;
 };
 
 }  // namespace Ethan
 
-#endif  // ETHAN_UTILS_DS_STACK_H_
+#endif  // ETHAN_UI_TYPES_FONT_H_

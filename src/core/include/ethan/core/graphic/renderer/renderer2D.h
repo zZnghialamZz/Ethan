@@ -68,8 +68,7 @@ struct Batch2DStorage {
   static const u32 MaxQuads    = 20000;
   static const u32 MaxIndices  = MaxQuads * 6;
   static const u32 MaxVertices = MaxQuads * 4;
-  static const u8 MaxTextures =
-      16;  // TODO(Nghia Lam): Detect this based on current machine driver
+  static const u8 MaxTextures  = 16;  // TODO(Nghia Lam): Auto detect this
 
   BatchVertex* VertexBatchBase;
   std::array<Shared<Texture2D>, MaxTextures> BatchTextures;
@@ -105,7 +104,7 @@ struct Renderer2DData {
 //------------------------------------------------------------------------------
 class Renderer2D {
  public:
-  // --- Methods
+
   static void Init();
   static void Shutdown();
 
@@ -114,7 +113,8 @@ class Renderer2D {
   static void BeginUI();
   static void EndUI();
 
-  // Primitives
+  // Quad
+  // ---
   static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
   static void DrawQuad(float x,
                        float y,
@@ -130,6 +130,8 @@ class Renderer2D {
                        const glm::vec4& color,
                        Render2DLayer layer = DEFAULT);
 
+  // Line
+  // ---
   static void DrawLine(float x0,
                        float y0,
                        float x1,
@@ -137,6 +139,12 @@ class Renderer2D {
                        const glm::vec4& color = glm::vec4(1.0f),
                        Render2DLayer layer    = DEFAULT);
 
+  // Font
+  // ---
+  static void DrawText();
+
+  // Texture
+  // ---
   static void DrawTexture(const Shared<Texture2D>& texture,
                           float x,
                           float y,

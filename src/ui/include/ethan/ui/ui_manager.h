@@ -45,6 +45,7 @@ class UIManager {
   [[nodiscard]] INLINE static UIManager* Instance() { return instance_; }
   [[nodiscard]] INLINE UIContext* GetContext() { return ctx_; }
   [[nodiscard]] INLINE UIStyle* GetStyle() { return ctx_->Style; }
+  [[nodiscard]] INLINE UIFont* GetFont() { return &ctx_->Font; }
 
  private:
   static UIManager* instance_;

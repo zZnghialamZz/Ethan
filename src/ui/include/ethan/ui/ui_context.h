@@ -33,6 +33,7 @@
 #ifndef ETHAN_UI_CONTEXT_H_
 #define ETHAN_UI_CONTEXT_H_
 
+#include "ui_font.h"
 #include "ui_style.h"
 
 namespace Ethan {
@@ -42,6 +43,7 @@ class UIContext {
   UIContext();
   ~UIContext();
 
+  UIFont Font;
   UIStyle* Style;
 
  private:

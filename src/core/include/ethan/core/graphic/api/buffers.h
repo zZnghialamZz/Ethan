@@ -36,103 +36,113 @@
 #include "shader.h"
 
 namespace Ethan {
-  
-  //------------------------------------------------------------------------------
-  // Type & Structure Definition
-  //------------------------------------------------------------------------------
-  enum class BufferDataUsage {
-    STATIC,
-    DYNAMIC
-  };
-  
-  //------------------------------------------------------------------------------
-  // Main Class Objects
-  //------------------------------------------------------------------------------
-  
-  //|
-  // BufferElement
-  class BufferElement {
-   public:
-    BufferElement(const std::string &name,
-                  ShaderData::DataType type,
-                  bool normalized = false);
-    virtual ~BufferElement();
-    
-    void SetOffset(size_t offset) { offset_ = offset; }
-    
-    [[nodiscard]] INLINE const std::string &GetName() const { return name_; }
-    [[nodiscard]] INLINE const size_t &GetOffset() const { return offset_; }
-    [[nodiscard]] INLINE const uint32_t &GetSize() const { return size_; }
-    [[nodiscard]] INLINE const ShaderData::DataType &GetType() const { return type_; }
-    [[nodiscard]] INLINE const bool &IsNormalized() const { return normalized_; }
-    [[nodiscard]] uint32_t GetComponentCount() const;
-    
-   private:
-    std::string name_;
-    uint32_t size_;
-    size_t offset_;
-    ShaderData::DataType type_;
-    bool normalized_;
-  };
-  
-  //|
-  // BufferLayout
-  class BufferLayout {
-   public:
-    BufferLayout();
-    explicit BufferLayout(const std::initializer_list<BufferElement> &elements);
-    virtual ~BufferLayout();
-    
-    void AddElement(const BufferElement& element);
-    
-    [[nodiscard]] INLINE uint32_t GetStride() const { return stride_; }
-    [[nodiscard]] INLINE const std::vector<BufferElement> &GetElements() const { return elements_; }
-    
-    INLINE std::vector<BufferElement>::iterator begin() { return elements_.begin(); }
-    INLINE std::vector<BufferElement>::iterator end() { return elements_.end(); }
-    [[nodiscard]] INLINE std::vector<BufferElement>::const_iterator begin() const { return elements_.begin(); }
-    [[nodiscard]] INLINE std::vector<BufferElement>::const_iterator end() const { return elements_.end(); }
-    
-   private:
-    std::vector<BufferElement> elements_;
-    uint32_t stride_;
-    
-    void Init();
-  };
-  
-  //|
-  // VertexBuffer
-  class VertexBuffer {
-   public:
-    virtual ~VertexBuffer() = default;
-    
-    virtual void Bind() const = 0;
-    virtual void UnBind() const = 0;
-    
-    [[nodiscard]] virtual const BufferLayout& GetLayout() const = 0;
-    virtual void SetLayout(const BufferLayout& layout) = 0;
-    virtual void SetData(const void* data, uint32_t size) = 0;
-    virtual void SetSubData(const void* data, uint32_t size, uint32_t offset) = 0;
-    
-    static Shared<VertexBuffer> Create(BufferDataUsage usage = BufferDataUsage::STATIC);
-    static Shared<VertexBuffer> Create(uint32_t size, BufferDataUsage usage = BufferDataUsage::STATIC);
-    static Shared<VertexBuffer> Create(const void* data, uint32_t size, BufferDataUsage usage = BufferDataUsage::STATIC);
-  };
-  
-  //|
-  // IndexBuffer
-  class IndexBuffer {
-   public:
-    virtual ~IndexBuffer() = default;
-    
-    virtual void Bind() const = 0;
-    virtual void UnBind() const = 0;
-    
-    [[nodiscard]] virtual uint32_t GetCount() const = 0;
-    
-    static Shared<IndexBuffer> Create(uint32_t* indices, uint32_t count);
-  };
-  
-}
 
-#endif // ETHAN_CORE_GRAPHIC_BUFFERS_H_
+//------------------------------------------------------------------------------
+// Type & Structure Definition
+//------------------------------------------------------------------------------
+enum class BufferDataUsage { STATIC, DYNAMIC };
+
+//------------------------------------------------------------------------------
+// Main Class Objects
+//------------------------------------------------------------------------------
+
+// BufferElement
+class BufferElement {
+ public:
+  BufferElement(const std::string& name,
+                ShaderData::DataType type,
+                bool normalized = false);
+  virtual ~BufferElement();
+
+  void SetOffset(size_t offset) { offset_ = offset; }
+
+  [[nodiscard]] uint32_t GetComponentCount() const;
+  [[nodiscard]] INLINE const std::string& GetName() const { return name_; }
+  [[nodiscard]] INLINE const size_t& GetOffset() const { return offset_; }
+  [[nodiscard]] INLINE const uint32_t& GetSize() const { return size_; }
+  [[nodiscard]] INLINE const bool& IsNormalized() const { return normalized_; }
+  [[nodiscard]] INLINE const ShaderData::DataType& GetType() const {
+    return type_;
+  }
+
+ private:
+  std::string name_;
+  uint32_t size_;
+  size_t offset_;
+  ShaderData::DataType type_;
+  bool normalized_;
+};
+
+// BufferLayout
+class BufferLayout {
+ public:
+  BufferLayout();
+  explicit BufferLayout(const std::initializer_list<BufferElement>& elements);
+  virtual ~BufferLayout();
+
+  void AddElement(const BufferElement& element);
+
+  [[nodiscard]] INLINE uint32_t GetStride() const { return stride_; }
+  [[nodiscard]] INLINE const std::vector<BufferElement>& GetElements() const {
+    return elements_;
+  }
+
+  INLINE std::vector<BufferElement>::iterator begin() {
+    return elements_.begin();
+  }
+  INLINE std::vector<BufferElement>::iterator end() { return elements_.end(); }
+  [[nodiscard]] INLINE std::vector<BufferElement>::const_iterator begin()
+      const {
+    return elements_.begin();
+  }
+  [[nodiscard]] INLINE std::vector<BufferElement>::const_iterator end() const {
+    return elements_.end();
+  }
+
+ private:
+  std::vector<BufferElement> elements_;
+  uint32_t stride_;
+
+  void Init();
+};
+
+// VertexBuffer
+class VertexBuffer {
+ public:
+  virtual ~VertexBuffer() = default;
+
+  virtual void Bind() const   = 0;
+  virtual void UnBind() const = 0;
+
+  [[nodiscard]] virtual const BufferLayout& GetLayout() const               = 0;
+  virtual void SetLayout(const BufferLayout& layout)                        = 0;
+  virtual void SetData(const void* data, uint32_t size)                     = 0;
+  virtual void SetSubData(const void* data, uint32_t size, uint32_t offset) = 0;
+
+  static Shared<VertexBuffer> Create(
+      BufferDataUsage usage = BufferDataUsage::STATIC);
+  static Shared<VertexBuffer> Create(
+      uint32_t size,
+      BufferDataUsage usage = BufferDataUsage::STATIC);
+  static Shared<VertexBuffer> Create(
+      const void* data,
+      uint32_t size,
+      BufferDataUsage usage = BufferDataUsage::STATIC);
+};
+
+// IndexBuffer
+class IndexBuffer {
+ public:
+  virtual ~IndexBuffer() = default;
+
+  virtual void Bind() const   = 0;
+  virtual void UnBind() const = 0;
+
+  [[nodiscard]] virtual uint32_t GetCount() const = 0;
+
+  static Shared<IndexBuffer> Create(uint32_t* indices, uint32_t count);
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_CORE_GRAPHIC_BUFFERS_H_

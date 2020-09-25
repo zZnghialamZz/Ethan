@@ -31,6 +31,7 @@
  */
 
 #include "ethan/core/graphic/api/buffers.h"
+
 #include "ethan/core/graphic/renderer/renderer.h"
 
 #ifdef __OPENGL_API__
@@ -38,152 +39,170 @@
 #endif
 
 namespace Ethan {
-  
-  //|
-  // VertexBuffer
-  Shared<VertexBuffer> VertexBuffer::Create(BufferDataUsage usage) {
-    switch (Renderer::GetAPI()) {
-      // None Renderer
-      case RendererAPI::None : {
-        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-        return nullptr;
-      }
-      // OpenGL Renderer
-      case RendererAPI::OpenGL : {
-#ifdef __OPENGL_API__
-        return MakeShared<GLVertexBuffer>(usage);
-#else
-        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
-#endif
-      }
+
+//------------------------------------------------------------------------------
+// VertexBuffer
+//------------------------------------------------------------------------------
+Shared<VertexBuffer> VertexBuffer::Create(BufferDataUsage usage) {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None: {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
     }
-    
-    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-    return nullptr;
-  }
-  
-  Shared<VertexBuffer> VertexBuffer::Create(uint32_t size, BufferDataUsage usage) {
-    switch (Renderer::GetAPI()) {
-      // None Renderer
-      case RendererAPI::None : {
-        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-        return nullptr;
-      }
-      // OpenGL Renderer
-      case RendererAPI::OpenGL : {
+    // OpenGL Renderer
+    case RendererAPI::OpenGL: {
 #ifdef __OPENGL_API__
-        return MakeShared<GLVertexBuffer>(size, usage);
+      return MakeShared<GLVertexBuffer>(usage);
 #else
-        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
-      }
     }
-    
-    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-    return nullptr;
   }
-  
-  Shared<VertexBuffer> VertexBuffer::Create(const void *data, uint32_t size, BufferDataUsage usage) {
-    switch (Renderer::GetAPI()) {
-      // None Renderer
-      case RendererAPI::None : {
-        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-        return nullptr;
-      }
-      // OpenGL Renderer
-      case RendererAPI::OpenGL : {
+
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
+}
+
+Shared<VertexBuffer> VertexBuffer::Create(uint32_t size,
+                                          BufferDataUsage usage) {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None: {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
+    }
+    // OpenGL Renderer
+    case RendererAPI::OpenGL: {
 #ifdef __OPENGL_API__
-        return MakeShared<GLVertexBuffer>(data, size, usage);
+      return MakeShared<GLVertexBuffer>(size, usage);
 #else
-        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
-      }
     }
-    
-    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-    return nullptr;
   }
-  
-  //|
-  // IndexBuffer
-  Shared<IndexBuffer> IndexBuffer::Create(uint32_t *indices, uint32_t count) {
-    switch (Renderer::GetAPI()) {
-      // None Renderer
-      case RendererAPI::None : {
-        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-        return nullptr;
-      }
-      // OpenGL Renderer
-      case RendererAPI::OpenGL : {
+
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
+}
+
+Shared<VertexBuffer> VertexBuffer::Create(const void* data,
+                                          uint32_t size,
+                                          BufferDataUsage usage) {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None: {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
+    }
+    // OpenGL Renderer
+    case RendererAPI::OpenGL: {
 #ifdef __OPENGL_API__
-        return MakeShared<GLIndexBuffer>(indices, count);
+      return MakeShared<GLVertexBuffer>(data, size, usage);
 #else
-        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
 #endif
-      }
     }
-    
-    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-    return nullptr;
   }
-  
-  //|
-  // BufferElement
-  BufferElement::BufferElement(const std::string &name,
-                               ShaderData::DataType type,
-                               bool normalized)
+
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// IndexBuffer
+//------------------------------------------------------------------------------
+Shared<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t count) {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None: {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
+    }
+    // OpenGL Renderer
+    case RendererAPI::OpenGL: {
+#ifdef __OPENGL_API__
+      return MakeShared<GLIndexBuffer>(indices, count);
+#else
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+    }
+  }
+
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
+}
+
+//|
+// BufferElement
+BufferElement::BufferElement(const std::string& name,
+                             ShaderData::DataType type,
+                             bool normalized)
     : name_(name)
     , size_(ShaderData::GetDataTypeSize(type))
     , offset_(0)
     , type_(type)
     , normalized_(normalized) {}
-  
-  BufferElement::~BufferElement() = default;
-  
-  uint32_t BufferElement::GetComponentCount() const {
-    switch (type_) {
-      case ShaderData::kNone:     return 0;
-      case ShaderData::kFloat:    return 1;
-      case ShaderData::kFloat2:   return 2;
-      case ShaderData::kFloat3:   return 3;
-      case ShaderData::kFloat4:   return 4;
-      case ShaderData::kMat3:     return 3; // 3 * float3
-      case ShaderData::kMat4:     return 4; // 4 * float4
-      case ShaderData::kInt:      return 1;
-      case ShaderData::kInt2:     return 2;
-      case ShaderData::kInt3:     return 3;
-      case ShaderData::kInt4:     return 4;
-      case ShaderData::kBool:     return 1;
-    }
-    
-    ETLOG_CORE_ERROR("Invalid ShaderData Type !");
-    return 0;
+
+BufferElement::~BufferElement() = default;
+
+uint32_t BufferElement::GetComponentCount() const {
+  switch (type_) {
+    case ShaderData::kNone:
+      return 0;
+    case ShaderData::kFloat:
+      return 1;
+    case ShaderData::kFloat2:
+      return 2;
+    case ShaderData::kFloat3:
+      return 3;
+    case ShaderData::kFloat4:
+      return 4;
+    case ShaderData::kMat3:
+      return 3;  // 3 * float3
+    case ShaderData::kMat4:
+      return 4;  // 4 * float4
+    case ShaderData::kInt:
+      return 1;
+    case ShaderData::kInt2:
+      return 2;
+    case ShaderData::kInt3:
+      return 3;
+    case ShaderData::kInt4:
+      return 4;
+    case ShaderData::kBool:
+      return 1;
   }
-  
-  //|
-  // BufferLayout
-  BufferLayout::BufferLayout() : stride_(0) {}
-  
-  BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)
+
+  ETLOG_CORE_ERROR("Invalid ShaderData Type !");
+  return 0;
+}
+
+//------------------------------------------------------------------------------
+// BufferLayout
+//------------------------------------------------------------------------------
+BufferLayout::BufferLayout() : stride_(0) {}
+
+BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)
     : elements_(elements), stride_(0) {
-    Init();
+  Init();
+}
+
+BufferLayout::~BufferLayout() = default;
+
+void BufferLayout::AddElement(const BufferElement& element) {
+  elements_.emplace_back(element);
+  elements_.back().SetOffset(stride_);
+  stride_ += elements_.back().GetSize();
+}
+
+void BufferLayout::Init() {
+  size_t offset = 0;
+  for (auto& element : elements_) {
+    element.SetOffset(offset);
+    offset += element.GetSize();
+    stride_ += element.GetSize();
   }
-  
-  BufferLayout::~BufferLayout() = default;
-  
-  void BufferLayout::AddElement(const BufferElement &element) {
-    elements_.emplace_back(element);
-    elements_.back().SetOffset(stride_);
-    stride_ += elements_.back().GetSize();
-  }
-  
-  void BufferLayout::Init() {
-    size_t offset = 0;
-    for(auto& element : elements_) {
-      element.SetOffset(offset);
-      offset += element.GetSize();
-      stride_ += element.GetSize();
-    }
-  }
-  
-} // namespace Ethan
+}
+
+}  // namespace Ethan

@@ -36,73 +36,77 @@
 #include "ethan/core/graphic/api/vertex_array.h"
 
 namespace Ethan {
-  
-  class Mesh {
-   public:
-    // Types Definitions ---
-    
-    enum class PrimitiveType : uint8_t {
-      NONE,
-      QUAD,
-      PLANE,
-      CUBE,
-      SPHERE,
-      PYRAMID,
-      CAPSULE,
-      CYLINDER
-    };
-    
-    struct Vertex {
-      glm::vec3 Position;
-      glm::vec2 Texcoord;
-      glm::vec4 VerColor;
-      
-      Vertex() 
+
+class Mesh {
+ public:
+
+  //------------------------------------------------------------------------------
+  // Definitions & Types
+  //------------------------------------------------------------------------------
+
+  enum class PrimitiveType : uint8_t {
+    NONE,
+    QUAD,
+    PLANE,
+    CUBE,
+    SPHERE,
+    PYRAMID,
+    CAPSULE,
+    CYLINDER
+  };
+
+  struct Vertex {
+    glm::vec3 Position;
+    glm::vec2 Texcoord;
+    glm::vec4 VerColor;
+
+    Vertex()
         : Position(glm::vec3(1.0f))
         , Texcoord(glm::vec2(0.0f))
         , VerColor(glm::vec4(1.0f)) {}
-      
-      bool operator==(const Vertex& other) const {
-        return 
-          Position == other.Position && 
-          Texcoord == other.Texcoord &&
-          VerColor == other.VerColor;
-      }
-    };
-    
-    // Class public modules ---
-    
-    Mesh();
-    Mesh(const Mesh& mesh);
-    explicit Mesh(const Shared<VertexArray>& vao);
-    
-    virtual ~Mesh();
-    
-    void Render(uint32_t index_count = 0); // 0: Render All
-    
-    [[nodiscard]] INLINE bool IsHide() const { return is_hide_; };
-    [[nodiscard]] INLINE const Shared<Ethan::VertexArray> &GetVertexArray() const { 
-      return mesh_vao_; 
-    }
-    
-    // Static method
-    static Shared<Mesh> CreatePrimitive(PrimitiveType type);
-    static Shared<Mesh> CreateQuad();
-    static Shared<Mesh> CreateQuad(float x, float y, float width, float height);
-    static Shared<Mesh> CreateQuad(const glm::vec2& position, const glm::vec2& size);
-    static Shared<Mesh> CreatePlane();
-    static Shared<Mesh> CreateCube();
-    static Shared<Mesh> CreateSphere();
-    static Shared<Mesh> CreatePyramid();
-    static Shared<Mesh> CreateCapsule();
-    static Shared<Mesh> CreateCylinder();
-    static Shared<Mesh> CreateBatchMesh();
-    
-   private:
-    Shared<VertexArray> mesh_vao_;
-    bool is_hide_;
-  };
-  
-} 
 
-#endif // ETHAN_CORE_GRAPHIC_MESH_H_
+    bool operator==(const Vertex& other) const {
+      return Position == other.Position && Texcoord == other.Texcoord &&
+             VerColor == other.VerColor;
+    }
+  };
+
+  //------------------------------------------------------------------------------
+  // Main Class Object
+  //------------------------------------------------------------------------------
+
+  Mesh();
+  Mesh(const Mesh& mesh);
+  explicit Mesh(const Shared<VertexArray>& vao);
+
+  virtual ~Mesh();
+
+  void Render(uint32_t index_count = 0);  // 0: Render All
+
+  [[nodiscard]] INLINE bool IsHide() const { return is_hide_; };
+  [[nodiscard]] INLINE const Shared<VertexArray>& GetVertexArray() const {
+    return mesh_vao_;
+  }
+
+  // Static method
+  static Shared<Mesh> CreatePrimitive(PrimitiveType type);
+  static Shared<Mesh> CreateQuad();
+  static Shared<Mesh> CreateQuad(float x, float y, float width, float height);
+  static Shared<Mesh> CreateQuad(const glm::vec2& position,
+                                 const glm::vec2& size);
+  static Shared<Mesh> CreatePlane();
+  static Shared<Mesh> CreateCube();
+  static Shared<Mesh> CreateSphere();
+  static Shared<Mesh> CreatePyramid();
+  static Shared<Mesh> CreateCapsule();
+  static Shared<Mesh> CreateCylinder();
+  static Shared<Mesh> CreateBatchMesh();
+
+ private:
+  Shared<VertexArray> mesh_vao_;
+  bool is_hide_;
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_CORE_GRAPHIC_MESH_H_

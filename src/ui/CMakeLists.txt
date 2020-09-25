@@ -1,6 +1,7 @@
 project(ET_UI)
 
 include_directories(
+    "../../extern/freetype/include"
     "../../extern/glm"
 
     "../utils/include"
@@ -16,6 +17,7 @@ set(SOURCES
     "${ET_UI_SRC_DIR}/ui_context.cpp"
     "${ET_UI_SRC_DIR}/ui_manager.cpp"
     "${ET_UI_SRC_DIR}/ui_style.cpp"
+    "${ET_UI_SRC_DIR}/ui_font.cpp"
     )
 set(HEADERS
     "${ET_UI_INCLUDE_DIR}/ethan/ui/widgets/ui_window.h"
@@ -30,6 +32,7 @@ set(HEADERS
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_widgets.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_macros.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_style.h"
+    "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_font.h"
 
     "${ET_UI_INCLUDE_DIR}/ethan/ui_pch.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui.h"
@@ -39,5 +42,5 @@ include_directories(${ET_UI_INCLUDE_DIR})
 
 add_library(ET_UI STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(ET_UI ET_UTILS glm)
+target_link_libraries(ET_UI ET_UTILS glm freetype)
 target_precompile_headers(ET_UI PUBLIC "$<$<COMPILE_LANGUAGE:CXX>:${ET_UI_INCLUDE_DIR}/ethan/ui_pch.h>")

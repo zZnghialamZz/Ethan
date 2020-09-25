@@ -34,7 +34,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "ethan/core/graphic/mesh/mesh.h"
 #include "ethan/core/graphic/renderer/renderer.h"
 
 namespace Ethan {

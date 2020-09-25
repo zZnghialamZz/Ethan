@@ -37,26 +37,26 @@
 #endif
 
 namespace Ethan {
-  
-  Shared<FrameBuffer> FrameBuffer::Create(FrameBufferProperty property) {
-    switch (Renderer::GetAPI()) {
-      // None Renderer
-      case RendererAPI::None : {
-        ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
-        return nullptr;
-      }
-      // OpenGL Renderer
-      case RendererAPI::OpenGL : {
-#ifdef __OPENGL_API__
-        return MakeShared<GLFrameBuffer>(property);
-#else
-        ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
-#endif
-      }
+
+Shared<FrameBuffer> FrameBuffer::Create(FrameBufferProperty property) {
+  switch (Renderer::GetAPI()) {
+    // None Renderer
+    case RendererAPI::None: {
+      ETLOG_CORE_CRITICAL("Not register any RendererAPI!");
+      return nullptr;
     }
-    
-    ETLOG_CORE_CRITICAL("Unknown Renderer API!");
-    return nullptr;
+    // OpenGL Renderer
+    case RendererAPI::OpenGL: {
+#ifdef __OPENGL_API__
+      return MakeShared<GLFrameBuffer>(property);
+#else
+      ETASSERT_CORE(false, "Settings and Build Config of RendererAPI WRONG !!");
+#endif
+    }
   }
-  
+
+  ETLOG_CORE_CRITICAL("Unknown Renderer API!");
+  return nullptr;
 }
+
+}  // namespace Ethan
