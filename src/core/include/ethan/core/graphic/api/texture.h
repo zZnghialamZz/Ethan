@@ -83,7 +83,7 @@ struct TextureProperty {
       , Format(format)
       , MinFilter(TextureFilter::LINEAR)
       , MaxFilter(TextureFilter::LINEAR)
-      , Wrap(TextureWrap::CLAMP) {}
+      , Wrap(TextureWrap::REPEAT) {}
 
   TextureProperty(TextureFormat format,
                   TextureFilter min_filter,
@@ -108,8 +108,8 @@ struct TextureProperty {
   TextureProperty(bool is_font)
       : IsFont(is_font)
       , Format(TextureFormat::RED)
-      , MinFilter(TextureFilter::LINEAR)
-      , MaxFilter(TextureFilter::LINEAR)
+      , MinFilter(TextureFilter::NEAREST)
+      , MaxFilter(TextureFilter::NEAREST)
       , Wrap(TextureWrap::CLAMP_TO_EDGE) {}
 };
 

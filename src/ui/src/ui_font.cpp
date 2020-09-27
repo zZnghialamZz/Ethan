@@ -46,8 +46,20 @@ UIFont::UIFont() {
   }
 
   // Load default font
-  size_ = 14;
-  LoadFont("res/fonts/JetBrainsMono-Regular.ttf");
+  size_ = 25;
+  LoadFont("res/fonts/Monogram_Extended.ttf");
+}
+
+UIFont::UIFont(const char* file_path, u8 size) {
+  // NOTE(Nghia Lam): Almost all the functions of freetype library will return 0
+  // if it fails.
+  if (FT_Init_FreeType(&ft_)) {
+    ETASSERT_CORE(false, "[UI] Cannot Init FreeType Font !!");
+  }
+
+  // Load default font
+  size_ = size;
+  LoadFont(file_path);
 }
 
 UIFont::~UIFont() {

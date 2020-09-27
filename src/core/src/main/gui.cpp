@@ -63,7 +63,7 @@ void GUI::UpdateUI() {
   {
 
   }
-  Renderer2D::DrawText("This is a test", *ui_manager_.GetFont(), 10, 100);
+  UIWindow::End();
 }
 
 void GUI::EventCall(Event& event) {}
