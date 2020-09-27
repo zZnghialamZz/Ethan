@@ -43,6 +43,7 @@ enum class TextureFormat : u8 {
   None = 0,
   DEPTH,
   ALPHA,
+  RED,
   RGB,
   RGB8,
   RGB16,
@@ -99,9 +100,14 @@ struct TextureProperty {
   // only. The RGB color itself is set to the same value for all the pixel. Then
   // to make sure every character is rendered exactly on pixel boundary, we
   // clamp the texture at the edge and enable linear interpolation.
+  // ---
+  // Changed:
+  //   - However, GL_ALPHA has been deprecated in OpenGL, we will replace it
+  //   with RED & modify the shader. <- Need to investigate this situation with
+  //   other lib api, maybe we only need this trick with OpenGL but not others.
   TextureProperty(bool is_font)
       : IsFont(is_font)
-      , Format(TextureFormat::ALPHA)
+      , Format(TextureFormat::RED)
       , MinFilter(TextureFilter::LINEAR)
       , MaxFilter(TextureFilter::LINEAR)
       , Wrap(TextureWrap::CLAMP_TO_EDGE) {}
@@ -116,8 +122,13 @@ class Texture {
  public:
   virtual ~Texture() = default;
 
-  virtual void Bind(u16 slot = 0) const  = 0;
-  virtual void SetData(void* data) const = 0;
+  virtual void Bind(u16 slot = 0) const     = 0;
+  virtual void SetData(void* data) const    = 0;
+  virtual void SetSubData(void* data,
+                          int xoffset,
+                          int yoffset,
+                          int width,
+                          int height) const = 0;
 
   virtual bool operator==(const Texture& texture) const = 0;
 

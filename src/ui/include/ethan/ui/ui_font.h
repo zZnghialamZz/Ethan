@@ -39,12 +39,60 @@
 
 namespace Ethan {
 
+// Forward declaration
+class Texture2D;
+
 class UIFont {
  public:
   //------------------------------------------------------------------------------
   // Type definitions & structure
   //------------------------------------------------------------------------------
+
+  // Glyph metrics:
+  // --------------
+  //
+  //                       xmin                     xmax
+  //                        |                         |
+  //                        |<-------- width -------->|
+  //                        |                         |
+  //              |         +-------------------------+----------------- ymax
+  //              |         |    ggggggggg   ggggg    |     ^        ^
+  //              |         |   g:::::::::ggg::::g    |     |        |
+  //              |         |  g:::::::::::::::::g    |     |        |
+  //              |         | g::::::ggggg::::::gg    |     |        |
+  //              |         | g:::::g     g:::::g     |     |        |
+  //    offsetX  -|-------->| g:::::g     g:::::g     |  offsetY     |
+  //              |         | g:::::g     g:::::g     |     |        |
+  //              |         | g::::::g    g:::::g     |     |        |
+  //              |         | g:::::::ggggg:::::g     |     |        |
+  //              |         |  g::::::::::::::::g     |     |      height
+  //              |         |   gg::::::::::::::g     |     |        |
+  //  baseline ---*---------|---- gggggggg::::::g-----*--------      |
+  //            / |         |             g:::::g     |              |
+  //     origin   |         | gggggg      g:::::g     |              |
+  //              |         | g:::::gg   gg:::::g     |              |
+  //              |         |  g::::::ggg:::::::g     |              |
+  //              |         |   gg:::::::::::::g      |              |
+  //              |         |     ggg::::::ggg        |              |
+  //              |         |         gggggg          |              v
+  //              |         +-------------------------+----------------- ymin
+  //              |                                   |
+  //              |------------- advanceX ----------->|
+
+  struct GlyphInfo {
+    UIFloat ax;  // advance x
+    UIFloat ay;  // advance y
+    UIFloat bw;  // bitmap width
+    UIFloat bh;  // bitmap height
+    UIFloat bl;  // bitmap left (xmin)
+    UIFloat bt;  // bitmap top (ymax)
+    UIFloat tx;  // offset x in texture atlas coordinate
+    UIFloat ty;  // offset y in texture atlas coordinate
+  };
+
   struct FontAtlas {
+    Shared<Texture2D> Texture;
+    GlyphInfo Char[128];
     u16 Width  = 0;
     u16 Height = 0;
   };

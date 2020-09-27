@@ -33,44 +33,54 @@
 #ifndef ETHAN_LIBS_GL_TEXTURE_H_
 #define ETHAN_LIBS_GL_TEXTURE_H_
 
-#include "ethan/core.h"
-
 #include <glad/glad.h>
 
-namespace Ethan {
-  
-  class GLTexture2D : public Texture2D {
-   public:
-    GLTexture2D(u16 width, u16 height, const TextureProperty& property);
-    explicit GLTexture2D(const std::string& path, const TextureProperty& property);
-    virtual ~GLTexture2D();
-    
-    void Bind(u16 slot = 0) const override;
-    void SetData(void *data) const override;
-    
-    bool operator==(const Texture& texture) const override;
-    
-    [[nodiscard]] INLINE TextureFormat GetFormat() const override { return property_.Format; }
-    [[nodiscard]] INLINE const u32 GetID() const override { return textureID_; }
-    [[nodiscard]] INLINE const u16 GetWidth() const override { return width_; }
-    [[nodiscard]] INLINE const u16 GetHeight() const override { return height_; }
-    [[nodiscard]] INLINE const std::string &GetPath() const override { return path_; }
-    
-   private:
-    // Private Members ---
-    
-    u32 textureID_;
-    std::string path_;
-    u16 width_;
-    u16 height_;
-    
-    TextureProperty property_;
-    
-    // Private Methods ---
-    
-    void LoadTextureToGPU();
-  };
-  
-}
+#include "ethan/core.h"
 
-#endif // ETHAN_LIBS_GL_TEXTURE_H_
+namespace Ethan {
+
+class GLTexture2D : public Texture2D {
+ public:
+  GLTexture2D(u16 width, u16 height, const TextureProperty& property);
+  explicit GLTexture2D(const std::string& path,
+                       const TextureProperty& property);
+  virtual ~GLTexture2D();
+
+  void Bind(u16 slot = 0) const override;
+  void SetData(void* data) const override;
+  void SetSubData(void* data,
+                  int xoffset,
+                  int yoffset,
+                  int width,
+                  int height) const override;
+
+  bool operator==(const Texture& texture) const override;
+
+  [[nodiscard]] INLINE const u32 GetID() const override { return textureID_; }
+  [[nodiscard]] INLINE const u16 GetWidth() const override { return width_; }
+  [[nodiscard]] INLINE const u16 GetHeight() const override { return height_; }
+  [[nodiscard]] INLINE const std::string& GetPath() const override {
+    return path_;
+  }
+  [[nodiscard]] INLINE TextureFormat GetFormat() const override {
+    return property_.Format;
+  }
+
+ private:
+  // Private Members ---
+
+  u32 textureID_;
+  std::string path_;
+  u16 width_;
+  u16 height_;
+
+  TextureProperty property_;
+
+  // Private Methods ---
+
+  void LoadTextureToGPU();
+};
+
+}  // namespace Ethan
+
+#endif  // ETHAN_LIBS_GL_TEXTURE_H_

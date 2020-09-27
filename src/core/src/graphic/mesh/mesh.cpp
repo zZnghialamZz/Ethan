@@ -161,6 +161,7 @@ Shared<Mesh> Mesh::CreateBatchMesh() {
   layout.AddElement({"vercolor", ShaderData::DataType::kFloat4});
   layout.AddElement({"texindex", ShaderData::DataType::kFloat});
   layout.AddElement({"tiling", ShaderData::DataType::kFloat2});
+  layout.AddElement({"isfont", ShaderData::DataType::kFloat});
 
   // NOTE(Nghia Lam): ertexBuffer
   Shared<VertexBuffer> batch_vb = VertexBuffer::Create(

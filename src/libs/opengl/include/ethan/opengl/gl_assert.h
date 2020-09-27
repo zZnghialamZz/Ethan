@@ -41,11 +41,11 @@
   GLLogCall(#x);
 
 namespace Ethan {
-  
-  void GLClearError();
-  
-  void GLLogCall(const char *function);
-  
-}
 
-#endif // ETHAN_LIBS_GL_ASSERT_H_
+void GLClearError();
+
+void GLLogCall(const char* function);
+
+}  // namespace Ethan
+
+#endif  // ETHAN_LIBS_GL_ASSERT_H_

@@ -37,6 +37,7 @@
 #include "ethan/core/graphic/api/vertex_array.h"
 #include "ethan/core/graphic/camera/camera.h"
 #include "ethan/core/graphic/mesh/mesh.h"
+#include "ethan/ui/ui_font.h"
 
 namespace Ethan {
 
@@ -61,7 +62,14 @@ struct BatchVertex : public Mesh::Vertex {
   float TextureIndex;
   glm::vec2 TilingFactor;
 
-  BatchVertex() : Vertex(), TextureIndex(0.0f), TilingFactor(glm::vec2(1.0f)) {}
+  // TODO(Nghia Lam): Consider using 2 shaders for this?
+  float IsFont;
+
+  BatchVertex()
+      : Vertex()
+      , TextureIndex(0.0f)
+      , TilingFactor(glm::vec2(1.0f))
+      , IsFont(0.0f) {}
 };
 
 struct Batch2DStorage {
@@ -104,7 +112,6 @@ struct Renderer2DData {
 //------------------------------------------------------------------------------
 class Renderer2D {
  public:
-
   static void Init();
   static void Shutdown();
 
@@ -141,7 +148,12 @@ class Renderer2D {
 
   // Font
   // ---
-  static void DrawText();
+  static void DrawText(const char* text,
+                       const UIFont& font,
+                       float x,
+                       float y,
+                       Render2DLayer layer   = DEFAULT,
+                       const glm::vec4& tint = glm::vec4(1.0f));
 
   // Texture
   // ---
@@ -190,6 +202,11 @@ class Renderer2D {
  private:
   static Renderer2DData data_;
 
+  static void SetDataText(const char* text,
+                          const glm::mat4& transform,
+                          const UIFont& font,
+                          float texture_index,
+                          const glm::vec4& color);
   static void SetDataQuad(const glm::mat4& transform,
                           float texture_index,
                           float tiling_u,

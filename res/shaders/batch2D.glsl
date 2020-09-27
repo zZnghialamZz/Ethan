@@ -6,6 +6,7 @@ layout(location = 1) in vec2 texcoord;
 layout(location = 2) in vec4 vercolor;
 layout(location = 3) in float texindex;
 layout(location = 4) in vec2 tiling;
+layout(location = 5) in float isfont;
 
 uniform mat4 uEthan_ViewProjection;
 
@@ -13,8 +14,10 @@ out float vtexindex;
 out vec2 vtexcoord;
 out vec2 vtiling;
 out vec4 vcolor;
+out float vfont;
 
 void main() {
+    vfont = isfont;
     vcolor = vercolor;
     vtiling = tiling;
     vtexcoord = texcoord;
@@ -31,10 +34,17 @@ in float vtexindex;
 in vec2 vtexcoord;
 in vec2 vtiling;
 in vec4 vcolor;
+in float vfont;
 
 uniform sampler2D u_Textures[16];
 uniform vec2 u_TilingFactor;
 
 void main() {
-    color = texture(u_Textures[int(vtexindex)], vtexcoord * vtiling) * vcolor;
+    if (vfont == 1) {
+        vec4 sampled = vec4(1.0, 1.0, 1.0, texture(u_Textures[int(vtexindex)], vtexcoord).r);
+        color = vcolor * sampled;
+    }
+    else {
+        color = texture(u_Textures[int(vtexindex)], vtexcoord * vtiling) * vcolor;
+    }
 }

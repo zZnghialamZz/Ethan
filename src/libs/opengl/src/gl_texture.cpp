@@ -52,6 +52,8 @@ GLenum ConvertToGLFormat(TextureFormat format) {
       return GL_DEPTH_STENCIL;
     case TextureFormat::ALPHA:
       return GL_ALPHA;
+    case TextureFormat::RED:
+      return GL_RED;
     case TextureFormat::RGB:
     case TextureFormat::RGB8:
     case TextureFormat::RGB16:
@@ -77,6 +79,8 @@ GLenum ConvertToGLInternalFormat(TextureFormat format) {
       return GL_DEPTH24_STENCIL8;
     case TextureFormat::ALPHA:
       return GL_ALPHA;
+    case TextureFormat::RED:
+      return GL_RED;
     case TextureFormat::RGB:
       return GL_SRGB;
     case TextureFormat::RGB8:
@@ -247,8 +251,7 @@ void GLTexture2D::LoadTextureToGPU() {
   // most of the texture have a width that can be divided by 4 and/or use 4
   // bytes per pixel. The glyph images are in a 1-byte greyscale format though,
   // and can have any possible width.
-  if (property_.IsFont)
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  if (property_.IsFont) glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 
 void GLTexture2D::SetData(void* data) const {
@@ -263,6 +266,24 @@ void GLTexture2D::SetData(void* data) const {
                           ? GL_UNSIGNED_BYTE
                           : GL_UNSIGNED_INT_24_8,
                       data));
+}
+
+void GLTexture2D::SetSubData(void* data,
+                             int xoffset,
+                             int yoffset,
+                             int width,
+                             int height) const {
+  GLCALL(glTexSubImage2D(GL_TEXTURE_2D,
+                         0,
+                         xoffset,
+                         yoffset,
+                         width,
+                         height,
+                         ConvertToGLFormat(property_.Format),
+                         (property_.Format != TextureFormat::DEPTH)
+                             ? GL_UNSIGNED_BYTE
+                             : GL_UNSIGNED_INT_24_8,
+                         data));
 }
 
 }  // namespace Ethan

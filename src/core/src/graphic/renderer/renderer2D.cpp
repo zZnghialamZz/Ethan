@@ -117,8 +117,6 @@ void Renderer2D::End() {
 
   // NOTE(Nghia Lam): Batch Rendering currently only use 1 vertex buffers to
   // store all info
-  // TODO(Nghia Lam): Investigate any more situation where this might become an
-  // issue.
   data_.BatchMesh->GetVertexArray()->GetVertexBuffers()[0]->SetSubData(
       data_.Storage.VertexBatchBase,
       data_size,
@@ -155,6 +153,8 @@ void Renderer2D::PreDrawing() {
   if (data_.CurrentIndiceCount >= data_.Storage.MaxIndices) ExecuteAndReset();
 }
 
+// Quad
+// ---
 void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
   PreDrawing();
   SetDataQuad(transform, 0.0f, 1.0f, 1.0f, color);
@@ -193,6 +193,8 @@ void Renderer2D::DrawQuad(float x,
   SetDataQuad(transform, 0.0f, 1.0f, 1.0f, color);
 }
 
+// Line
+// ---
 void Renderer2D::DrawLine(float x0,
                           float y0,
                           float x1,
@@ -202,6 +204,28 @@ void Renderer2D::DrawLine(float x0,
   PreDrawing();
 }
 
+// Font
+// ---
+void Renderer2D::DrawText(const char* text,
+                          const UIFont& font,
+                          float x,
+                          float y,
+                          Render2DLayer layer,
+                          const glm::vec4& tint) {
+  // TODO(Nghia Lam): Profile here.
+
+  PreDrawing();
+  glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, (float)layer}) *
+                        glm::scale(glm::mat4(1.0f), {1.0f, 1.0f, 1.0f});
+  SetDataText(text,
+              transform,
+              font,
+              GetTextureIndexInBatch(font.GetFontAtlas().Texture),
+              tint);
+}
+
+// Texture
+// ---
 void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
                              float x,
                              float y,
@@ -311,12 +335,70 @@ void Renderer2D::SetDataQuad(const glm::mat4& transform,
     data_.CurrentVertex->VerColor     = color;
     data_.CurrentVertex->TextureIndex = texture_index;
     data_.CurrentVertex->TilingFactor = {tiling_u, tiling_v};
+    data_.CurrentVertex->IsFont       = 0;
     data_.CurrentVertex++;  // Next Vertex
   }
 
   data_.CurrentIndiceCount += 6;  // Has drawn 2 triangle <=> 6 indices
 
   ++data_.Stats.QuadCount;
+}
+
+void Renderer2D::SetDataText(const char* text,
+                             const glm::mat4& transform,
+                             const UIFont& font,
+                             float texture_index,
+                             const glm::vec4& color) {
+  float x = 0;
+  float y = 0;
+  for (const u8* p = (const u8*)text; *p; p++) {
+    const UIFont::FontAtlas& atlas_ = font.GetFontAtlas();
+
+    // TODO(Nghia Lam): Anyway faster than this?
+    float charx  = x + atlas_.Char[*p].bl;
+    float chary  = y - atlas_.Char[*p].bt;
+    float charw  = atlas_.Char[*p].bw;
+    float charh  = atlas_.Char[*p].bh;
+    float coordx = atlas_.Char[*p].tx;
+    float coordy = atlas_.Char[*p].ty;
+    float coordw = atlas_.Char[*p].bw / atlas_.Width;
+    float coordh = atlas_.Char[*p].bh / atlas_.Height;
+
+    // Advance to the start of the next character
+    x += atlas_.Char[*p].ax;
+    y += atlas_.Char[*p].ay;
+
+    // NOTE(Nghia Lam): Update all vertices attributes
+    // The position of Quad Vertices look like this:
+    //   3 - 2
+    //  /   /
+    // 0 - 1
+    constexpr uint8_t vertex_count     = 4;
+    glm::vec4 vertex_pos[vertex_count] = {
+        {charx, chary, 0.0f, 1.0f},
+        {charx + charw, chary, 0.0f, 1.0f},
+        {charx + charw, chary + charh, 0.0f, 1.0f},
+        {charx, chary + charh, 0.0f, 1.0f}};
+    glm::vec2 texture_coords[vertex_count] = {
+        {coordx, coordy},
+        {coordx + coordw, coordy},
+        {coordx + coordw, coordy + coordh},
+        {coordx, coordy + coordh}};
+
+    for (uint8_t i = 0; i < vertex_count; ++i) {
+      data_.CurrentVertex->Position     = transform * vertex_pos[i];
+      data_.CurrentVertex->Texcoord     = texture_coords[i];
+      data_.CurrentVertex->VerColor     = color;
+      data_.CurrentVertex->TextureIndex = texture_index;
+      data_.CurrentVertex->TilingFactor = {1.0f, 1.0f};
+      data_.CurrentVertex->IsFont       = 1;
+      data_.CurrentVertex++;  // Next Vertex
+    }
+
+    data_.CurrentIndiceCount += 6;  // Has drawn 2 triangle <=> 6 indices
+
+    ++data_.Stats.QuadCount;
+  }
 }
 
 void Renderer2D::ResetStats() {

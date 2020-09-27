@@ -42,7 +42,7 @@ GUI::GUI(const char* name) : Process(name) {}
 
 void GUI::BeginUI() {
   RendererCommand::Clear();
-  RendererCommand::SetClearColor(ColorHexToRGBA(COLORWHITE));
+  RendererCommand::SetClearColor(ColorHexToRGBA(COLORGRAY));
 
   Renderer2D::BeginUI();
 }
@@ -64,6 +64,8 @@ void GUI::UpdateUI() {
 
   }
   UIWindow::End();
+
+  Renderer2D::DrawText("This is a test", *ui_manager_.GetFont(), 10, 100);
 }
 
 void GUI::EventCall(Event& event) {}
