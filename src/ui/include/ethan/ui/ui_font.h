@@ -107,17 +107,23 @@ class UIFont {
   // Methods
   //------------------------------------------------------------------------------
   [[nodiscard]] INLINE const FontAtlas& GetFontAtlas() const { return atlas_; }
+  [[nodiscard]] INLINE const u8& GetSize() const { return size_; }
 
-  void LoadTTF(const char* file_path);
+  void LoadFont(const char* file_path);
   void ClearFont();
+  void ResizeFont(u8 size);
   void BuildFontAtlas();
   void ClearFontAtlas();
 
  private:
+  // Private members
   FT_Library ft_;
   FT_Face face_;
   FontAtlas atlas_;
   u8 size_;
+
+  // Private methods
+  void LoadTTF(const char* file_path);
 };
 
 }  // namespace Ethan

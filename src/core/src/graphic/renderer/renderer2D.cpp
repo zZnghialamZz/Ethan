@@ -215,8 +215,7 @@ void Renderer2D::DrawText(const char* text,
   // TODO(Nghia Lam): Profile here.
 
   PreDrawing();
-  glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, (float)layer}) *
-                        glm::scale(glm::mat4(1.0f), {1.0f, 1.0f, 1.0f});
+  glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, (float)layer});
   SetDataText(text,
               transform,
               font,
@@ -354,7 +353,7 @@ void Renderer2D::SetDataText(const char* text,
   for (const u8* p = (const u8*)text; *p; p++) {
     const UIFont::FontAtlas& atlas_ = font.GetFontAtlas();
 
-    // TODO(Nghia Lam): Anyway faster than this?
+    // TODO(Nghia Lam): Any other way faster than this?
     float charx  = x + atlas_.Char[*p].bl;
     float chary  = y - atlas_.Char[*p].bt;
     float charw  = atlas_.Char[*p].bw;

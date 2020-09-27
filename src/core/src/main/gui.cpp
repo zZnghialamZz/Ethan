@@ -63,8 +63,6 @@ void GUI::UpdateUI() {
   {
 
   }
-  UIWindow::End();
-
   Renderer2D::DrawText("This is a test", *ui_manager_.GetFont(), 10, 100);
 }
 

@@ -46,10 +46,8 @@ UIFont::UIFont() {
   }
 
   // Load default font
-  size_ = 20;
-  LoadTTF("res/fonts/JetBrainsMono-Regular.ttf");
-  ClearFontAtlas();
-  BuildFontAtlas();
+  size_ = 14;
+  LoadFont("res/fonts/JetBrainsMono-Regular.ttf");
 }
 
 UIFont::~UIFont() {
@@ -57,13 +55,29 @@ UIFont::~UIFont() {
   FT_Done_FreeType(ft_);
 }
 
-void UIFont::ClearFont() { FT_Done_Face(face_); }
-
 void UIFont::LoadTTF(const char* file_path) {
   // NOTE(Nghia Lam): 0 is the face index <- should we support multiple faces?
   if (FT_New_Face(ft_, file_path, 0, &face_)) {
     ETLOG_CORE_ERROR("[UI] Cannot load font: {0} !!", file_path);
   }
+}
+
+void UIFont::LoadFont(const char* file_path) {
+  if (atlas_.Width != 0 && atlas_.Height != 0) {
+    ClearFont();
+    ClearFontAtlas();
+  }
+
+  LoadTTF(file_path);
+  BuildFontAtlas();
+}
+
+void UIFont::ClearFont() { FT_Done_Face(face_); }
+
+void UIFont::ResizeFont(u8 size) {
+  size_ = size;
+  ClearFontAtlas();
+  BuildFontAtlas();
 }
 
 void UIFont::BuildFontAtlas() {
@@ -126,6 +140,7 @@ void UIFont::BuildFontAtlas() {
       offset_x_ = 0;
       row_h_    = 0;
     }
+
     atlas_.Texture->SetSubData(g->bitmap.buffer,
                                offset_x_,
                                offset_y_,
@@ -143,6 +158,14 @@ void UIFont::BuildFontAtlas() {
     row_h_ = FIND_MAX(row_h_, g->bitmap.rows);
     offset_x_ += g->bitmap.width + 1;
   }
+
+  // Cleanup after build atlas
+  // ---
+  // NOTE(Nghia Lam): Currently I am disabling this because we need to store
+  // this font data for rebuilding font atlas when resizing. Any better way for
+  // font resize?
+
+  // ClearFont();
 
   ETLOG_CORE_INFO(
       "[Font] Generate a font texture atlas with: {0} w, {1} h ({2} kb)",
