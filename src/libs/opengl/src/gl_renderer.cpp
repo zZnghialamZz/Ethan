@@ -31,31 +31,36 @@
  */
 
 #include "ethan/opengl/gl_renderer.h"
-#include "ethan/opengl/gl_assert.h"
 
 #include <glad/glad.h>
 
+#include "ethan/opengl/gl_assert.h"
+
 namespace Ethan {
-  
-  void GLRendererAPI::Init() {
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  }
-  
-  void GLRendererAPI::Clear() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  }
-  
-  void GLRendererAPI::SetClearColor(const glm::vec4 &color) {
-    GLCALL(glClearColor(color.r, color.g, color.b, color.a));
-  }
-  
-  void GLRendererAPI::DrawIndexed(const Shared<VertexArray> &vertex_array, const u32 indice_count) {
-    
-    u32 count = indice_count  ? indice_count  : vertex_array->GetIndexBuffer()->GetCount();
-    
-    GLCALL(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr));
-  }
-  
+
+void GLRendererAPI::Init() {
+  // Depth Sorting
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_ALWAYS);
+  // Enable Alpha
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
+
+void GLRendererAPI::Clear() {
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void GLRendererAPI::SetClearColor(const glm::vec4& color) {
+  GLCALL(glClearColor(color.r, color.g, color.b, color.a));
+}
+
+void GLRendererAPI::DrawIndexed(const Shared<VertexArray>& vertex_array,
+                                const u32 indice_count) {
+  u32 count =
+      indice_count ? indice_count : vertex_array->GetIndexBuffer()->GetCount();
+
+  GLCALL(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr));
+}
+
+}  // namespace Ethan

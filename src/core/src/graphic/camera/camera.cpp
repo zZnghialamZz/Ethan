@@ -108,8 +108,8 @@ void Camera::UpdateProjectionMatrix() {
                                       viewport_.x * zoom_,
                                       viewport_.y * zoom_,
                                       0.0f,
-                                      -1.0f,  // Should we support this depth ?
-                                      1.0f);
+                                      -100.0f,  // Should we support this depth ?
+                                      100.0f);
       break;
     }
     case CameraType::PERSPECTIVE: {

@@ -50,29 +50,13 @@ using UIUint8 = u8;         // alias for unsigned char
 using UIVec2  = glm::vec2;  // alias for math <- TODO(Nghia Lam): My math lib ..
 using UIVec3  = glm::vec3;  // alias for math <- TODO(Nghia Lam): My math lib ..
 using UIPoint = UIVec2;     // Re-alias for readability in some drawing cases
-using UIFlags = int;        // -> enum of UIFLAGs // used in UIWindow::Begin()
-using UIType  = UIUint8;    // -> enum of UIWIDGETs // used in every widgets
+using UIType  = UIUint8;    // -> enum of UIWIDGETs     // used in every widgets
+using UIWindowFlags = int;  // -> enum of UIWINDOWFLAGs // used in UIWindow
 
 //------------------------------------------------------------------------------
 // UI Configurations
 // NOTE(Nghia Lam): Using a bunch of enums for predefine data
 //------------------------------------------------------------------------------
-
-/**
- * UI Widget Flags -> Consider to change this into per widgets
- */
-enum {
-  UIFLAG_NONE        = 0,
-  UIFLAG_HIDDEN      = BIT(0),
-  UIFLAG_SELECTED    = BIT(1),
-  UIFLAG_DISABLED    = BIT(2),
-  UIFLAG_FOCUSED     = BIT(3),
-  UIFLAG_ALIGNCENTER = BIT(4),
-  UIFLAG_ALIGNLEFT   = BIT(5),
-  UIFLAG_ALIGNRIGHT  = BIT(6),
-  UIFLAG_NOTITLE     = BIT(7),
-  UIFLAG_NOCLOSE     = BIT(8),
-};
 
 /**
  * UI Widget Types

@@ -42,7 +42,7 @@ GUI::GUI(const char* name) : Process(name) {}
 
 void GUI::BeginUI() {
   RendererCommand::Clear();
-  RendererCommand::SetClearColor(ColorHexToRGBA(COLORGRAY));
+  RendererCommand::SetClearColor(ColorHexToRGBA(COLORPINK));
 
   Renderer2D::BeginUI();
 }
@@ -59,7 +59,7 @@ void GUI::Update() {}
 
 void GUI::UpdateUI() {
   // Testing purpose <-- TO BE REMOVED
-  UIWindow::Begin("Test Window", UIRect(400.0f, 200.0f, 800.0f, 400.0f), UIFLAG_NOCLOSE);
+  UIWindow::Begin("Test Window", UIRect(400.0f, 200.0f, 800.0f, 400.0f), 0);
   {
 
   }

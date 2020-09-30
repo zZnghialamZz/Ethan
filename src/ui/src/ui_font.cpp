@@ -48,6 +48,8 @@ UIFont::UIFont() {
   // Load default font
   size_ = 25;
   LoadFont("res/fonts/Monogram_Extended.ttf");
+  // size_ = 14;
+  // LoadFont("res/fonts/JetBrainsMono-Regular.ttf");
 }
 
 UIFont::UIFont(const char* file_path, u8 size) {

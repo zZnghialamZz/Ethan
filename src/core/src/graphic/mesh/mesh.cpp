@@ -163,7 +163,7 @@ Shared<Mesh> Mesh::CreateBatchMesh() {
   layout.AddElement({"tiling", ShaderData::DataType::kFloat2});
   layout.AddElement({"isfont", ShaderData::DataType::kFloat});
 
-  // NOTE(Nghia Lam): ertexBuffer
+  // NOTE(Nghia Lam): VertexBuffer
   Shared<VertexBuffer> batch_vb = VertexBuffer::Create(
       sizeof(BatchVertex) * Renderer2D::GetData().Storage.MaxVertices,
       BufferDataUsage::DYNAMIC);
@@ -174,8 +174,7 @@ Shared<Mesh> Mesh::CreateBatchMesh() {
   uint32_t* indices = new uint32_t[Renderer2D::GetData().Storage.MaxIndices];
   uint32_t offset   = 0;
 
-  // TODO(Nghia Lam): This may be a bit slow, consider some alter way just need
-  // O(logn)
+  // TODO(Nghia Lam): This is a bit slow, consider some way just need O(logn)
   for (uint32_t i = 0; i < Renderer2D::GetData().Storage.MaxIndices; i += 6) {
     // NOTE(Nghia Lam): Render Quad based on two triangles,
     // which depends on index of vertex.

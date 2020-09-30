@@ -42,16 +42,20 @@ namespace Ethan {
 //------------------------------------------------------------------------------
 void UIWindow::Begin(const char* title,
                      const UIRect<float>& bounds,
-                     UIFlags flags) {
-  // TODO(Nghia Lam): IMGUI logic here
+                     UIWindowFlags flags) {
 
-  // Render
+  // Render -> Need to relocate to somewhere ??
   // ---
-  // NOTE(Nghia Lam): This order does matter since our Renderer2D render
-  // everything like a stack
-  if (~flags & UIFLAG_NOCLOSE) RenderCloseButton(bounds);
-  if (~flags & UIFLAG_NOTITLE) RenderTitleBar(bounds);
+  // NOTE(Nghia Lam): This order does matter
   RenderWindow(bounds);
+  if (~flags & UIWINDOWFLAG_NOTITLE) {
+    RenderTitleBar(bounds, title);
+    if (~flags & UIWINDOWFLAG_NOCLOSE) RenderCloseButton(bounds);
+  }
+  if (~flags & UIWINDOWFLAG_NOSCROLL)
+    RenderScrollbar(bounds);
+
+  // TODO(Nghia Lam): IMGUI logic here
 }
 
 void UIWindow::End() {}
@@ -69,30 +73,71 @@ void UIWindow::RenderWindow(const UIRect<float>& window_bound) {
   //  - Cannot config rounding value.
   //  - Hard to work with custom style. (light/dark, etc..)
   if (!style->WindowRounding) {
-    Renderer2D::DrawQuad(window_bound.x,
-                         window_bound.y,
-                         window_bound.w,
-                         window_bound.h,
-                         ColorHexToRGBA(style->Colors[UITHEME_WINDOWBG]));
     // Draw border
     Renderer2D::DrawQuad(window_bound.x - style->WindowBorder,
                          window_bound.y - style->WindowBorder,
                          window_bound.w + style->WindowBorder * 2,
                          window_bound.h + style->WindowBorder * 2,
                          ColorHexToRGBA(style->Colors[UITHEME_BORDER]));
+
+    Renderer2D::DrawQuad(window_bound.x,
+                         window_bound.y,
+                         window_bound.w,
+                         window_bound.h,
+                         ColorHexToRGBA(style->Colors[UITHEME_WINDOWBG]));
   }
 }
 
-void UIWindow::RenderTitleBar(const UIRect<float>& window_bound) {
+void UIWindow::RenderTitleBar(const UIRect<float>& window_bound,
+                              const char* title) {
+  // Get style and calculate the title padding
+  // ---
+  // NOTE(Nghia Lam): What we are trying to here is automatically align the text
+  // to be in the middle height of the title bar. In case the title bar is too
+  // short for the font size, we will scale it up with the default value of
+  // padding is 2 pixel.
+  // TODO(Nghia Lam): Support align text & icon close: left | center | right
+  // ---------------------------------------
+  //                                       ^
+  //  Text here                          X | WindowTitleHeight
+  //                                       v
+  // ---------------------------------------
   UIStyle* style = UIManager::Instance()->GetStyle();
+  float fsize_   = UIManager::Instance()->GetFont()->GetFontAtlas().Char[33].bh;
+  int padding_   = (style->WindowTitleHeight - fsize_) / 2;
+  // If the font is bigger than the title height then we scale the bar bigger
+  if (padding_ <= 0) {
+    padding_                 = 2;
+    style->WindowTitleHeight = fsize_ + padding_ * 2;
+  }
+
   Renderer2D::DrawQuad(window_bound.x,
                        window_bound.y,
                        window_bound.w,
                        style->WindowTitleHeight,
                        ColorHexToRGBA(style->Colors[UITHEME_TITLEBG]));
+  Renderer2D::DrawText(title,
+                       *UIManager::Instance()->GetFont(),
+                       window_bound.x + padding_ * 2,
+                       window_bound.y + style->WindowTitleHeight - padding_);
 }
 
 // TODO(Nghia Lam): Support icons & draw this
-void UIWindow::RenderCloseButton(const UIRect<float>& window_bound) {}
+void UIWindow::RenderCloseButton(const UIRect<float>& window_bound) {
+  // Duplicate code ? -> Consider move these lines to the RenderWindow function
+  UIStyle* style = UIManager::Instance()->GetStyle();
+  float fwidth_  = UIManager::Instance()->GetFont()->GetFontAtlas().Char[33].ax;
+  float fheight_ = UIManager::Instance()->GetFont()->GetFontAtlas().Char[33].bh;
+  int padding_   = (style->WindowTitleHeight - fheight_) / 2;
+  // Since we already scaling the titlebar with padding (if needed), we only
+  // need to apply it here
+  Renderer2D::DrawText("X",
+                       *UIManager::Instance()->GetFont(),
+                       window_bound.x + window_bound.w - padding_ * 2 - fwidth_,
+                       window_bound.y + style->WindowTitleHeight - padding_);
+}
+
+// TODO(Nghia Lam): Draw this
+void UIWindow::RenderScrollbar(const UIRect<float>& window_bound) {}
 
 }  // namespace Ethan
