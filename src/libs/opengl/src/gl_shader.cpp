@@ -83,7 +83,10 @@ GLShader::GLShader(const std::string &file_path)
   Compile();
 }
 
-GLShader::~GLShader() = default;
+GLShader::~GLShader() {
+  location_cache_.clear();
+  shader_cache_.clear();
+};
 
 void GLShader::Bind() const {
   glUseProgram(shaderID_);

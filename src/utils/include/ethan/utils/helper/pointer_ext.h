@@ -59,6 +59,12 @@ constexpr Shared<T> MakeShared(Args&& ... args) {
   return std::make_shared<T>(std::forward<Args>(args) ...);
 }
 
+/**
+ * Weak Pointer Wrapper: Use only for caching ref count of other pointers.
+ */
+template<typename T>
+using Cache = std::weak_ptr<T>;
+
 } // namespace Ethan
 
 #endif // ETHAN_UTILS_HELPER_BASE_WRAPPERS_H_

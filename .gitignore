@@ -37,9 +37,11 @@
 .idea/
 .vs/
 build/
+build_mingw/
 bin/
 lib/
 
 # Auto-generated files
+.dir-locals.el
 imgui.ini
 compile_commands.json

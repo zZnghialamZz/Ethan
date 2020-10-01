@@ -31,60 +31,57 @@
  */
 
 #include "ethan/opengl/gl_vertexarray.h"
-#include "ethan/opengl/gl_assert.h"
-#include "ethan/utils/console/console.h"
 
 #include <glad/glad.h>
 
+#include "ethan/opengl/gl_assert.h"
+#include "ethan/utils/console/console.h"
+
 namespace Ethan {
-  
-  GLVertexArray::GLVertexArray() {
-    GLCALL(glGenVertexArrays(1, &vertexarrayID_));
-  }
-  
-  GLVertexArray::~GLVertexArray() {
-    GLCALL(glDeleteVertexArrays(1, &vertexarrayID_));
-  }
-  
-  void GLVertexArray::Bind() const {
-    GLCALL(glBindVertexArray(vertexarrayID_));
-  }
-  
-  void GLVertexArray::UnBind() const {
-    GLCALL(glBindVertexArray(0));
-  }
-  
-  void GLVertexArray::AddVertexBuffer(const Shared<VertexBuffer> &vertex_buffer) {
-    ETASSERT_CORE(!vertex_buffer->GetLayout().GetElements().empty(),
-                  "Vertex Buffer has no layout !!");
-    
-    GLCALL(glBindVertexArray(vertexarrayID_));
-    vertex_buffer->Bind();
-    SettingBufferLayout(vertex_buffer);
-    
-    vertex_buffers_.emplace_back(vertex_buffer);
-  }
-  
-  void GLVertexArray::SetIndexBuffer(const Shared<IndexBuffer> &index_buffer) {
-    GLCALL(glBindVertexArray(vertexarrayID_));
-    index_buffer->Bind();
-    
-    index_buffer_ = index_buffer;
-  }
-  
-  void GLVertexArray::SettingBufferLayout(const Shared<VertexBuffer> &vertex_buffer) {
-    uint32_t index = 0;
-    const auto& layout = vertex_buffer->GetLayout();
-    for (const auto& element : layout) {
-      GLCALL(glEnableVertexAttribArray(index));
-      GLCALL(glVertexAttribPointer(index,
-                                   element.GetComponentCount(),
-                                   ShaderData::ToNativeDataType(element.GetType()),
-                                   element.IsNormalized() ? GL_TRUE : GL_FALSE,
-                                   layout.GetStride(),
-                                   (const void *) element.GetOffset()));
-      ++index;
-    }
-  }
-  
+
+GLVertexArray::GLVertexArray() {
+  GLCALL(glGenVertexArrays(1, &vertexarrayID_));
 }
+
+GLVertexArray::~GLVertexArray() {
+  GLCALL(glDeleteVertexArrays(1, &vertexarrayID_));
+}
+
+void GLVertexArray::Bind() const { GLCALL(glBindVertexArray(vertexarrayID_)); }
+
+void GLVertexArray::UnBind() const { GLCALL(glBindVertexArray(0)); }
+
+void GLVertexArray::AddVertexBuffer(const Shared<VertexBuffer>& vertex_buffer) {
+  ETASSERT_CORE(!vertex_buffer->GetLayout().GetElements().empty(),
+                "Vertex Buffer has no layout !!");
+
+  GLCALL(glBindVertexArray(vertexarrayID_));
+  vertex_buffer->Bind();
+  SettingBufferLayout(vertex_buffer);
+
+  vertex_buffers_.emplace_back(vertex_buffer);
+}
+
+void GLVertexArray::SetIndexBuffer(const Shared<IndexBuffer>& index_buffer) {
+  GLCALL(glBindVertexArray(vertexarrayID_));
+  index_buffer->Bind();
+
+  index_buffer_ = index_buffer;
+}
+
+void GLVertexArray::SettingBufferLayout(const Shared<VertexBuffer>& vertex_buffer) {
+  uint32_t index     = 0;
+  const auto& layout = vertex_buffer->GetLayout();
+  for (const auto& element : layout) {
+    GLCALL(glEnableVertexAttribArray(index));
+    GLCALL(glVertexAttribPointer(index,
+                                 element.GetComponentCount(),
+                                 ShaderData::ToNativeDataType(element.GetType()),
+                                 element.IsNormalized() ? GL_TRUE : GL_FALSE,
+                                 layout.GetStride(),
+                                 (const void*)element.GetOffset()));
+    ++index;
+  }
+}
+
+}  // namespace Ethan

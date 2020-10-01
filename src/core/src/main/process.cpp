@@ -53,6 +53,7 @@ void ProcessStack::Dispose() {
   for (Process* process : processes_){
     process->Detach();
     delete process;
+    process = nullptr;
   }
 }
 

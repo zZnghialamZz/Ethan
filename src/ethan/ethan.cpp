@@ -30,3 +30,5 @@
  */
 
 #include "ethan.h"
+
+namespace Ethan {}

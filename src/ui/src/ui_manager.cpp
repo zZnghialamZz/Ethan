@@ -48,6 +48,10 @@ UIManager::UIManager() {
   ctx_ = new UIContext();
 }
 
-UIManager::~UIManager() { delete ctx_; }
+UIManager::~UIManager() {
+  delete ctx_;
+  ctx_      = nullptr;
+  instance_ = nullptr;
+}
 
 }  // namespace Ethan

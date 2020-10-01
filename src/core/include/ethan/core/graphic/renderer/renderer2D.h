@@ -80,30 +80,30 @@ struct Batch2DStorage {
   static const u8 MaxTextures  = 16;  // TODO(Nghia Lam): Auto detect this
 
   BatchVertex* VertexBatchBase;
-  std::array<Shared<Texture2D>, MaxTextures> BatchTextures;
+  std::array<Cache<Texture2D>, MaxTextures> BatchTextures;
 };
 
 struct Renderer2DStatistic {
-  u32 DrawCall;
-  u32 QuadCount;
+  u32 DrawCall  = 0;
+  u32 QuadCount = 0;
 
   u32 GetTotalVertexCount() { return QuadCount * 4; }
 };
 
 struct Renderer2DData {
   // Shared<Mesh> QuadMesh;
-  Shared<Mesh> BatchMesh;
-  Shared<Shader> Base2DShader;
-  Shared<Texture2D> Base2DTexture;
+  Shared<Mesh> BatchMesh          = nullptr;
+  Shared<Shader> Base2DShader     = nullptr;
+  Shared<Texture2D> Base2DTexture = nullptr;
 
   Batch2DStorage Storage;
 
   // TODO(Nghia Lam): Using Sprite System for this
   glm::vec4 VertexOrigin[4];
 
-  BatchVertex* CurrentVertex;
-  u32 CurrentIndiceCount  = 0;
-  u32 CurrentTextureIndex = 0;  // Default White Texture
+  BatchVertex* CurrentVertex = nullptr;
+  u32 CurrentIndiceCount     = 0;
+  u32 CurrentTextureIndex    = 0;  // Default White Texture
 
   Renderer2DStatistic Stats;
 };

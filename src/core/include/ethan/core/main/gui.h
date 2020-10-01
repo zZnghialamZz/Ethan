@@ -41,7 +41,7 @@ namespace Ethan {
 class GUI : public Process {
  public:
   GUI(const char* name = "GUI Process");
-  virtual ~GUI() = default;
+  virtual ~GUI();
 
   void Attach() override;
   void Detach() override;

@@ -76,7 +76,7 @@ int Main::InitWinMain(void* h_instance,
 
   delete app;
 
-  return 0;
+  return (0);
 }
 
 }  // namespace Ethan

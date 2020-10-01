@@ -90,6 +90,7 @@ class Mesh {
 
   // Static method
   static Shared<Mesh> CreatePrimitive(PrimitiveType type);
+  static Shared<Mesh> CreateBatchMesh();
   static Shared<Mesh> CreateQuad();
   static Shared<Mesh> CreateQuad(float x, float y, float width, float height);
   static Shared<Mesh> CreateQuad(const glm::vec2& position,
@@ -100,7 +101,6 @@ class Mesh {
   static Shared<Mesh> CreatePyramid();
   static Shared<Mesh> CreateCapsule();
   static Shared<Mesh> CreateCylinder();
-  static Shared<Mesh> CreateBatchMesh();
 
  private:
   Shared<VertexArray> mesh_vao_;

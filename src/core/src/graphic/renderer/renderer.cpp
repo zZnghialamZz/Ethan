@@ -69,7 +69,9 @@ void Renderer::Init() {
   Renderer2D::Init();
 }
 
-void Renderer::Shutdown() {}
+void Renderer::Shutdown() {
+  Renderer2D::Shutdown();
+}
 
 void Renderer::Reset() {
   Renderer2D::ResetStats();

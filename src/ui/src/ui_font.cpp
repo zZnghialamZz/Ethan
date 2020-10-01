@@ -39,8 +39,8 @@
 namespace Ethan {
 
 UIFont::UIFont() {
-  // NOTE(Nghia Lam): Almost all the functions of freetype library will return 0
-  // if it fails.
+  // NOTE(Nghia Lam): Almost all the functions of freetype library will return a
+  // non-zero integer if it fails.
   if (FT_Init_FreeType(&ft_)) {
     ETASSERT_CORE(false, "[UI] Cannot Init FreeType Font !!");
   }
@@ -71,7 +71,8 @@ UIFont::~UIFont() {
 
 void UIFont::LoadTTF(const char* file_path) {
   // NOTE(Nghia Lam): 0 is the face index <- should we support multiple faces?
-  if (FT_New_Face(ft_, file_path, 0, &face_)) {
+  int result = FT_New_Face(ft_, file_path, 0, &face_);
+  if (result) {
     ETLOG_CORE_ERROR("[UI] Cannot load font: {0} !!", file_path);
   }
 }

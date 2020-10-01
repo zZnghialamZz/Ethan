@@ -54,7 +54,9 @@ Application::Application(const std::string& name) : name_(name) {
   Renderer::Init();
 }
 
-Application::~Application() {}
+Application::~Application() {
+  Renderer::Shutdown();
+}
 
 void Application::Init() { Start(); }
 

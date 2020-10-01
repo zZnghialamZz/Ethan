@@ -39,6 +39,7 @@
 namespace Ethan {
 
 GUI::GUI(const char* name) : Process(name) {}
+GUI::~GUI() {}
 
 void GUI::BeginUI() {
   RendererCommand::Clear();

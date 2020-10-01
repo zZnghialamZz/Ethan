@@ -91,6 +91,14 @@ void Renderer2D::Init() {
 void Renderer2D::Shutdown() {
   // TODO(Nghia Lam): Profile here.
 
+  // NOTE(Nghia Lam): I'm not sure why but these values need to be reseted here
+  // else it would cause a weird memory leak and keep running even after the
+  // application is closed.
+  data_.Base2DShader->UnBind();
+  data_.Base2DShader.reset();
+  data_.Base2DTexture.reset();
+  data_.BatchMesh.reset();
+
   delete[] data_.Storage.VertexBatchBase;
 }
 
@@ -135,7 +143,7 @@ void Renderer2D::Execute() {
   if (!data_.CurrentIndiceCount) return;  // Render nothing
 
   for (uint32_t i = 0; i < data_.CurrentTextureIndex; ++i) {
-    data_.Storage.BatchTextures[i]->Bind(i);
+    data_.Storage.BatchTextures[i].lock()->Bind(i);
   }
   data_.BatchMesh->Render(data_.CurrentIndiceCount);
   ++data_.Stats.DrawCall;
@@ -296,7 +304,7 @@ void Renderer2D::DrawTexture(const Shared<Texture2D>& texture,
 float Renderer2D::GetTextureIndexInBatch(const Shared<Texture2D>& texture) {
   float texture_index = 0.0f;
   for (uint32_t i = 1; i < data_.CurrentTextureIndex; ++i) {
-    if (*texture == *data_.Storage.BatchTextures[i]) {
+    if (*texture == *data_.Storage.BatchTextures[i].lock()) {
       texture_index = (float)i;
       break;
     }

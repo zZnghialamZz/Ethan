@@ -35,21 +35,21 @@
 #include "application.h"
 
 namespace Ethan {
-  
-  class Main {
-   public:
-    static Application* CreateApplication();
-    
-    static int InitMain(int argc, char* argv[]);
-    
-    // NOTE(Nghia Lam): Specific for Windows Platforms 
-    static int InitWinMain(void* h_instance,
-                           void* h_prev_instance,
-                           char* lp_cmdline,
-                           int nshowcmd);
-  };
-  
-}
+
+class Main {
+ public:
+  static Application* CreateApplication();
+
+  static int InitMain(int argc, char* argv[]);
+
+  // NOTE(Nghia Lam): Specific for Windows Platforms
+  static int InitWinMain(void* h_instance,
+                         void* h_prev_instance,
+                         char* lp_cmdline,
+                         int nshowcmd);
+};
+
+}  // namespace Ethan
 
 //------------------------------------------------------------------------------
 // Entry Point
@@ -59,20 +59,19 @@ namespace Ethan {
 
 #include <Windows.h>
 
-int __stdcall WinMain(HINSTANCE hInstance,
-                      HINSTANCE hPrevInstance,
-                      LPSTR lpCmdLine,
-                      int nShowCmd)
-{
-  return Ethan::Main::InitWinMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+int APIENTRY WinMain(HINSTANCE hInstance,
+                     HINSTANCE hPrevInstance,
+                     LPSTR lpCmdLine,
+                     int nShowCmd) {
+  return Ethan::Main::InitWinMain(hInstance,
+                                  hPrevInstance,
+                                  lpCmdLine,
+                                  nShowCmd);
 }
 
 #else
 
-int main(int argc, char* argv[])
-{
-  return Ethan::Main::InitMain(argc, argv);
-}
+int main(int argc, char* argv[]) { return Ethan::Main::InitMain(argc, argv); }
 
 #endif
 
@@ -80,4 +79,4 @@ int main(int argc, char* argv[])
 // End
 //------------------------------------------------------------------------------
 
-#endif // ETHAN_CORE_MAIN_H_
+#endif  // ETHAN_CORE_MAIN_H_

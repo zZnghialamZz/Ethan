@@ -171,11 +171,11 @@ Shared<Mesh> Mesh::CreateBatchMesh() {
   batch_va->AddVertexBuffer(batch_vb);
 
   // NOTE(Nghia Lam): IndexBuffer
-  uint32_t* indices = new uint32_t[Renderer2D::GetData().Storage.MaxIndices];
-  uint32_t offset   = 0;
+  u32* indices = new u32[Renderer2D::GetData().Storage.MaxIndices];
+  u32 offset   = 0;
 
   // TODO(Nghia Lam): This is a bit slow, consider some way just need O(logn)
-  for (uint32_t i = 0; i < Renderer2D::GetData().Storage.MaxIndices; i += 6) {
+  for (u32 i = 0; i < Renderer2D::GetData().Storage.MaxIndices; i += 6) {
     // NOTE(Nghia Lam): Render Quad based on two triangles,
     // which depends on index of vertex.
     // 3 - 2
