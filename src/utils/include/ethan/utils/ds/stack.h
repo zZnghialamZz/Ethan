@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_stack.h
+ * @file stack.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -35,24 +35,32 @@
 
 namespace Ethan {
 
-template <typename T>
+/**
+ * Fix sized Stack
+ */
+template <typename T, size_t size>
 class Stack {
  public:
   // Constructor & Destructor
-  Stack(unsigned int max_size) { array_[max_size]; }
+  Stack() { array_[size]; }
   ~Stack() = default;
 
   // Methods
-  inline void Push(const T& value) { array_[index_++] = value; }
-  inline T Pop() { return array_[--index_]; }
+  INLINE T& operator[] (u32 index) { return array_[index]; }
+  INLINE void Push(const T& value) { array_[index_++] = value; }
+  INLINE T Pop() { return array_[--index_]; }
+  INLINE void Clear() {
+    index_ = 0;
+    memset(array_, 0, sizeof(array_));
+  }
 
-  [[nodiscard]] inline T& Peek() { return array_[index_ - 1]; }
-  [[nodiscard]] inline int Size() const { return index_; }
-  [[nodiscard]] inline bool IsEmpty() const { return index_ == 0; }
+  [[nodiscard]] INLINE T& Peek() { return array_[index_ - 1]; }
+  [[nodiscard]] INLINE int Size() const { return index_; }
+  [[nodiscard]] INLINE bool IsEmpty() const { return index_ == 0; }
 
  private:
   T* array_;
-  int index_ = 0;
+  u32 index_ = 0;
 };
 
 }  // namespace Ethan

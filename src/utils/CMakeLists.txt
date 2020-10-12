@@ -29,12 +29,14 @@ set(HEADERS
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/os/file_system.h"
 
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/misc/macros.h"
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils/misc/funcs.h"
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/misc/types.h"
 
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/time/delta_time.h"
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/time/timer.h"
 
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils/ds/stack.h"
+    "${ET_UTILS_INCLUDE_DIR}/ethan/utils/ds/queue.h"
 
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils_pch.h"
     "${ET_UTILS_INCLUDE_DIR}/ethan/utils.h"

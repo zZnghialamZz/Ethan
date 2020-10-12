@@ -33,6 +33,7 @@
 #include "ethan/ui/widgets/ui_window.h"
 
 #include "ethan/core/graphic/renderer/renderer2D.h"
+#include "ethan/ui/ui_command.h"
 #include "ethan/ui/ui_manager.h"
 
 namespace Ethan {
@@ -43,52 +44,62 @@ namespace Ethan {
 void UIWindow::Begin(const char* title,
                      const UIRect<float>& bounds,
                      UIWindowFlags flags) {
-
-  // Render -> Need to relocate to somewhere ??
-  // ---
-  // NOTE(Nghia Lam): This order does matter
-  RenderWindow(bounds);
-  if (~flags & UIWINDOWFLAG_NOTITLE) {
-    RenderTitleBar(bounds, title);
-    if (~flags & UIWINDOWFLAG_NOCLOSE) RenderCloseButton(bounds);
-  }
-  if (~flags & UIWINDOWFLAG_NOSCROLL)
-    RenderScrollbar(bounds);
-
   // TODO(Nghia Lam): IMGUI logic here
+  UIContext* ctx         = UIManager::Instance()->GetContext();
+  UIID id                = ctx->Storage.GetUIID(title);
+  UIContainer* container = ctx->Storage.GetContainer(id);
+
+  // Defer render commands
+  Render(container, title, bounds, flags);
 }
 
 void UIWindow::End() {}
+
+void UIWindow::Render(UIContainer* container,
+                      const char* title,
+                      const UIRect<float>& bounds,
+                      UIWindowFlags flags) {
+  // NOTE(Nghia Lam): This order does matter
+  RenderWindow(container, bounds);
+  if (~flags & UIWINDOWFLAG_NOTITLE) {
+    RenderTitleBar(container, bounds, title);
+    if (~flags & UIWINDOWFLAG_NOCLOSE) RenderCloseButton(container, bounds);
+  }
+  if (~flags & UIWINDOWFLAG_NOSCROLL) RenderScrollbar(container, bounds);
+}
 
 //------------------------------------------------------------------------------
 // Drawing
 //------------------------------------------------------------------------------
 
-void UIWindow::RenderWindow(const UIRect<float>& window_bound) {
+void UIWindow::RenderWindow(UIContainer* container,
+                            const UIRect<float>& window_bound) {
   UIStyle* style = UIManager::Instance()->GetStyle();
 
   // NOTE(Nghia Lam): Since I dont support drawing too many shapes right now, we
-  // will use the 9-slice scaling texture method for drawing the round shape.
+  // might use the 9-slice scaling texture method for drawing the round shape.
   // There will be some limitations:
   //  - Cannot config rounding value.
   //  - Hard to work with custom style. (light/dark, etc..)
   if (!style->WindowRounding) {
-    // Draw border
-    Renderer2D::DrawQuad(window_bound.x - style->WindowBorder,
-                         window_bound.y - style->WindowBorder,
-                         window_bound.w + style->WindowBorder * 2,
-                         window_bound.h + style->WindowBorder * 2,
-                         ColorHexToRGBA(style->Colors[UITHEME_BORDER]));
+    UIRenderRectCommand draw_border(window_bound.x - style->WindowBorder,
+                                    window_bound.y - style->WindowBorder,
+                                    window_bound.w + style->WindowBorder * 2,
+                                    window_bound.h + style->WindowBorder * 2,
+                                    style->Colors[UITHEME_BORDER]);
+    UIRenderRectCommand draw_window(window_bound.x,
+                                    window_bound.y,
+                                    window_bound.w,
+                                    window_bound.h,
+                                    style->Colors[UITHEME_WINDOWBG]);
 
-    Renderer2D::DrawQuad(window_bound.x,
-                         window_bound.y,
-                         window_bound.w,
-                         window_bound.h,
-                         ColorHexToRGBA(style->Colors[UITHEME_WINDOWBG]));
+    container->AddCommand(&draw_border);
+    container->AddCommand(&draw_window);
   }
 }
 
-void UIWindow::RenderTitleBar(const UIRect<float>& window_bound,
+void UIWindow::RenderTitleBar(UIContainer* container,
+                              const UIRect<float>& window_bound,
                               const char* title) {
   // Get style and calculate the title padding
   // ---
@@ -123,7 +134,8 @@ void UIWindow::RenderTitleBar(const UIRect<float>& window_bound,
 }
 
 // TODO(Nghia Lam): Support icons & draw this
-void UIWindow::RenderCloseButton(const UIRect<float>& window_bound) {
+void UIWindow::RenderCloseButton(UIContainer* container,
+                                 const UIRect<float>& window_bound) {
   // Duplicate code ? -> Consider move these lines to the RenderWindow function
   UIStyle* style = UIManager::Instance()->GetStyle();
   float fwidth_  = UIManager::Instance()->GetFont()->GetFontAtlas().Char[33].ax;
@@ -138,6 +150,7 @@ void UIWindow::RenderCloseButton(const UIRect<float>& window_bound) {
 }
 
 // TODO(Nghia Lam): Draw this
-void UIWindow::RenderScrollbar(const UIRect<float>& window_bound) {}
+void UIWindow::RenderScrollbar(UIContainer* container,
+                               const UIRect<float>& window_bound) {}
 
 }  // namespace Ethan

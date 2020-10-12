@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_macros.h
+ * @file ui_container.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,21 +30,42 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_MACROS_H_
-#define ETHAN_UI_MACROS_H_
+#ifndef ETHAN_UI_CONTAINER_H_
+#define ETHAN_UI_CONTAINER_H_
+
+#include "ui_command.h"
 
 namespace Ethan {
 
-//------------------------------------------------------------------------------
-// UI Configurations
-// NOTE(Nghia Lam): Some of these configs is used for fixed size data storage,
-// which might need to comeback and revise many times. --> Can we consider using
-// another built-in dynamic array?
-//------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
-#define UICOMMAND_SIZE   256 * 1024
+class UIContainer {
+ public:
+  //------------------------------------------------------------------------------
+  // Constructor & Destructor
+  //------------------------------------------------------------------------------
+  UIContainer();
+  ~UIContainer();
+
+  //------------------------------------------------------------------------------
+  // Parameters
+  //------------------------------------------------------------------------------
+  UIContainer* Prev;
+  UIContainer* Next;
+
+  //------------------------------------------------------------------------------
+  // Methods
+  //------------------------------------------------------------------------------
+  void Init();
+  void Render();
+  void AddCommand(UICommand* command);
+
+ private:
+  UIRect<float> body_;
+  u32 command_size_;
+  UICommand* head_;
+  UICommand* tail_;
+};
+
 
 }  // namespace Ethan
 
-#endif  // ETHAN_UI_MACROS_H_
+#endif  // ETHAN_UI_CONTAINER_H_

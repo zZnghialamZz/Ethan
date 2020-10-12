@@ -34,8 +34,8 @@
 #define ETHAN_UI_H_
 
 #include "ui/types/ui_types.h"
-#include "ui/ui_context.h"
 #include "ui/ui_macros.h"
+#include "ui/ui_context.h"
 #include "ui/ui_manager.h"
 #include "ui/ui_widgets.h"
 

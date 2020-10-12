@@ -36,10 +36,18 @@
 namespace Ethan {}
 
 //------------------------------------------------------------------------------
+// Simple hashing helpers
+// NOTE(Nghia Lam): Based on 32 bit fnv-1a hash for creating a unique and fast
+// id via hashing
+//------------------------------------------------------------------------------
+#define HASH_OFFSET 2166136261
+#define HASH_PRIME  16777619
+
+//------------------------------------------------------------------------------
 // Simple math helpers
 //------------------------------------------------------------------------------
-#define FIND_MAX(x, y)    (x > y ? x : y)
-#define FIND_MIN(x, y)    (x < y ? x : y)
+#define FIND_MAX(x, y) (x > y ? x : y)
+#define FIND_MIN(x, y) (x < y ? x : y)
 
 //------------------------------------------------------------------------------
 // Convinient way to convert to one byte
@@ -50,6 +58,7 @@ namespace Ethan {}
 // Some compilers does not inline any functions when not optimizing unless it
 // has always_inline attribute
 // https://gcc.gnu.org/onlinedocs/gcc/Inline.html
+//------------------------------------------------------------------------------
 // --- ALWAYS_INLINE
 #ifndef ALWAYS_INLINE
 
@@ -75,9 +84,6 @@ namespace Ethan {}
 #define INLINE ALWAYS_INLINE
 #endif
 
-#endif // INLINE
-//------------------------------------------------------------------------------
+#endif  // INLINE
 
-
-
-#endif // ETHAN_UTILS_MISC_MACROS_H_
+#endif  // ETHAN_UTILS_MISC_MACROS_H_

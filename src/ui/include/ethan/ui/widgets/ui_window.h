@@ -39,15 +39,17 @@ namespace Ethan {
 // UI Window Flags
 //------------------------------------------------------------------------------
 enum {
-  UIWINDOWFLAG_NONE             = 0,
-  UIWINDOWFLAG_NOTITLE          = BIT(0),
-  UIWINDOWFLAG_NOCLOSE          = BIT(1),
-  UIWINDOWFLAG_NOSCROLL         = BIT(2),
+  UIWINDOWFLAG_NONE     = 0,
+  UIWINDOWFLAG_NOTITLE  = BIT(0),
+  UIWINDOWFLAG_NOCLOSE  = BIT(1),
+  UIWINDOWFLAG_NOSCROLL = BIT(2),
 };
 
 //------------------------------------------------------------------------------
 // Main UI Window
 //------------------------------------------------------------------------------
+class UIContainer;
+
 class UIWindow {
  public:
   [[nodiscard]] INLINE static const UIType GetType() { return UIWIDGET_WINDOW; }
@@ -58,10 +60,18 @@ class UIWindow {
   static void End();
 
  private:
-  static void RenderWindow(const UIRect<float>& window_bound);
-  static void RenderCloseButton(const UIRect<float>& window_bound);
-  static void RenderScrollbar(const UIRect<float>& window_bound);
-  static void RenderTitleBar(const UIRect<float>& window_bound,
+  static void Render(UIContainer* container,
+                     const char* title,
+                     const UIRect<float>& bounds,
+                     UIWindowFlags flags);
+  static void RenderWindow(UIContainer* container,
+                           const UIRect<float>& window_bound);
+  static void RenderCloseButton(UIContainer* container,
+                                const UIRect<float>& window_bound);
+  static void RenderScrollbar(UIContainer* container,
+                              const UIRect<float>& window_bound);
+  static void RenderTitleBar(UIContainer* container,
+                             const UIRect<float>& window_bound,
                              const char* title);
 };
 

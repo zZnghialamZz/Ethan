@@ -33,8 +33,6 @@
 #ifndef ETHAN_UTILS_TIME_DELTA_TIME_H_
 #define ETHAN_UTILS_TIME_DELTA_TIME_H_
 
-#include "ethan/utils/misc/macros.h"
-
 namespace Ethan {
 
 class DeltaTime {

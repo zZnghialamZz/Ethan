@@ -33,20 +33,20 @@
 #ifndef ETHAN_UTILS_TYPES_H_
 #define ETHAN_UTILS_TYPES_H_
 
-namespace Ethan {
-  
-  //|
-  // NOTE(Nghia Lam): Using some short name for these types
-  //|
-  using i8   = int8_t;
-  using i16  = int16_t;
-  using i32  = int32_t;
-  using i64  = int64_t;
-  using u8   = uint8_t;
-  using u16  = uint16_t;
-  using u32  = uint32_t;
-  using u64  = uint64_t;
-  
-}
+#include <cstdint>
 
-#endif // ETHAN_UTILS_TYPES_H_
+namespace Ethan {
+
+// NOTE(Nghia Lam): Using some short name for these types
+using i8  = int8_t;
+using i16 = int16_t;
+using i32 = int32_t;
+using i64 = int64_t;
+using u8  = uint8_t;
+using u16 = uint16_t;
+using u32 = uint32_t;
+using u64 = uint64_t;
+
+}  // namespace Ethan
+
+#endif  // ETHAN_UTILS_TYPES_H_

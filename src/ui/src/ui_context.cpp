@@ -38,6 +38,6 @@ UIContext::UIContext() {
   Style = &style_;
 }
 
-UIContext::~UIContext() {}
+UIContext::~UIContext() { Storage.Clear(); }
 
 }  // namespace Ethan

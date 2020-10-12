@@ -35,6 +35,8 @@
 
 #include "ui_font.h"
 #include "ui_style.h"
+#include "ui_queue.h"
+#include "ui_storage.h"
 
 namespace Ethan {
 
@@ -43,7 +45,10 @@ class UIContext {
   UIContext();
   ~UIContext();
 
+  UIStorage Storage;
+  UIQueue Queue;
   UIFont Font;
+
   UIStyle* Style;
 
  private:

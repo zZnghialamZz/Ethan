@@ -37,6 +37,8 @@
 
 namespace Ethan {
 
+// TODO(Nghia Lam): Consider using another approach
+
 template <typename T>
 class UIRect {
  public:

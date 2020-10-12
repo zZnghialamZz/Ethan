@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_macros.h
+ * @file ui_command.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,21 +30,23 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_MACROS_H_
-#define ETHAN_UI_MACROS_H_
+#include "ethan/ui/ui_command.h"
+
+#include "ethan/core/graphic/renderer/renderer2D.h"
 
 namespace Ethan {
 
-//------------------------------------------------------------------------------
-// UI Configurations
-// NOTE(Nghia Lam): Some of these configs is used for fixed size data storage,
-// which might need to comeback and revise many times. --> Can we consider using
-// another built-in dynamic array?
-//------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
-#define UICOMMAND_SIZE   256 * 1024
+UIRenderRectCommand::UIRenderRectCommand(float x,
+                                         float y,
+                                         float w,
+                                         float h,
+                                         const UIColor& color)
+    : x_(x), y_(y), w_(w), h_(h), color_(color) {}
+
+UIRenderRectCommand::~UIRenderRectCommand() {}
+
+void UIRenderRectCommand::Execute() {
+  Renderer2D::DrawQuad(x_, y_, w_, h_, ColorHexToRGBA(color_));
+}
 
 }  // namespace Ethan
-
-#endif  // ETHAN_UI_MACROS_H_

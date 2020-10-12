@@ -31,9 +31,9 @@
  */
 
 #include "ethan/core/main/gui.h"
+
 #include "ethan/core/graphic/renderer/renderer.h"
 #include "ethan/core/graphic/renderer/renderer2D.h"
-
 #include "ethan/ui.h"
 
 namespace Ethan {
@@ -49,6 +49,11 @@ void GUI::BeginUI() {
 }
 
 void GUI::EndUI() {
+  UIQueue ui_queue = ui_manager_.GetContext()->Queue;
+  for (auto ui : ui_queue) {
+    ui.Render();
+  }
+
   Renderer2D::EndUI();
 }
 
@@ -61,12 +66,10 @@ void GUI::Update() {}
 void GUI::UpdateUI() {
   // Testing purpose <-- TO BE REMOVED
   UIWindow::Begin("Test Window", UIRect(400.0f, 200.0f, 800.0f, 400.0f), 0);
-  {
-
-  }
+  {}
   UIWindow::End();
 }
 
 void GUI::EventCall(Event& event) {}
 
-}
+}  // namespace Ethan

@@ -14,9 +14,13 @@ set(ET_UI_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 set(SOURCES
     "${ET_UI_SRC_DIR}/widgets/ui_window.cpp"
 
+    "${ET_UI_SRC_DIR}/ui_container.cpp"
     "${ET_UI_SRC_DIR}/ui_context.cpp"
+    "${ET_UI_SRC_DIR}/ui_command.cpp"
+    "${ET_UI_SRC_DIR}/ui_storage.cpp"
     "${ET_UI_SRC_DIR}/ui_manager.cpp"
     "${ET_UI_SRC_DIR}/ui_style.cpp"
+    "${ET_UI_SRC_DIR}/ui_queue.cpp"
     "${ET_UI_SRC_DIR}/ui_font.cpp"
     )
 set(HEADERS
@@ -27,11 +31,15 @@ set(HEADERS
     "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_base.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_rect.h"
 
+    "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_container.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_context.h"
+    "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_command.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_manager.h"
+    "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_storage.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_widgets.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_macros.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_style.h"
+    "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_queue.h"
     "${ET_UI_INCLUDE_DIR}/ethan/ui/ui_font.h"
 
     "${ET_UI_INCLUDE_DIR}/ethan/ui_pch.h"

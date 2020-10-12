@@ -73,37 +73,37 @@ bool IsStartWith(const std::string& input, const std::string& word);
 
 namespace Ethan {
   
-  // NOTE(Nghia Lam): Temporary class until fully replace std::string.
-  class Str {
+// NOTE(Nghia Lam): Temporary class until fully replace std::string.
+class Str {
     
-   public:
-    Str();
+ public:
+  Str();
     
-    [[nodiscard]] INLINE char* c_str() { return data_; }
-    [[nodiscard]] INLINE const char* c_str() const { return data_; }
-    [[nodiscard]] INLINE bool empty() const { return data_[0] == 0; }
-    [[nodiscard]] INLINE int length() const { return (int)strlen(data_); }
-    [[nodiscard]] INLINE int capacity() const { return capacity_; }
+  [[nodiscard]] INLINE char* c_str() { return data_; }
+  [[nodiscard]] INLINE const char* c_str() const { return data_; }
+  [[nodiscard]] INLINE bool empty() const { return data_[0] == 0; }
+  [[nodiscard]] INLINE int length() const { return (int)strlen(data_); }
+  [[nodiscard]] INLINE int capacity() const { return capacity_; }
     
-    [[nodiscard]] INLINE char& operator[](size_t i) { return data_[i]; }
-    [[nodiscard]] INLINE char operator[](size_t i) const { return data_[i]; }
-    [[nodiscard]] INLINE Str& operator=(const char* input) const { /* Return Str here */ }
-    [[nodiscard]] INLINE bool operator==(const char* input) const { return strcmp(c_str(), input) == 0; }
+  [[nodiscard]] INLINE char& operator[](size_t i) { return data_[i]; }
+  [[nodiscard]] INLINE char operator[](size_t i) const { return data_[i]; }
+  [[nodiscard]] INLINE Str& operator=(const char* input) const { /* Return Str here */ }
+  [[nodiscard]] INLINE bool operator==(const char* input) const { return strcmp(c_str(), input) == 0; }
     
-    void clear();
-    void reserve(int cap);
-    void reserve_discard(int cap);
-    void shrink_to_fit();
+  void clear();
+  void reserve(int cap);
+  void reserve_discard(int cap);
+  void shrink_to_fit();
      
-   private:
-    // Private Members ---
+ private:
+  // Private Members ---
     
-    char*        data_;                  // Point to local buffer or heap allocate
-    int          capacity_ : 21;         // Max 2MB
-    int          localbuffer_size_ : 10; // Max 1023 Bytes
-    unsigned int owned_ : 1;             // Set when we have the ownership of the pointed data (most common, unless using set reference method or create a reference constructor.
+  char*        data_;                  // Point to local buffer or heap allocate
+  int          capacity_ : 21;         // Max 2MB
+  int          localbuffer_size_ : 10; // Max 1023 Bytes
+  unsigned int owned_ : 1;             // Set when we have the ownership of the pointed data (most common, unless using set reference method or create a reference constructor.
     
-  };
+};
   
 }
 

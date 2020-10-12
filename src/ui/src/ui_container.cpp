@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_macros.h
+ * @file ui_container.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,21 +30,45 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_MACROS_H_
-#define ETHAN_UI_MACROS_H_
+#include "ethan/ui/ui_container.h"
+#include "ethan/ui/ui_manager.h"
 
 namespace Ethan {
 
-//------------------------------------------------------------------------------
-// UI Configurations
-// NOTE(Nghia Lam): Some of these configs is used for fixed size data storage,
-// which might need to comeback and revise many times. --> Can we consider using
-// another built-in dynamic array?
-//------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
-#define UICOMMAND_SIZE   256 * 1024
+UIContainer::UIContainer()
+    : Prev(nullptr)
+    , Next(nullptr)
+    , command_size_(0)
+    , head_(nullptr)
+    , tail_(nullptr) {}
+
+UIContainer::~UIContainer() {}
+
+void UIContainer::Init() {
+  UIContext* ctx = UIManager::Instance()->GetContext();
+  ctx->Queue.Add(this);
+}
+
+void UIContainer::Render() {
+  if (head_ != nullptr) {
+    UICommand* cmd = head_;
+    while (cmd) {
+      cmd->Execute();
+      cmd = cmd->Next;
+    }
+  }
+}
+
+void UIContainer::AddCommand(UICommand* command) {
+  UIContext* ctx = UIManager::Instance()->GetContext();
+  ctx->Storage.StoreCommand(*command);
+
+  if (command_size_ == 0) {
+    head_ = tail_ = command;
+  } else {
+    tail_->Next = command;
+    tail_       = tail_->Next;
+  }
+}
 
 }  // namespace Ethan
-
-#endif  // ETHAN_UI_MACROS_H_

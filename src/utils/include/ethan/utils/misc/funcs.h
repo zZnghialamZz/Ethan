@@ -10,10 +10,11 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_macros.h
+ * @file funcs.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
- * @brief
+ * @brief A collection of random functions which may be helpful during the
+ * development process
  *
  * @license Copyright 2020 Nghia Lam
  *
@@ -30,21 +31,23 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_MACROS_H_
-#define ETHAN_UI_MACROS_H_
+#ifndef ETHAN_UTILS_MISC_FUNCS_H_
+#define ETHAN_UTILS_MISC_FUNCS_H_
+
+#include <cstddef>
+#include <cstring>
 
 namespace Ethan {
 
-//------------------------------------------------------------------------------
-// UI Configurations
-// NOTE(Nghia Lam): Some of these configs is used for fixed size data storage,
-// which might need to comeback and revise many times. --> Can we consider using
-// another built-in dynamic array?
-//------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
-#define UICOMMAND_SIZE   256 * 1024
+INLINE u32 Hash(u32 hash, const char* str) {
+  const size_t length = strlen(str) + 1;
+  for (size_t i = 0; i < length; ++i) {
+    hash = (hash ^ *str++) * HASH_PRIME;
+  }
+
+  return hash;
+}
 
 }  // namespace Ethan
 
-#endif  // ETHAN_UI_MACROS_H_
+#endif  // ETHAN_UTILS_MISC_FUNCS_H_

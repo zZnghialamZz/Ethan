@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_macros.h
+ * @file queue.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,21 +30,29 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_MACROS_H_
-#define ETHAN_UI_MACROS_H_
+#ifndef ETHAN_UTILS_DS_QUEUE_H_
+#define ETHAN_UTILS_DS_QUEUE_H_
 
 namespace Ethan {
 
-//------------------------------------------------------------------------------
-// UI Configurations
-// NOTE(Nghia Lam): Some of these configs is used for fixed size data storage,
-// which might need to comeback and revise many times. --> Can we consider using
-// another built-in dynamic array?
-//------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
-#define UICOMMAND_SIZE   256 * 1024
+template <typename T>
+class Queue {
+ public:
+  // Constructor & Destructor
+  Queue() : size_(0), head_(nullptr), tail_(nullptr) {}
+  ~Queue() = default;
+
+  // Methods
+  INLINE void Enqueue(const T& value) {}
+
+  [[nodiscard]] INLINE const u32 GetSize() const { return size_; }
+
+ private:
+  u32 size_;
+  T* head_;
+  T* tail_;
+};
 
 }  // namespace Ethan
 
-#endif  // ETHAN_UI_MACROS_H_
+#endif  // ETHAN_UTILS_DS_QUEUE_H_

@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_macros.h
+ * @file ui_command.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,21 +30,29 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_MACROS_H_
-#define ETHAN_UI_MACROS_H_
+#ifndef ETHAN_UI_COMMAND_H_
+#define ETHAN_UI_COMMAND_H_
 
 namespace Ethan {
 
-//------------------------------------------------------------------------------
-// UI Configurations
-// NOTE(Nghia Lam): Some of these configs is used for fixed size data storage,
-// which might need to comeback and revise many times. --> Can we consider using
-// another built-in dynamic array?
-//------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
-#define UICOMMAND_SIZE   256 * 1024
+class UICommand {
+ public:
+  UICommand* Next        = nullptr;
+  virtual void Execute() = 0;
+};
+
+class UIRenderRectCommand : public UICommand {
+ public:
+  UIRenderRectCommand(float x, float y, float w, float h, const UIColor& color);
+  ~UIRenderRectCommand();
+
+  void Execute() override;
+
+ private:
+  float x_, y_, w_, h_;
+  UIColor color_;
+};
 
 }  // namespace Ethan
 
-#endif  // ETHAN_UI_MACROS_H_
+#endif  // ETHAN_UI_COMMAND_H_

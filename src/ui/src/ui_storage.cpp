@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_macros.h
+ * @file ui_storage.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,21 +30,47 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_MACROS_H_
-#define ETHAN_UI_MACROS_H_
+#include "ethan/ui/ui_storage.h"
 
 namespace Ethan {
 
-//------------------------------------------------------------------------------
-// UI Configurations
-// NOTE(Nghia Lam): Some of these configs is used for fixed size data storage,
-// which might need to comeback and revise many times. --> Can we consider using
-// another built-in dynamic array?
-//------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
-#define UICOMMAND_SIZE   256 * 1024
+UIStorage::UIStorage() {}
+
+UIStorage::~UIStorage() { Clear(); }
+
+void UIStorage::Clear() {
+  containers_.Clear();
+  commands_.Clear();
+  ids_.Clear();
+}
+
+void UIStorage::ClearCommands() {
+  commands_.Clear();
+}
+
+void UIStorage::StoreCommand(const UICommand &command) {
+  commands_.Push(command);
+}
+
+UIContainer* UIStorage::GetContainer(UIID id) {
+  for (u32 i = 0; i < ids_.Size(); ++i) {
+    if (ids_[i] == id) return &containers_[i];
+  }
+
+  // Not found containers in the storage, create a new container and add to
+  // current storage.
+  UIContainer container;
+  container.Init();
+  containers_.Push(container);
+  ids_.Push(id);
+
+  return &containers_.Peek();
+}
+
+UIID UIStorage::GetUIID(const char *data) {
+  UIID id = (ids_.Size() > 0) ? ids_[ids_.Size() - 1] : HASH_OFFSET;
+  id = Hash(id, data);
+  return id;
+}
 
 }  // namespace Ethan
-
-#endif  // ETHAN_UI_MACROS_H_

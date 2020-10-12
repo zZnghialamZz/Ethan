@@ -55,6 +55,7 @@ namespace Ethan {}
 // TODO(Nghia Lam): Code Documentation
 // TODO(Nghia Lam): Learn SIMD and write my own math library
 // TODO(Nghia Lam): Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
-// TODO(Nghia Lam): Cleanup CMake Setup
+// TODO(Nghia Lam): Cleanup CMake Setup.
+// TODO(Nghia Lam): Review all the code and tweaking for a better memory layout.
 
 #endif // ETHAN_H_
