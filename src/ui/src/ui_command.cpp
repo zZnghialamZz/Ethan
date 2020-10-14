@@ -33,20 +33,33 @@
 #include "ethan/ui/ui_command.h"
 
 #include "ethan/core/graphic/renderer/renderer2D.h"
+#include "ethan/ui/ui_manager.h"
 
 namespace Ethan {
 
+// Rect
+// ---
 UIRenderRectCommand::UIRenderRectCommand(float x,
                                          float y,
                                          float w,
                                          float h,
                                          const UIColor& color)
-    : x_(x), y_(y), w_(w), h_(h), color_(color) {}
-
-UIRenderRectCommand::~UIRenderRectCommand() {}
+    : x(x), y(y), w(w), h(h), Color(color) {}
 
 void UIRenderRectCommand::Execute() {
-  Renderer2D::DrawQuad(x_, y_, w_, h_, ColorHexToRGBA(color_));
+  Renderer2D::DrawQuad(x, y, w, h, ColorHexToRGBA(Color));
+}
+
+// Text
+// ---
+UIRenderTextCommand::UIRenderTextCommand(const char* text,
+                                         float x,
+                                         float y,
+                                         const UIColor& color)
+    : Text(text), x(x), y(y), Color(color) {}
+
+void UIRenderTextCommand::Execute() {
+  Renderer2D::DrawText(Text, *UIManager::Instance()->GetFont(), x, y);
 }
 
 }  // namespace Ethan

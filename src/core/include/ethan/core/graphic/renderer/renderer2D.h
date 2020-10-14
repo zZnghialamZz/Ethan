@@ -153,8 +153,8 @@ class Renderer2D {
                        const UIFont& font,
                        float x,
                        float y,
-                       Render2DLayer layer   = DEFAULT,
-                       const glm::vec4& tint = glm::vec4(1.0f));
+                       const glm::vec4& tint = glm::vec4(1.0f),
+                       Render2DLayer layer   = DEFAULT);
 
   // Texture
   // ---

@@ -47,7 +47,7 @@ class UIStorage {
   void Clear();
   void ClearCommands();
 
-  void StoreCommand(const UICommand& command);
+  UICommand* StoreCommand(const UICommand& command);
   UIContainer* GetContainer(UIID id);
   UIID GetUIID(const char* data);
 

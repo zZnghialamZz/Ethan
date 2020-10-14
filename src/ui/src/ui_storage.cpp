@@ -48,8 +48,9 @@ void UIStorage::ClearCommands() {
   commands_.Clear();
 }
 
-void UIStorage::StoreCommand(const UICommand &command) {
+UICommand* UIStorage::StoreCommand(const UICommand &command) {
   commands_.Push(command);
+  return &commands_.Peek();
 }
 
 UIContainer* UIStorage::GetContainer(UIID id) {
@@ -60,16 +61,16 @@ UIContainer* UIStorage::GetContainer(UIID id) {
   // Not found containers in the storage, create a new container and add to
   // current storage.
   UIContainer container;
-  container.Init();
-  containers_.Push(container);
+  containers_.Push(container); // We made a copy here ... Is this slow?
   ids_.Push(id);
 
+  containers_.Peek().Init();
   return &containers_.Peek();
 }
 
 UIID UIStorage::GetUIID(const char *data) {
-  UIID id = (ids_.Size() > 0) ? ids_[ids_.Size() - 1] : HASH_OFFSET;
-  id = Hash(id, data);
+  // UIID id = (ids_.Size() > 0) ? ids_[ids_.Size() - 1] : HASH_OFFSET;
+  UIID id = Hash(HASH_OFFSET, data);
   return id;
 }
 

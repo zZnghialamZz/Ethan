@@ -50,25 +50,34 @@ void UIContainer::Init() {
 }
 
 void UIContainer::Render() {
-  if (head_ != nullptr) {
+  if (head_) {
     UICommand* cmd = head_;
     while (cmd) {
-      cmd->Execute();
+      switch(cmd->Type) {
+        case UICOMMAND_RENDERRECT:
+          cmd->RectCmd.Execute();
+          break;
+        case UICOMMAND_RENDERTEXT:
+          cmd->TextCmd.Execute();
+          break;
+      }
       cmd = cmd->Next;
     }
   }
 }
 
-void UIContainer::AddCommand(UICommand* command) {
+void UIContainer::AddCommand(UICommand& command) {
   UIContext* ctx = UIManager::Instance()->GetContext();
-  ctx->Storage.StoreCommand(*command);
+  UICommand* cmd_ptr = ctx->Storage.StoreCommand(command);
 
   if (command_size_ == 0) {
-    head_ = tail_ = command;
+    head_ = tail_ = cmd_ptr;
   } else {
-    tail_->Next = command;
+    tail_->Next = cmd_ptr;
     tail_       = tail_->Next;
   }
+
+  ++command_size_;
 }
 
 }  // namespace Ethan

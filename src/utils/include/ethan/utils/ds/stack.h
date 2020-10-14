@@ -42,24 +42,30 @@ template <typename T, size_t size>
 class Stack {
  public:
   // Constructor & Destructor
-  Stack() { array_[size]; }
-  ~Stack() = default;
+  Stack() {}
+  ~Stack() {}
 
   // Methods
   INLINE T& operator[] (u32 index) { return array_[index]; }
-  INLINE void Push(const T& value) { array_[index_++] = value; }
-  INLINE T Pop() { return array_[--index_]; }
+  INLINE void Push(const T& value) {
+    array_[index_] = value;
+    ++index_;
+  }
+  INLINE T Pop() {
+    --index_;
+    return array_[index_];
+  }
   INLINE void Clear() {
     index_ = 0;
     memset(array_, 0, sizeof(array_));
   }
 
   [[nodiscard]] INLINE T& Peek() { return array_[index_ - 1]; }
-  [[nodiscard]] INLINE int Size() const { return index_; }
+  [[nodiscard]] INLINE u32 Size() const { return index_; }
   [[nodiscard]] INLINE bool IsEmpty() const { return index_ == 0; }
 
  private:
-  T* array_;
+  T array_[size];
   u32 index_ = 0;
 };
 

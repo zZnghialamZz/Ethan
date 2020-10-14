@@ -218,8 +218,8 @@ void Renderer2D::DrawText(const char* text,
                           const UIFont& font,
                           float x,
                           float y,
-                          Render2DLayer layer,
-                          const glm::vec4& tint) {
+                          const glm::vec4& tint,
+                          Render2DLayer layer) {
   // TODO(Nghia Lam): Profile here.
 
   PreDrawing();

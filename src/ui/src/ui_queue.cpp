@@ -39,14 +39,14 @@ UIQueue::UIQueue() : head_(nullptr), tail_(nullptr), size_(0) {}
 UIQueue::~UIQueue() { Clear(); }
 
 void UIQueue::Clear() {
-  UIContainer* travel = head_;
-  while (travel) {
-    UIContainer* next = travel->Next;
-    travel->Prev = travel->Next = nullptr;
-    travel                      = next;
-  }
-  head_ = tail_ = travel = nullptr;
-  size_                  = 0;
+  // UIContainer* travel = head_;
+  // while (travel) {
+  //   UIContainer* next = travel->Next;
+  //   travel->Prev = travel->Next = nullptr;
+  //   travel                      = next;
+  // }
+  head_ = tail_ = nullptr;
+  size_         = 0;
 }
 
 void UIQueue::Add(UIContainer* container) { AddLast(container); }
@@ -55,8 +55,8 @@ void UIQueue::AddLast(UIContainer* container) {
   if (IsEmpty()) {
     head_ = tail_ = container;
   } else {
-    tail_->Next = container;
-    tail_       = tail_->Next;
+    head_->Next = container;
+    tail_       = head_->Next;
   }
   ++size_;
 }

@@ -35,22 +35,59 @@
 
 namespace Ethan {
 
-class UICommand {
- public:
-  UICommand* Next        = nullptr;
-  virtual void Execute() = 0;
+using UICommandType = enum : u8 {
+  UICOMMAND_RENDERRECT = 1,
+  UICOMMAND_RENDERTEXT,
 };
 
-class UIRenderRectCommand : public UICommand {
- public:
-  UIRenderRectCommand(float x, float y, float w, float h, const UIColor& color);
-  ~UIRenderRectCommand();
+struct UIRenderRectCommand {
+  UIFloat x, y, w, h;
+  UIColor Color;
 
-  void Execute() override;
+  void Execute();
 
- private:
-  float x_, y_, w_, h_;
-  UIColor color_;
+  UIRenderRectCommand() = default;
+  UIRenderRectCommand(float x,
+                      float y,
+                      float w,
+                      float h,
+                      const UIColor& color = COLORWHITE);
+};
+
+struct UIRenderTextCommand {
+  const char* Text;
+  UIFloat x, y;
+  UIColor Color;
+
+  void Execute();
+
+  UIRenderTextCommand() = default;
+  UIRenderTextCommand(const char* text,
+                      float x,
+                      float y,
+                      const UIColor& color = COLORWHITE);
+};
+
+struct UICommand {
+  UICommandType Type;
+  UICommand* Next;
+
+  // Union of commands
+  union {
+    UIRenderRectCommand RectCmd;
+    UIRenderTextCommand TextCmd;
+  };
+
+  // Constructors
+  UICommand() = default;
+  UICommand(UICommandType type,
+            UICommand* next,
+            const UIRenderRectCommand& rectCmd)
+      : Type(type), Next(next), RectCmd(rectCmd) {}
+  UICommand(UICommandType type,
+            UICommand* next,
+            const UIRenderTextCommand& textCmd)
+      : Type(type), Next(next), TextCmd(textCmd) {}
 };
 
 }  // namespace Ethan

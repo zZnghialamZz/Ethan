@@ -56,7 +56,7 @@ class UIContainer {
   //------------------------------------------------------------------------------
   void Init();
   void Render();
-  void AddCommand(UICommand* command);
+  void AddCommand(UICommand& command);
 
  private:
   UIRect<float> body_;

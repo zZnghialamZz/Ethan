@@ -82,19 +82,24 @@ void UIWindow::RenderWindow(UIContainer* container,
   //  - Cannot config rounding value.
   //  - Hard to work with custom style. (light/dark, etc..)
   if (!style->WindowRounding) {
-    UIRenderRectCommand draw_border(window_bound.x - style->WindowBorder,
-                                    window_bound.y - style->WindowBorder,
-                                    window_bound.w + style->WindowBorder * 2,
-                                    window_bound.h + style->WindowBorder * 2,
-                                    style->Colors[UITHEME_BORDER]);
-    UIRenderRectCommand draw_window(window_bound.x,
-                                    window_bound.y,
-                                    window_bound.w,
-                                    window_bound.h,
-                                    style->Colors[UITHEME_WINDOWBG]);
+    UICommand draw_border{
+        UICOMMAND_RENDERRECT,
+        nullptr,
+        (UIRenderRectCommand(window_bound.x - style->WindowBorder,
+                            window_bound.y - style->WindowBorder,
+                            window_bound.w + style->WindowBorder * 2,
+                            window_bound.h + style->WindowBorder * 2,
+                            style->Colors[UITHEME_BORDER]))};
+    UICommand draw_window{UICOMMAND_RENDERRECT,
+                          nullptr,
+                          (UIRenderRectCommand(window_bound.x,
+                                              window_bound.y,
+                                              window_bound.w,
+                                              window_bound.h,
+                                              style->Colors[UITHEME_WINDOWBG]))};
 
-    container->AddCommand(&draw_border);
-    container->AddCommand(&draw_window);
+    container->AddCommand(draw_border);
+    container->AddCommand(draw_window);
   }
 }
 
@@ -122,15 +127,23 @@ void UIWindow::RenderTitleBar(UIContainer* container,
     style->WindowTitleHeight = fsize_ + padding_ * 2;
   }
 
-  Renderer2D::DrawQuad(window_bound.x,
-                       window_bound.y,
-                       window_bound.w,
-                       style->WindowTitleHeight,
-                       ColorHexToRGBA(style->Colors[UITHEME_TITLEBG]));
-  Renderer2D::DrawText(title,
-                       *UIManager::Instance()->GetFont(),
-                       window_bound.x + padding_ * 2,
-                       window_bound.y + style->WindowTitleHeight - padding_);
+  UICommand draw_bar{UICOMMAND_RENDERRECT,
+                     nullptr,
+                     (UIRenderRectCommand(window_bound.x,
+                                         window_bound.y,
+                                         window_bound.w,
+                                         style->WindowTitleHeight,
+                                         style->Colors[UITHEME_TITLEBG]))};
+  UICommand draw_text{
+      UICOMMAND_RENDERTEXT,
+      nullptr,
+      (UIRenderTextCommand(
+          title,
+          window_bound.x + padding_ * 2,
+          window_bound.y + style->WindowTitleHeight - padding_))};
+
+  container->AddCommand(draw_bar);
+  container->AddCommand(draw_text);
 }
 
 // TODO(Nghia Lam): Support icons & draw this
@@ -143,10 +156,14 @@ void UIWindow::RenderCloseButton(UIContainer* container,
   int padding_   = (style->WindowTitleHeight - fheight_) / 2;
   // Since we already scaling the titlebar with padding (if needed), we only
   // need to apply it here
-  Renderer2D::DrawText("X",
-                       *UIManager::Instance()->GetFont(),
-                       window_bound.x + window_bound.w - padding_ * 2 - fwidth_,
-                       window_bound.y + style->WindowTitleHeight - padding_);
+  UICommand draw_text{
+      UICOMMAND_RENDERTEXT,
+      nullptr,
+      (UIRenderTextCommand(
+          "X",
+          window_bound.x + window_bound.w - padding_ * 2 - fwidth_,
+          window_bound.y + style->WindowTitleHeight - padding_))};
+  container->AddCommand(draw_text);
 }
 
 // TODO(Nghia Lam): Draw this

@@ -57,5 +57,7 @@ namespace Ethan {}
 // TODO(Nghia Lam): Support multiple Rendering API (DirectX 11 & 12, Metal, Vulkan)
 // TODO(Nghia Lam): Cleanup CMake Setup.
 // TODO(Nghia Lam): Review all the code and tweaking for a better memory layout.
+//                  --> Consider changing to DOT approach ?
+//                  --> Do I really need to rewrite all the stuffs ?
 
 #endif // ETHAN_H_
