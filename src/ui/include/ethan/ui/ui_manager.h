@@ -45,11 +45,17 @@ class UIManager {
   void BeginUI();
   void EndUI();
 
+  void UpdateWidget(UIID id, const UIRect<float>& body);
+  void SetFocus(UIID id);
+  void SetHover(UIID id);
+
   [[nodiscard]] INLINE static UIManager* Instance() { return instance_; }
   [[nodiscard]] INLINE UIContext* GetContext() { return ctx_; }
   [[nodiscard]] INLINE UIStyle* GetStyle() { return ctx_->Style; }
   [[nodiscard]] INLINE UIFont* GetFont() { return &ctx_->Font; }
   [[nodiscard]] INLINE UIIO* GetIO() { return &ctx_->IO; }
+  [[nodiscard]] INLINE UIID GetFocus() { return ctx_->Focus; }
+  [[nodiscard]] INLINE UIID GetHover() { return ctx_->Hover; }
 
  private:
   static UIManager* instance_;

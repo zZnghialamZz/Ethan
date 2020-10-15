@@ -51,6 +51,9 @@ class UIContext {
   UIFont Font;
   UIIO IO;
 
+  UIID Focus;
+  UIID Hover;
+
   UIStyle* Style;
 
  private:

@@ -60,18 +60,11 @@ class UIWindow {
   static void End();
 
  private:
-  static void Render(UIContainer* container,
-                     const char* title,
-                     const UIRect<float>& bounds,
-                     UIWindowFlags flags);
-  static void RenderWindow(UIContainer* container,
-                           const UIRect<float>& window_bound);
-  static void RenderCloseButton(UIContainer* container,
-                                const UIRect<float>& window_bound);
-  static void RenderScrollbar(UIContainer* container,
-                              const UIRect<float>& window_bound);
+  static void RenderWindow(UIContainer* container);
+  static void RenderCloseButton(UIContainer* container);
+  static void RenderScrollbar(UIContainer* container);
   static void RenderTitleBar(UIContainer* container,
-                             const UIRect<float>& window_bound,
+                             const UIRect<float>& bounds,
                              const char* title);
 };
 

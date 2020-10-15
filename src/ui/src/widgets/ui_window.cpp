@@ -44,36 +44,44 @@ namespace Ethan {
 void UIWindow::Begin(const char* title,
                      const UIRect<float>& bounds,
                      UIWindowFlags flags) {
-  // TODO(Nghia Lam): IMGUI logic here
   UIContext* ctx         = UIManager::Instance()->GetContext();
   UIID id                = ctx->Storage.GetContainerUIID(title);
   UIContainer* container = ctx->Storage.GetContainer(id);
 
-  // Defer render commands
-  Render(container, title, bounds, flags);
+  if (container->Body.w == 0) container->Body = bounds;
+  UIManager::Instance()->UpdateWidget(id, container->Body);
+
+  // Defer commands
+  // NOTE(Nghia Lam): This order does matter
+  RenderWindow(container);
+  if (~flags & UIWINDOWFLAG_NOTITLE) {
+    // Title Bar
+    UIRect<float> title_rect(container->Body.x,
+                             container->Body.y,
+                             container->Body.w,
+                             ctx->Style->WindowTitleHeight);
+
+    RenderTitleBar(container, title_rect, title);
+
+    if (ctx->Focus == id && ctx->IO.GetMouseDown() == UIIO_MOUSE_LEFT) {
+      container->Body.x += ctx->IO.GetMouseDelta().x;
+      container->Body.y += ctx->IO.GetMouseDelta().y;
+    }
+
+    // Close Button
+    if (~flags & UIWINDOWFLAG_NOCLOSE) RenderCloseButton(container);
+  }
+  // Scroll Bar
+  if (~flags & UIWINDOWFLAG_NOSCROLL) RenderScrollbar(container);
 }
 
 void UIWindow::End() {}
-
-void UIWindow::Render(UIContainer* container,
-                      const char* title,
-                      const UIRect<float>& bounds,
-                      UIWindowFlags flags) {
-  // NOTE(Nghia Lam): This order does matter
-  RenderWindow(container, bounds);
-  if (~flags & UIWINDOWFLAG_NOTITLE) {
-    RenderTitleBar(container, bounds, title);
-    if (~flags & UIWINDOWFLAG_NOCLOSE) RenderCloseButton(container, bounds);
-  }
-  if (~flags & UIWINDOWFLAG_NOSCROLL) RenderScrollbar(container, bounds);
-}
 
 //------------------------------------------------------------------------------
 // Drawing
 //------------------------------------------------------------------------------
 
-void UIWindow::RenderWindow(UIContainer* container,
-                            const UIRect<float>& window_bound) {
+void UIWindow::RenderWindow(UIContainer* container) {
   UIStyle* style = UIManager::Instance()->GetStyle();
 
   // NOTE(Nghia Lam): Since I dont support drawing too many shapes right now, we
@@ -85,18 +93,19 @@ void UIWindow::RenderWindow(UIContainer* container,
     UICommand draw_border{
         UICOMMAND_RENDERRECT,
         nullptr,
-        (UIRenderRectCommand(window_bound.x - style->WindowBorder,
-                            window_bound.y - style->WindowBorder,
-                            window_bound.w + style->WindowBorder * 2,
-                            window_bound.h + style->WindowBorder * 2,
-                            style->Colors[UITHEME_BORDER]))};
-    UICommand draw_window{UICOMMAND_RENDERRECT,
-                          nullptr,
-                          (UIRenderRectCommand(window_bound.x,
-                                              window_bound.y,
-                                              window_bound.w,
-                                              window_bound.h,
-                                              style->Colors[UITHEME_WINDOWBG]))};
+        (UIRenderRectCommand(container->Body.x - style->WindowBorder,
+                             container->Body.y - style->WindowBorder,
+                             container->Body.w + style->WindowBorder * 2,
+                             container->Body.h + style->WindowBorder * 2,
+                             style->Colors[UITHEME_BORDER]))};
+    UICommand draw_window{
+        UICOMMAND_RENDERRECT,
+        nullptr,
+        (UIRenderRectCommand(container->Body.x,
+                             container->Body.y,
+                             container->Body.w,
+                             container->Body.h,
+                             style->Colors[UITHEME_WINDOWBG]))};
 
     container->AddCommand(draw_border);
     container->AddCommand(draw_window);
@@ -104,7 +113,7 @@ void UIWindow::RenderWindow(UIContainer* container,
 }
 
 void UIWindow::RenderTitleBar(UIContainer* container,
-                              const UIRect<float>& window_bound,
+                              const UIRect<float>& bounds,
                               const char* title) {
   // Get style and calculate the title padding
   // ---
@@ -129,26 +138,25 @@ void UIWindow::RenderTitleBar(UIContainer* container,
 
   UICommand draw_bar{UICOMMAND_RENDERRECT,
                      nullptr,
-                     (UIRenderRectCommand(window_bound.x,
-                                         window_bound.y,
-                                         window_bound.w,
-                                         style->WindowTitleHeight,
-                                         style->Colors[UITHEME_TITLEBG]))};
+                     (UIRenderRectCommand(container->Body.x,
+                                          container->Body.y,
+                                          container->Body.w,
+                                          style->WindowTitleHeight,
+                                          style->Colors[UITHEME_TITLEBG]))};
   UICommand draw_text{
       UICOMMAND_RENDERTEXT,
       nullptr,
       (UIRenderTextCommand(
           title,
-          window_bound.x + padding_ * 2,
-          window_bound.y + style->WindowTitleHeight - padding_))};
+          container->Body.x + padding_ * 2,
+          container->Body.y + style->WindowTitleHeight - padding_))};
 
   container->AddCommand(draw_bar);
   container->AddCommand(draw_text);
 }
 
 // TODO(Nghia Lam): Support icons & draw this
-void UIWindow::RenderCloseButton(UIContainer* container,
-                                 const UIRect<float>& window_bound) {
+void UIWindow::RenderCloseButton(UIContainer* container) {
   // Duplicate code ? -> Consider move these lines to the RenderWindow function
   UIStyle* style = UIManager::Instance()->GetStyle();
   float fwidth_  = UIManager::Instance()->GetFont()->GetFontAtlas().Char[33].ax;
@@ -161,13 +169,12 @@ void UIWindow::RenderCloseButton(UIContainer* container,
       nullptr,
       (UIRenderTextCommand(
           "X",
-          window_bound.x + window_bound.w - padding_ * 2 - fwidth_,
-          window_bound.y + style->WindowTitleHeight - padding_))};
+          container->Body.x + container->Body.w - padding_ * 2 - fwidth_,
+          container->Body.y + style->WindowTitleHeight - padding_))};
   container->AddCommand(draw_text);
 }
 
 // TODO(Nghia Lam): Draw this
-void UIWindow::RenderScrollbar(UIContainer* container,
-                               const UIRect<float>& window_bound) {}
+void UIWindow::RenderScrollbar(UIContainer* container) {}
 
 }  // namespace Ethan

@@ -54,14 +54,12 @@ UIManager::~UIManager() {
   instance_ = nullptr;
 }
 
-void UIManager::BeginUI() {
-  ctx_->IO.StartIO();
-}
+void UIManager::BeginUI() { ctx_->IO.StartIO(); }
 
 void UIManager::EndUI() {
   // Render
   UIContainer* ui = ctx_->Queue.begin();
-  while(ui) {
+  while (ui) {
     ui->Render();
     ui = ui->Next;
   }
@@ -69,6 +67,24 @@ void UIManager::EndUI() {
   // Cleanup
   ctx_->Storage.ClearCommands();
   ctx_->IO.ResetIO();
+}
+
+void UIManager::SetFocus(UIID id) { ctx_->Focus = id; }
+void UIManager::SetHover(UIID id) { ctx_->Hover = id; }
+
+void UIManager::UpdateWidget(UIID id, const UIRect<float>& body) {
+  bool contain_mouse = body.IsContain(ctx_->IO.GetMousePosition());
+
+  if (contain_mouse && !ctx_->IO.GetMouseDown()) SetHover(id);
+  if (ctx_->Focus == id) {
+    if (ctx_->IO.GetMousePressed() && !contain_mouse) SetFocus(0);
+  }
+  if (ctx_->Hover == id) {
+    if (ctx_->IO.GetMousePressed())
+      SetFocus(id);
+    else if (!contain_mouse)
+      SetHover(0);
+  }
 }
 
 }  // namespace Ethan
