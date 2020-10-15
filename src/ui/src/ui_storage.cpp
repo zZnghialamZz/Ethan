@@ -68,10 +68,16 @@ UIContainer* UIStorage::GetContainer(UIID id) {
   return &containers_.Peek();
 }
 
-UIID UIStorage::GetUIID(const char *data) {
-  // UIID id = (ids_.Size() > 0) ? ids_[ids_.Size() - 1] : HASH_OFFSET;
+UIID UIStorage::GetContainerUIID(const char *data) {
   UIID id = Hash(HASH_OFFSET, data);
   return id;
+}
+
+UIID UIStorage::GetWidgetUIID(const char *data) {
+  UIID id = (ids_.Size() > 0) ? ids_[ids_.Size() - 1] : HASH_OFFSET;
+  id = Hash(id, data);
+  return id;
+
 }
 
 }  // namespace Ethan

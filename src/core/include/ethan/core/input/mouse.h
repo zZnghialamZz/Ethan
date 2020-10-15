@@ -41,7 +41,7 @@ namespace Ethan {
 /// --- Main Mouse API
 /// -------------------------------------------
 
-typedef enum class MouseCode : uint16_t {
+typedef enum class MouseCode : u8 {
   // From glfw3.h
   Button0                = 0,
   Button1                = 1,

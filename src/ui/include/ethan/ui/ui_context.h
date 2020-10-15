@@ -33,6 +33,7 @@
 #ifndef ETHAN_UI_CONTEXT_H_
 #define ETHAN_UI_CONTEXT_H_
 
+#include "ui_io.h"
 #include "ui_font.h"
 #include "ui_style.h"
 #include "ui_queue.h"
@@ -48,6 +49,7 @@ class UIContext {
   UIStorage Storage;
   UIQueue Queue;
   UIFont Font;
+  UIIO IO;
 
   UIStyle* Style;
 

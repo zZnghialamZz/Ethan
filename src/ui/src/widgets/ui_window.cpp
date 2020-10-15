@@ -46,7 +46,7 @@ void UIWindow::Begin(const char* title,
                      UIWindowFlags flags) {
   // TODO(Nghia Lam): IMGUI logic here
   UIContext* ctx         = UIManager::Instance()->GetContext();
-  UIID id                = ctx->Storage.GetUIID(title);
+  UIID id                = ctx->Storage.GetContainerUIID(title);
   UIContainer* container = ctx->Storage.GetContainer(id);
 
   // Defer render commands

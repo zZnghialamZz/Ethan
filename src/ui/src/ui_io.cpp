@@ -10,7 +10,7 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_manager.cpp
+ * @file ui_io.cpp
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
  * @brief
@@ -30,45 +30,41 @@
  * limitations under the License.
  */
 
-#include "ethan/ui/ui_manager.h"
+#include "ethan/ui/ui_io.h"
 
 namespace Ethan {
 
-// Is this safe?
-UIManager* UIManager::instance_ = nullptr;
+UIIO::UIIO()
+    : mouse_position_(0)
+    , mouse_last_pos_(0)
+    , mouse_delta_(0)
+    , scroll_delta_(0) {}
 
-UIManager::UIManager() {
-  if (instance_ != nullptr)
-    ETLOG_CORE_ERROR("There can only be 1 instance of UIManager !!");
+UIIO::~UIIO() {}
 
-  instance_ = this;
+void UIIO::StartIO() { mouse_delta_ = mouse_position_ - mouse_last_pos_; }
 
-  // NOTE(Nghia Lam): The only memory allocation we will make till this point
-  // for the Immediate Mode UI of Ethan.
-  ctx_ = new UIContext();
+void UIIO::ResetIO() {
+  mouse_pressed_  = 0;
+  scroll_delta_   = UIVec2(0);
+  mouse_last_pos_ = mouse_position_;
 }
 
-UIManager::~UIManager() {
-  delete ctx_;
-  ctx_      = nullptr;
-  instance_ = nullptr;
+void UIIO::UpdateMouseMove(const UIFloat& x, const UIFloat& y) {
+  mouse_position_.x = x;
+  mouse_position_.y = y;
 }
 
-void UIManager::BeginUI() {
-  ctx_->IO.StartIO();
+void UIIO::UpdateMouseDown(UIMouseInput mouse_btn) {
+  mouse_pressed_ |= mouse_btn;
+  mouse_down_ |= mouse_btn;
 }
 
-void UIManager::EndUI() {
-  // Render
-  UIContainer* ui = ctx_->Queue.begin();
-  while(ui) {
-    ui->Render();
-    ui = ui->Next;
-  }
+void UIIO::UpdateMouseUp(UIMouseInput mouse_btn) { mouse_down_ &= ~mouse_btn; }
 
-  // Cleanup
-  ctx_->Storage.ClearCommands();
-  ctx_->IO.ResetIO();
+void UIIO::UpdateScrollDelta(const UIFloat& delta_x, const UIFloat& delta_y) {
+  mouse_delta_.x = delta_x;
+  mouse_delta_.y = delta_y;
 }
 
 }  // namespace Ethan

@@ -49,7 +49,8 @@ class UIStorage {
 
   UICommand* StoreCommand(const UICommand& command);
   UIContainer* GetContainer(UIID id);
-  UIID GetUIID(const char* data);
+  UIID GetContainerUIID(const char* data);
+  UIID GetWidgetUIID(const char* data);
 
  private:
   // Datas
