@@ -52,22 +52,25 @@ void UIQueue::Clear() {
 void UIQueue::Add(UIContainer* container) { AddLast(container); }
 
 void UIQueue::AddLast(UIContainer* container) {
+  if (container->Next) container->Next = nullptr;
   if (IsEmpty()) {
     head_ = tail_ = container;
   } else {
-    head_->Next = container;
-    tail_       = head_->Next;
+    container->Prev = tail_;
+    tail_->Next     = container;
+    tail_           = tail_->Next;
   }
   ++size_;
 }
 
 void UIQueue::AddFirst(UIContainer* container) {
+  if (container->Prev) container->Prev = nullptr;
   if (IsEmpty()) {
     head_ = tail_ = container;
   } else {
     container->Next = head_;
     head_->Prev     = container;
-    head_           = container;
+    head_           = head_->Prev;
   }
   ++size_;
 }
@@ -75,8 +78,14 @@ void UIQueue::AddFirst(UIContainer* container) {
 void UIQueue::Remove(UIContainer* container) {
   // If the node need to be removed is somewhere either at the head or the tail,
   // handle those immediately
-  if (container->Prev == nullptr) RemoveFirst();
-  if (container->Next == nullptr) RemoveLast();
+  if (container->Prev == nullptr) {
+    RemoveFirst();
+    return;
+  }
+  if (container->Next == nullptr) {
+    RemoveLast();
+    return;
+  }
 
   // Skip this node in queue
   container->Next->Prev = container->Prev;

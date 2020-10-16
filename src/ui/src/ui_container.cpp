@@ -31,6 +31,7 @@
  */
 
 #include "ethan/ui/ui_container.h"
+
 #include "ethan/ui/ui_manager.h"
 
 namespace Ethan {
@@ -38,6 +39,7 @@ namespace Ethan {
 UIContainer::UIContainer()
     : Prev(nullptr)
     , Next(nullptr)
+    , IsOpen(true)
     , command_size_(0)
     , head_(nullptr)
     , tail_(nullptr) {}
@@ -53,7 +55,7 @@ void UIContainer::Render() {
   if (head_) {
     UICommand* cmd = head_;
     while (cmd) {
-      switch(cmd->Type) {
+      switch (cmd->Type) {
         case UICOMMAND_RENDERRECT:
           cmd->RectCmd.Execute();
           break;
@@ -67,7 +69,7 @@ void UIContainer::Render() {
 }
 
 void UIContainer::AddCommand(UICommand& command) {
-  UIContext* ctx = UIManager::Instance()->GetContext();
+  UIContext* ctx     = UIManager::Instance()->GetContext();
   UICommand* cmd_ptr = ctx->Storage.StoreCommand(command);
 
   if (command_size_ == 0) {

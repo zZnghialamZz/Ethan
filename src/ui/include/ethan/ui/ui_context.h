@@ -54,6 +54,9 @@ class UIContext {
   UIID Focus;
   UIID Hover;
 
+  UIContainer* FocusContainer;
+  UIContainer* HoverContainer;
+
   UIStyle* Style;
 
  private:

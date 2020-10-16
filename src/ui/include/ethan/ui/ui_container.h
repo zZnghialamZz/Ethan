@@ -51,6 +51,7 @@ class UIContainer {
   UIRect<float> Body;
   UIContainer* Prev;
   UIContainer* Next;
+  UIBool IsOpen;
 
   //------------------------------------------------------------------------------
   // Methods

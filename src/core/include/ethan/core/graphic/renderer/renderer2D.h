@@ -62,8 +62,6 @@ struct BatchVertex : public Mesh::Vertex {
   float TextureIndex;
   glm::vec2 TilingFactor;
 
-  // TODO(Nghia Lam): Consider using 2 shaders for this?
-  //                  -> Maybe we need pipeline?
   float IsFont;
 
   BatchVertex()

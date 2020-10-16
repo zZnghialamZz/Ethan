@@ -47,9 +47,11 @@ void UIWindow::Begin(const char* title,
   UIContext* ctx         = UIManager::Instance()->GetContext();
   UIID id                = ctx->Storage.GetContainerUIID(title);
   UIContainer* container = ctx->Storage.GetContainer(id);
+  if (!container->IsOpen) return;
 
   if (container->Body.w == 0) container->Body = bounds;
   UIManager::Instance()->UpdateWidget(id, container->Body);
+  UIManager::Instance()->UpdateContainer(container);
 
   // Defer commands
   // NOTE(Nghia Lam): This order does matter
@@ -69,10 +71,33 @@ void UIWindow::Begin(const char* title,
     }
 
     // Close Button
-    if (~flags & UIWINDOWFLAG_NOCLOSE) RenderCloseButton(container);
+    if (~flags & UIWINDOWFLAG_NOCLOSE) {
+      // Temporarily use 'X' character for the close button <- Need a way to
+      // render icons for these button
+      UIStyle* style = ctx->Style;
+      float fwidth_  = ctx->Font.GetFontAtlas().Char[33].ax;
+      float fheight_ = ctx->Font.GetFontAtlas().Char[33].bh;
+      int padding_   = (style->WindowTitleHeight - fheight_) / 2;
+      // Since we already scaling the titlebar with padding (if needed), we only
+      // need to apply it here
+      UIRect<float> close_rect(
+          container->Body.x + container->Body.w - padding_ * 2 - fwidth_,
+          container->Body.y + padding_,
+          fwidth_,
+          fheight_);
+      if (close_rect.IsContain(ctx->IO.GetMousePosition()) &&
+          ctx->IO.GetMousePressed() == UIIO_MOUSE_LEFT) {
+        container->IsOpen = false;
+      }
+      // Text render downside to up (reverse of quad rendering)
+      RenderCloseButton(container, close_rect.x, close_rect.y + close_rect.h);
+    }
   }
+
   // Scroll Bar
   if (~flags & UIWINDOWFLAG_NOSCROLL) RenderScrollbar(container);
+
+  // Resize
 }
 
 void UIWindow::End() {}
@@ -156,21 +181,10 @@ void UIWindow::RenderTitleBar(UIContainer* container,
 }
 
 // TODO(Nghia Lam): Support icons & draw this
-void UIWindow::RenderCloseButton(UIContainer* container) {
-  // Duplicate code ? -> Consider move these lines to the RenderWindow function
-  UIStyle* style = UIManager::Instance()->GetStyle();
-  float fwidth_  = UIManager::Instance()->GetFont()->GetFontAtlas().Char[33].ax;
-  float fheight_ = UIManager::Instance()->GetFont()->GetFontAtlas().Char[33].bh;
-  int padding_   = (style->WindowTitleHeight - fheight_) / 2;
-  // Since we already scaling the titlebar with padding (if needed), we only
-  // need to apply it here
-  UICommand draw_text{
-      UICOMMAND_RENDERTEXT,
-      nullptr,
-      (UIRenderTextCommand(
-          "X",
-          container->Body.x + container->Body.w - padding_ * 2 - fwidth_,
-          container->Body.y + style->WindowTitleHeight - padding_))};
+void UIWindow::RenderCloseButton(UIContainer* container, float x, float y) {
+  UICommand draw_text{UICOMMAND_RENDERTEXT,
+                      nullptr,
+                      (UIRenderTextCommand("X", x, y))};
   container->AddCommand(draw_text);
 }
 

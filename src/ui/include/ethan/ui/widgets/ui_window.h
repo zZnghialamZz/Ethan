@@ -40,9 +40,11 @@ namespace Ethan {
 //------------------------------------------------------------------------------
 enum {
   UIWINDOWFLAG_NONE     = 0,
-  UIWINDOWFLAG_NOTITLE  = BIT(0),
-  UIWINDOWFLAG_NOCLOSE  = BIT(1),
-  UIWINDOWFLAG_NOSCROLL = BIT(2),
+  UIWINDOWFLAG_POPUP    = BIT(0),
+  UIWINDOWFLAG_NOTITLE  = BIT(1),
+  UIWINDOWFLAG_NOCLOSE  = BIT(2),
+  UIWINDOWFLAG_NOSCROLL = BIT(3),
+  UIWINDOWFLAG_NORESIZE = BIT(4),
 };
 
 //------------------------------------------------------------------------------
@@ -61,11 +63,11 @@ class UIWindow {
 
  private:
   static void RenderWindow(UIContainer* container);
-  static void RenderCloseButton(UIContainer* container);
-  static void RenderScrollbar(UIContainer* container);
   static void RenderTitleBar(UIContainer* container,
                              const UIRect<float>& bounds,
                              const char* title);
+  static void RenderScrollbar(UIContainer* container);
+  static void RenderCloseButton(UIContainer* container, float x, float y);
 };
 
 }  // namespace Ethan

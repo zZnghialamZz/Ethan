@@ -83,6 +83,14 @@ void GUI::UpdateUI() {
   UIWindow::Begin("Test Window", UIRect(400.0f, 200.0f, 800.0f, 400.0f), 0);
   {}
   UIWindow::End();
+
+  UIWindow::Begin("Test Window 2", UIRect(200.0f, 100.0f, 800.0f, 400.0f), 0);
+  {}
+  UIWindow::End();
+
+  UIWindow::Begin("Test Window 3", UIRect(100.0f, 400.0f, 800.0f, 400.0f), 0);
+  {}
+  UIWindow::End();
 }
 
 void GUI::EventCall(Event& event) {

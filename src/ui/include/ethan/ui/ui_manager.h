@@ -46,6 +46,7 @@ class UIManager {
   void EndUI();
 
   void UpdateWidget(UIID id, const UIRect<float>& body);
+  void UpdateContainer(UIContainer* container);
   void SetFocus(UIID id);
   void SetHover(UIID id);
 
@@ -58,8 +59,12 @@ class UIManager {
   [[nodiscard]] INLINE UIID GetHover() { return ctx_->Hover; }
 
  private:
+  // Private members
   static UIManager* instance_;
   UIContext* ctx_;
+
+  // Private methods
+  void BringContainerToFront(UIContainer* container);
 };
 
 }  // namespace Ethan

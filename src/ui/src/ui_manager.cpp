@@ -87,4 +87,29 @@ void UIManager::UpdateWidget(UIID id, const UIRect<float>& body) {
   }
 }
 
+void UIManager::UpdateContainer(UIContainer* container) {
+  bool contain_mouse = container->Body.IsContain(ctx_->IO.GetMousePosition());
+  if (contain_mouse && !ctx_->IO.GetMouseDown())
+    ctx_->HoverContainer = container;
+
+  if (ctx_->FocusContainer == container) {
+    if (ctx_->IO.GetMousePressed() && !contain_mouse)
+      ctx_->FocusContainer = nullptr;
+  }
+  if (ctx_->HoverContainer == container) {
+    if (ctx_->IO.GetMousePressed())
+      BringContainerToFront(container);
+    else if (!contain_mouse)
+      ctx_->HoverContainer = nullptr;
+  }
+}
+
+void UIManager::BringContainerToFront(UIContainer *container) {
+  ctx_->FocusContainer = container;
+  if (ctx_->Queue.PeekLast() == container) return;
+
+  ctx_->Queue.Remove(container);
+  ctx_->Queue.AddLast(container);
+}
+
 }  // namespace Ethan
