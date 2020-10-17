@@ -38,7 +38,9 @@ UIIO::UIIO()
     : mouse_position_(0)
     , mouse_last_pos_(0)
     , mouse_delta_(0)
-    , scroll_delta_(0) {}
+    , scroll_delta_(0)
+    , mouse_down_(0)
+    , mouse_pressed_(0) {}
 
 UIIO::~UIIO() {}
 

@@ -89,7 +89,7 @@ void UIManager::UpdateWidget(UIID id, const UIRect<float>& body) {
 
 void UIManager::UpdateContainer(UIContainer* container) {
   bool contain_mouse = IsMouseInContainer(container);
-  if (contain_mouse && !ctx_->IO.GetMouseDown())
+  if (contain_mouse && !(ctx_->IO.GetMousePressed()))
     ctx_->HoverContainer = container;
 
   if (ctx_->FocusContainer == container) {
