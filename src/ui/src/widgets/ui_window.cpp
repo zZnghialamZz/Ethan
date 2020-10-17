@@ -56,6 +56,7 @@ void UIWindow::Begin(const char* title,
   // Defer commands
   // NOTE(Nghia Lam): This order does matter
   RenderWindow(container);
+
   if (~flags & UIWINDOWFLAG_NOTITLE) {
     // Title Bar
     UIRect<float> title_rect(container->Body.x,
@@ -65,7 +66,8 @@ void UIWindow::Begin(const char* title,
 
     RenderTitleBar(container, title_rect, title);
 
-    if (ctx->Focus == id && ctx->IO.GetMouseDown() == UIIO_MOUSE_LEFT) {
+    if (ctx->FocusContainer == container &&
+        ctx->IO.GetMouseDown() == UIIO_MOUSE_LEFT) {
       container->Body.x += ctx->IO.GetMouseDelta().x;
       container->Body.y += ctx->IO.GetMouseDelta().y;
     }

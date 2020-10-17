@@ -88,7 +88,7 @@ void UIManager::UpdateWidget(UIID id, const UIRect<float>& body) {
 }
 
 void UIManager::UpdateContainer(UIContainer* container) {
-  bool contain_mouse = container->Body.IsContain(ctx_->IO.GetMousePosition());
+  bool contain_mouse = IsMouseInContainer(container);
   if (contain_mouse && !ctx_->IO.GetMouseDown())
     ctx_->HoverContainer = container;
 
@@ -99,8 +99,6 @@ void UIManager::UpdateContainer(UIContainer* container) {
   if (ctx_->HoverContainer == container) {
     if (ctx_->IO.GetMousePressed())
       BringContainerToFront(container);
-    else if (!contain_mouse)
-      ctx_->HoverContainer = nullptr;
   }
 }
 
@@ -110,6 +108,22 @@ void UIManager::BringContainerToFront(UIContainer *container) {
 
   ctx_->Queue.Remove(container);
   ctx_->Queue.AddLast(container);
+}
+
+bool UIManager::IsMouseInContainer(UIContainer* container) {
+  if (!container->Body.IsContain(ctx_->IO.GetMousePosition()))
+    return false;
+
+  // Make sure higher container doesnt contain the mouse
+  // NOTE(Nghia Lam): Handle Clipping
+  UIContainer* travel = container->Next;
+  while(travel) {
+    if (travel->Body.IsContain(ctx_->IO.GetMousePosition()))
+      return false;
+    travel = travel->Next;
+  }
+
+  return true;
 }
 
 }  // namespace Ethan

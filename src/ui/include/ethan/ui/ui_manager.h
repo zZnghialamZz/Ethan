@@ -65,6 +65,7 @@ class UIManager {
 
   // Private methods
   void BringContainerToFront(UIContainer* container);
+  bool IsMouseInContainer(UIContainer* container);
 };
 
 }  // namespace Ethan
