@@ -88,7 +88,7 @@ void GUI::UpdateUI() {
   {}
   UIWindow::End();
 
-  UIWindow::Begin("Test Window 3", UIRect(100.0f, 400.0f, 800.0f, 400.0f), 0);
+  UIWindow::Begin("Tst 3", UIRect(100.0f, 400.0f, 800.0f, 400.0f), 0);
   {}
   UIWindow::End();
 }

@@ -60,7 +60,10 @@ void UIManager::EndUI() {
   // Render
   UIContainer* ui = ctx_->Queue.begin();
   while (ui) {
-    ui->Render();
+    if (ui->IsOpen) {
+      ui->Render();
+      ui->Reset();
+    }
     ui = ui->Next;
   }
 
@@ -97,12 +100,11 @@ void UIManager::UpdateContainer(UIContainer* container) {
       ctx_->FocusContainer = nullptr;
   }
   if (ctx_->HoverContainer == container) {
-    if (ctx_->IO.GetMousePressed())
-      BringContainerToFront(container);
+    if (ctx_->IO.GetMousePressed()) BringContainerToFront(container);
   }
 }
 
-void UIManager::BringContainerToFront(UIContainer *container) {
+void UIManager::BringContainerToFront(UIContainer* container) {
   ctx_->FocusContainer = container;
   if (ctx_->Queue.PeekLast() == container) return;
 
@@ -111,14 +113,13 @@ void UIManager::BringContainerToFront(UIContainer *container) {
 }
 
 bool UIManager::IsMouseInContainer(UIContainer* container) {
-  if (!container->Body.IsContain(ctx_->IO.GetMousePosition()))
-    return false;
+  if (!container->Body.IsContain(ctx_->IO.GetMousePosition())) return false;
 
   // Make sure higher container doesnt contain the mouse
   // NOTE(Nghia Lam): Handle Clipping
   UIContainer* travel = container->Next;
-  while(travel) {
-    if (travel->Body.IsContain(ctx_->IO.GetMousePosition()))
+  while (travel) {
+    if (travel->Body.IsContain(ctx_->IO.GetMousePosition()) && travel->IsOpen)
       return false;
     travel = travel->Next;
   }

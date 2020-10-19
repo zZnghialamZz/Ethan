@@ -51,6 +51,11 @@ void UIContainer::Init() {
   ctx->Queue.Add(this);
 }
 
+void UIContainer::Reset() {
+  command_size_ = 0;
+  head_ = tail_ = nullptr;
+}
+
 void UIContainer::Render() {
   if (head_) {
     UICommand* cmd = head_;

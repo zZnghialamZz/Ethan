@@ -57,6 +57,7 @@ class UIContainer {
   // Methods
   //------------------------------------------------------------------------------
   void Init();
+  void Reset();
   void Render();
   void AddCommand(UICommand& command);
 
