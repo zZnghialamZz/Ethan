@@ -32,6 +32,8 @@
 
 #include "ethan/ui/ui_storage.h"
 
+#include "ethan/ui/ui_manager.h"
+
 namespace Ethan {
 
 UIStorage::UIStorage() {}
@@ -44,11 +46,27 @@ void UIStorage::Clear() {
   ids_.Clear();
 }
 
-void UIStorage::ClearCommands() {
-  commands_.Clear();
+void UIStorage::ClearCommands() { commands_.Clear(); }
+
+void UIStorage::StoreContainer(UIContainer* container) {
+  container_layout_.Push(container);
 }
 
-UICommand* UIStorage::StoreCommand(const UICommand &command) {
+UIContainer* UIStorage::PopContainer() { return container_layout_.Pop(); }
+
+void UIStorage::StoreLayout(UIContainer* container) {
+  UIContext* ctx = UIManager::Instance()->GetContext();
+  UILayout layout(
+      UIRect<float>(container->Body.x - ctx->Style->WindowPadding.x,
+                    container->Body.y - ctx->Style->WindowPadding.y,
+                    container->Body.w - ctx->Style->WindowPadding.x,
+                    container->Body.h - ctx->Style->WindowPadding.y));
+  layouts_.Push(layout);
+}
+
+void UIStorage::PopLayout() { layouts_.Pop(); }
+
+UICommand* UIStorage::StoreCommand(const UICommand& command) {
   commands_.Push(command);
   return &commands_.Peek();
 }
@@ -61,23 +79,22 @@ UIContainer* UIStorage::GetContainer(UIID id) {
   // Not found containers in the storage, create a new container and add to
   // current storage.
   UIContainer container;
-  containers_.Push(container); // We made a copy here ... Is this slow?
+  containers_.Push(container);  // We made a copy here ... Is this slow?
   ids_.Push(id);
 
   containers_.Peek().Init();
   return &containers_.Peek();
 }
 
-UIID UIStorage::GetContainerUIID(const char *data) {
+UIID UIStorage::GetContainerUIID(const char* data) {
   UIID id = Hash(HASH_OFFSET, data);
   return id;
 }
 
-UIID UIStorage::GetWidgetUIID(const char *data) {
+UIID UIStorage::GetWidgetUIID(const char* data) {
   UIID id = (ids_.Size() > 0) ? ids_[ids_.Size() - 1] : HASH_OFFSET;
-  id = Hash(id, data);
+  id      = Hash(id, data);
   return id;
-
 }
 
 }  // namespace Ethan

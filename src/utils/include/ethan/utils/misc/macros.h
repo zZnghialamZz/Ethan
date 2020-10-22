@@ -46,6 +46,8 @@ namespace Ethan {}
 //------------------------------------------------------------------------------
 // Simple math helpers
 //------------------------------------------------------------------------------
+#define MAX_VALUE  0x1000000
+#define MIN_VALUE -0x1000000
 #define FIND_MAX(x, y) (x > y ? x : y)
 #define FIND_MIN(x, y) (x < y ? x : y)
 

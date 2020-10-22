@@ -33,6 +33,7 @@
 #ifndef ETHAN_UI_STORAGE_H_
 #define ETHAN_UI_STORAGE_H_
 
+#include "ui_layout.h"
 #include "ui_container.h"
 
 namespace Ethan {
@@ -47,16 +48,28 @@ class UIStorage {
   void Clear();
   void ClearCommands();
 
+  void StoreLayout(UIContainer* container);
+  void PopLayout();
+
+  void StoreContainer(UIContainer* container);
+  UIContainer* PopContainer();
+
   UICommand* StoreCommand(const UICommand& command);
+
   UIContainer* GetContainer(UIID id);
   UIID GetContainerUIID(const char* data);
   UIID GetWidgetUIID(const char* data);
 
+  [[nodiscard]] INLINE UILayout* GetCurrentLayout() { return &layouts_.Peek(); }
+
  private:
   // Datas
+  // TODO(Nghia Lam): Organize these parameters
+  Stack<UIContainer, UICONTAINER_SIZE> containers_; // Consider change this to normal array
+  Stack<UIContainer*, UILAYOUT_SIZE> container_layout_; // Bad name ....
+  Stack<UILayout, UILAYOUT_SIZE> layouts_;
   Stack<UICommand, UICOMMAND_SIZE> commands_;
-  Stack<UIContainer, UICONTAINER_SIZE> containers_;
-  Stack<UIID, UICONTAINER_SIZE> ids_;
+  Stack<UIID, UICONTAINER_SIZE> ids_; // Consider change this to normal array
 };
 
 }  // namespace Ethan

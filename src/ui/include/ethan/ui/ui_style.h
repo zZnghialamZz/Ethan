@@ -39,6 +39,8 @@ namespace Ethan {
 class UIStyle {
  public:
   // Parameters
+  UIVec2  WidgetPadding;         // Padding betweeen widgets
+
   UIFloat WindowBorder;          // The width of the borders of window.
   UIVec2  WindowPadding;         // Padding within window.
   UIUint8 WindowTitleHeight;     // Height of the window title bar.

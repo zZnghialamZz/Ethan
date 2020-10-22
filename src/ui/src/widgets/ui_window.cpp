@@ -47,9 +47,11 @@ void UIWindow::Begin(const char* title,
   UIContext* ctx         = UIManager::Instance()->GetContext();
   UIID id                = ctx->Storage.GetContainerUIID(title);
   UIContainer* container = ctx->Storage.GetContainer(id);
+  ctx->Storage.StoreContainer(container);
   if (!container->IsOpen) return;
 
   if (container->Body.w == 0) container->Body = bounds;
+  ctx->Storage.StoreLayout(container);
   UIManager::Instance()->UpdateWidget(id, container->Body);
   UIManager::Instance()->UpdateContainer(container);
 
@@ -102,7 +104,13 @@ void UIWindow::Begin(const char* title,
   // Resize
 }
 
-void UIWindow::End() {}
+void UIWindow::End() {
+  UIContext* ctx         = UIManager::Instance()->GetContext();
+  UIContainer* container = ctx->Storage.PopContainer();
+  if (container->IsOpen) {
+    ctx->Storage.PopLayout();
+  }
+}
 
 //------------------------------------------------------------------------------
 // Drawing

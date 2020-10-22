@@ -41,8 +41,9 @@ namespace Ethan {
 // which might need to comeback and revise many times. --> Can we consider using
 // another built-in dynamic array?
 //------------------------------------------------------------------------------
-#define FONTATLAS_WIDTH  1024
-#define UICONTAINER_SIZE 48
+#define FONTATLAS_WIDTH  1024        // Current width of font atlas
+#define UILAYOUT_SIZE    16          // Maximum support 16 nested layout
+#define UICONTAINER_SIZE 48          // Maximum support 48 opened window
 #define UICOMMAND_SIZE   256 * 1024
 
 }  // namespace Ethan
