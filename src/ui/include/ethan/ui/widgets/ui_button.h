@@ -10,10 +10,10 @@
  *                   Game Engine
  * ==================================================
  *
- * @file ui_layout.h
+ * @file ui_button.h
  * @author Nghia Lam <nghialam12795@gmail.com>
  *
- * @brief layout implementation for imgui's container.
+ * @brief
  *
  * @license Copyright 2020 Nghia Lam
  *
@@ -30,33 +30,29 @@
  * limitations under the License.
  */
 
-#ifndef ETHAN_UI_LAYOUT_H_
-#define ETHAN_UI_LAYOUT_H_
+#ifndef ETHAN_UI_WIDGETS_BUTTON_H_
+#define ETHAN_UI_WIDGETS_BUTTON_H_
 
 namespace Ethan {
 
 //------------------------------------------------------------------------------
-// UI Layout Implementation
-// NOTE(Nghia Lam): A layout is usually come with a container as a main system
-// to determine the position of the next widgets (default to be a vertical
-// layout for each widget call). However if we call a sublayout system: row,
-// column, etc.. the layout will be push into a stack to be used up by widgets.
+// UI Button Flags
 //------------------------------------------------------------------------------
-class UILayout {
+enum {
+  UIBUTTONFLAG_NONE     = 0,
+  UIBUTTONFLAG_NOBORDER = BIT(0),
+};
+
+//------------------------------------------------------------------------------
+// Main UI Button
+// TODO (Nghia Lam): Support Icon and draw Icon button
+//------------------------------------------------------------------------------
+class UIButton {
  public:
-  UILayout();
-  UILayout(const UIRect<float>& body);
-  ~UILayout();
-
-  INLINE void SetNextLayout(const UIRect<float>& next) { next_ = next; }
-  [[nodiscard]] INLINE const UIRect<float>& GetBodyLayout() { return body_; }
-  [[nodiscard]] INLINE const UIRect<float>& GetNextLayout() { return next_; }
-
- private:
-  UIRect<float> body_;
-  UIRect<float> next_;
+  static bool Label(const char* text, const UIButtonFlags& flags = 0);
+  static bool Icon();
 };
 
 }  // namespace Ethan
 
-#endif  // ETHAN_UI_LAYOUT_H_
+#endif  // ETHAN_UI_WIDGETS_BUTTON_H_

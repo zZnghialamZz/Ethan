@@ -60,6 +60,16 @@ class UIRect {
   //------------------------------------------------------------------------------
 
   /**
+   * Operator == overloading
+   */
+  INLINE const bool operator==(const UIRect<T>& rect) const {
+    return rect.x == this->x
+        && rect.y == this->y
+        && rect.w == this->w
+        && rect.h == this->h;
+  }
+
+  /**
    * Checking if the width or height of the rectangle is equal or less than 0.
    */
   [[nodiscard]] INLINE bool IsEmpty() const { return w <= 0 || h <= 0; }
@@ -68,16 +78,14 @@ class UIRect {
    * Checking if this rectangle enclose the p point.
    */
   [[nodiscard]] INLINE bool IsContain(const UIPoint& p) const {
-    return p.x >= x && p.x < x + w
-        && p.y >= y && p.y < y + h;
+    return p.x >= x && p.x < x + w && p.y >= y && p.y < y + h;
   }
 
   /**
    * Checking if this rectangle enclose the point with x, y coordinate.
    */
   [[nodiscard]] INLINE bool IsContain(const T& x_, const T& y_) const {
-    return x_ >= x && x_ < x + w
-        && y_ >= y && y_ < y + h;
+    return x_ >= x && x_ < x + w && y_ >= y && y_ < y + h;
   }
 
   /**

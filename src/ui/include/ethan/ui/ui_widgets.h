@@ -31,5 +31,6 @@
  */
 
 #include "widgets/ui_window.h"
+#include "widgets/ui_button.h"
 
 namespace Ethan {}

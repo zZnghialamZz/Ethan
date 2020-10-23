@@ -35,7 +35,8 @@
 namespace Ethan {
 
 UIStyle::UIStyle() {
-  WidgetPadding     = UIVec2(2, 2);
+  ButtonPadding     = UIVec2(5, 5);
+  WidgetPadding     = UIVec2(5, 5);
 
   WindowBorder      = 1.0f;
   WindowPadding     = UIVec2(5, 5);

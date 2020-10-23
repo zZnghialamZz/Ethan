@@ -51,7 +51,8 @@ using UIVec2  = glm::vec2;  // alias for math <- TODO(Nghia Lam): My math lib ..
 using UIVec3  = glm::vec3;  // alias for math <- TODO(Nghia Lam): My math lib ..
 using UIPoint = UIVec2;     // Re-alias for readability in some drawing cases
 using UIType  = UIUint8;    // -> enum of UIWIDGETs     // used in every widgets
-using UIMouseInput = int;   // -> enum of UIIO_MOUSE    // used in UIIO
+using UIMouseInput  = int;  // -> enum of UIIO_MOUSE    // used in UIIO
+using UIButtonFlags = int;  // -> enum of UIBUTTONFLAGs // used in UIButton
 using UIWindowFlags = int;  // -> enum of UIWINDOWFLAGs // used in UIWindow
 
 //------------------------------------------------------------------------------

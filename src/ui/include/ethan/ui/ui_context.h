@@ -60,7 +60,7 @@ class UIContext {
   UIStyle* Style;
 
  private:
-  // HACK: Little trick for not allocate Style's block of memory to the Heap
+  // HACK: Little trick for not allocate Style's block of memory
   UIStyle style_;
 };
 

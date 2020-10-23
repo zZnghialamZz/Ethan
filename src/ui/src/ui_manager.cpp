@@ -81,6 +81,7 @@ void UIManager::UpdateWidget(UIID id, const UIRect<float>& body) {
   if (contain_mouse && !ctx_->IO.GetMouseDown()) SetHover(id);
   if (ctx_->Focus == id) {
     if (ctx_->IO.GetMousePressed() && !contain_mouse) SetFocus(0);
+    if (!ctx_->IO.GetMousePressed()) SetFocus(0);
   }
   if (ctx_->Hover == id) {
     if (ctx_->IO.GetMousePressed())
@@ -88,6 +89,8 @@ void UIManager::UpdateWidget(UIID id, const UIRect<float>& body) {
     else if (!contain_mouse)
       SetHover(0);
   }
+
+  ctx_->Storage.CalculateNextLayout(body);
 }
 
 void UIManager::UpdateContainer(UIContainer* container) {

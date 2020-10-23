@@ -358,9 +358,9 @@ void Renderer2D::SetDataText(const char* text,
                              const glm::vec4& color) {
   float x = 0;
   float y = 0;
-  for (const u8* p = (const u8*)text; *p; p++) {
-    const UIFont::FontAtlas& atlas_ = font.GetFontAtlas();
 
+  const UIFont::FontAtlas& atlas_ = font.GetFontAtlas();
+  for (const u8* p = (const u8*)text; *p; p++) {
     // TODO(Nghia Lam): Any other way faster than this?
     float charx  = x + atlas_.Char[*p].bl;
     float chary  = y - atlas_.Char[*p].bt;

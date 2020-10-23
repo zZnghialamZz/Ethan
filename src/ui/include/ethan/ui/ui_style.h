@@ -39,6 +39,7 @@ namespace Ethan {
 class UIStyle {
  public:
   // Parameters
+  UIVec2  ButtonPadding;         // Button inside buttons
   UIVec2  WidgetPadding;         // Padding betweeen widgets
 
   UIFloat WindowBorder;          // The width of the borders of window.

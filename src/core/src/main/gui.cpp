@@ -80,12 +80,38 @@ void GUI::Update() {}
 
 void GUI::UpdateUI() {
   // Testing purpose <-- TO BE REMOVED
-  UIWindow::Begin("Test Window", UIRect(400.0f, 200.0f, 800.0f, 400.0f), 0);
-  {}
+  UIWindow::Begin("Test Window", UIRect(400.0f, 200.0f, 800.0f, 200.0f), 0);
+  {
+    if (UIButton::Label("Test 1")) {
+      ETLOG_CORE_INFO("Click button 1");
+    }
+    if (UIButton::Label("Test 2")) {
+      ETLOG_CORE_INFO("Click button 2");
+    }
+    if (UIButton::Label("Test 3")) {
+      ETLOG_CORE_INFO("Click button 3");
+    }
+    if (UIButton::Label("Test 4")) {
+      ETLOG_CORE_INFO("Click button 4");
+    }
+    if (UIButton::Label("Test 5")) {
+      ETLOG_CORE_INFO("Click button 5");
+    }
+    if (UIButton::Label("Test 6")) {
+      ETLOG_CORE_INFO("Click button 6");
+    }
+    if (UIButton::Label("Test 7")) {
+      ETLOG_CORE_INFO("Click button 7");
+    }
+    if (UIButton::Label("Test 8")) {
+      ETLOG_CORE_INFO("Click button 8");
+    }
+  }
   UIWindow::End();
 
   UIWindow::Begin("Test Window 2", UIRect(200.0f, 100.0f, 800.0f, 400.0f), 0);
-  {}
+  {
+  }
   UIWindow::End();
 
   UIWindow::Begin("Tst 3", UIRect(100.0f, 400.0f, 800.0f, 400.0f), 0);

@@ -33,7 +33,6 @@
 #include "ethan/ui/widgets/ui_window.h"
 
 #include "ethan/core/graphic/renderer/renderer2D.h"
-#include "ethan/ui/ui_command.h"
 #include "ethan/ui/ui_manager.h"
 
 namespace Ethan {
@@ -51,9 +50,25 @@ void UIWindow::Begin(const char* title,
   if (!container->IsOpen) return;
 
   if (container->Body.w == 0) container->Body = bounds;
-  ctx->Storage.StoreLayout(container);
-  UIManager::Instance()->UpdateWidget(id, container->Body);
+  // UIManager::Instance()->UpdateWidget(id, container->Body);
   UIManager::Instance()->UpdateContainer(container);
+
+  // Define the layout
+  if (~flags & UIWINDOWFLAG_NOTITLE) {
+    UILayout layout(
+        UIRect<float>(container->Body.x,
+                      container->Body.y + ctx->Style->WindowTitleHeight,
+                      container->Body.w,
+                      container->Body.h));
+    ctx->Storage.StoreLayout(layout);
+  } else {
+    UILayout layout(UIRect<float>(container->Body.x,
+                                  container->Body.y,
+                                  container->Body.w,
+                                  container->Body.h));
+    ctx->Storage.StoreLayout(layout);
+  }
+  ctx->Storage.CalculateNextLayout();
 
   // Defer commands
   // NOTE(Nghia Lam): This order does matter

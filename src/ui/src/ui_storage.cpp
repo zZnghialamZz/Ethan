@@ -32,6 +32,7 @@
 
 #include "ethan/ui/ui_storage.h"
 
+#include "ethan/ui/types/ui_rect.h"
 #include "ethan/ui/ui_manager.h"
 
 namespace Ethan {
@@ -54,17 +55,39 @@ void UIStorage::StoreContainer(UIContainer* container) {
 
 UIContainer* UIStorage::PopContainer() { return container_layout_.Pop(); }
 
-void UIStorage::StoreLayout(UIContainer* container) {
-  UIContext* ctx = UIManager::Instance()->GetContext();
-  UILayout layout(
-      UIRect<float>(container->Body.x - ctx->Style->WindowPadding.x,
-                    container->Body.y - ctx->Style->WindowPadding.y,
-                    container->Body.w - ctx->Style->WindowPadding.x,
-                    container->Body.h - ctx->Style->WindowPadding.y));
-  layouts_.Push(layout);
-}
+void UIStorage::StoreLayout(const UILayout& layout) { layouts_.Push(layout); }
 
 void UIStorage::PopLayout() { layouts_.Pop(); }
+
+void UIStorage::CalculateNextLayout(const UIRect<float>& used_space) {
+  if (layouts_.Size() > 1) {
+    layouts_.Pop();
+    return;
+  }
+
+  UIContext* ctx = UIManager::Instance()->GetContext();
+
+  // First time create a layout in a container will set the next layout to the
+  // space within container
+  if (used_space.w == 0) {
+    layouts_.Peek().SetNextLayout(UIRect<float>(
+        layouts_.Peek().GetBodyLayout().x + ctx->Style->WindowPadding.x,
+        layouts_.Peek().GetBodyLayout().y + ctx->Style->WindowPadding.y,
+        layouts_.Peek().GetBodyLayout().w - ctx->Style->WindowPadding.x,
+        layouts_.Peek().GetBodyLayout().h - ctx->Style->WindowPadding.y));
+  } else {
+    layouts_.Peek().SetNextLayout(
+        UIRect<float>(layouts_.Peek().GetBodyLayout().x + ctx->Style->WidgetPadding.x,
+                      used_space.y + used_space.h + ctx->Style->WidgetPadding.y,
+                      layouts_.Peek().GetBodyLayout().w - ctx->Style->WidgetPadding.x,
+                      layouts_.Peek().GetNextLayout().h - used_space.h));
+  }
+}
+
+const UIRect<float>& UIStorage::GetNextLayoutBody() {
+  return (layouts_.Size() == 1) ? layouts_.Peek().GetNextLayout()
+                                : layouts_.Peek().GetBodyLayout();
+}
 
 UICommand* UIStorage::StoreCommand(const UICommand& command) {
   commands_.Push(command);

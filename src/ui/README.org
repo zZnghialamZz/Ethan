@@ -1,0 +1,10 @@
+#+TITLE:   Ethan UI (Immediate Mode UI)
+#+AUTHOR:  Nghia Lam
+
+* NOTEs:
+
+There are some drawbacks right now of my ImGui:
+- Fix sized container (Only support 48 opened window right now, which would make some features may be hard to implement, such as the graph editor, text editor, etc...).
+- Some bad naming conventions (See TODO).
+- Some copy value which may cause slowness -> I may need to reconsider the flow of my ImGui design.
+- Cannot have same name on different widgets. <- This may be critical.

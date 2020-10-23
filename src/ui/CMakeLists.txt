@@ -13,6 +13,7 @@ set(ET_UI_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
 set(SOURCES
   "${ET_UI_SRC_DIR}/widgets/ui_window.cpp"
+  "${ET_UI_SRC_DIR}/widgets/ui_button.cpp"
 
   "${ET_UI_SRC_DIR}/ui_container.cpp"
   "${ET_UI_SRC_DIR}/ui_context.cpp"
@@ -27,6 +28,7 @@ set(SOURCES
   )
 set(HEADERS
   "${ET_UI_INCLUDE_DIR}/ethan/ui/widgets/ui_window.h"
+  "${ET_UI_INCLUDE_DIR}/ethan/ui/widgets/ui_button.h"
 
   "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_types.h"
   "${ET_UI_INCLUDE_DIR}/ethan/ui/types/ui_color.h"
