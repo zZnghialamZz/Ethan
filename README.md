@@ -13,10 +13,6 @@
 <!-- limitations under the License. -->
 <!----------------------------------------------------------------------------->
 
-<p align="center">
-  <img src="res/images/ethan_logo.png" width="256" height="256" />
-</p>
-
 <!-- Title -->
 <h1 align="center" style="border-bottom: none;">
   <a href="">A cross-platform C++ Game Engine</a>
