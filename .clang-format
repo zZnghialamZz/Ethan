@@ -1,3 +1,6 @@
+# Configuration of clang-format
+# =============================
+
 ---
 BasedOnStyle: Google
 ---
@@ -16,8 +19,71 @@ AlignEscapedNewlines: Right
 AlignTrailingComments: true
 AlwaysBreakTemplateDeclarations: Yes
 
+# These two settings trigger stacking of parameters in most cases; this is
+# easier to read and also makes diffs easier to read (since an added or removed
+# parameter is obvious). For example, function calls will look like this:
+#
+#   like_this_long_name(parameter_one,
+#                       parameter_two,
+#                       parameter_three,
+#                       parameter_four,
+#                       parameter_five,
+#                       parameter_six);
+#
+# Instead of:
+#
+#   like_this_long_name(parameter_one, parameter_two, parameter_three, parameter_four,
+#                       parameter_five, parameter_six);
+#
+BinPackArguments: false
+BinPackParameters: false
+
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+UseTab: Never
+
+---
+Language: ObjC
+
+ColumnLimit: 80
+
+AlignConsecutiveBitFields: true # <- clang-format 12
+AlignConsecutiveAssignments: true
+AlignConsecutiveMacros: true
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortIfStatementsOnASingleLine: true
+AlignEscapedNewlines: Right
+AlignTrailingComments: true
+AlwaysBreakTemplateDeclarations: Yes
+AlignOperands: AlignAfterOperator
+
+# These two settings trigger stacking of parameters in most cases; this is
+# easier to read and also makes diffs easier to read (since an added or removed
+# parameter is obvious). For example, function calls will look like this:
+#
+#   like_this_long_name(parameter_one,
+#                       parameter_two,
+#                       parameter_three,
+#                       parameter_four,
+#                       parameter_five,
+#                       parameter_six);
+#
+# Instead of:
+#
+#   like_this_long_name(parameter_one, parameter_two, parameter_three, parameter_four,
+#                       parameter_five, parameter_six);
+#
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeComma
+BreakBeforeBinaryOperators: NonAssignment
+
+PenaltyBreakAssignment: 20
 
 DerivePointerAlignment: false
 PointerAlignment: Left

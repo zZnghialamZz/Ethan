@@ -37,7 +37,8 @@
 </p>
 
 <!-- Contents -->
+
 Ethan Game Engine
 -------------------------------------------------------------------------------
-A lightweight Game Engine written in modern C++, which aims for a user friendly, fast
-and robust workflow for any Game Creators.
+A lightweight Game Framework/Engine written in C and a little of C++, which aims
+for a user friendly, fast and robust workflow for any Game Creators.
