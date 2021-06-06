@@ -1,13 +1,7 @@
 /* ==========================================================================
-|  @File   : ethan.h
-|  @Brief  : Main header of Ethan, contain main APIs of the framework/engine.
+|  @File   : ethan_base.h
+|  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
-|  ---
-|
-|  TODO(Nghia Lam):
-|    - [ ] Setup new base structure for ethan.
-|    - [ ] Initialize the window.
-|
 |  ---
 |  @License: MIT License.
 |
@@ -32,12 +26,7 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef _ETHAN_H
-#define _ETHAN_H
+#ifndef ETHAN_BASE_H_
+#define ETHAN_BASE_H_
 
-// -----------------------------------------------------------------------------
-// Global define contexts
-// -----------------------------------------------------------------------------
-#define ETHAN_VERSION "0.0.1"
-
-#endif  // _ETHAN_H
+#endif  // ETHAN_BASE_H_
