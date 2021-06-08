@@ -43,6 +43,7 @@ BreakConstructorInitializers: BeforeComma
 
 DerivePointerAlignment: false
 PointerAlignment: Left
+IndentPPDirectives: BeforeHash
 UseTab: Never
 
 ---
@@ -85,6 +86,7 @@ BreakBeforeBinaryOperators: NonAssignment
 
 PenaltyBreakAssignment: 20
 
+IndentPPDirectives: BeforeHash
 DerivePointerAlignment: false
 PointerAlignment: Left
 UseTab: Never

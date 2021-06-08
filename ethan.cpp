@@ -1,6 +1,6 @@
 /* ==========================================================================
-|  @File   : ethan_base.h
-|  @Brief  : ...
+|  @File   : ethan.cpp
+|  @Brief  : Main source of Ethan, used for building framework/engine.
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
 |  @License: MIT License.
@@ -26,7 +26,4 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef ETHAN_BASE_H
-#define ETHAN_BASE_H
-
-#endif  // ETHAN_BASE_H
+#include "ethan.h"

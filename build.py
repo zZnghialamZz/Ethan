@@ -5,7 +5,7 @@
 # ---
 #
 # TODO(Nghia Lam):
-#   - Build options (shared library, executable).
+#   - [ ] Build options (shared library, executable).
 #
 # ---
 # @License: MIT License.
@@ -31,26 +31,201 @@
 # SOFTWARE.
 # ==============================================================================
 
+import os
+import sys
 import logging
+import platform
+import subprocess
 
 from optparse import OptionParser
 
 
+# TODO(Nghia Lam): Detect the version from ethan.h
 __version__ = "0.0.1"
 __doc__ = "All in one build file of every platforms for Ethan."
+
+
+# ------------------------------------------------------------------------------
+# Global architectures
+# ------------------------------------------------------------------------------
+
+# Operating system architecture
+ARCH = platform.architecture()[0]
+SYSTEM64 = platform.machine().endswith('64')
+SYSTEM32 = not SYSTEM64
+
+# Get current platforms
+WIN32 = (platform.system() == "Windows")
+LINUX = (platform.system() == "Linux")
+MACOS = (platform.system() == "Darwin")
+
+# Directories
+ROOT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+BUILD_DIR = os.path.join(ROOT_DIR, "build")
 
 
 # ------------------------------------------------------------------------------
 # Build configurations
 # ------------------------------------------------------------------------------
 BUILD_TYPE = ['Debug', 'Release']
-BUILD_CONFIG = ['ETHAN_SHARED', 'ETHAN_EXECUTABLE']
+BUILD_CONFIG = ['ETHAN_BUILD_SHARED', 'ETHAN_USE_SHARED', 'ETHAN_EXECUTABLE']
+
+MAIN_FILE = os.path.join(ROOT_DIR, 'ethan.cpp')
+
+# NOTE(Nghia Lam): These Visual Studio constants are used to setup our build
+# environment in Windows platform if the user decides to use cl to build the
+# project.
+# ---
+# TODO(Nghia Lam): Find better way for managing this vcvarall location and auto
+# detect the version of it.
+VS_VERSION = 2019
+VS_PLATFORM = 'x86' if SYSTEM32 else 'x64'
+VS_VCVARS = ('C:\\Program Files (x86)\\Microsoft Visual Studio\\'
+             + str(VS_VERSION)
+             + '\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat')
+
+# ------------------------------------------------------------------------------
+# Build script here
+# ------------------------------------------------------------------------------
+def _assertion(condition, error_message):
+    if not condition:
+        logging.error('%s Please see --help for more information.',
+                      error_message)
+        sys.exit(1)
+
+
+def _check_dependencies():
+    global ARCH, BUILD_TYPE, BUILD_CONFIG
+
+    api = ''
+    if WIN32:
+        api = 'Win32 API'
+    elif MACOS:
+        api = 'MacOS Native'
+
+    # TODO(Nghia Lam): Renderer information here
+
+    logging.info('''Checking dependencies...
+    ----------------------------------------------------------
+    Detect current platform information:
+      - OS: %s
+      - Arch: %s
+      - Python: %s
+
+    Current build settings:
+      - Build type: %s
+      - Build config: %s
+      - API: %s
+    ----------------------------------------------------------''',
+                 platform.system(),
+                 ARCH,
+                 platform.python_version(),
+                 BUILD_TYPE,
+                 BUILD_CONFIG,
+                 api)
+
+
+def _check_directories():
+    logging.info('Checking directories...')
+    if not os.path.exists(BUILD_DIR):
+        os.makedirs(BUILD_DIR)
+
+
+def _get_compiler():
+    if WIN32:
+        return 'cl'
+    elif MACOS:
+        return 'clang'
+
+    return None
+
+
+def _get_compile_flags():
+    result = []
+    if WIN32:
+        # NOTE(Nghia Lam): Compile flags on Windows:
+        #   - Zi: debug info (use Z7 older debug format for complex build).
+        #   - FC: full path on errors.
+        result.append('-FC')
+        result.append('-Zi')
+    elif MACOS:
+        # NOTE(Nghia Lam): Compile flags on MacOS:
+        #   - -g: Enable all debugger features.
+        result.append('-g')
+
+    return result
+
+
+def _get_link_libraries():
+    result = []
+    if WIN32:
+        result.append('user32.lib')
+        result.append('gdi32.lib')
+    elif MACOS:
+        # NOTE(Nghia Lam): Libraries on MacOS:
+        #   - AppKit: Default NS Library
+        result.append('-framework')
+        result.append('AppKit')
+        # result.append('-o osx_dango-go')
+
+    return result
+
+
+def _get_output_options():
+    global BUILD_CONFIG
+
+    result = []
+    if WIN32:
+        if (BUILD_CONFIG == 'ETHAN_BUILD_SHARED' or
+            BUILD_CONFIG == 'ETHAN_USE_SHARED'):
+            result.append('-LD')
+
+    return result
+
+
+def _get_environment():
+    logging.info('Setup environment...')
+    result = []
+
+    if WIN32:
+        result.append(VS_VCVARS)
+        result.append(VS_PLATFORM)
+
+    return result
 
 
 def build():
-    global BUILD_TYPE, BUILD_CONFIG
+    logging.info('Ethan build startup ...')
 
-    # Build here
+    # Prerequisites
+    _check_dependencies()
+    _check_directories()
+
+    # Execute build command
+    compiler = _get_compiler()
+    compile_flags = _get_compile_flags()
+    link_libraries = _get_link_libraries()
+    output_option = _get_output_options()
+
+    _assertion(compiler != None, 'Cannot detect compiler !')
+    _assertion(compile_flags != None, 'Cannot get default compile flags !')
+    _assertion(link_libraries != None, 'Cannot get linked libraries !')
+
+    args = list()
+    if _get_environment(): # Not all the OS need to setup the environment.
+        args.extend(_get_environment())
+        args.append('&&')
+    args.append(compiler)
+    args.extend(compile_flags)
+    args.extend(link_libraries)
+    args.extend(output_option)
+    args.append(MAIN_FILE)
+
+    build = subprocess.Popen(args, cwd=BUILD_DIR)
+    build.wait()
+    _assertion(build.returncode == 0, 'Build failed !!')
+
+    logging.info('Ethan finish building !')
 
 
 def main():
@@ -81,7 +256,7 @@ def main():
         choices=BUILD_CONFIG,
         dest='build_config',
         default=BUILD_CONFIG[0],
-        help='Build configs as %s. Default: %s' % (BUILD_CONFIG, BUILD_CONFIG[0]),
+        help='Build config as %s. Default: %s' % (BUILD_CONFIG, BUILD_CONFIG[0]),
     )
 
     # Parse input

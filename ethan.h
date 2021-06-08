@@ -1,6 +1,6 @@
 /* ==========================================================================
 |  @File   : ethan.h
-|  @Brief  : Main header of Ethan, contain main APIs of the framework/engine.
+|  @Brief  : Main header of Ethan.
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
 |
@@ -39,6 +39,19 @@
 // Global define contexts
 // -----------------------------------------------------------------------------
 #define ETHAN_VERSION "0.0.1"
+
+#if defined(_WIN32)
+  // Microsoft attribute to tell compiler that symbols are imported/exported.
+  #if defined(ETHAN_BUILD_SHARED)
+    #define ETHAN_API __declspec(dllexport)  // Build as shared library.
+  #elif defined(ETHAN_USE_SHARED)
+    #define ETHAN_API __declspec(dllimport)  // Use as shared library.
+  #else
+    #define ETHAN_API
+  #endif
+#else
+  #define ETHAN_API
+#endif
 
 // -----------------------------------------------------------------------------
 // Ethan sources
