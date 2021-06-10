@@ -1,14 +1,7 @@
 /* ==========================================================================
-|  @File   : ethan.h
-|  @Brief  : Main header of Ethan.
+|  @File   : ethan_audio.h
+|  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
-|  ---
-|
-|  TODO(Nghia Lam):
-|    - [ ] Setup new base structure for ethan.
-|    - [ ] Find a good structure for our cross-platform entry point.
-|    - [ ] Initialize the window.
-|
 |  ---
 |  @License: MIT License.
 |
@@ -33,31 +26,7 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef ETHAN_H
-#define ETHAN_H
+#ifndef ETHAN_AUDIO_H
+#define ETHAN_AUDIO_H
 
-// -----------------------------------------------------------------------------
-// Global define contexts
-// -----------------------------------------------------------------------------
-#define ETHAN_VERSION "0.0.1"
-
-#if defined(_WIN32)
-  // Microsoft attribute to tell compiler that symbols are imported/exported.
-  #if defined(ETHAN_BUILD_SHARED)
-    #define ETHAN_API __declspec(dllexport)  // Build as shared library.
-  #elif defined(ETHAN_USE_SHARED)
-    #define ETHAN_API __declspec(dllimport)  // Use as shared library.
-  #else
-    #define ETHAN_API
-  #endif
-#else
-  #define ETHAN_API
-#endif
-
-// -----------------------------------------------------------------------------
-// Ethan sources
-// -----------------------------------------------------------------------------
-#include "code/ethan_base.h"
-#include "code/ethan_audio.h"
-
-#endif  // ETHAN_H
+#endif  // ETHAN_AUDIO_H

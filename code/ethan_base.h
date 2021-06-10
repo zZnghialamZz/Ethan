@@ -29,4 +29,41 @@
 #ifndef ETHAN_BASE_H
 #define ETHAN_BASE_H
 
+// -----------------------------------------------------------------------------
+// Global define contexts
+// -----------------------------------------------------------------------------
+#if defined(_WIN32)
+  // Microsoft attribute to tell compiler that symbols are imported/exported.
+  #if defined(ETHAN_BUILD_SHARED)
+    #define ETHAN_API __declspec(dllexport)  // Build as shared library.
+  #elif defined(ETHAN_USE_SHARED)
+    #define ETHAN_API __declspec(dllimport)  // Use as shared library.
+  #else
+    #define ETHAN_API
+  #endif
+#else
+  #define ETHAN_API
+#endif
+
+// -----------------------------------------------------------------------------
+// Types & structures definition
+// -----------------------------------------------------------------------------
+using i8  = signed char;  // 1-byte long signed integer.
+using i16 = short;        // 2-byte long signed integer.
+using i32 = int;          // 4-byte long signed integer.
+using i64 = long long;    // 8-byte long signed integer.
+
+using u8  = unsigned char;       // 1-byte long unsigned integer.
+using u16 = unsigned short;      // 2-byte long unsigned integer.
+using u32 = unsigned int;        // 4-byte long unsigned integer.
+using u64 = unsigned long long;  // 8-byte long unsigned integer.
+
+using b8  = i8;   // 1-byte boolean signed integer.
+using b16 = i16;  // 2-byte boolean signed integer.
+using b32 = i32;  // 4-byte boolean signed integer.
+using b64 = i64;  // 8-byte boolean signed integer.
+
+using f32 = float;   // 4-byte floating point.
+using f64 = double;  // 8-byte floating point.
+
 #endif  // ETHAN_BASE_H
