@@ -40,10 +40,20 @@
     #define ETHAN_API __declspec(dllimport)  // Use as shared library.
   #else
     #define ETHAN_API
-  #endif
+  #endif  // defined(ETHAN_BUILD_SHARED)
 #else
   #define ETHAN_API
-#endif
+#endif  // defined(_WIN32)
+
+// Useful helpers
+// ---
+// TODO(Nghia Lam): Consider change the BIT and PI32 to ethan_math.h
+#define BIT(x) (1 << x)  // Get the number bits by using 1 shifting.
+#define PI32   3.14159265359f
+
+#define INTERNAL      static  // Function only belong to this translation unit.
+#define GLOBAL        static  // Variable global to all translation unit.
+#define LOCAL_PERSIST static  // Dont use this in release code <- Thread unsafe.
 
 // -----------------------------------------------------------------------------
 // Types & structures definition

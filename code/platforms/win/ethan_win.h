@@ -1,5 +1,5 @@
 /* ==========================================================================
-|  @File   : ethan_audio.h
+|  @File   : ethan_win.h
 |  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
@@ -26,25 +26,12 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef ETHAN_AUDIO_H
-#define ETHAN_AUDIO_H
+#ifndef ETHAN_WIN_H
+#define ETHAN_WIN_H
 
-// ----------------------------------------------------------------------------
-// Types & structure definition
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Ethan Windows Implementation
+// -----------------------------------------------------------------------------
+#include "ethan_win_audio.cpp"
 
-// Sound type
-struct Sound {
-  int SampleRate;
-  int SampleCount;
-  i16 *Sample;
-};
-
-// ----------------------------------------------------------------------------
-// Main Audio API
-// ----------------------------------------------------------------------------
-
-// Actual output the `sound` to the audio device.
-ETHAN_API void OutputSound(Sound sound);
-
-#endif // ETHAN_AUDIO_H
+#endif  // ETHAN_WIN_H

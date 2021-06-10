@@ -1,6 +1,6 @@
 /* ==========================================================================
-|  @File   : ethan_audio.h
-|  @Brief  : ...
+|  @File   : ethan_config.h
+|  @Brief  : Multiple configurations for Ethan.
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
 |  @License: MIT License.
@@ -26,25 +26,17 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef ETHAN_AUDIO_H
-#define ETHAN_AUDIO_H
+#ifndef ETHAN_CONFIG_H
+#define ETHAN_CONFIG_H
 
-// ----------------------------------------------------------------------------
-// Types & structure definition
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Ethan configurations
+// -----------------------------------------------------------------------------
 
-// Sound type
-struct Sound {
-  int SampleRate;
-  int SampleCount;
-  i16 *Sample;
-};
+#ifdef _WIN32
+  #include "platforms/win/ethan_win.h"
+#elif defined(__APPLE__)
+  #include "platforms/macos/ethan_macos.h"
+#endif  // _WIN32
 
-// ----------------------------------------------------------------------------
-// Main Audio API
-// ----------------------------------------------------------------------------
-
-// Actual output the `sound` to the audio device.
-ETHAN_API void OutputSound(Sound sound);
-
-#endif // ETHAN_AUDIO_H
+#endif  // ETHAN_CONFIG_H

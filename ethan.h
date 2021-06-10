@@ -41,17 +41,10 @@
 // -----------------------------------------------------------------------------
 #define ETHAN_VERSION "0.0.1"
 
-#if defined(_WIN32)
-  // Microsoft attribute to tell compiler that symbols are imported/exported.
-  #if defined(ETHAN_BUILD_SHARED)
-    #define ETHAN_API __declspec(dllexport)  // Build as shared library.
-  #elif defined(ETHAN_USE_SHARED)
-    #define ETHAN_API __declspec(dllimport)  // Use as shared library.
-  #else
-    #define ETHAN_API
-  #endif
-#else
-  #define ETHAN_API
+// Using single define for Windows
+#if !defined(_WIN32) && (defined(__WIN32__) || defined(WIN32) ||               \
+                         defined(__MINGW32__) || defined(__CYGWIN__))
+  #define _WIN32
 #endif
 
 // -----------------------------------------------------------------------------
@@ -59,5 +52,9 @@
 // -----------------------------------------------------------------------------
 #include "code/ethan_base.h"
 #include "code/ethan_audio.h"
+
+// NOTE(Nghia Lam): This file will always be at the bottom of the file as it
+// contains many implementations of different platforms.
+#include "code/ethan_config.h"
 
 #endif  // ETHAN_H
