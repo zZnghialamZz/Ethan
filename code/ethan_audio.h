@@ -37,14 +37,19 @@
 struct Sound {
   int SampleRate;
   int SampleCount;
-  i16 *Sample;
+  i16* Sample;
 };
 
 // ----------------------------------------------------------------------------
-// Main Audio API
+// Main audio API
 // ----------------------------------------------------------------------------
 
-// Actual output the `sound` to the audio device.
+/**
+ * Fill the sound buffer with the given `sound`. This method is implemented
+ * differently in each platform.
+ *
+ * @param sound - The sound we want to output to the user.
+ * */
 ETHAN_API void OutputSound(Sound sound);
 
-#endif // ETHAN_AUDIO_H
+#endif  // ETHAN_AUDIO_H

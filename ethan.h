@@ -55,6 +55,8 @@
 
 // NOTE(Nghia Lam): This file will always be at the bottom of the file as it
 // contains many implementations of different platforms.
+// ---
+// TODO(Nghia Lam): Is this a good structure?
 #include "code/ethan_config.h"
 
 #endif  // ETHAN_H
