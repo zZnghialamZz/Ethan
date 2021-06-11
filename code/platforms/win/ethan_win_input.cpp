@@ -1,5 +1,5 @@
 /* ==========================================================================
-|  @File   : ethan_win.h
+|  @File   : ethan_win_input.cpp
 |  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
@@ -26,15 +26,4 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef ETHAN_WIN_H
-#define ETHAN_WIN_H
-
-#include <windows.h>
-
-// -----------------------------------------------------------------------------
-// Ethan Windows Implementation
-// -----------------------------------------------------------------------------
-#include "ethan_win_audio.cpp"
-#include "ethan_win_input.cpp"
-
-#endif  // ETHAN_WIN_H
+#include "ethan_win_input.h"
