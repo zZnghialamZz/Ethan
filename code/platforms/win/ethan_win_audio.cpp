@@ -28,6 +28,10 @@
 
 #include "ethan_win_audio.h"
 
+// TODO(Nghia Lam): Check if this is a global library can be used for cross
+// platforms.
+#include <math.h>
+
 // ----------------------------------------------------------------------------
 // Main audio API definitions
 // ----------------------------------------------------------------------------
