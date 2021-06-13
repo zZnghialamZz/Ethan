@@ -25,5 +25,3 @@
 |  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 |  SOFTWARE.
 |  ========================================================================== */
-
-#include "ethan_win_input.h"
