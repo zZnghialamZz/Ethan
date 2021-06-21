@@ -56,6 +56,23 @@ typedef DIRECT_SOUND_CREATE(DSoundCreate);
 // Types & structure definition
 // ----------------------------------------------------------------------------
 
+// Main
+// ---
+
+struct Win32OffScreenBuffer {
+  BITMAPINFO Info;  // The information of the device independent bitmap.
+  void* Memory;     // The memory area for the bitmap.
+  int Width;        // The width of our bitmap area.
+  int Height;       // The height of our bitmap area.
+  int Pitch;        // The range of the bitmap's width in bytes.
+  int BytePerPixel;
+};
+
+// ---
+
+// Audio
+// ---
+
 struct Win32SoundOutput {
   int SampleRate;          // How many samples can be played per second.
   int BytesPerSample;      // The size of our sample in byte.
@@ -68,15 +85,22 @@ struct Win32SoundOutput {
   int LatencySampleCount;  // How much ahead of the cursor we want to be.
 };
 
+// ---
+
 // ----------------------------------------------------------------------------
 // Global variables
 // ----------------------------------------------------------------------------
 
-GLOBAL IDirectSoundBuffer* global_audio_buffer;  // The second sound buffer.
+GLOBAL IDirectSoundBuffer* win32_audio_buffer;  // The second sound buffer.
 
 // ----------------------------------------------------------------------------
 // Win32 API declaration
 // ----------------------------------------------------------------------------
+
+// Main
+// ---
+
+// ---
 
 // Audio
 // ---
@@ -109,6 +133,7 @@ ETHAN_API void Win32FillSoundBuffer(Win32SoundOutput* sound_output,
 // -----------------------------------------------------------------------------
 // Windows API Implementation
 // -----------------------------------------------------------------------------
+#include "ethan_win_main.cpp"
 #include "ethan_win_audio.cpp"
 #include "ethan_win_input.cpp"
 

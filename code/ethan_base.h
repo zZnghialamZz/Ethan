@@ -47,13 +47,13 @@
 
 // Useful helpers
 // ---
-// TODO(Nghia Lam): Consider change the BIT and PI32 to ethan_math.h
-#define BIT(x) (1 << x)  // Get the number bits by using 1 shifting.
-#define PI32   3.14159265359f
-
 #define INTERNAL      static  // Function only belong to this translation unit.
 #define GLOBAL        static  // Variable global to all translation unit.
 #define LOCAL_PERSIST static  // Dont use this in release code <- Thread unsafe.
+
+// TODO(Nghia Lam): Consider change the BIT and PI32 to ethan_math.h
+#define BIT(x) (1 << x)  // Get the number bits by using 1 shifting.
+#define PI32   3.14159265359f
 
 // -----------------------------------------------------------------------------
 // Types & structures definition

@@ -1,6 +1,6 @@
 /* ==========================================================================
-|  @File   : ethan_config.h
-|  @Brief  : Multiple configurations for Ethan.
+|  @File   : ethan_main.h
+|  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
 |  @License: MIT License.
@@ -26,17 +26,35 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef ETHAN_CONFIG_H
-#define ETHAN_CONFIG_H
+#ifndef ETHAN_MAIN_H
+#define ETHAN_MAIN_H
 
-// -----------------------------------------------------------------------------
-// Ethan configurations
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// Types & structure definition
+// ----------------------------------------------------------------------------
+struct WindowDimension {
+  int Width;
+  int Height;
+};
 
-#ifdef _WIN32
-  #include "platforms/win/ethan_win.h"
-#elif defined(__APPLE__)
-  #include "platforms/macos/ethan_macos.h"
-#endif  // _WIN32
+// ----------------------------------------------------------------------------
+// Main audio API
+// ----------------------------------------------------------------------------
 
-#endif  // ETHAN_CONFIG_H
+/**
+ * Initialize the Window based on the current OS and settings.
+ *
+ * @param width  - The width of the main Window.
+ * @param height - The height of the main Window.
+ * @param title  - The title of the main Window.
+ * */
+ETHAN_API void InitWindow(int width, int height, const char* title);
+
+/**
+ * Find the `WindowDimension` of current main Window.
+ *
+ * @return WindowDimension
+ * */
+ETHAN_API WindowDimension GetWindowDimension();
+
+#endif  // ETHAN_MAIN_H

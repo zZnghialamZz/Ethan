@@ -67,16 +67,14 @@ void Win32InitDSound(HWND window, i32 sample_rate, i32 buffer_size) {
       //   second.
       //   - cbSize: Size of any extra information we want to pass. We dont
       //   have any so set it to 0.
-      WAVEFORMATEX wave_format   = {};
-      wave_format.wFormatTag     = WAVE_FORMAT_PCM;
-      wave_format.nChannels      = 2;
-      wave_format.nSamplesPerSec = sample_rate;
-      wave_format.wBitsPerSample = 16;
-      wave_format.nBlockAlign =
-          (wave_format.nChannels * wave_format.wBitsPerSample) / 8;
-      wave_format.nAvgBytesPerSec =
-          wave_format.nSamplesPerSec * wave_format.nBlockAlign;
-      wave_format.cbSize = 0;
+      WAVEFORMATEX wave    = {};
+      wave.wFormatTag      = WAVE_FORMAT_PCM;
+      wave.nChannels       = 2;
+      wave.nSamplesPerSec  = sample_rate;
+      wave.wBitsPerSample  = 16;
+      wave.nBlockAlign     = (wave.nChannels * wave.wBitsPerSample) / 8;
+      wave.nAvgBytesPerSec = wave.nSamplesPerSec * wave.nBlockAlign;
+      wave.cbSize          = 0;
 
       // NOTE(Nghia Lam): Since we have to setup our sound format, we need to
       // use DSSCL_PRIORITY.
@@ -88,16 +86,16 @@ void Win32InitDSound(HWND window, i32 sample_rate, i32 buffer_size) {
         //   - dwSize : size of the buffer desc.
         //   - dwFlags: a bit field. We use DSBCAPS_PRIMARYBUFFER as it
         //   identitfies the buffer as primary.
-        DSBUFFERDESC buffer_description = {};  // Clear all settings to zero
-        buffer_description.dwSize       = sizeof(buffer_description);
-        buffer_description.dwFlags      = DSBCAPS_PRIMARYBUFFER;
+        DSBUFFERDESC sound_description = {};  // Clear all settings to zero
+        sound_description.dwSize       = sizeof(sound_description);
+        sound_description.dwFlags      = DSBCAPS_PRIMARYBUFFER;
 
         IDirectSoundBuffer* primary_buffer;
-        if (SUCCEEDED(DirectSound->CreateSoundBuffer(&buffer_description,
+        if (SUCCEEDED(DirectSound->CreateSoundBuffer(&sound_description,
                                                      &primary_buffer,
                                                      0))) {
           // Set the sound format
-          if (SUCCEEDED(primary_buffer->SetFormat(&wave_format))) {
+          if (SUCCEEDED(primary_buffer->SetFormat(&wave))) {
           }
         }
       }
@@ -108,13 +106,13 @@ void Win32InitDSound(HWND window, i32 sample_rate, i32 buffer_size) {
       //   - dwBufferBytes: buffer size, we pass this as a parameter.
       //   - lpwfxFormat: we dont really need to set the format again, just pass
       //   the address of the wave format to here.
-      DSBUFFERDESC buffer_description  = {};  // Clear all settings to zero
-      buffer_description.dwSize        = sizeof(buffer_description);
-      buffer_description.dwBufferBytes = buffer_size;
-      buffer_description.lpwfxFormat   = &wave_format;
+      DSBUFFERDESC sound_description  = {};  // Clear all settings to zero
+      sound_description.dwSize        = sizeof(sound_description);
+      sound_description.dwBufferBytes = buffer_size;
+      sound_description.lpwfxFormat   = &wave;
 
-      if (SUCCEEDED(DirectSound->CreateSoundBuffer(&buffer_description,
-                                                   &global_audio_buffer,
+      if (SUCCEEDED(DirectSound->CreateSoundBuffer(&sound_description,
+                                                   &win32_audio_buffer,
                                                    0))) {
         // Start it playing!
         OutputDebugStringA("Secondary Buffer init successfully !!");
@@ -144,14 +142,14 @@ void Win32FillSoundBuffer(Win32SoundOutput* sound_output,
   //   size variable for the potential second region, if any.
   //   - dwFlags: There a couple flags that we could pass here. We don't
   //   really need them, so just pass 0.
-  if (SUCCEEDED(global_audio_buffer->Lock(byte_to_lock,    // Input
-                                          bytes_to_write,  // Input
-                                          &region1,        // Output
-                                          &region1_size,   // Output
-                                          &region2,        // Output
-                                          &region2_size,   // Output
-                                          0                // Input
-                                          ))) {
+  if (SUCCEEDED(win32_audio_buffer->Lock(byte_to_lock,    // Input
+                                         bytes_to_write,  // Input
+                                         &region1,        // Output
+                                         &region1_size,   // Output
+                                         &region2,        // Output
+                                         &region2_size,   // Output
+                                         0                // Input
+                                         ))) {
     // TODO(Nghia Lam): Assert region1_size/region2_size are valid.
     i16* sample_out     = (i16*)region1;
     DWORD region1_count = region1_size / sound_output->BytesPerSample;
@@ -175,6 +173,6 @@ void Win32FillSoundBuffer(Win32SoundOutput* sound_output,
       ++sound_output->RunningSampleIndex;
     }
 
-    global_audio_buffer->Unlock(region1, region1_size, region2, region2_size);
+    win32_audio_buffer->Unlock(region1, region1_size, region2, region2_size);
   }
 }

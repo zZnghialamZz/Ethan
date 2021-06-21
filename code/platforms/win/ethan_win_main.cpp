@@ -1,14 +1,7 @@
 /* ==========================================================================
-|  @File   : ethan.h
-|  @Brief  : Main header of Ethan.
+|  @File   : ethan_win_main.cpp
+|  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
-|  ---
-|
-|  TODO(Nghia Lam):
-|    - [ ] Setup new base structure for ethan.
-|    - [ ] Find a good structure for our cross-platform entry point.
-|    - [ ] Initialize the window.
-|
 |  ---
 |  @License: MIT License.
 |
@@ -33,34 +26,14 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-#ifndef ETHAN_H
-#define ETHAN_H
+void InitWindow(int width, int height, const char* title) {
+  // TODO(Nghia Lam): Init the Win32 application.
+}
 
-// -----------------------------------------------------------------------------
-// Global define contexts
-// -----------------------------------------------------------------------------
-#define ETHAN_VERSION "0.0.1"
-
-// Using single define for Windows
-#if !defined(_WIN32) && (defined(__WIN32__)   || defined(WIN32)       ||       \
-                         defined(__MINGW32__) || defined(__CYGWIN__))
-  #define _WIN32
-#endif
-
-// -----------------------------------------------------------------------------
-// Ethan sources
-// -----------------------------------------------------------------------------
-#include "code/ethan_base.h"
-#include "code/ethan_main.h"
-#include "code/ethan_audio.h"
-
-// NOTE(Nghia Lam): These lines will always be at the bottom of the file as it
-// contains many implementations of different platforms.
-
-#ifdef _WIN32
-  #include "code/platforms/win/ethan_win.h"
-#elif defined(__APPLE__)
-  #include "platforms/macos/ethan_macos.h"
-#endif  // _WIN32
-
-#endif  // ETHAN_H
+WindowDimension GetWindowDimension() {
+  WindowDimension result = {};
+  
+  // TODO(Nghia Lam): Find the Win32 window dimension.
+  
+  return result;
+}
