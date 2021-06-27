@@ -1,5 +1,5 @@
 /* ==========================================================================
-|  @File   : ethan_win_audio.cpp
+|  @File   : ethan_win32.cpp
 |  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
@@ -26,19 +26,32 @@
 |  SOFTWARE.
 |  ========================================================================== */
 
-// TODO(Nghia Lam): Check if this is a global library can be used for cross
-// platforms.
-#include <math.h>
+#include "ethan_win32.h"
 
-// ----------------------------------------------------------------------------
-// Main audio API definitions
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Windows API Implementation
+// -----------------------------------------------------------------------------
+
+// Main
+// ---
+
+void InitWindow(int width, int height, const char* title) {
+  // TODO(Nghia Lam): Init the Win32 application.
+}
+
+WindowDimension GetWindowDimension() {
+  WindowDimension result = {};
+
+  // TODO(Nghia Lam): Find the Win32 window dimension.
+
+  return result;
+}
+// --- Main
+
+// Audio
+// ---
 
 void OutputSound(Sound sound) {}
-
-// ----------------------------------------------------------------------------
-// Specific Win32 audio API definitions
-// ----------------------------------------------------------------------------
 
 void Win32InitDSound(HWND window, i32 sample_rate, i32 buffer_size) {
   // Load the library
@@ -112,7 +125,7 @@ void Win32InitDSound(HWND window, i32 sample_rate, i32 buffer_size) {
       sound_description.lpwfxFormat   = &wave;
 
       if (SUCCEEDED(DirectSound->CreateSoundBuffer(&sound_description,
-                                                   &win32_audio_buffer,
+                                                   &gWin32AudioBuffer,
                                                    0))) {
         // Start it playing!
         OutputDebugStringA("Secondary Buffer init successfully !!");
@@ -142,14 +155,14 @@ void Win32FillSoundBuffer(Win32SoundOutput* sound_output,
   //   size variable for the potential second region, if any.
   //   - dwFlags: There a couple flags that we could pass here. We don't
   //   really need them, so just pass 0.
-  if (SUCCEEDED(win32_audio_buffer->Lock(byte_to_lock,    // Input
-                                         bytes_to_write,  // Input
-                                         &region1,        // Output
-                                         &region1_size,   // Output
-                                         &region2,        // Output
-                                         &region2_size,   // Output
-                                         0                // Input
-                                         ))) {
+  if (SUCCEEDED(gWin32AudioBuffer->Lock(byte_to_lock,    // Input
+                                        bytes_to_write,  // Input
+                                        &region1,        // Output
+                                        &region1_size,   // Output
+                                        &region2,        // Output
+                                        &region2_size,   // Output
+                                        0                // Input
+                                        ))) {
     // TODO(Nghia Lam): Assert region1_size/region2_size are valid.
     i16* sample_out     = (i16*)region1;
     DWORD region1_count = region1_size / sound_output->BytesPerSample;
@@ -173,6 +186,8 @@ void Win32FillSoundBuffer(Win32SoundOutput* sound_output,
       ++sound_output->RunningSampleIndex;
     }
 
-    win32_audio_buffer->Unlock(region1, region1_size, region2, region2_size);
+    gWin32AudioBuffer->Unlock(region1, region1_size, region2, region2_size);
   }
 }
+
+// --- Sound

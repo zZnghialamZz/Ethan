@@ -33,9 +33,45 @@
 #include <dsound.h>
 #include <xinput.h>
 
+// TODO(Nghia Lam): Consider create our own math library.
+#include <math.h>
+
 // ----------------------------------------------------------------------------
 // Define global contexts
 // ----------------------------------------------------------------------------
+
+// Input ---
+
+// NOTE(Nghia Lam): Since xinput.lib is different on each machine depend on the
+// Windows driver. So we will need to load the library by hand, not linking it
+// directly (The game wont load if it cannot find the driver).
+// This is how we did it:
+//   - Define the function macros
+//   - Define type of the functions, so we can use the function as a pointer
+//   - Create a stub function in case we fail to properly load the function
+//   - Create the function pointers
+//   - Re-define the name for usage
+// ---
+// TODO(Nghia Lam): This need to be abstracted to a different platform layer.
+// XInputGetState
+#define XINPUT_GET_STATE(name)                                                 \
+  DWORD WINAPI name(DWORD dwUserIndex, XINPUT_STATE* pState)
+typedef XINPUT_GET_STATE(XInputGetStateAlt);
+XINPUT_GET_STATE(XInputGetStateStub) { return (ERROR_DEVICE_NOT_CONNECTED); }
+GLOBAL XInputGetStateAlt* XInputGetState_ = XInputGetStateStub;
+#define XInputGetState XInputGetState_
+
+// --- Input
+
+// Audio ---
+
+// XInputSetState
+#define XINPUT_SET_STATE(name)                                                 \
+  DWORD WINAPI name(DWORD dwUserIndex, XINPUT_VIBRATION* pVibration)
+typedef XINPUT_SET_STATE(XInputSetStateAlt);
+XINPUT_SET_STATE(XInputSetStateStub) { return (ERROR_DEVICE_NOT_CONNECTED); }
+GLOBAL XInputSetStateAlt* XInputSetState_ = XInputSetStateStub;
+#define XInputSetState XInputSetState_
 
 // NOTE(Nghia Lam): Similar to xinput.h, dsound.h is different on each machine
 // depend on the Windows driver. So we will need to load the library by hand,
@@ -52,12 +88,13 @@
                       LPUNKNOWN pUnkOuter);
 typedef DIRECT_SOUND_CREATE(DSoundCreate);
 
+// --- Audio
+
 // ----------------------------------------------------------------------------
 // Types & structure definition
 // ----------------------------------------------------------------------------
 
-// Main
-// ---
+// Main ---
 
 struct Win32OffScreenBuffer {
   BITMAPINFO Info;  // The information of the device independent bitmap.
@@ -68,10 +105,9 @@ struct Win32OffScreenBuffer {
   int BytePerPixel;
 };
 
-// ---
+// --- Main
 
-// Audio
-// ---
+// Audio ---
 
 struct Win32SoundOutput {
   int SampleRate;          // How many samples can be played per second.
@@ -85,34 +121,32 @@ struct Win32SoundOutput {
   int LatencySampleCount;  // How much ahead of the cursor we want to be.
 };
 
-// ---
+// --- Audio
 
 // ----------------------------------------------------------------------------
 // Global variables
 // ----------------------------------------------------------------------------
 
-GLOBAL IDirectSoundBuffer* win32_audio_buffer;  // The second sound buffer.
+GLOBAL IDirectSoundBuffer* gWin32AudioBuffer;  // The second sound buffer.
 
 // ----------------------------------------------------------------------------
 // Win32 API declaration
 // ----------------------------------------------------------------------------
 
-// Main
-// ---
+// Main ---
 
-// ---
+// --- Main
 
-// Audio
-// ---
+// Audio ---
 
 /**
  * Initialize the dsound library on Windows. Then also create the wave format,
  * which also defines the sound format and finally create the global sound
  * buffer.
  *
- * @param window - Our window handler on Windows.
- * @param sample_rate - The samples that can be played per second.
- * @param buffer_size - The size of our global sound buffer.
+ * @param window Our window handler on Windows.
+ * @param sample_rate The samples that can be played per second.
+ * @param buffer_size The size of our global sound buffer.
  * */
 ETHAN_API void Win32InitDSound(HWND window, i32 sample_rate, i32 buffer_size);
 
@@ -120,21 +154,14 @@ ETHAN_API void Win32InitDSound(HWND window, i32 sample_rate, i32 buffer_size);
  * Fill the primary sound buffer with our global audio buffer (we use as a
  * second buffer for our cycle method).
  *
- * @param sound_output - The actual sound settings we want to output.
- * @param byte_to_lock - The region we want to lock for writing.
- * @param byte_to_write - The actual region we gonna write the sound.
+ * @param sound_output The actual sound settings we want to output.
+ * @param byte_to_lock The region we want to lock for writing.
+ * @param byte_to_write The actual region we gonna write the sound.
  * */
 ETHAN_API void Win32FillSoundBuffer(Win32SoundOutput* sound_output,
                                     DWORD byte_to_lock,
                                     DWORD bytes_to_write);
 
-// ---
-
-// -----------------------------------------------------------------------------
-// Windows API Implementation
-// -----------------------------------------------------------------------------
-#include "ethan_win_main.cpp"
-#include "ethan_win_audio.cpp"
-#include "ethan_win_input.cpp"
+// --- Audio
 
 #endif  // ETHAN_WIN_H

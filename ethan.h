@@ -41,8 +41,10 @@
 // -----------------------------------------------------------------------------
 #define ETHAN_VERSION "0.0.1"
 
-// Using single define for Windows
-#if !defined(_WIN32) && (defined(__WIN32__)   || defined(WIN32)       ||       \
+// Platform detection
+// ---
+// NOTE(Nghia Lam): We use one definition for Windows platform.
+#if !defined(_WIN32) && (defined(__WIN32__) || defined(WIN32) ||               \
                          defined(__MINGW32__) || defined(__CYGWIN__))
   #define _WIN32
 #endif
@@ -58,9 +60,9 @@
 // contains many implementations of different platforms.
 
 #ifdef _WIN32
-  #include "code/platforms/win/ethan_win.h"
+  #include "code/platforms/ethan_win32.cpp"
 #elif defined(__APPLE__)
-  #include "platforms/macos/ethan_macos.h"
+  #include "code/platforms/ethan_macos.cpp"
 #endif  // _WIN32
 
 #endif  // ETHAN_H

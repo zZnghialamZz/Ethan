@@ -5,7 +5,8 @@
 # ---
 #
 # TODO(Nghia Lam):
-#   - [ ] Build options (shared library, executable).
+#   - [ ] Build options (shared library, executable). <- Do we need this as an
+#   argument options or just build a simple difinition fiel>
 #
 # ---
 # @License: MIT License.
@@ -39,11 +40,9 @@ import subprocess
 
 from optparse import OptionParser
 
-
 # TODO(Nghia Lam): Detect the version from ethan.h
 __version__ = "0.0.1"
 __doc__ = "All in one build file of every platforms for Ethan."
-
 
 # ------------------------------------------------------------------------------
 # Global architectures
@@ -63,7 +62,6 @@ MACOS = (platform.system() == "Darwin")
 ROOT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 BUILD_DIR = os.path.join(ROOT_DIR, "build")
 
-
 # ------------------------------------------------------------------------------
 # Build configurations
 # ------------------------------------------------------------------------------
@@ -80,9 +78,10 @@ MAIN_FILE = os.path.join(ROOT_DIR, 'ethan.cpp')
 # detect the version of it.
 VS_VERSION = 2019
 VS_PLATFORM = 'x86' if SYSTEM32 else 'x64'
-VS_VCVARS = ('C:\\Program Files (x86)\\Microsoft Visual Studio\\'
-             + str(VS_VERSION)
-             + '\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat')
+VS_VCVARS = ('C:\\Program Files (x86)\\Microsoft Visual Studio\\' +
+             str(VS_VERSION) +
+             '\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat')
+
 
 # ------------------------------------------------------------------------------
 # Build script here
@@ -105,7 +104,8 @@ def _check_dependencies():
 
     # TODO(Nghia Lam): Renderer information here
 
-    logging.info('''Checking dependencies...
+    logging.info(
+        '''Checking dependencies...
     ----------------------------------------------------------
     Detect current platform information:
       - OS: %s
@@ -117,12 +117,13 @@ def _check_dependencies():
       - Build config: %s
       - API: %s
     ----------------------------------------------------------''',
-                 platform.system(),
-                 ARCH,
-                 platform.python_version(),
-                 BUILD_TYPE,
-                 BUILD_CONFIG,
-                 api)
+        platform.system(),
+        ARCH,
+        platform.python_version(),
+        BUILD_TYPE,
+        BUILD_CONFIG,
+        api,
+    )
 
 
 def _check_directories():
@@ -177,7 +178,7 @@ def _get_output_options():
     result = []
     if WIN32:
         if (BUILD_CONFIG == 'ETHAN_BUILD_SHARED' or
-            BUILD_CONFIG == 'ETHAN_USE_SHARED'):
+                BUILD_CONFIG == 'ETHAN_USE_SHARED'):
             result.append('-LD')
 
     return result
@@ -212,7 +213,7 @@ def build():
     _assertion(link_libraries != None, 'Cannot get linked libraries !')
 
     args = list()
-    if _get_environment(): # Not all the OS need to setup the environment.
+    if _get_environment():  # Not all the OS need to setup the environment.
         args.extend(_get_environment())
         args.append('&&')
     args.append(compiler)
@@ -243,7 +244,7 @@ def main():
     parser.add_option(
         '-b',
         '--build',
-        type = 'choice',
+        type='choice',
         choices=BUILD_TYPE,
         dest='build_type',
         default=BUILD_TYPE[0],
@@ -252,19 +253,21 @@ def main():
     parser.add_option(
         '-c',
         '--config',
-        type = 'choice',
+        type='choice',
         choices=BUILD_CONFIG,
         dest='build_config',
         default=BUILD_CONFIG[0],
-        help='Build config as %s. Default: %s' % (BUILD_CONFIG, BUILD_CONFIG[0]),
+        help='Build config as %s. Default: %s' %
+        (BUILD_CONFIG, BUILD_CONFIG[0]),
     )
 
     # Parse input
-    options, _   = parser.parse_args()
-    BUILD_TYPE   = options.build_type
+    options, _ = parser.parse_args()
+    BUILD_TYPE = options.build_type
     BUILD_CONFIG = options.build_config
 
     build()
+
 
 if __name__ == '__main__':
     main()

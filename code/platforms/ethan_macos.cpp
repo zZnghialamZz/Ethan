@@ -1,5 +1,5 @@
 /* ==========================================================================
-|  @File   : ethan_win_input.cpp
+|  @File   : ethan_macos.cpp
 |  @Brief  : ...
 |  @Author : Nghia Lam <nghialam12795@gmail.com>
 |  ---
@@ -25,3 +25,5 @@
 |  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 |  SOFTWARE.
 |  ========================================================================== */
+
+#include "ethan_macos.h"

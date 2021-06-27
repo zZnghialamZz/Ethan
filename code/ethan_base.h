@@ -32,8 +32,9 @@
 // -----------------------------------------------------------------------------
 // Global define contexts
 // -----------------------------------------------------------------------------
+// NOTE(Nghia Lam): Microsoft attribute to tell compiler that symbols are
+// either imported or exported.
 #if defined(_WIN32)
-  // Microsoft attribute to tell compiler that symbols are imported/exported.
   #if defined(ETHAN_BUILD_SHARED)
     #define ETHAN_API __declspec(dllexport)  // Build as shared library.
   #elif defined(ETHAN_USE_SHARED)
@@ -51,9 +52,25 @@
 #define GLOBAL        static  // Variable global to all translation unit.
 #define LOCAL_PERSIST static  // Dont use this in release code <- Thread unsafe.
 
-// TODO(Nghia Lam): Consider change the BIT and PI32 to ethan_math.h
+// TODO(Nghia Lam): Consider move these to ethan_math.h
 #define BIT(x) (1 << x)  // Get the number bits by using 1 shifting.
-#define PI32   3.14159265359f
+
+#define PI32 3.14159265359f
+
+#define MIN8  (i8)0x80;
+#define MIN16 (i16)0x8000;
+#define MIN32 (i32)0x80000000;
+#define MIN64 (i64)0x8000000000000000llu;
+
+#define MAX8  (i8)0x7f;
+#define MAX16 (i16)0x7fff;
+#define MAX32 (i32)0x7fffffff;
+#define MAX64 (i64)0x7fffffffffffffffllu;
+
+#define UMAX8  0xff;
+#define UMAX16 0xffff;
+#define UMAX32 0xffffffff;
+#define UMAX64 0xffffffffffffffffllu;
 
 // -----------------------------------------------------------------------------
 // Types & structures definition

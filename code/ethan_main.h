@@ -53,7 +53,8 @@ ETHAN_API void InitWindow(int width, int height, const char* title);
 /**
  * Find the `WindowDimension` of current main Window.
  *
- * @return WindowDimension
+ * @return the `WindowDimension` type which contains the width and height of the
+ * current main Window.
  * */
 ETHAN_API WindowDimension GetWindowDimension();
 
