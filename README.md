@@ -1,4 +1,15 @@
-<!-- Copyright 2023 Nghia Lam                                                       -->
+<!-- ============================================================================== -->
+<!--                     _____                                                      -->
+<!--                  __|___  |__    __    __   _  ____    ____   _                 -->
+<!--                 |   ___|    | _|  |_ |  |_| ||    \  |    \ | |                -->
+<!--                 |   ___|    ||_    _||   _  ||     \ |     \| |                -->
+<!--                 |______|  __|  |__|  |__| |_||__|\__\|__/\____|                -->
+<!--                    |_____|                                                     -->
+
+<!--                                  Game Engine                                   -->
+<!-- ============================================================================== -->
+
+<!-- MIT License - Copyright 2023 Nghia Lam                                         -->
 
 <!-- Permission is hereby granted, free of charge, to any person obtaining a copy   -->
 <!-- of this software and associated documentation files (the "Software"), to deal  -->
@@ -20,7 +31,7 @@
 <!------------------------------------------------------------------------------------>
 
 Ethan Game Engine
----------------------------------------------------------------------------------------
+---
 
-A lightweight Game Framework/Engine written in C and a little of C++, which aims
-for a user friendly, fast and robust workflow for any Game Creators.
+A lightweight 2D Game Framework/Engine written in C and a little of C++, which
+aims for a user friendly, fast and robust workflow for any Game Creators.
