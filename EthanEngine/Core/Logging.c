@@ -13,11 +13,10 @@
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEditor/EntryPoint.c
+// EthanEngine/Core/Logging.c
 
-#include "EntryPoint.h"
+#include "Logging.h"
 
-int main()
+void ELoggerLogOutput(ELogLevel level, const char* message, ...)
 {
-    return 0;
 }
