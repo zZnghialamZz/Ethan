@@ -37,6 +37,8 @@
 #define LOG_ERROR_ENABLED 1
 #define LOG_FATAL_ENABLED 1
 
+#define MAX_LOG_LENGTH 2048
+
 // ---------------------------------------------------------------------------------
 // SECTION: Types & structures
 // ---------------------------------------------------------------------------------
@@ -57,35 +59,35 @@ typedef enum ELogLevel
 
 ETHAN_API void ELoggerInitialize();
 ETHAN_API void ELoggerShutdown();
-ETHAN_API void ELoggerLogOutput(ELogLevel level, const char* message, ...);
+ETHAN_API void ELoggerLogOutput(ELogLevel level, const char* message, const char* file, int line, ...);
 
 #if LOG_TRACE_ENABLED == 1
-    #define ELOG_TRACE(message, ...) ELoggerLogOutput(ELogTrace, message, ##__VA_ARGS__)
+    #define ELOG_TRACE(message, ...) ELoggerLogOutput(ELogTrace, message, __FILE__, __LINE__, ##__VA_ARGS__)
 #else
     #define ELOG_TRACE(message, ...)
 #endif
 #if LOG_DEBUG_ENABLED == 1
-    #define ELOG_DEBUG(message, ...) ELoggerLogOutput(ELogDebug, message, ##__VA_ARGS__)
+    #define ELOG_DEBUG(message, ...) ELoggerLogOutput(ELogDebug, message, __FILE__, __LINE__, ##__VA_ARGS__)
 #else
     #define ELOG_DEBUG(message, ...)
 #endif
 #if LOG_INFO_ENABLED == 1
-    #define ELOG_INFO(message, ...) ELoggerLogOutput(ELogInfo, message, ##__VA_ARGS__)
+    #define ELOG_INFO(message, ...) ELoggerLogOutput(ELogInfo, message, __FILE__, __LINE__, ##__VA_ARGS__)
 #else
     #define ELOG_INFO(message, ...)
 #endif
 #if LOG_WARN_ENABLED == 1
-    #define ELOG_WARN(message, ...) ELoggerLogOutput(ELogWarn, message, ##__VA_ARGS__)
+    #define ELOG_WARN(message, ...) ELoggerLogOutput(ELogWarn, message, __FILE__, __LINE__, ##__VA_ARGS__)
 #else
     #define ELOG_WARN(message, ...)
 #endif
 #if LOG_ERROR_ENABLED == 1
-    #define ELOG_ERROR(message, ...) ELoggerLogOutput(ELogError, message, ##__VA_ARGS__)
+    #define ELOG_ERROR(message, ...) ELoggerLogOutput(ELogError, message, __FILE__, __LINE__, ##__VA_ARGS__)
 #else
     #define ELOG_ERROR(message, ...)
 #endif
 #if LOG_FATAL_ENABLED == 1
-    #define ELOG_FATAL(message, ...) ELoggerLogOutput(ELogFatal, message, ##__VA_ARGS__)
+    #define ELOG_FATAL(message, ...) ELoggerLogOutput(ELogFatal, message, __FILE__, __LINE__, ##__VA_ARGS__)
 #else
     #define ELOG_FATAL(message, ...)
 #endif

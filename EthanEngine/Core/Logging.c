@@ -17,6 +17,10 @@
 
 #include "Logging.h"
 
-void ELoggerLogOutput(ELogLevel level, const char* message, ...)
+#include <memory.h> // Required for: memset
+
+ETHAN_API_IMPL void ELoggerLogOutput(ELogLevel level, const char* message, const char* file, int line, ...)
 {
+    char buffer[MAX_LOG_LENGTH];
+    memset(buffer, 0, sizeof(buffer));
 }
