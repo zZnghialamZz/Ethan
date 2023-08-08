@@ -12,7 +12,7 @@
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEngine/Core/ELogger.hpp
+// EthanEngine/Core/Logger.hpp
 
 #ifndef ETHANENGINE_CORE_LOGGER_H
 #define ETHANENGINE_CORE_LOGGER_H

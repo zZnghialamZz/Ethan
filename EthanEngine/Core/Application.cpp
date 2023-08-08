@@ -12,10 +12,10 @@
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEngine/Core/EApplication.cpp
+// EthanEngine/Core/Application.cpp
 
-#include "EApplication.hpp"
-#include "ELogger.hpp"
+#include "Application.hpp"
+#include "Logger.hpp"
 
 namespace Ethan
 {

@@ -12,7 +12,7 @@
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEngine/Core/EApplication.hpp
+// EthanEngine/Core/Application.hpp
 
 #ifndef ETHANENGINE_CORE_APPLICATION_H
 #define ETHANENGINE_CORE_APPLICATION_H
