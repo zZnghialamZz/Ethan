@@ -17,6 +17,7 @@
 #ifndef ETHANENGINE_CORE_H
 #define ETHANENGINE_CORE_H
 
+#include "EApplication.hpp"
 #include "ELogger.hpp"
 
 #endif // ETHANENGINE_CORE_H

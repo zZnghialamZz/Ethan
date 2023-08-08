@@ -23,7 +23,8 @@ project(
 file(GLOB_RECURSE SOURCES
     "${ETHAN_ENGINE_PATH}/Core/*.cpp")
 file(GLOB_RECURSE HEADERS
-    "${ETHAN_ENGINE_PATH}/EthanPCH.hpp")
+    "${ETHAN_ENGINE_PATH}/Ethan.hpp")
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
+target_link_libraries(${PROJECT_NAME} spdlog)
 target_precompile_headers(${PROJECT_NAME} PUBLIC "${ETHAN_ENGINE_PATH}/EthanPCH.hpp")

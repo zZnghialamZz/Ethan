@@ -12,25 +12,27 @@
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEditor/EthanEditor.hpp
+// EthanEngine/Core/EApplication.cpp
 
-#ifndef ETHANEDITOR_EDITOR_H
-#define ETHANEDITOR_EDITOR_H
+#include "EApplication.hpp"
+#include "ELogger.hpp"
 
-#include "Ethan.hpp"
-
-namespace EthanEditor
+namespace Ethan
 {
-	class MainEditor final : public Ethan::Application
+	Application::Application() = default;
+	Application::~Application() = default;
+
+	void Application::Start()
 	{
-	public:
-		MainEditor();
-		~MainEditor() override;
+        Logger::InitLoggers();
+	}
 
-        void Start() override;
-        void RunLoop() override;
-        void Exit() override;
-	};
-} // namespace EthanEditor
+	void Application::RunLoop()
+	{
+	}
 
-#endif // ETHANEDITOR_EDITOR_H
+	void Application::Exit()
+	{
+        Logger::ShutDown();
+	}
+} // namespace Ethan

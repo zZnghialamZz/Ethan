@@ -16,7 +16,28 @@
 
 #include "EthanEditor.hpp"
 
-int main()
+namespace EthanEditor
 {
-    return 0;
-}
+	MainEditor::MainEditor() = default;
+	MainEditor::~MainEditor() = default;
+
+	void MainEditor::Start()
+	{
+		Ethan::Application::Start();
+
+		CLIENTLOG_INFO("Ethan Editor Initialized !!");
+	}
+
+	void MainEditor::RunLoop()
+	{
+		Ethan::Application::RunLoop();
+	}
+
+	void MainEditor::Exit()
+	{
+		Ethan::Application::Exit();
+	}
+
+} // namespace EthanEditor
+
+ETHAN_RUNMAIN(EthanEditor::MainEditor);

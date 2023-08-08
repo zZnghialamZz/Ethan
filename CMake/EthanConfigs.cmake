@@ -36,6 +36,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 # Add definitions
+if (BUILD_ETHAN_EDITOR EQUAL 0)
+    add_definitions(-DETHAN_BUILD_DLL)
+endif()
 if (USE_ETHAN_DEBUG EQUAL 1)
     add_definitions(-DUSE_ETHAN_DEBUG)
 endif()

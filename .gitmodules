@@ -1,0 +1,3 @@
+[submodule "ThirdParties/SpdLog"]
+	path = ThirdParties/SpdLog
+	url = https://github.com/zZnghialamZz/spdlog.git

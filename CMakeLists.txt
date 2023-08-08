@@ -33,5 +33,6 @@ include(EthanSetup)
 
 # Loading modules
 # ---
+add_subdirectory(ThirdParties)
 add_subdirectory(EthanEngine)
 add_subdirectory(EthanEditor)
