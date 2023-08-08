@@ -2,12 +2,13 @@ Language: Cpp
 BasedOnStyle: LLVM
 
 AccessModifierOffset: -4
-AlignAfterOpenBracket: DontAlign
-AlignEscapedNewlines: Right
+AllowShortFunctionsOnASingleLine: All
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: None
+AlignEscapedNewlines: Left
 AlignOperands: DontAlign
-AlignConsecutiveMacros: true
-AlignConsecutiveAssignments: true
 AlignTrailingComments: true
+AlignConsecutiveMacros: Consecutive
 AllowShortBlocksOnASingleLine: Empty
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
@@ -30,7 +31,7 @@ BraceWrapping:
   IndentBraces: false
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeBraces: Custom
-BreakInheritanceList: AfterColon
+BreakInheritanceList: AfterComma
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakStringLiterals: false
@@ -40,11 +41,13 @@ Cpp11BracedListStyle: false
 EmptyLineBeforeAccessModifier: LogicalBlock
 IndentCaseBlocks: false
 IndentCaseLabels: true
+IndentExternBlock: NoIndent
 IndentPPDirectives: BeforeHash
 IndentWidth: 4
 NamespaceIndentation: All
 PointerAlignment: Left
 SortIncludes: false
 SpaceBeforeCaseColon: false
+PackConstructorInitializers: CurrentLine
 TabWidth: 4
-UseTab: Never
+UseTab: Always

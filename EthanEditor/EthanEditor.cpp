@@ -8,14 +8,15 @@
 //                   Game Engine
 // ==================================================
 //
-// Author: Nghia Lam
-// Github: https://github.com/zZnghialamZz/Ethan
+// Github : https://github.com/zZnghialamZz/Ethan
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEditor/EntryPoint.h
+// EthanEditor/EthanEditor.cpp
 
-#ifndef ETHANEDITOR_ENTRYPOINT_H
-#define ETHANEDITOR_ENTRYPOINT_H
+#include "EthanEditor.hpp"
 
-#endif // ETHANEDITOR_ENTRYPOINT_H
+int main()
+{
+    return 0;
+}

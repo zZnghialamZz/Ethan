@@ -8,17 +8,14 @@
 //                   Game Engine
 // ==================================================
 //
-// Author: Nghia Lam
-// Github: https://github.com/zZnghialamZz/Ethan
+// Github : https://github.com/zZnghialamZz/Ethan
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEngine/Core/Logging.h
+// EthanEngine/Core/ELogger.hpp
 
-#ifndef ETHANENGINE_CORE_LOGGING_H
-#define ETHANENGINE_CORE_LOGGING_H
-
-#include "EthanEngine/BasicDefines.h"
+#ifndef ETHANENGINE_CORE_LOGGER_H
+#define ETHANENGINE_CORE_LOGGER_H
 
 // ---------------------------------------------------------------------------------
 // SECTION: Settings
@@ -92,4 +89,4 @@ ETHAN_API void ELoggerLogOutput(ELogLevel level, const char* message, const char
     #define ELOG_FATAL(message, ...)
 #endif
 
-#endif // ETHANENGINE_CORE_LOGGING_H
+#endif // ETHANENGINE_CORE_LOGGER_H

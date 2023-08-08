@@ -8,19 +8,10 @@
 //                   Game Engine
 // ==================================================
 //
-// Author: Nghia Lam
-// Github: https://github.com/zZnghialamZz/Ethan
+// Github : https://github.com/zZnghialamZz/Ethan
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEngine/Core/Logging.c
+// EthanEngine/Ethan.hpp
 
-#include "Logging.h"
-
-#include <memory.h> // Required for: memset
-
-ETHAN_API_IMPL void ELoggerLogOutput(ELogLevel level, const char* message, const char* file, int line, ...)
-{
-    char buffer[MAX_LOG_LENGTH];
-    memset(buffer, 0, sizeof(buffer));
-}
+#include "Core/Core.hpp"

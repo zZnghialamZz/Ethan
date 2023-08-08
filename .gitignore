@@ -42,5 +42,6 @@ bin/
 lib/
 
 # Auto-generated files
+.DS_Store
 imgui.ini
 compile_commands.json

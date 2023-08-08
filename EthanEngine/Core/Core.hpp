@@ -8,16 +8,15 @@
 //                   Game Engine
 // ==================================================
 //
-// Author: Nghia Lam
-// Github: https://github.com/zZnghialamZz/Ethan
+// Github : https://github.com/zZnghialamZz/Ethan
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEditor/EntryPoint.c
+// EthanEngine/Core/Core.hpp
 
-#include "EntryPoint.h"
+#ifndef ETHANENGINE_CORE_H
+#define ETHANENGINE_CORE_H
 
-int main()
-{
-    return 0;
-}
+#include "ELogger.hpp"
+
+#endif // ETHANENGINE_CORE_H

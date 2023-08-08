@@ -8,52 +8,29 @@
 #                   Game Engine
 # ==================================================
 #
-# Author: Nghia Lam
-# Github: https://github.com/zZnghialamZz/Ethan
+# Github : https://github.com/zZnghialamZz/Ethan
+# License: MIT License (See LICENSE for details)
 
 # ---
-# EthanConfigs.cmake
+# CMake/EthanSetup.cmake
 
 # ------------------------------------------------------
-# Setup dependencies
+# Set universal paths
 # ------------------------------------------------------
+set(ETHAN_EDITOR_PATH "${ETHAN_PATH}/EthanEditor")
+set(ETHAN_ENGINE_PATH "${ETHAN_PATH}/EthanEngine")
 
-set(USE_ETHAN_DEBUG 1)
-set(USE_ETHAN_ASSERT 1)
+# ------------------------------------------------------
+# Enable C++17 Support
+# ------------------------------------------------------
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(BUILD_ETHAN_EDITOR 1)
-set(BUILD_ETHAN_OPENGL 0)
-set(BUILD_ETHAN_VULKAN 1)
-
-if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    set(BUILD_ETHAN_DX11 0)
-    set(BUILD_ETHAN_DX12 0)
-endif()
+# ------------------------------------------------------
+# Compiler Flags
+# ------------------------------------------------------
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(BUILD_ETHAN_METAL 0)
-endif()
-
-# Add definitions
-if (USE_ETHAN_DEBUG EQUAL 1)
-    add_definitions(-DUSE_ETHAN_DEBUG)
-endif()
-if (USE_ETHAN_ASSERT EQUAL 1)
-    add_definitions(-DUSE_ETHAN_ASSERT)
-endif()
-if (BUILD_ETHAN_OPENGL EQUAL 1)
-    add_definitions(-DBUILD_ETHAN_OPENGL)
-endif()
-if (BUILD_ETHAN_VULKAN EQUAL 1)
-    add_definitions(-DBUILD_ETHAN_VULKAN)
-endif()
-if (BUILD_ETHAN_DX11 EQUAL 1)
-    add_definitions(-DBUILD_ETHAN_DX11)
-endif()
-if (BUILD_ETHAN_DX12 EQUAL 1)
-    add_definitions(-DBUILD_ETHAN_DX12)
-endif()
-if (BUILD_ETHAN_METAL EQUAL 1)
-    add_definitions(-DBUILD_ETHAN_METAL)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -stdlib=libc++")
 endif()
 
 # ------------------------------------------------------
