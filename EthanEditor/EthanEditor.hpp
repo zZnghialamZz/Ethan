@@ -27,9 +27,9 @@ namespace EthanEditor
 		MainEditor();
 		~MainEditor() override;
 
-        void Start() override;
-        void RunLoop() override;
-        void Exit() override;
+		void Start() override;
+		void RunLoop() override;
+		void Exit() override;
 	};
 } // namespace EthanEditor
 

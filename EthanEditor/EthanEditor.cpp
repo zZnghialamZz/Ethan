@@ -18,6 +18,7 @@
 
 namespace EthanEditor
 {
+
 	MainEditor::MainEditor() = default;
 	MainEditor::~MainEditor() = default;
 

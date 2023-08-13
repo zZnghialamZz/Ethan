@@ -24,7 +24,7 @@ namespace Ethan
 
 	void Application::Start()
 	{
-        Logger::InitLoggers();
+		Logger::InitLoggers();
 	}
 
 	void Application::RunLoop()
@@ -33,6 +33,6 @@ namespace Ethan
 
 	void Application::Exit()
 	{
-        Logger::ShutDown();
+		Logger::ShutDown();
 	}
 } // namespace Ethan
