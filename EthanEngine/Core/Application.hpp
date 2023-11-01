@@ -55,6 +55,7 @@ namespace Ethan
 		Application();
 		virtual ~Application();
 
+		virtual void Init();
 		virtual void Start();
 		virtual void RunLoop();
 		virtual void Exit();

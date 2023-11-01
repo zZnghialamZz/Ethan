@@ -49,7 +49,7 @@ namespace Ethan
 	void Logger::PrintContextInfo()
 	{
 		ENGINELOG_INFO("\n\n"
-					   "\tContext Info:\n"
+					   "\tEngine Context Info:\n"
 					   "\t|\n"
 					   "\t-\tOS:\n"
 					   "\t|\t\tWin32 = {0}\n"

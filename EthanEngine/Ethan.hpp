@@ -15,3 +15,4 @@
 // EthanEngine/Ethan.hpp
 
 #include "Core/Core.hpp"
+#include "Utilities/Utilities.hpp"

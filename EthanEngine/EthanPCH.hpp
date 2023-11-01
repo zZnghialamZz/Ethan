@@ -171,6 +171,41 @@
 	#endif
 #endif
 
+// --------------------------------------------------------------------------------
+// SECTION: Enum helpers
+// ---
+// Solution for using enum class as bit field, using operator overload and shift
+// value.
+//
+// Usage:
+//     enum class EBitField
+//     {
+//         None = 0,
+//         Bit1 = BIT(1),
+//         Bit2 = BIT(2),
+//     };
+//     ENUM_CLASS_BITWISE(EBitField);
+//
+//     ---
+//     if ((bitvalue & EBitField::Bit1) != EBitField::None)
+//     {
+//         // Do something...
+//     }
+// --------------------------------------------------------------------------------
+
+#define BIT(x) (1 << x)
+#define ENUM_CLASS_BITWISE(Enum)                        \
+    inline constexpr Enum operator&(Enum Lhs, Enum Rhs) \
+    {                                                   \
+        using EnumType = __underlying_type(Enum);       \
+        return Enum((EnumType)Lhs & (EnumType)Rhs);     \
+    }                                                   \
+    inline constexpr Enum operator|(Enum Lhs, Enum Rhs) \
+    {                                                   \
+        using EnumType = __underlying_type(Enum);       \
+        return Enum((EnumType)Lhs | (EnumType)Rhs);     \
+    }
+
 // ---------------------------------------------------------------------------------
 // SECTION: Engine Utilities
 // ---------------------------------------------------------------------------------

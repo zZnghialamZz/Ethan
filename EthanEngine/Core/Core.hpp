@@ -19,5 +19,6 @@
 
 #include "Application.hpp"
 #include "Logger.hpp"
+#include "Event.hpp"
 
 #endif // ETHANENGINE_CORE_H

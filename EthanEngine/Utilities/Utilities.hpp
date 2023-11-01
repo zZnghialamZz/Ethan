@@ -12,31 +12,9 @@
 // License: MIT License (See LICENSE for details)
 //
 // ---
-// EthanEngine/Core/Application.cpp
+// EthanEngine/Utilities/Utilities.hpp
 
-#include "Application.hpp"
-#include "Logger.hpp"
+#ifndef ETHANENGINE_UTILITIES_H
+#define ETHANENGINE_UTILITIES_H
 
-namespace Ethan
-{
-	Application::Application() = default;
-	Application::~Application() = default;
-
-	void Application::Init()
-	{
-		Logger::InitLoggers();
-	}
-
-	void Application::Start()
-	{
-	}
-
-	void Application::RunLoop()
-	{
-	}
-
-	void Application::Exit()
-	{
-		Logger::ShutDown();
-	}
-} // namespace Ethan
+#endif // ETHANENGINE_UTILITIES_H

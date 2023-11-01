@@ -21,7 +21,8 @@ project(
     LANGUAGES CXX)
 
 file(GLOB_RECURSE SOURCES
-    "${ETHAN_ENGINE_PATH}/Core/*.cpp")
+    "${ETHAN_ENGINE_PATH}/Core/*.cpp"
+    "${ETHAN_ENGINE_PATH}/Utilities/*.cpp")
 file(GLOB_RECURSE HEADERS
     "${ETHAN_ENGINE_PATH}/Ethan.hpp")
 
