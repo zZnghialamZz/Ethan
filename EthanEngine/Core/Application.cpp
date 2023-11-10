@@ -27,10 +27,6 @@ namespace Ethan
 		Logger::InitLoggers();
 	}
 
-	void Application::Start()
-	{
-	}
-
 	void Application::RunLoop()
 	{
 	}

@@ -14,5 +14,10 @@
 // ---
 // EthanEngine/Ethan.hpp
 
+#ifndef ETHANENGINE_H
+#define ETHANENGINE_H
+
 #include "Core/Core.hpp"
 #include "Utilities/Utilities.hpp"
+
+#endif /* ETHANENGINE_H */

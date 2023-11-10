@@ -56,14 +56,13 @@ namespace Ethan
 		virtual ~Application();
 
 		virtual void Init();
-		virtual void Start();
 		virtual void RunLoop();
 		virtual void Exit();
 	};
 
 	static int RunMain(Application* App)
 	{
-		App->Start();
+		App->Init();
 		App->RunLoop();
 		App->Exit();
 		return 0;

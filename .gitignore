@@ -38,6 +38,8 @@
 .idea/
 .vs/
 build/
+builddebug/
+buildrelease/
 bin/
 lib/
 

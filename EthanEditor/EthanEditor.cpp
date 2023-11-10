@@ -22,21 +22,20 @@ namespace EthanEditor
 	MainEditor::MainEditor() = default;
 	MainEditor::~MainEditor() = default;
 
-	void MainEditor::Start()
+	void MainEditor::Init()
 	{
-		Ethan::Application::Start();
-
+		Application::Init();
 		CLIENTLOG_INFO("Ethan Editor Initialized !!");
 	}
 
 	void MainEditor::RunLoop()
 	{
-		Ethan::Application::RunLoop();
+		Application::RunLoop();
 	}
 
 	void MainEditor::Exit()
 	{
-		Ethan::Application::Exit();
+		Application::Exit();
 	}
 
 } // namespace EthanEditor

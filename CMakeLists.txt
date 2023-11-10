@@ -26,7 +26,7 @@ project(
 # ---
 if(NOT ETHAN_PATH)
     set(ETHAN_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${ETHAN_PATH}/CMake/")
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${ETHAN_PATH}/CMakeScripts/")
 endif()
 include(EthanConfigs) # Tweak this file for build's configuration.
 include(EthanSetup)

@@ -66,11 +66,11 @@ namespace Ethan
 		[[nodiscard]] virtual const char* GetName() const = 0;
 		[[nodiscard]] virtual EEventCategory GetCategoryFlags() const = 0;
 
-		inline void SetHandled(bool Value) { Handled = Value; }
-		[[nodiscard]] inline bool IsHandled() const { return Handled; }
-		[[nodiscard]] inline bool IsInCategory(EEventCategory Category) const
+		void SetHandled(const bool Value) { Handled = Value; }
+		[[nodiscard]] bool IsHandled() const { return Handled; }
+		[[nodiscard]] bool IsInCategory(const EEventCategory Category) const
 		{
-			return ((GetCategoryFlags() & Category) != EEventCategory::None);
+			return (GetCategoryFlags() & Category) != EEventCategory::None;
 		}
 
 	private:
