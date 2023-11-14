@@ -191,24 +191,35 @@
 //     {
 //         // Do something...
 //     }
+//
+// Warning: Currently, we only support | and & operator.
+// See: https://www.sandordargo.com/blog/2022/06/22/bitwise-enums
 // --------------------------------------------------------------------------------
 
 #define BIT(x) (1 << x)
 #define ENUM_CLASS_BITWISE(Enum)                        \
-    inline constexpr Enum operator&(Enum Lhs, Enum Rhs) \
-    {                                                   \
-        using EnumType = __underlying_type(Enum);       \
-        return Enum((EnumType)Lhs & (EnumType)Rhs);     \
-    }                                                   \
-    inline constexpr Enum operator|(Enum Lhs, Enum Rhs) \
-    {                                                   \
-        using EnumType = __underlying_type(Enum);       \
-        return Enum((EnumType)Lhs | (EnumType)Rhs);     \
-    }
+	inline constexpr Enum operator&(Enum Lhs, Enum Rhs) \
+	{                                                   \
+		using EnumType = __underlying_type(Enum);       \
+		return Enum((EnumType)Lhs & (EnumType)Rhs);     \
+	}                                                   \
+	inline constexpr Enum operator|(Enum Lhs, Enum Rhs) \
+	{                                                   \
+		using EnumType = __underlying_type(Enum);       \
+		return Enum((EnumType)Lhs | (EnumType)Rhs);     \
+	}
 
 // ---------------------------------------------------------------------------------
 // SECTION: Engine Utilities
 // ---------------------------------------------------------------------------------
+#if !defined(EAPI_NODISCARD) && defined(__has_cpp_attribute)
+	#if __has_cpp_attribute(nodiscard)
+		#define EAPI_NODISCARD [[nodiscard]]
+	#endif
+#endif
+#ifndef EAPI_NODISCARD
+	#define EAPI_NODISCARD
+#endif
 
 namespace Ethan
 {

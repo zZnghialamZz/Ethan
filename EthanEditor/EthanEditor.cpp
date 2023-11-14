@@ -25,6 +25,7 @@ namespace EthanEditor
 	void MainEditor::Init()
 	{
 		Application::Init();
+
 		CLIENTLOG_INFO("Ethan Editor Initialized !!");
 	}
 

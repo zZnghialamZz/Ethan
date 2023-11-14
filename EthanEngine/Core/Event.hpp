@@ -17,64 +17,56 @@
 #ifndef ETHANENGINE_EVENT_H
 #define ETHANENGINE_EVENT_H
 
+#include "Utilities/UtilString.hpp"
+
 namespace Ethan
 {
-#define EVENT_CLASS(name, category)                          \
-	virtual const char* GetName() const override             \
-	{                                                        \
-		return #name;                                        \
-	}                                                        \
-	virtual EEventCategory GetCategoryFlags() const override \
-	{                                                        \
-		return category;                                     \
+#define EVENT_CLASS(name)                              \
+	virtual const char* GetName() const override       \
+	{                                                  \
+		return #name;                                  \
+	}                                                  \
+	virtual const EventID& GetEventID() const override \
+	{                                                  \
+		if (EID == 0)                                  \
+		{                                              \
+			EID = LibString::Hash(GetName());          \
+		}                                              \
+		return EID;                                    \
 	}
-
-	// ---------------------------------------------------------------------------
-	// Bit field enum class for Event Category. This is a bit hacky since we use
-	// operator overload to make the enum class have the bitwise operator.
-	//
-	// Warning: Currently, we only support | and & operator.
-	// See: https://www.sandordargo.com/blog/2022/06/22/bitwise-enums
-	// ---------------------------------------------------------------------------
-	enum class EEventCategory
-	{
-		None = 0,
-		Application = BIT(1),
-		Input = BIT(2),
-		Controller = BIT(3),
-		Keyboard = BIT(4),
-		Mouse = BIT(5),
-	};
-	ENUM_CLASS_BITWISE(EEventCategory);
 
 	// ---------------------------------------------------------------------------
 	// Event interface for other event children classes to derive from.
 	//
 	// Usage:
-	//     class KeyboardEvent : public IEvent
+	//     class KeyboardEvent : public IEventBase
 	//     {
 	//     public:
-	//         EVENT_CLASS(KeyboardEvent, EEventCategory::Input | EEventCategory::Keyboard)
+	//         EVENT_CLASS(KeyboardEvent)
 	//         ...
 	//     };
 	// ---------------------------------------------------------------------------
-	class IEvent
+	using EventID = unsigned long;
+
+	class IEventBase
 	{
 	public:
-		virtual ~IEvent() = default;
+		explicit IEventBase()
+			: EID(0)
+			, Handled(false) {}
+		virtual ~IEventBase() = default;
 
-		[[nodiscard]] virtual const char* GetName() const = 0;
-		[[nodiscard]] virtual EEventCategory GetCategoryFlags() const = 0;
+		EAPI_NODISCARD virtual const char* GetName() const = 0;
+		EAPI_NODISCARD virtual const EventID& GetEventID() const = 0;
 
+		bool IsHandled() const { return Handled; }
 		void SetHandled(const bool Value) { Handled = Value; }
-		[[nodiscard]] bool IsHandled() const { return Handled; }
-		[[nodiscard]] bool IsInCategory(const EEventCategory Category) const
-		{
-			return (GetCategoryFlags() & Category) != EEventCategory::None;
-		}
+
+	protected:
+		EventID EID;
 
 	private:
-		bool Handled = false;
+		bool Handled;
 	};
 } // namespace Ethan
 

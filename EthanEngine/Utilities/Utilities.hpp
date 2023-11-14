@@ -17,4 +17,6 @@
 #ifndef ETHANENGINE_UTILITIES_H
 #define ETHANENGINE_UTILITIES_H
 
+#include "UtilString.hpp"
+
 #endif // ETHANENGINE_UTILITIES_H
