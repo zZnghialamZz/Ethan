@@ -2,7 +2,6 @@ Language: Cpp
 BasedOnStyle: LLVM
 
 AccessModifierOffset: -4
-AllowShortFunctionsOnASingleLine: All
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: None
 AlignEscapedNewlines: Left
@@ -46,7 +45,7 @@ IndentPPDirectives: BeforeHash
 IndentWidth: 4
 NamespaceIndentation: All
 PointerAlignment: Left
-SortIncludes: false
+SortIncludes: Never
 SpaceBeforeCaseColon: false
 PackConstructorInitializers: CurrentLine
 TabWidth: 4

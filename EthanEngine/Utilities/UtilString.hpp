@@ -21,7 +21,7 @@ namespace Ethan
 {
 	struct LibString
 	{
-        // See: http://www.cse.yorku.ca/~oz/hash.html
+		// See: http://www.cse.yorku.ca/~oz/hash.html
 		static unsigned long Hash(const char* Str)
 		{
 			unsigned long HashValue = 5381;

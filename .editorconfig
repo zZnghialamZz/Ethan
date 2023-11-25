@@ -21,6 +21,6 @@ root = true
 [*]
 end_of_line = crlf                # Enforce Windows style line endings
 insert_final_newline = true       # Always end files with a blank line
-indent_style = space              # Force space characters for indentation
+indent_style = tab                # Force space characters for indentation
 indent_size = 4                   # Always indent by 4 characters
 trim_trailing_whitespace = true   # Remove whitespace characters at the end of line
